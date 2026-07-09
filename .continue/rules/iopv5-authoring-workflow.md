@@ -1,0 +1,6 @@
+---
+globs: rag-authoring-starter/**,AGENTS.md
+alwaysApply: false
+---
+
+When working in the IOPv5 / rag-authoring-starter workspace: (1) Act on concrete next steps by running the tools and verifying output — do not stop at analysis. (2) Respect the one-directional data flow rag/corpus -> extracted -> rag/chunks -> rag/indexes -> rag/reports/specs; never hand-edit derived artefacts, fix the input/tool and regenerate. (3) Before writing normative spec prose, ground it via `python tools/rag/query.py` and cite provenance as source_id#chunk. (4) Follow the DASH-IF-IOP authoring convention per part: one `<part>.bs` (metadata + includes, Group: dashif) plus `NN-name.inc.md` prose, with Images/ and Diagrams/ folders. Prefer Mermaid for diagrams, PlantUML (.wsd) for UML, draw.io (*.drawio.svg) for bespoke figures. (5) Quote file paths with spaces in PowerShell. (6) Bikeshed `update` and some fetches fail behind the corporate TLS proxy — document workarounds (REQUESTS_CA_BUNDLE / corporate root CA / Docker), don't hide the error. (7) Never commit proprietary MPEG/unpublished DASH-IF binaries to public Git. (8) Record non-trivial choices as short ADRs in docs/decisions/.

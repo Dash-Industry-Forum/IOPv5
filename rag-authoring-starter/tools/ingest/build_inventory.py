@@ -23,7 +23,7 @@ def _parse_scalar(value: str) -> Any:
     value = value.strip()
     if value == "":
         return ""
-    if value.startswith('"') and value.endswith('""):
+    if value.startswith('"') and value.endswith('"'):
         return value[1:-1]
     if value.startswith("[") and value.endswith("]"):
         inner = value[1:-1].strip()

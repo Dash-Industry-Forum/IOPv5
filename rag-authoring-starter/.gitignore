@@ -1,0 +1,49 @@
+t-Q# --- Generated RAG artefacts (rebuild with the tools) ---
+rag/chunks/*.jsonl
+rag/indexes/*.json
+rag/indexes/*.pkl
+rag/corpus/**/*.extracted.txt
+rag/corpus/**/*.extracted.json
+
+# --- Proprietary / access-controlled corpus sources ---
+# Keep private MPEG and unpublished DASH-IF documents out of public Git.
+# Uncomment or adjust per your access policy before committing corpus files.
+rag/corpus/mpeg/*.docx
+rag/corpus/mpeg/*.pdf
+rag/corpus/external/*
+rag/corpus/published/*
+rag/corpus/change-requests/*
+rag/corpus/drafts/*
+rag/corpus/legacy-v4/*
+# OS / sync junk
+**/desktop.ini
+.DS_Store
+# Allow structure/placeholder files to remain tracked:
+!rag/corpus/**/.gitkeep
+!rag/corpus/**/README.md
+
+# --- Python ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# --- Local environment artefacts (machine-specific, do not commit) ---
+# The corporate CA bundle is generated locally from your machine's trust store.
+build-tools/corp-ca-bundle.pem
+
+# --- Bikeshed / Metanorma build output ---
+dist/
+specs/**/*.html
+
+# --- Extracted images from source DOCX (triage before committing) ---
+# Auto-extracted originals are kept local until an editor decides keep vs redraw.
+# The image manifest (*-images.md) and hand-authored diagrams stay tracked.
+specs/**/Images/*-img[0-9]*.png
+specs/**/Images/*-img[0-9]*.jpg
+specs/**/Images/*-img[0-9]*.jpeg
+specs/**/Images/*-img[0-9]*.gif
+specs/**/Images/*-img[0-9]*.bmp
+specs/**/Images/*-img[0-9]*.emf
+specs/**/Images/*-img[0-9]*.wmf
+rag/reports/images/

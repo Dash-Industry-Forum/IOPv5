@@ -35,10 +35,29 @@ The first pilot should focus on **Part 4: Live and Low-Latency Services** becaus
 
 Do not commit private MPEG or unpublished DASH-IF documents to a public repository unless their publication status and license permit it. The `rag/corpus/` tree is designed so that private corpora can be maintained locally while public source stubs remain in Git.
 
+## Toolchain
+
+All tools live under `tools/` and are designed to degrade gracefully. The
+inventory, chunking, index, and query tools run with the Python standard library
+only; text extraction needs the optional packages in `requirements.txt`.
+
+```bash
+pip install -r requirements.txt   # optional: enables DOCX/PDF extraction + YAML
+
+python tools/ingest/build_inventory.py     # rag/sources.yaml -> docs/document-inventory.md
+python tools/ingest/extract_text.py        # corpus DOCX/PDF -> *.extracted.txt + .json
+python tools/rag/chunk.py                  # extracted text -> rag/chunks/*.jsonl
+python tools/rag/build_index.py            # chunks -> rag/indexes/index.json
+python tools/rag/query.py "segment sequence" --part part04-live-low-latency
+python tools/migration/delta_report.py cr-low-latency-live-r8 cr-low-latency-live-r9
+python tools/publication/check_links.py    # link / heading / modal-verb checks on specs/
+```
+
 ## Next steps
 
-1. Populate `rag/sources.yaml` with the available documents.
-2. Run `python tools/ingest/build_inventory.py`.
-3. Review `docs/document-inventory.md`.
-4. Add source material to `rag/corpus/` according to status and access policy.
-5. Run the RAG build/query tools once dependencies are installed.
+1. Install optional dependencies: `pip install -r requirements.txt`.
+2. Add source material to `rag/corpus/` according to status and access policy
+   (see `rag/corpus/README.md`). Paths must match `corpus_path` in `rag/sources.yaml`.
+3. Run `python tools/ingest/build_inventory.py` and review `docs/document-inventory.md`.
+4. Run the extract -> chunk -> index -> query pipeline shown above.
+5. For the Part 4 pilot, add the r8/r9 CR inputs and run `delta_report.py`.

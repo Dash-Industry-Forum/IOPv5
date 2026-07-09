@@ -1,0 +1,18 @@
+# Optional dependencies for the RAG authoring toolchain.
+#
+# The tools are designed to degrade gracefully:
+#   - build_inventory.py and the RAG index/query tools run with stdlib only.
+#   - Text extraction and nicer YAML parsing need the packages below.
+#
+# Install with:  pip install -r requirements.txt
+
+PyYAML>=6.0        # richer sources.yaml parsing (fallback parser used otherwise)
+python-docx>=1.1   # DOCX text extraction (tools/ingest/extract_text.py)
+pypdf>=4.0         # PDF text extraction (tools/ingest/extract_text.py)
+
+# Authoring / publication build:
+bikeshed>=7.1      # spec build (specs/<part>/<part>.bs -> HTML)
+wincertstore; sys_platform == "win32"   # export Windows trust store for the corporate CA bundle
+
+# Optional, for a stronger index/embedding backend (not required):
+# scikit-learn>=1.3

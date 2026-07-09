@@ -37,7 +37,7 @@ sources:
     type: specification
     status: draft
     target_part: part04-live-low-latency
-    corpus_path: rag/corpus/drafts/DASH-IF-IOPv5.0-Part4-DRAFT-r1.docx
+    corpus_path: "rag/corpus/drafts/DASH-IF-IOPv5.0-Part4-DRAFT - r1.docx"
     canonical_url: ""
     tags: [dash-if, iop, v5, part4, live, low-latency, draft]
 
@@ -46,7 +46,7 @@ sources:
     type: change-request
     status: draft
     target_part: part04-live-low-latency
-    corpus_path: rag/corpus/change-requests/CR-Low-Latency-Live-r8.pdf
+    corpus_path: "rag/corpus/change-requests/CR-Low-Latency-Live-r8 (1).pdf"
     canonical_url: ""
     tags: [dash-if, change-request, low-latency, live, r8]
 
@@ -82,11 +82,11 @@ sources:
     type: external-standard
     status: published
     target_part: multiple
-    corpus_path: rag/corpus/mpeg/ISO_IEC_23000-19_2024.docx
+    corpus_path: "rag/corpus/mpeg/ISO_IEC 23000-19_2024 ed.3 - id.85623 Publication Word (en)-wcm.docx"
     canonical_url: ""
     tags: [mpeg, cmaf, iso, external, 2024]
 
-  - id: iso-iec-23009-1-2026-merged-r5
+    - id: iso-iec-23009-1-2026-merged-r5
     title: "ISO/IEC 23009-1:2026 DASH merged r5"
     type: external-standard
     status: draft
@@ -94,6 +94,33 @@ sources:
     corpus_path: rag/corpus/mpeg/ISO_IEC_23009-1_2026_merged_r5.docx
     canonical_url: ""
     tags: [mpeg, dash, iso, external, 2026, segment-sequence, ari, events]
+
+  - id: iso-iec-14496-12-ed8
+    title: "ISO/IEC 14496-12 (8th edition, FDIS): ISO Base Media File Format"
+    type: external-standard
+    status: draft
+    target_part: multiple
+    corpus_path: "rag/corpus/mpeg/20241016_ISO_IEC FDIS 14496-12ed8.docx"
+    canonical_url: "https://www.iso.org/standard/83102.html"
+    tags: [mpeg, isobmff, iso, external, 14496-12, ed8, 2024]
+
+  - id: cta-5003-c
+    title: "CTA-5003-C: Web Application Video Ecosystem (WAVE) Device Playback Capabilities"
+    type: external-standard
+    status: published
+    target_part: multiple
+    corpus_path: "rag/corpus/external/cta-5003-c-024-cl.docx"
+    canonical_url: "https://cdn.cta.tech/cta/media/media/resources/standards/pdfs/cta-5003-c-final.pdf"
+    tags: [cta, wave, external, device-playback, 5003, revision-c]
+
+  - id: dashif-iop-v5-part8-draft
+    title: "DASH-IF IOP v5 Part 8: Audio (DRAFT 2021-07-01)"
+    type: specification
+    status: draft
+    target_part: part08-audio
+    corpus_path: rag/corpus/drafts/DASH-IF-IOPv5.0-Part8-DRAFT-20210701.docx
+    canonical_url: ""
+    tags: [dash-if, iop, v5, part8, audio, draft]
 
   - id: iop-docs-overview
     title: "IOP Documents Overview"

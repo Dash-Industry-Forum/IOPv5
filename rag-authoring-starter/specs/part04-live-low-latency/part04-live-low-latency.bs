@@ -1,0 +1,44 @@
+<pre class=metadata>
+Revision: 0.1
+Title: DASH-IF IOP v5 Part 4: Live and Low-Latency Services
+Status: LD
+Shortname: iop-v5-part4
+URL: https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html
+Group: dashif
+Editor: DASH-IF Live Task Force
+Abstract: Working draft of DASH-IF IOP v5 Part 4, covering interoperability points for live and low-latency live DASH services. Authored in the IOPv5 workspace; not a published DASH-IF document.
+Repository: Dash-Industry-Forum/IOPv5
+!Disclaimer: This is a working draft of DASH-IF IOP v5 Part 4, authored in the IOPv5 workspace. It is not a published DASH-IF document. Please use the GitHub bug tracker for feedback: https://github.com/Dash-Industry-Forum/IOPv5/issues.
+!Contributors: DASH-IF Live Task Force
+!Key Words: Live, Low-Latency, ARR, Segment Sequence, Resync
+!Related Features: Live, Low-Latency
+</pre>
+
+<pre class=biblio>
+{
+  "MPEGDASH": {
+    "href": "https://www.iso.org/standard/83314.html",
+    "title": "Information technology - Dynamic adaptive streaming over HTTP (DASH) - Part 1: Media presentation description and segment formats",
+    "publisher": "ISO/IEC",
+    "date": "2022"
+  },
+  "MPEGCMAF": {
+    "href": "https://www.iso.org/standard/85623.html",
+    "title": "Information technology - Multimedia application format (MPEG-A) - Part 19: Common media application format (CMAF) for segmented media",
+    "publisher": "ISO/IEC",
+    "date": "2024"
+  }
+}
+</pre>
+
+<pre class=include>
+path: 01-part04.inc.md
+</pre>
+
+<pre class=include>
+path: 00-live-services.inc.md
+</pre>
+
+<pre class=include>
+path: 02-low-latency.inc.md
+</pre>

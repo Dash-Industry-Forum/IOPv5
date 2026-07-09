@@ -1,0 +1,40 @@
+<pre class=metadata>
+Revision: 0.1
+Title: DASH-IF IOP v5 Part 1: Overview, Architecture and Interfaces
+Status: LD
+Shortname: iop-v5-part1
+URL: https://dashif.org/Guidelines/iop-v5/part01-overview.html
+Group: dashif
+Editor: DASH-IF Technical Working Group
+Abstract: Overview of DASH-IF Interoperability Guidelines (IOP) v5: scope, the multi-part document structure, references, terms, symbols, abbreviations, and conformance/style conventions. Working draft authored in the IOPv5 workspace.
+Repository: Dash-Industry-Forum/IOPv5
+!Contributors: DASH-IF Technical Working Group
+!Key Words: Overview, Architecture, Interfaces
+</pre>
+
+<pre class=biblio>
+{
+  "MPEGDASH": {
+    "href": "https://www.iso.org/standard/83314.html",
+    "title": "Information technology - Dynamic adaptive streaming over HTTP (DASH) - Part 1: Media presentation description and segment formats",
+    "publisher": "ISO/IEC",
+    "date": "2022"
+  },
+  "ISOBMFF": {
+    "href": "https://www.iso.org/standard/83102.html",
+    "title": "Information technology - Coding of audio-visual objects - Part 12: ISO base media file format",
+    "publisher": "ISO/IEC",
+    "date": "2024"
+  },
+  "MPEGCMAF": {
+    "href": "https://www.iso.org/standard/85623.html",
+    "title": "Information technology - Multimedia application format (MPEG-A) - Part 19: Common media application format (CMAF) for segmented media",
+    "publisher": "ISO/IEC",
+    "date": "2024"
+  }
+}
+</pre>
+
+<pre class=include>
+path: 01-overview.inc.md
+</pre>
