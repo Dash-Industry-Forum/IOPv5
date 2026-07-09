@@ -5,10 +5,11 @@ Status: LD
 Shortname: iop-v5-part1
 URL: https://dashif.org/Guidelines/iop-v5/part01-overview.html
 Group: dashif
-Editor: DASH-IF Technical Working Group
+Editor: Thomas Stockhammer, Qualcomm, https://www.linkedin.com/in/stockhammer/
+Editor: Mike Dolan, Pearl TV, https://www.linkedin.com/in/michael-dolan-50872355/
 Abstract: Overview of DASH-IF Interoperability Guidelines (IOP) v5: scope, the multi-part document structure, references, terms, symbols, abbreviations, and conformance/style conventions. Working draft authored in the IOPv5 workspace.
 Repository: Dash-Industry-Forum/IOPv5
-!Contributors: DASH-IF Technical Working Group
+!Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: Overview, Architecture, Interfaces
 </pre>
 
@@ -36,5 +37,17 @@ Repository: Dash-Industry-Forum/IOPv5
 </pre>
 
 <pre class=include>
+path: _shared-ipr.inc.md
+</pre>
+
+<pre class=include>
+path: _shared-diagram-style.inc.md
+</pre>
+
+<pre class=include>
 path: 01-overview.inc.md
+</pre>
+
+<pre class=include>
+path: 02-architecture.inc.md
 </pre>

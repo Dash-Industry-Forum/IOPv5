@@ -37,13 +37,33 @@ function Build-One([string]$dir) {
     $bs = Get-ChildItem -Path $dir -Filter *.bs -File | Select-Object -First 1
     if (-not $bs) { Write-Host "[skip] no .bs in $dir"; return }
     $out = [System.IO.Path]::ChangeExtension($bs.FullName, ".html")
-    if ($Watch) {
-        Write-Host "[watch] $($bs.Name) (Ctrl-C to stop)"
-        python -m bikeshed watch $bs.FullName $out
-    } else {
-        Write-Host "[build] $($bs.Name)"
-        python -m bikeshed spec $bs.FullName $out
-        if (Test-Path $out) { Write-Host "   -> $out ($((Get-Item $out).Length) bytes)" }
+
+    # Stage shared boilerplate into the spec dir (Bikeshed chroots includes to
+    # the .bs directory, so parent-dir includes are not allowed). The DASH-IF-IOP
+    # container does the equivalent via its Makefile. Staged copies are prefixed
+    # with '_shared-' and removed after the build.
+    $sharedDir = Join-Path $specsRoot "_boilerplate"
+    $staged = @()
+    if (Test-Path $sharedDir) {
+        Get-ChildItem -Path $sharedDir -Filter *.inc.md -File | ForEach-Object {
+            $dest = Join-Path $dir "_shared-$($_.Name)"
+            Copy-Item $_.FullName $dest -Force
+            $staged += $dest
+        }
+    }
+
+    try {
+        if ($Watch) {
+            Write-Host "[watch] $($bs.Name) (Ctrl-C to stop)"
+            python -m bikeshed watch $bs.FullName $out
+        } else {
+            Write-Host "[build] $($bs.Name)"
+            python -m bikeshed spec $bs.FullName $out
+            if (Test-Path $out) { Write-Host "   -> $out ($((Get-Item $out).Length) bytes)" }
+        }
+    } finally {
+        # Clean up staged boilerplate (skip in watch mode, which stays running).
+        if (-not $Watch) { $staged | ForEach-Object { Remove-Item $_ -ErrorAction SilentlyContinue } }
     }
 }
 
@@ -51,7 +71,7 @@ $specsRoot = Join-Path $Root "specs"
 if ($Part) {
     Build-One (Join-Path $specsRoot $Part)
 } else {
-    Get-ChildItem -Path $specsRoot -Directory | ForEach-Object {
+    Get-ChildItem -Path $specsRoot -Directory | Where-Object { $_.Name -ne "_boilerplate" } | ForEach-Object {
         if (Get-ChildItem -Path $_.FullName -Filter *.bs -File -ErrorAction SilentlyContinue) {
             Build-One $_.FullName
         }

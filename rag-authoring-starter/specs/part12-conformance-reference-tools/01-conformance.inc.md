@@ -88,21 +88,23 @@ the [=dash.js=] reference player. An implementor of a DASH client is encouraged
 to use the relevant test assets for testing. As a necessary condition, test
 assets must pass DASH-IF conformance validation.
 
-Issue: Redraw the source "Figure 1 — DASH-IF conformance and reference tools" as
-a Mermaid diagram; see below.
+Note: The relationships between the tools are shown in Figure 1.
 
-<figure>
+<figure class="diagram">
 <pre class=mermaid>
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'16px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':55,'rankSpacing':70,'padding':12,'htmlLabels':true,'useMaxWidth':false}}}%%
 flowchart LR
-    CA[Content author / service provider] --> V[DASH-IF Conformance Validator]
+    CA["Content author /<br/>service provider"] --> V[DASH-IF Conformance Validator]
     V -->|errors / warnings| CA
     TA[Test assets] --> V
     TA --> P[dash.js reference player]
     LS[livesim2 live source simulator] --> P
     LS --> V
-    P -->|playback verification| DEV[Client / player developer]
+    P -->|playback verification| DEV["Client /<br/>player developer"]
+    classDef box fill:#eef3f8,stroke:#33475b,stroke-width:1.4px,color:#1a2733;
+    class CA,V,TA,P,LS,DEV box;
 </pre>
-<figcaption>DASH-IF conformance and reference tools and their relationships.</figcaption>
+<figcaption>Figure 1: DASH-IF conformance and reference tools and their relationships.</figcaption>
 </figure>
 
 ## Conformance Validator ## {#tools-validator}

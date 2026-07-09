@@ -5,11 +5,11 @@ Status: LD
 Shortname: iop-v5-part4
 URL: https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html
 Group: dashif
-Editor: DASH-IF Live Task Force
+Editor: Thomas Stockhammer, Qualcomm, https://www.linkedin.com/in/stockhammer/
 Abstract: Working draft of DASH-IF IOP v5 Part 4, covering interoperability points for live and low-latency live DASH services. Authored in the IOPv5 workspace; not a published DASH-IF document.
 Repository: Dash-Industry-Forum/IOPv5
 !Disclaimer: This is a working draft of DASH-IF IOP v5 Part 4, authored in the IOPv5 workspace. It is not a published DASH-IF document. Please use the GitHub bug tracker for feedback: https://github.com/Dash-Industry-Forum/IOPv5/issues.
-!Contributors: DASH-IF Live Task Force
+!Contributors: DASH-IF Live Task Force. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: Live, Low-Latency, ARR, Segment Sequence, Resync
 !Related Features: Live, Low-Latency
 </pre>
@@ -29,6 +29,14 @@ Repository: Dash-Industry-Forum/IOPv5
     "date": "2024"
   }
 }
+</pre>
+
+<pre class=include>
+path: _shared-ipr.inc.md
+</pre>
+
+<pre class=include>
+path: _shared-diagram-style.inc.md
 </pre>
 
 <pre class=include>

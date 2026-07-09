@@ -88,6 +88,50 @@ Note: The derivation of SAST, SAET, and Segment URLs follows the addressing and
 timing rules of ISO/IEC 23009-1 (`SegmentTemplate`, `SegmentTimeline`,
 `@availabilityStartTime`, `@availabilityTimeOffset`, `@presentationTimeOffset`).
 
+### Segment Information Derivation ### {#live-segment-derivation}
+
+Based on an MPD available at time `NOW` on the server, a synchronized DASH client
+derives the list of Segments for each Representation in each Period. The following
+definitions, aligned with ISO/IEC 23009-1, apply:
+
+:: A Segment that is accessible at its assigned HTTP-URL: an HTTP GET to the URL
+    returns the Segment with a 2xx status code.
+: <dfn>valid Segment URL</dfn>
+    availability period.
+: <dfn>NOW</dfn>
+:: The wall-clock time on the content server. All wall-clock-related information
+
+**MPD information.** For a dynamic service without MPD updates: `MPD@type` shall
+be `dynamic`; `MPD@mediaPresentationDuration` shall be present, or the
+`Period@duration` of the last Period shall be present; `MPD@minimumUpdatePeriod`
+shall not be present. It is recommended to provide `MPD@timeShiftBufferDepth` and
+`MPD@suggestedPresentationDelay`.
+
+**Period information.** Each Period *i* is assigned a Period start time in
+wall-clock time (PSwc[i]) and a Period end time in wall-clock time (PEwc[i]),
+determined per ISO/IEC 23009-1:
+
+- If `Period@start` is present, PSwc[i] is the sum of `MPD@availabilityStartTime`
+    (AST) and `@start`.
+- Otherwise, if the previous Period has `@duration`, PSwc[i] is the previous
+    Period start plus that duration (`@start`, if also present, takes precedence).
+- The Period end time PEwc[i] is the start of the next Period (PSwc[i+1]); for the
+    last Period it derives from `MPD@mediaPresentationDuration` or the last
+    `Period@duration`, and an MPD update may extend it.
+
+**Representation information.** For a Period *i*, when `SegmentTemplate.SegmentTimeline`
+is present (and `SegmentTemplate@duration` is not), the `SegmentTimeline` contains
+`S` elements with `@t` (start time), `@d` (duration), and `@r` (repeat count),
+from which the number and timing of Segments — and hence SAST/SAET and URLs — are
+derived using `@timescale` and any applicable `@availabilityTimeOffset`. A
+negative `@r` repeats until the next `@t` or the Period end. Gaps are possible and
+indicate that no media is present for the gap.
+
+**Media time information.** Each Media Segment *k* has an earliest presentation
+time (EPT[k,r,i]) and an accurate duration, measured in media presentation time.
+EPT may be estimated from the MPD (SAST minus announced segment duration) or
+determined accurately from the Segment itself.
+
 ### Service Offering Requirements and Guidelines ### {#live-so-requirements}
 
 For dynamic service offerings, the MPD shall conform to DASH-IF IOP and shall at
@@ -206,6 +250,35 @@ present, the client should do the following:
     least one of the announced timing methods to synchronize its clock. The client
     must not request Segments prior to their Segment Availability Start Time with
     reference to the chosen `UTCTiming` method.
+
+## Client Operation, Requirements and Guidelines ## {#live-client}
+
+### General ### {#live-client-general}
+
+A DASH client offering a live service consumes the MPD and, using a clock
+synchronized per [[#live-time-sync]], derives the available Segments per
+[[#live-segment-derivation]]. The client schedules requests so that a Segment is
+requested no earlier than its Segment Availability Start Time and no later than
+its Segment Availability End Time, and manages a buffer to absorb throughput
+variation while maintaining the presentation schedule.
+
+### Joining, Initial Buffering and Playout ### {#live-client-joining}
+
+When joining a live service, the client should:
+
+- Determine the live edge from the MPD timeline and the synchronized wall-clock
+    time, taking `MPD@suggestedPresentationDelay` into account where present to
+    select the initial presentation time.
+- Begin playout at a presentation time that leaves sufficient buffer within the
+    time-shift buffer (`MPD@timeShiftBufferDepth`) to avoid rebuffering, while
+    honouring any latency target of the service.
+- Prefer to start at a random access point rather than presenting stale media,
+    to keep the join latency consistent.
+- Not request Segments prior to their Segment Availability Start Time with
+    reference to the chosen `UTCTiming` method (see [[#live-sync-client]]).
+
+Note: Detailed low-latency joining, buffer management, and resynchronisation are
+specified in [[#low-latency]].
 
 ## Provisioning of Live Content in On-Demand Mode ## {#live-to-vod}
 

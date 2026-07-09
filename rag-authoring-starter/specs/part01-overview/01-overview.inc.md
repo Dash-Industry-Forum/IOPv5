@@ -20,32 +20,8 @@ Any identified bugs or missing features may be submitted through the DASH-IF
 issue tracker at
 [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).
 
-## Document Structure ## {#document-structure}
-
-DASH-IF IOP v5 is published as a multi-part document set. The parts are:
-
-<figure>
-  <table class="data">
-    <thead>
-      <tr>
-        <th>Part
-        <th>Title
-    <tbody>
-      <tr><td>1<td>Overview, architecture and interfaces (this document)
-      <tr><td>2<td>Core principles and CMAF mapping
-      <tr><td>3<td>On-demand services
-      <tr><td>4<td>Live and low-latency live services
-      <tr><td>5<td>Ad insertion
-      <tr><td>6<td>Content protection
-      <tr><td>7<td>Video
-      <tr><td>8<td>Audio
-      <tr><td>9<td>Text
-      <tr><td>10<td>Events
-      <tr><td>11<td>Additional functionalities
-      <tr><td>12<td>Conformance and reference tools
-  </table>
-  <figcaption>The parts of DASH-IF IOP v5.</figcaption>
-</figure>
+Note: DASH-IF IOP v5 is published as a multi-part document set. The parts and
+their summaries are described in [[#part-descriptions]].
 
 # References # {#doc-references}
 
@@ -156,18 +132,3 @@ The following naming conventions apply in this document set:
     specific element, the notation `Element@attribute` is used.
 - **List** values, XML data types, and conditions follow the conventions of
     ISO/IEC 23009-1 [[!MPEGDASH]].
-
-# Change History # {#change-history}
-
-<figure>
-  <table class="data">
-    <thead>
-      <tr><th>Version<th>Date<th>Change
-    <tbody>
-      <tr>
-        <td>0.1
-        <td>Initial
-        <td>Migrated from DASH-IF IOP-1 v5.0.0 (2022-06); references modernised (HTTP RFC 9110/9111/9112, TLS 1.3 RFC 8446); issue-tracker URL updated to the IOPv5 repository.
-  </table>
-  <figcaption>Part 1 change history.</figcaption>
-</figure>

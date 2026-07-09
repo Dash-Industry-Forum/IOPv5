@@ -35,6 +35,7 @@ build-tools/corp-ca-bundle.pem
 # --- Bikeshed / Metanorma build output ---
 dist/
 specs/**/*.html
+specs/**/_shared-*.inc.md
 
 # --- Extracted images from source DOCX (triage before committing) ---
 # Auto-extracted originals are kept local until an editor decides keep vs redraw.

@@ -338,8 +338,9 @@ The following sequence illustrates fast tune-in (redrawn as Mermaid from the
 source Word figure; see `Images/dashif-iop-v5-part4-draft-r1-images.md` for the
 original figures pending triage).
 
-<figure>
+<figure class="diagram">
 <pre class=mermaid>
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'16px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','actorBkg':'#eef3f8','actorBorder':'#33475b','signalColor':'#333','noteBkgColor':'#fff7e6','noteBorderColor':'#c9a227'},'sequence':{'useMaxWidth':false,'mirrorActors':false,'messageFontSize':15,'actorFontSize':16}}}%%
 sequenceDiagram
     participant C as Client
     participant O as Origin

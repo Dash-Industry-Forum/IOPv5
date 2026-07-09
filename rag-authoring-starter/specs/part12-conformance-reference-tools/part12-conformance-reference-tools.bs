@@ -1,14 +1,16 @@
 <pre class=metadata>
+
 Revision: 0.1
 Title: DASH-IF IOP v5 Part 12: Conformance and Reference Tools
 Status: LD
 Shortname: iop-v5-part12
 URL: https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html
 Group: dashif
-Editor: DASH-IF Technical Working Group
+Editor: Daniel Silhavy, Fraunhofer FOKUS, https://www.linkedin.com/in/daniel-silhavy-21650a129/
+Editor: Thomas Stockhammer, Qualcomm, https://www.linkedin.com/in/stockhammer/
 Abstract: Overview of the DASH-IF conformance and reference tools: the DASH-IF Conformance Validator, the dash.js reference player, the livesim2 live source simulator, and the DASH-IF test assets, together with the contextual interpretation of conformance keywords. Working draft authored in the IOPv5 workspace.
 Repository: Dash-Industry-Forum/IOPv5
-!Contributors: DASH-IF Technical Working Group
+!Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: Conformance, Reference Tools, Validator, dash.js, livesim2, Test Assets
 </pre>
 
@@ -21,6 +23,14 @@ Repository: Dash-Industry-Forum/IOPv5
     "date": "2022"
   }
 }
+</pre>
+
+<pre class=include>
+path: _shared-ipr.inc.md
+</pre>
+
+<pre class=include>
+path: _shared-diagram-style.inc.md
 </pre>
 
 <pre class=include>
