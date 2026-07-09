@@ -88,27 +88,25 @@ parts apply where used.
 
 For the purposes of the present document, the following abbreviations apply:
 
-<figure>
-  <table class="data">
-    <thead>
-      <tr><th>Abbreviation<th>Meaning
-    <tbody>
-      <tr><td>BMFF<td>Base Media File Format
-      <tr><td>CMAF<td>Common Media Application Format
-      <tr><td>DASH<td>Dynamic Adaptive Streaming over HTTP
-      <tr><td>DRM<td>Digital Rights Management
-      <tr><td>HTTP<td>HyperText Transfer Protocol
-      <tr><td>IOP<td>InterOperability Point
-      <tr><td>ISO<td>International Organization for Standardization
-      <tr><td>MPD<td>Media Presentation Description
-      <tr><td>MPEG<td>Moving Picture Experts Group
-      <tr><td>RFC<td>Request for Comments
-      <tr><td>TLS<td>Transport Layer Security
-      <tr><td>URL<td>Uniform Resource Locator
-      <tr><td>XML<td>Extensible Markup Language
-  </table>
-  <figcaption>Abbreviations used in DASH-IF IOP v5.</figcaption>
-</figure>
+<table class="data">
+  <caption>Abbreviations used in DASH-IF IOP v5.</caption>
+  <thead>
+    <tr><th>Abbreviation<th>Meaning
+  <tbody>
+    <tr><td>BMFF<td>Base Media File Format
+    <tr><td>CMAF<td>Common Media Application Format
+    <tr><td>DASH<td>Dynamic Adaptive Streaming over HTTP
+    <tr><td>DRM<td>Digital Rights Management
+    <tr><td>HTTP<td>HyperText Transfer Protocol
+    <tr><td>IOP<td>InterOperability Point
+    <tr><td>ISO<td>International Organization for Standardization
+    <tr><td>MPD<td>Media Presentation Description
+    <tr><td>MPEG<td>Moving Picture Experts Group
+    <tr><td>RFC<td>Request for Comments
+    <tr><td>TLS<td>Transport Layer Security
+    <tr><td>URL<td>Uniform Resource Locator
+    <tr><td>XML<td>Extensible Markup Language
+</table>
 
 # Conformance and Style # {#conformance-style}
 

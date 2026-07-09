@@ -340,7 +340,7 @@ original figures pending triage).
 
 <figure class="diagram">
 <pre class=mermaid>
-%%{init: {'theme':'neutral','themeVariables':{'fontSize':'16px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','actorBkg':'#eef3f8','actorBorder':'#33475b','signalColor':'#333','noteBkgColor':'#fff7e6','noteBorderColor':'#c9a227'},'sequence':{'useMaxWidth':false,'mirrorActors':false,'messageFontSize':15,'actorFontSize':16}}}%%
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','actorBkg':'#eef3f8','actorBorder':'#33475b','signalColor':'#333','noteBkgColor':'#fff7e6','noteBorderColor':'#c9a227'},'sequence':{'useMaxWidth':false,'mirrorActors':false,'messageFontSize':16,'actorFontSize':18}}}%%
 sequenceDiagram
     participant C as Client
     participant O as Origin

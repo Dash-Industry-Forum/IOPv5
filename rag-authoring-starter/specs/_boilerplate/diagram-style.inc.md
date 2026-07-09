@@ -21,11 +21,20 @@ figure.diagram .mermaid {
 figure.diagram svg {
   width: 100% !important;
   height: auto !important;
-  max-width: 900px;
+  max-width: 1100px;
 }
 figure.diagram figcaption {
   margin-top: .6em;
   font-style: italic;
   color: #444;
+}
+
+/* Data-table captions: styled like a table title, NOT a figure. */
+table.data > caption {
+  caption-side: top;
+  text-align: left;
+  font-weight: 600;
+  margin-bottom: .35em;
+  color: #222;
 }
 </style>

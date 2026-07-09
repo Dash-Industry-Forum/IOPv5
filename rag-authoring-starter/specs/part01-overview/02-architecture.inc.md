@@ -21,23 +21,23 @@ based on ISO BMFF (ISO/IEC 14496-12 [[!ISOBMFF]]) and CMAF (ISO/IEC 23000-19
 
 <figure class="diagram">
 <pre class=mermaid>
-%%{init: {'theme':'neutral','themeVariables':{'fontSize':'16px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':55,'rankSpacing':70,'padding':12,'htmlLabels':true,'useMaxWidth':false}}}%%
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':60,'rankSpacing':80,'padding':16,'htmlLabels':true,'useMaxWidth':false,'wrappingWidth':180}}}%%
 flowchart LR
-    CP[Contribution Link] -->|Contribution| ENC[ABR Encoder]
-    ENC -->|ISO BMFF / CMAF| PKG["ISO BMFF/CMAF Packager (Encryption)"]
-    PKG -->|Ingest 1-IF| MPG["MPD Generator and DASH Packager (Encryption)"]
-    MPG -->|Ingest 2-IF| CDN[("CDN — Segment + MPD Server")]
-    CDN -->|"DASH-IOP-IF (MPD + Segments)"| AC[DASH Access Client]
-    AC -->|Playback-API| RPP["Reference Playback Platform — Media Playback + Content Decryption"]
-    APP[Application] -->|Application-IF| AC
+    CP["Contribution<br/>Link"] -->|Contribution| ENC["ABR<br/>Encoder"]
+    ENC -->|"ISO BMFF /<br/>CMAF"| PKG["ISO BMFF / CMAF<br/>Packager<br/>(Encryption)"]
+    PKG -->|Ingest 1-IF| MPG["MPD Generator and<br/>DASH Packager<br/>(Encryption)"]
+    MPG -->|Ingest 2-IF| CDN[("CDN<br/>Segment + MPD<br/>Server")]
+    CDN -->|"DASH-IOP-IF<br/>(MPD + Segments)"| AC["DASH Access<br/>Client"]
+    AC -->|Playback-API| RPP["Reference Playback<br/>Platform<br/>(Media Playback +<br/>Content Decryption)"]
+    APP["Application"] -->|Application-IF| AC
     APP -->|Client-API| AC
-    SC[Service Configuration] -->|Service-Config-API| MPG
-    DRM[DRM System] -->|CPIX-IF| PKG
+    SC["Service<br/>Configuration"] -->|Service-<br/>Config-API| MPG
+    DRM["DRM<br/>System"] -->|CPIX-IF| PKG
     DRM -->|CPIX| MPG
     classDef box fill:#eef3f8,stroke:#33475b,stroke-width:1.4px,color:#1a2733;
     class CP,ENC,PKG,MPG,CDN,AC,RPP,APP,SC,DRM box;
 </pre>
-<figcaption>Figure 1: DASH-based distribution architecture.</figcaption>
+<figcaption>DASH-based distribution architecture.</figcaption>
 </figure>
 
 The following major components are identified:
@@ -66,10 +66,10 @@ The following major components are identified:
 
 The architecture defines a set of reference points (interfaces), explained below.
 
-<figure>
-  <table class="data">
-    <thead>
-      <tr><th>Reference Point<th>Explanation
+<table class="data">
+  <caption>Reference points of the DASH-based distribution architecture.</caption>
+  <thead>
+    <tr><th>Reference Point<th>Explanation
     <tbody>
       <tr>
         <td>Ingest 1-IF
@@ -96,8 +96,6 @@ The architecture defines a set of reference points (interfaces), explained below
         <td>Client-API
         <td>An API between the application and the DASH client (both access client and playback platform) to configure, control, and monitor the service.
   </table>
-  <figcaption>Reference points of the DASH-based distribution architecture.</figcaption>
-</figure>
 
 ## DASH Reference Client ## {#reference-client}
 
@@ -119,28 +117,28 @@ offerings. The following basic workflow is assumed:
 
 <figure class="diagram">
 <pre class=mermaid>
-%%{init: {'theme':'neutral','themeVariables':{'fontSize':'16px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':50,'rankSpacing':65,'padding':12,'htmlLabels':true,'useMaxWidth':false}}}%%
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':55,'rankSpacing':70,'padding':16,'htmlLabels':true,'useMaxWidth':false,'wrappingWidth':180}}}%%
 flowchart TB
-    APP[Application] -->|"Client-API — config / notifications / status"| MGMT
+    APP["Application"] -->|"Client-API<br/>(config / notifications /<br/>status)"| MGMT
     subgraph Player [DASH Player]
       direction TB
       subgraph AC [DASH Access Client]
         direction TB
-        MGMT[Management] --- MPD[MPD Processing]
-        MPD --- ASS[Adaptation Set Selection]
-        ASS --- ABR[ABR Controller and Dynamic Switching]
-        ABR --- TP[Download / Throughput Estimation]
-        MGMT --- EV[Event Processing]
-        MGMT --- MET[Metrics]
-        MGMT --- MPM[Media Playback Management and Protection Controller]
+        MGMT["Management"] --- MPD["MPD<br/>Processing"]
+        MPD --- ASS["Adaptation Set<br/>Selection"]
+        ASS --- ABR["ABR Controller and<br/>Dynamic Switching"]
+        ABR --- TP["Download /<br/>Throughput<br/>Estimation"]
+        MGMT --- EV["Event<br/>Processing"]
+        MGMT --- MET["Metrics"]
+        MGMT --- MPM["Media Playback<br/>Management and<br/>Protection Controller"]
       end
-      MPM -->|Playback-API| MPP["Media Playback Platform and Content Decryption Module"]
+      MPM -->|Playback-API| MPP["Media Playback<br/>Platform and Content<br/>Decryption Module"]
     end
-    SRV[("Segment Server / MPD Server")] -->|"DASH-Interface — request scheduling"| TP
+    SRV[("Segment Server /<br/>MPD Server")] -->|"DASH-Interface<br/>(request scheduling)"| TP
     classDef box fill:#eef3f8,stroke:#33475b,stroke-width:1.4px,color:#1a2733;
     class APP,MGMT,MPD,ASS,ABR,TP,EV,MET,MPM,MPP,SRV box;
 </pre>
-<figcaption>Figure 2: DASH reference client.</figcaption>
+<figcaption>DASH reference client.</figcaption>
 </figure>
 
 The following functions are part of the reference client:
@@ -221,19 +219,17 @@ The following summarises each part of DASH-IF IOP v5:
 
 # Change History # {#change-history}
 
-<figure>
-  <table class="data">
-    <thead>
-      <tr><th>Version<th>Date<th>Change
-    <tbody>
-      <tr>
-        <td>0.1
-        <td>Initial
-        <td>Migrated from DASH-IF IOP-1 v5.0.0 (2022-06); references modernised (HTTP RFC 9110/9111/9112, TLS 1.3 RFC 8446); issue-tracker URL updated to the IOPv5 repository.
-      <tr>
-        <td>0.2
-        <td>Initial
-        <td>Ported clause 5 (Architecture and Interfaces: baseline architecture, interfaces, reference client, part descriptions); added editors, contributors, and shared IPR boilerplate.
-  </table>
-  <figcaption>Part 1 change history.</figcaption>
-</figure>
+<table class="data">
+  <caption>Part 1 change history.</caption>
+  <thead>
+    <tr><th>Version<th>Date<th>Change
+  <tbody>
+    <tr>
+      <td>0.1
+      <td>Initial
+      <td>Migrated from DASH-IF IOP-1 v5.0.0 (2022-06); references modernised (HTTP RFC 9110/9111/9112, TLS 1.3 RFC 8446); issue-tracker URL updated to the IOPv5 repository.
+    <tr>
+      <td>0.2
+      <td>Initial
+      <td>Ported clause 5 (Architecture and Interfaces: baseline architecture, interfaces, reference client, part descriptions); added editors, contributors, and shared IPR boilerplate.
+</table>

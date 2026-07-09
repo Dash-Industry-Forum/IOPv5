@@ -92,19 +92,19 @@ Note: The relationships between the tools are shown in Figure 1.
 
 <figure class="diagram">
 <pre class=mermaid>
-%%{init: {'theme':'neutral','themeVariables':{'fontSize':'16px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':55,'rankSpacing':70,'padding':12,'htmlLabels':true,'useMaxWidth':false}}}%%
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':60,'rankSpacing':80,'padding':16,'htmlLabels':true,'useMaxWidth':false,'wrappingWidth':170}}}%%
 flowchart LR
-    CA["Content author /<br/>service provider"] --> V[DASH-IF Conformance Validator]
-    V -->|errors / warnings| CA
-    TA[Test assets] --> V
-    TA --> P[dash.js reference player]
-    LS[livesim2 live source simulator] --> P
+    CA["Content author /<br/>service provider"] --> V["DASH-IF<br/>Conformance<br/>Validator"]
+    V -->|"errors /<br/>warnings"| CA
+    TA["Test<br/>assets"] --> V
+    TA --> P["dash.js<br/>reference player"]
+    LS["livesim2<br/>live source<br/>simulator"] --> P
     LS --> V
-    P -->|playback verification| DEV["Client /<br/>player developer"]
+    P -->|"playback<br/>verification"| DEV["Client /<br/>player developer"]
     classDef box fill:#eef3f8,stroke:#33475b,stroke-width:1.4px,color:#1a2733;
     class CA,V,TA,P,LS,DEV box;
 </pre>
-<figcaption>Figure 1: DASH-IF conformance and reference tools and their relationships.</figcaption>
+<figcaption>DASH-IF conformance and reference tools and their relationships.</figcaption>
 </figure>
 
 ## Conformance Validator ## {#tools-validator}
@@ -231,15 +231,13 @@ involve one or more community-review rounds.
 
 # Change History # {#change-history}
 
-<figure>
-  <table class="data">
-    <thead>
-      <tr><th>Version<th>Date<th>Change
-    <tbody>
-      <tr>
-        <td>0.1
-        <td>Initial
-        <td>Migrated from the Part 12 draft; reference-tool sections updated to current dash.js and the second-generation livesim2 (CMAF Ingest, SGAI, stateless URL parameters).
-  </table>
-  <figcaption>Part 12 change history.</figcaption>
-</figure>
+<table class="data">
+  <caption>Part 12 change history.</caption>
+  <thead>
+    <tr><th>Version<th>Date<th>Change
+  <tbody>
+    <tr>
+      <td>0.1
+      <td>Initial
+      <td>Migrated from the Part 12 draft; reference-tool sections updated to current dash.js and the second-generation livesim2 (CMAF Ingest, SGAI, stateless URL parameters).
+</table>
