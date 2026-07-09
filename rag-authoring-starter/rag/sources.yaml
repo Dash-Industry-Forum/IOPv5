@@ -1,0 +1,105 @@
+# DASH-IF IOP v5 RAG source manifest
+#
+# This manifest separates published, draft, legacy, change-request, MPEG, website,
+# and example sources. Keep private or access-controlled documents out of public Git
+# unless publication rights are confirmed.
+
+sources:
+  - id: dashif-iop-v4-3
+    title: "DASH-IF Interoperability Points v4.3"
+    type: legacy
+    status: published
+    target_part: multiple
+    corpus_path: rag/corpus/legacy-v4/DASH-IF-IOP-v4.3.docx
+    canonical_url: "https://dashif.org/guidelines/earlier-versions/"
+    tags: [dash-if, iop, v4, legacy, migration]
+
+  - id: dashif-iop-v5-part1
+    title: "DASH-IF IOP v5 Part 1: Overview, Architecture and Interfaces"
+    type: specification
+    status: published
+    target_part: part01-overview
+    corpus_path: rag/corpus/published/DASH-IF-IOP-Part1-v5.0.0.pdf
+    canonical_url: "https://dashif.org/guidelines/iop-v5/#part-1-overview-architecture-and-interfaces"
+    tags: [dash-if, iop, v5, part1, architecture]
+
+  - id: dashif-iop-v5-part2-draft
+    title: "DASH-IF IOP v5 Part 2: Core Principles and CMAF Mapping"
+    type: specification
+    status: draft
+    target_part: part02-core-cmaf
+    corpus_path: rag/corpus/drafts/DASH-IF-IOPv5.0-Part2-DRAFT.docx
+    canonical_url: ""
+    tags: [dash-if, iop, v5, part2, cmaf, draft]
+
+  - id: dashif-iop-v5-part4-draft-r1
+    title: "DASH-IF IOP v5 Part 4: Live and Low-Latency Live Services"
+    type: specification
+    status: draft
+    target_part: part04-live-low-latency
+    corpus_path: rag/corpus/drafts/DASH-IF-IOPv5.0-Part4-DRAFT-r1.docx
+    canonical_url: ""
+    tags: [dash-if, iop, v5, part4, live, low-latency, draft]
+
+  - id: cr-low-latency-live-r8
+    title: "CR Low-Latency Live r8"
+    type: change-request
+    status: draft
+    target_part: part04-live-low-latency
+    corpus_path: rag/corpus/change-requests/CR-Low-Latency-Live-r8.pdf
+    canonical_url: ""
+    tags: [dash-if, change-request, low-latency, live, r8]
+
+  - id: cr-low-latency-live-r9
+    title: "CR Low-Latency Live r9: Fast Tune-in and Switching"
+    type: change-request
+    status: draft
+    target_part: part04-live-low-latency
+    corpus_path: rag/corpus/change-requests/CR-Low-Latency-Live-r9.docx
+    canonical_url: ""
+    tags: [dash-if, change-request, low-latency, live, arr, broadcast-profile, r9]
+
+  - id: dashif-iop-v5-part5
+    title: "DASH-IF IOP v5 Part 5: Ad Insertion in DASH"
+    type: specification
+    status: published
+    target_part: part05-ad-insertion
+    corpus_path: rag/corpus/published/DASH-IF-IOP-Part5-v5.0.0.docx
+    canonical_url: "https://dashif.org/guidelines/iop-v5#part-5-ad-insertion"
+    tags: [dash-if, iop, v5, part5, ad-insertion, sgai, ssai]
+
+  - id: dashif-iop-v5-part6-v5-1
+    title: "DASH-IF IOP v5.1 Part 6: Content Protection"
+    type: specification
+    status: published
+    target_part: part06-content-protection
+    corpus_path: rag/corpus/published/DASH-IF-IOPv5.1.0-Part6.pdf
+    canonical_url: "https://dashif.org/guidelines/iop-v5#part-6-content-protection-and-security"
+    tags: [dash-if, iop, v5, part6, content-protection, drm, cenc, cbcs]
+
+  - id: iso-iec-23000-19-2024
+    title: "ISO/IEC 23000-19:2024 CMAF"
+    type: external-standard
+    status: published
+    target_part: multiple
+    corpus_path: rag/corpus/mpeg/ISO_IEC_23000-19_2024.docx
+    canonical_url: ""
+    tags: [mpeg, cmaf, iso, external, 2024]
+
+  - id: iso-iec-23009-1-2026-merged-r5
+    title: "ISO/IEC 23009-1:2026 DASH merged r5"
+    type: external-standard
+    status: draft
+    target_part: multiple
+    corpus_path: rag/corpus/mpeg/ISO_IEC_23009-1_2026_merged_r5.docx
+    canonical_url: ""
+    tags: [mpeg, dash, iso, external, 2026, segment-sequence, ari, events]
+
+  - id: iop-docs-overview
+    title: "IOP Documents Overview"
+    type: planning
+    status: working-note
+    target_part: multiple
+    corpus_path: rag/corpus/drafts/IOP-docs.docx
+    canonical_url: ""
+    tags: [dash-if, planning, roadmap, maintainers, parts]
