@@ -1,0 +1,28 @@
+<pre class=metadata>
+Revision: 0.1
+Title: DASH-IF IOP v5 Part 12: Conformance and Reference Tools
+Status: LD
+Shortname: iop-v5-part12
+URL: https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html
+Group: dashif
+Editor: DASH-IF Technical Working Group
+Abstract: Overview of the DASH-IF conformance and reference tools: the DASH-IF Conformance Validator, the dash.js reference player, the livesim2 live source simulator, and the DASH-IF test assets, together with the contextual interpretation of conformance keywords. Working draft authored in the IOPv5 workspace.
+Repository: Dash-Industry-Forum/IOPv5
+!Contributors: DASH-IF Technical Working Group
+!Key Words: Conformance, Reference Tools, Validator, dash.js, livesim2, Test Assets
+</pre>
+
+<pre class=biblio>
+{
+  "MPEGDASH": {
+    "href": "https://www.iso.org/standard/83314.html",
+    "title": "Information technology - Dynamic adaptive streaming over HTTP (DASH) - Part 1: Media presentation description and segment formats",
+    "publisher": "ISO/IEC",
+    "date": "2022"
+  }
+}
+</pre>
+
+<pre class=include>
+path: 01-conformance.inc.md
+</pre>

@@ -18,6 +18,7 @@ Generated from `rag/sources.yaml`.
 | cta-5003-c | CTA-5003-C: Web Application Video Ecosystem (WAVE) Device Playback Capabilities | external-standard | published | multiple | present | rag/corpus/external/cta-5003-c-024-cl.docx | cta, wave, external, device-playback, 5003, revision-c |
 | dashif-iop-v5-part8-draft | DASH-IF IOP v5 Part 8: Audio (DRAFT 2021-07-01) | specification | draft | part08-audio | present | rag/corpus/drafts/DASH-IF-IOPv5.0-Part8-DRAFT-20210701.docx | dash-if, iop, v5, part8, audio, draft |
 | iop-docs-overview | IOP Documents Overview | planning | working-note | multiple | present | rag/corpus/drafts/IOP-docs.docx | dash-if, planning, roadmap, maintainers, parts |
+| dashif-iop-v5-part12-draft | DASH-IF IOP v5 Part 12: Conformance and Reference Tools (DRAFT) | specification | draft | part12-conformance-reference-tools | present | rag/corpus/drafts/DASH-IF-IOPv5.0-Part12-DRAFT.docx | dash-if, iop, v5, part12, conformance, reference-tools, dashjs, livesim2, draft |
 
 ## Notes
 

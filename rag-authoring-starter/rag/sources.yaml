@@ -1,4 +1,5 @@
 # DASH-IF IOP v5 RAG source manifest
+
 #
 # This manifest separates published, draft, legacy, change-request, MPEG, website,
 # and example sources. Keep private or access-controlled documents out of public Git
@@ -130,3 +131,12 @@ sources:
     corpus_path: rag/corpus/drafts/IOP-docs.docx
     canonical_url: ""
     tags: [dash-if, planning, roadmap, maintainers, parts]
+
+  - id: dashif-iop-v5-part12-draft
+    title: "DASH-IF IOP v5 Part 12: Conformance and Reference Tools (DRAFT)"
+    type: specification
+    status: draft
+    target_part: part12-conformance-reference-tools
+    corpus_path: rag/corpus/drafts/DASH-IF-IOPv5.0-Part12-DRAFT.docx
+    canonical_url: ""
+    tags: [dash-if, iop, v5, part12, conformance, reference-tools, dashjs, livesim2, draft]
