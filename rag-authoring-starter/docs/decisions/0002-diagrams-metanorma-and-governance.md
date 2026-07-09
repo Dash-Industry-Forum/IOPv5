@@ -31,6 +31,8 @@ Three related questions arose while standing up the authoring workflow:
 
 ### Bikeshed vs Metanorma
 
+> Superseded by ADR 0004 (deeper evaluation). Summary retained for context.
+
 - **Bikeshed remains the canonical path** (Option B: local `bikeshed`, no Docker),
   reusing the DASH-IF-IOP `specs/<part>/<part>.bs` + `.inc.md` convention.
 - **Metanorma is tracked as a complementary evaluation**, not adopted yet. It is

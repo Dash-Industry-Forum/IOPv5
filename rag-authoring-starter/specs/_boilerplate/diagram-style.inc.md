@@ -19,9 +19,8 @@ figure.diagram .mermaid {
   text-align: center;
 }
 figure.diagram svg {
-  width: 100% !important;
   height: auto !important;
-  max-width: 1100px;
+  max-width: 100%;
 }
 figure.diagram figcaption {
   margin-top: .6em;
