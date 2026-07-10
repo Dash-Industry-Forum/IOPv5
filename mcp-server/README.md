@@ -154,6 +154,11 @@ cd mcp-server
 This checks that the repository paths are present and that a representative set
 of MCP tool functions can be invoked locally.
 
+On bootstrap/main-style branches where the full authoring content is not yet
+present, the smoke test may complete with **warnings** rather than treating the
+absence of authored specs/reports as a hard failure.
+
+
 ## How to start and include the server in VS Code
 
 1. Open the `IOPv5` repository in VS Code.
