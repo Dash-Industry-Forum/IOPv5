@@ -83,14 +83,17 @@ from `main` once the Bikeshed authoring content is merged. Until the
 bootstrap placeholder and should not be expected to publish the full site from
 `main`.
 
-For GitHub Pages publication to work, repository administrators need to enable
-GitHub Pages with:
+For preview or publication deployment to work, repository administrators need to
+enable GitHub Pages with:
 
 ```text
-Source: GitHub Actions
+Settings → Pages → Build and deployment → Source: GitHub Actions
 ```
 
-in the repository settings.
+If this is not enabled, the build job may succeed but the deploy job will fail
+with a 404/error similar to "Failed to create deployment" or "Ensure GitHub Pages
+has been enabled".
+
 
 ## Issue tracking
 
