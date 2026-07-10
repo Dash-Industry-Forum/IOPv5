@@ -1,0 +1,45 @@
+name: Build Part 6
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'rag-authoring-starter/specs/part06-content-protection/**'
+      - '.github/workflows/build-part6.yml'
+
+jobs:
+  build-part6:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Bikeshed
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install bikeshed
+          bikeshed update
+
+      - name: Install DASH-IF boilerplate (dashif group)
+        working-directory: rag-authoring-starter
+        run: python tools/env/install_dashif_boilerplate.py
+
+      - name: Build all specs
+        working-directory: rag-authoring-starter
+        run: python tools/publication/build_all.py --out ../dist
+
+      - name: Collect Part 6 output
+        run: |
+          New-Item -ItemType Directory -Force dist-part6 | Out-Null
+          Copy-Item dist/part06-content-protection.html dist-part6/ -Force
+          if (Test-Path dist/part06-content-protection.pdf) { Copy-Item dist/part06-content-protection.pdf dist-part6/ -Force }
+
+      - name: Upload Part 6 artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: part6-dist
+          path: dist-part6

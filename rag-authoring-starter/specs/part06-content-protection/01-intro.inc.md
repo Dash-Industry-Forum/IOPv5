@@ -32,7 +32,8 @@ If a **client implementer** follows the client-oriented requirements described i
 
 This document uses statements of fact when describing normative requirements defined in referenced specifications such as [[!DASH]] and [[!CMAF]]. References are typically provided to indicate where the requirements are defined.
 
-[[!RFC2119]] statements (e.g. "SHALL", "SHOULD" and "MAY") are used when this document defines a new requirement or further constrains a requirement from a referenced document.
+[[!RFC2119]] statements (e.g. **_shall_**, **_should_** and **_may_**) are used when this document defines a new requirement or further constrains a requirement from a referenced document.
+
 
 <div class="example">
 Statement of fact:
@@ -41,7 +42,7 @@ Statement of fact:
 
 New or more constrained requirement:
 
-* Segments **SHALL NOT** use the MPEG-2 TS container format.
+* Segments ****_shall not_**** use the MPEG-2 TS container format.
 
 </div>
 
