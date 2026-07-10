@@ -41,36 +41,42 @@ issue tracker at
 ## Introduction ## {#conformance-intro}
 
 This clause provides guidance on the contextual interpretation of the conformance
-terms *shall*, *shall not*, *should*, *should not*, and *may*, beyond what is
-described in the ETSI Drafting Rules, in terms of how the DASH-IF tools treat
-each keyword.
+terms <span class=modal-keyword>shall</span>, <span class=modal-keyword>shall not</span>,
+<span class=modal-keyword>should</span>, <span class=modal-keyword>should not</span>,
+and <span class=modal-keyword>may</span>, beyond what is described in the ETSI
+Drafting Rules, in terms of how the DASH-IF tools treat each keyword.
 
 ## Content Authoring ## {#conformance-authoring}
 
 Where an IOP document associates a conformance keyword with a content-authoring
 statement, the following applies:
 
-- **shall / shall not**: the [=DASH-IF Conformance Validator=] provides a check
-    and issues an **error** if the requirement is not fulfilled.
-- **should / should not**: the validator provides a check and issues a
-    **warning** if the recommendation is not fulfilled.
-- **should / may**: where present, the validator's feature check **documents**
-    the feature of the content (informational).
+- <span class=modal-keyword>shall</span> / <span class=modal-keyword>shall not</span>:
+    the [=DASH-IF Conformance Validator=] provides a check and issues an **error**
+    if the requirement is not fulfilled.
+- <span class=modal-keyword>should</span> / <span class=modal-keyword>should not</span>:
+    the validator provides a check and issues a **warning** if the recommendation
+    is not fulfilled.
+- <span class=modal-keyword>should</span> / <span class=modal-keyword>may</span>:
+    where present, the validator's feature check **documents** the feature of the
+    content (informational).
 
 ## Client Processing ## {#conformance-client}
 
 Where an IOP document associates a conformance keyword with DASH client behaviour,
 the following applies:
 
-- **shall**: test content is provided for the rule and the reference client
-    ([=dash.js=]) implements the feature.
-- **shall not**: the reference client does not implement the feature.
-- **should**: test content is provided and the reference client implements the
-    feature unless there is a justification for not doing so.
-- **should not**: the reference client does not implement the feature unless
-    there is a justification for doing so.
-- **may**: test content is provided and the reference client implements the
-    feature where justified.
+- <span class=modal-keyword>shall</span>: test content is provided for the rule
+    and the reference client ([=dash.js=]) implements the feature.
+- <span class=modal-keyword>shall not</span>: the reference client does not
+    implement the feature.
+- <span class=modal-keyword>should</span>: test content is provided and the
+    reference client implements the feature unless there is a justification for
+    not doing so.
+- <span class=modal-keyword>should not</span>: the reference client does not
+    implement the feature unless there is a justification for doing so.
+- <span class=modal-keyword>may</span>: test content is provided and the reference
+    client implements the feature where justified.
 
 # Conformance and Reference Tools # {#tools}
 
@@ -92,7 +98,7 @@ Note: The relationships between the tools are shown in Figure 1.
 
 <figure class="diagram">
 <pre class=mermaid>
-%%{init: {'theme':'neutral','themeVariables':{'fontSize':'16px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':45,'rankSpacing':70,'padding':10,'htmlLabels':false,'useMaxWidth':true}}}%%
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':55,'rankSpacing':80,'padding':14,'htmlLabels':false,'useMaxWidth':true}}}%%
 flowchart LR
     CA["Content author / service provider"] --> V["DASH-IF Conformance Validator"]
     V -->|errors / warnings| CA

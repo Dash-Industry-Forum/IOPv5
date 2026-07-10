@@ -19,8 +19,9 @@ figure.diagram .mermaid {
   text-align: center;
 }
 figure.diagram svg {
+  width: 100% !important;
   height: auto !important;
-  max-width: 100%;
+  max-width: 1100px;
 }
 figure.diagram figcaption {
   margin-top: .6em;
@@ -35,5 +36,14 @@ table.data > caption {
   font-weight: 600;
   margin-bottom: .35em;
   color: #222;
+}
+
+/* Light modal-keyword emphasis; use sparingly to avoid noisy prose. */
+.modal-keyword,
+strong em.modal-keyword,
+em strong.modal-keyword {
+  font-weight: 600;
+  font-style: italic;
+  color: inherit;
 }
 </style>

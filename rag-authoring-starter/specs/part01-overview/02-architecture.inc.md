@@ -21,7 +21,7 @@ based on ISO BMFF (ISO/IEC 14496-12 [[!ISOBMFF]]) and CMAF (ISO/IEC 23000-19
 
 <figure class="diagram">
 <pre class=mermaid>
-%%{init: {'theme':'neutral','themeVariables':{'fontSize':'16px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':45,'rankSpacing':70,'padding':10,'htmlLabels':false,'useMaxWidth':true}}}%%
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':55,'rankSpacing':80,'padding':14,'htmlLabels':false,'useMaxWidth':true}}}%%
 flowchart LR
     CP[Contribution Link] -->|Contribution| ENC[ABR Encoder]
     ENC -->|ISO BMFF / CMAF| PKG["ISO BMFF / CMAF Packager (Encryption)"]
@@ -117,7 +117,7 @@ offerings. The following basic workflow is assumed:
 
 <figure class="diagram">
 <pre class=mermaid>
-%%{init: {'theme':'neutral','themeVariables':{'fontSize':'16px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':40,'rankSpacing':60,'padding':10,'htmlLabels':false,'useMaxWidth':true}}}%%
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':50,'rankSpacing':75,'padding':14,'htmlLabels':false,'useMaxWidth':true}}}%%
 flowchart TB
     APP[Application] -->|"Client-API (config / notifications / status)"| MGMT
     subgraph Player [DASH Player]

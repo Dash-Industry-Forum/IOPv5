@@ -8,3 +8,8 @@ dist/
 # Python
 __pycache__/
 *.pyc
+
+# Metanorma proof-of-concept generated outputs
+metanorma.asciidoc.log.txt
+authoring/metanorma/generated/
+authoring/metanorma/output*/

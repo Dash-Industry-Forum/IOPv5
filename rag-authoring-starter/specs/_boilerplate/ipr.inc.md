@@ -42,8 +42,12 @@ Note: IPR declarations relevant to DASH-IF specifications are published at
 
 ## Modal Verbs Terminology ## {#ipr-modal-verbs}
 
-In the present document, "shall", "shall not", "should", "should not", "may",
-"need not", "will", "will not", "can", and "cannot" are to be interpreted as
-described in the ETSI Drafting Rules (Verbal forms for the expression of
-provisions). "must" and "must not" are NOT allowed in DASH-IF deliverables except
-when used in direct citation.
+In the present document, <span class=modal-keyword>shall</span>,
+<span class=modal-keyword>shall not</span>, <span class=modal-keyword>should</span>,
+<span class=modal-keyword>should not</span>, <span class=modal-keyword>may</span>,
+<span class=modal-keyword>need not</span>, <span class=modal-keyword>will</span>,
+<span class=modal-keyword>will not</span>, <span class=modal-keyword>can</span>, and
+<span class=modal-keyword>cannot</span> are to be interpreted as described in the
+ETSI Drafting Rules (Verbal forms for the expression of provisions).
+<span class=modal-keyword>must</span> and <span class=modal-keyword>must not</span>
+are NOT allowed in DASH-IF deliverables except when used in direct citation.

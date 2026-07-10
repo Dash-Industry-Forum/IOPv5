@@ -6,12 +6,25 @@
 
 # Scope # {#scope}
 
-This document specifies DASH-IF IOP v5 Part 11: **Additional Functionalities**. Additional DASH-IF interoperability functionalities such as thumbnails, query/token mechanisms, and related deployment features.
+This document specifies DASH-IF IOP v5 Part 11: **Additional Functionalities**.
+The part collects DASH-IF interoperability features that are not primarily core
+DASH/CMAF mapping, service-type, media-profile, content-protection, ad-insertion,
+or event-processing topics.
 
-This is an initial Bikeshed conversion shell. Normative content shall be migrated
-from the identified source material and reconciled with Part 2 core principles,
-Part 12 conformance interpretation, and the current editions of MPEG-DASH and
-CMAF.
+Part 11 has not yet been substantively drafted. The initial work items are:
+
+- migrate **trick mode** material, including v4.3 clause 3.2.9 and live trick-mode
+    material, into this part where it is not specific to Part 4;
+- migrate **thumbnail tracks** from v4.3;
+- define treatment of **specific metadata tracks**, in coordination with Part 10
+    because timed metadata may also be event-related;
+- define a **registration and documentation process** for additional DASH-IF
+    technologies and extension points; and
+- identify examples and conformance/test-asset expectations for each technology.
+
+Normative content shall be migrated from the identified source material and
+reconciled with Part 2 core principles, Part 10 events/metadata processing, Part
+12 conformance interpretation, and the current editions of MPEG-DASH and CMAF.
 
 # References # {#doc-references}
 
@@ -28,12 +41,36 @@ part:
 Terms and definitions are inherited from ISO/IEC 23009-1, ISO/IEC 23000-19, and
 Part 2 unless defined in this part.
 
-# Requirements and Recommendations # {#requirements}
+# Additional Technologies # {#additional-technologies}
 
-Issue: Migrate and reconcile the normative requirements for Part 11 from the
-identified source material. Preserve source provenance in comments or issue notes
-and avoid duplicating requirements that are already covered by Part 2 or other
-parts. [GROUNDED_BY=iop-docs-overview / legacy v4.3 feature clauses]
+## Trick Mode ## {#trick-mode}
+
+Issue: Migrate trick-mode requirements and recommendations from DASH-IF IOP v4.3,
+including clause 3.2.9 and live trick-mode text, into Part 11. Separate generic
+trick-mode signalling/client behaviour from live-service-specific constraints
+that may remain in Part 4. [GROUNDED_BY=dashif-iop-v4-3#168..#170]
+
+## Thumbnail Tracks ## {#thumbnail-tracks}
+
+Issue: Migrate thumbnail-track requirements and recommendations from v4.3. Define
+how thumbnail tracks are signalled in the MPD, how they map to CMAF/ISO BMFF
+tracks where applicable, and what clients can assume for seeking and preview
+experiences. [GROUNDED_BY=dashif-iop-v4-3 / uploaded source material]
+
+## Specific Metadata Tracks ## {#specific-metadata-tracks}
+
+Issue: Define the scope of specific metadata tracks in Part 11 and coordinate
+with Part 10. If metadata is time-synchronized and event-like, Part 10 may own the
+processing model; Part 11 may own registration, carriage, and deployment
+conventions. [GROUNDED_BY=dashif-iop-v4-3 / iop-docs-overview]
+
+## Registration and Documentation Process ## {#registration-process}
+
+Issue: Define a registration and documentation process for additional DASH-IF
+technologies. The process should identify: required specification text, signalling
+scheme ownership, examples/test assets, validator expectations, reference-player
+expectations, and where maintained registries are published.
+
 
 # Open Issues and Work Items # {#open-issues}
 
@@ -41,8 +78,12 @@ parts. [GROUNDED_BY=iop-docs-overview / legacy v4.3 feature clauses]
   <caption>Part 11 open issues and topics to progress.</caption>
   <thead><tr><th>Topic<th>Status<th>Next action
   <tbody>
-    <tr><td>Source migration<td>Open<td>Migrate clause structure and normative text from the identified source material.
-    <tr><td>Cross-part alignment<td>Open<td>Align terminology and references with Parts 1, 2, and 12.
+        <tr><td>Trick mode migration<td>Open<td>Move v4.3 clause 3.2.9 and related live trick-mode material into Part 11 or cross-reference Part 4 where live-specific.
+    <tr><td>Thumbnail tracks<td>Open<td>Migrate thumbnail-track text from v4.3 and define signalling, packaging, and client behaviour.
+    <tr><td>Specific metadata tracks<td>Open<td>Decide split between Part 10 and Part 11; define carriage and processing expectations.
+    <tr><td>Registration process<td>Open<td>Define documentation and registration workflow for additional DASH-IF technologies.
+    <tr><td>Examples<td>Open<td>Create examples/test assets for each additional technology.
+    <tr><td>Cross-part alignment<td>Open<td>Align terminology and references with Parts 1, 2, 10, and 12.
     <tr><td>Conformance mapping<td>Open<td>Identify validator/test-asset/reference-player expectations and link them to Part 12.
 </table>
 
