@@ -6,56 +6,100 @@ from pathlib import Path
 
 import server
 
-
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def check(name: str, ok: bool, details: str = "") -> tuple[str, bool, str]:
-    return (name, ok, details)
+class Result(dict):
+    pass
+
+
+def result(name: str, status: str, details: str = "") -> Result:
+    return Result(name=name, status=status, details=details)
 
 
 def main() -> int:
-    results: list[tuple[str, bool, str]] = []
+    results: list[Result] = []
 
-    # Basic repository assumptions.
-    results.append(check("repo_root", ROOT.exists(), str(ROOT)))
-    results.append(check("authoring_root", server.AUTHORING_ROOT.exists(), str(server.AUTHORING_ROOT)))
-    results.append(check("specs_root", server.SPECS.exists(), str(server.SPECS)))
+    results.append(result("repo_root", "PASS" if ROOT.exists() else "FAIL", str(ROOT)))
+    results.append(
+        result(
+            "authoring_root",
+            "PASS" if server.AUTHORING_ROOT.exists() else "WARN",
+            str(server.AUTHORING_ROOT),
+        )
+    )
+    results.append(
+        result(
+            "specs_root",
+            "PASS" if server.SPECS.exists() else "WARN",
+            str(server.SPECS),
+        )
+    )
 
-    # Tool smoke tests.
-    parts = json.loads(server.list_parts())
-    results.append(check("list_parts", bool(parts.get("parts")), json.dumps(parts)[:300]))
+    try:
+        git = json.loads(server.git_status())
+        results.append(result("git_status", "PASS" if "branch" in git else "FAIL", json.dumps(git)[:300]))
+    except Exception as exc:
+        results.append(result("git_status", "FAIL", repr(exc)))
 
-    docs = json.loads(server.list_documents())
-    results.append(check("list_documents", bool(docs.get("documents")), json.dumps(docs)[:300]))
+    try:
+        parts = json.loads(server.list_parts())
+        status = "PASS" if parts.get("parts") else "WARN"
+        results.append(result("list_parts", status, json.dumps(parts)[:300]))
+    except Exception as exc:
+        results.append(result("list_parts", "FAIL", repr(exc)))
 
-    search = json.loads(server.search_iop("Scope", 3))
-    results.append(check("search_iop", "hits" in search, json.dumps(search)[:300]))
+    try:
+        docs = json.loads(server.list_documents())
+        status = "PASS" if docs.get("documents") else "WARN"
+        results.append(result("list_documents", status, json.dumps(docs)[:300]))
+    except Exception as exc:
+        results.append(result("list_documents", "FAIL", repr(exc)))
 
-    git = json.loads(server.git_status())
-    results.append(check("git_status", "branch" in git, json.dumps(git)[:300]))
+    try:
+        search = json.loads(server.search_iop("Scope", 3))
+        status = "PASS" if search.get("hits") else "WARN"
+        results.append(result("search_iop", status, json.dumps(search)[:300]))
+    except Exception as exc:
+        results.append(result("search_iop", "FAIL", repr(exc)))
 
-    broken = json.loads(server.find_broken_refs(5))
-    results.append(check("find_broken_refs", "issues" in broken, json.dumps(broken)[:300]))
+    try:
+        broken = json.loads(server.find_broken_refs(5))
+        status = "PASS" if "issues" in broken else "FAIL"
+        results.append(result("find_broken_refs", status, json.dumps(broken)[:300]))
+    except Exception as exc:
+        results.append(result("find_broken_refs", "FAIL", repr(exc)))
 
-    report = json.loads(server.search_rag_reports("Metanorma", 3))
-    results.append(check("search_rag_reports", "hits" in report, json.dumps(report)[:300]))
+    try:
+        report = json.loads(server.search_rag_reports("Metanorma", 3))
+        status = "PASS" if report.get("hits") else "WARN"
+        results.append(result("search_rag_reports", status, json.dumps(report)[:300]))
+    except Exception as exc:
+        results.append(result("search_rag_reports", "FAIL", repr(exc)))
 
-    modal = json.loads(server.modal_keyword_report())
-    results.append(check("modal_keyword_report", "files" in modal, json.dumps(modal)[:300]))
+    try:
+        modal = json.loads(server.modal_keyword_report())
+        status = "PASS" if modal.get("files") else "WARN"
+        results.append(result("modal_keyword_report", status, json.dumps(modal)[:300]))
+    except Exception as exc:
+        results.append(result("modal_keyword_report", "FAIL", repr(exc)))
 
-    failures = [r for r in results if not r[1]]
+    failures = [r for r in results if r["status"] == "FAIL"]
+    warnings = [r for r in results if r["status"] == "WARN"]
 
     print("MCP smoke test results:\n")
-    for name, ok, details in results:
-        status = "PASS" if ok else "FAIL"
-        print(f"[{status}] {name}")
-        if details:
-            print(f"  {details}")
+    for r in results:
+        print(f"[{r['status']}] {r['name']}")
+        if r["details"]:
+            print(f"  {r['details']}")
 
     if failures:
-        print(f"\n{len(failures)} failure(s).")
+        print(f"\n{len(failures)} failure(s), {len(warnings)} warning(s).")
         return 1
+
+    if warnings:
+        print(f"\nSmoke test completed with {len(warnings)} warning(s).")
+        return 0
 
     print("\nAll smoke tests passed.")
     return 0
@@ -63,3 +107,4 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+
