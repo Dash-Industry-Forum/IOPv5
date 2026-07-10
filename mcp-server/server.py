@@ -4,6 +4,7 @@ from __future__ import annotations
 import json
 import re
 import subprocess
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -12,6 +13,11 @@ from mcp.server.fastmcp import FastMCP
 ROOT = Path(__file__).resolve().parents[1]
 AUTHORING_ROOT = ROOT / "rag-authoring-starter"
 SPECS = AUTHORING_ROOT / "specs"
+REPORTS = AUTHORING_ROOT / "rag" / "reports"
+
+LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
+HEADING = re.compile(r"^(#{1,6})\s+(.*)$")
+MODALS = ("shall", "should", "may", "must", "shall not", "should not")
 
 mcp = FastMCP("DASH-IF-IOP")
 
@@ -40,6 +46,16 @@ def _authored_files() -> list[Path]:
         p for p in SPECS.rglob("*")
         if p.is_file() and p.suffix in {".md", ".bs"}
     )
+
+
+def _report_files() -> list[Path]:
+    if not REPORTS.exists():
+        return []
+    return sorted(p for p in REPORTS.rglob("*.md") if p.is_file())
+
+
+def _is_external(target: str) -> bool:
+    return target.startswith(("http://", "https://", "mailto:", "#"))
 
 
 @mcp.tool()
@@ -82,6 +98,18 @@ def read_clause(path: str, start_line: int | None = None, end_line: int | None =
 
 
 @mcp.tool()
+def list_documents(part: str | None = None) -> str:
+    """List authored source documents, optionally filtered by part-folder substring."""
+    docs = []
+    for path in _authored_files():
+        rel = str(path.relative_to(ROOT))
+        if part and part not in rel:
+            continue
+        docs.append(rel)
+    return json.dumps({"part": part, "documents": docs}, indent=2)
+
+
+@mcp.tool()
 def build_iop(part: str | None = None) -> str:
     """Build all parts, or one part by folder name, using the local Bikeshed workflow."""
     if not AUTHORING_ROOT.exists():
@@ -91,6 +119,68 @@ def build_iop(part: str | None = None) -> str:
     else:
         result = _run(["powershell", "-ExecutionPolicy", "Bypass", "-File", "build.ps1"], cwd=AUTHORING_ROOT)
     return json.dumps(result, indent=2)
+
+
+@mcp.tool()
+def build_part(part: str) -> str:
+    """Build one part by folder name, e.g. part12-conformance-reference-tools."""
+    return build_iop(part)
+
+
+@mcp.tool()
+def validate_links() -> str:
+    """Run the repository publication checker over authored specs."""
+    checker = AUTHORING_ROOT / "tools" / "publication" / "check_links.py"
+    if not checker.exists():
+        return json.dumps({"error": "check_links.py not found"}, indent=2)
+    result = _run(["python", str(checker)], cwd=AUTHORING_ROOT)
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool()
+def find_broken_refs(limit: int = 100) -> str:
+    """Return broken relative links and duplicate headings from authored specs."""
+    issues: list[str] = []
+    for path in _authored_files():
+        text = path.read_text(encoding="utf-8", errors="replace")
+        rel = path.relative_to(AUTHORING_ROOT)
+        headings: Counter[str] = Counter()
+        for line in text.splitlines():
+            m = HEADING.match(line.strip())
+            if m:
+                headings[m.group(2).strip().lower()] += 1
+        for title, count in headings.items():
+            if count > 1:
+                issues.append(f"{rel}: duplicate heading '{title}' ({count}x)")
+        for match in LINK.finditer(text):
+            target = match.group(1).split(" ")[0].split("#")[0]
+            if not target or _is_external(target):
+                continue
+            resolved = (path.parent / target).resolve()
+            if not resolved.exists():
+                issues.append(f"{rel}: broken link target -> {target}")
+        if len(issues) >= limit:
+            break
+    return json.dumps({"issues": issues[:limit], "count": len(issues[:limit])}, indent=2)
+
+
+@mcp.tool()
+def search_rag_reports(query: str, limit: int = 10) -> str:
+    """Search Markdown reports under rag/reports/."""
+    rx = re.compile(query, re.IGNORECASE)
+    hits: list[dict[str, Any]] = []
+    for path in _report_files():
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for line_no, line in enumerate(text.splitlines(), 1):
+            if rx.search(line):
+                hits.append({
+                    "path": str(path.relative_to(ROOT)),
+                    "line": line_no,
+                    "text": line.strip(),
+                })
+                if len(hits) >= limit:
+                    return json.dumps({"query": query, "hits": hits}, indent=2)
+    return json.dumps({"query": query, "hits": hits}, indent=2)
 
 
 @mcp.tool()

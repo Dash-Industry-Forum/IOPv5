@@ -4,16 +4,31 @@ This is a very small local MCP server intended for AI-assisted authoring in the
 IOPv5 repository. It is deliberately simple: a Python script running on your
 machine and exposing a few repository-specific tools.
 
-## MVP tools
+## Tools
+
+### Core tools
 
 - `search_iop(query, limit=10)`
   Search authored source files under `rag-authoring-starter/specs/`.
 - `read_clause(path, start_line=None, end_line=None)`
   Read a specific clause/source file or a line range.
 - `build_iop(part=None)`
-  Run the local Bikeshed build (`build.ps1` or `build_all.py`).
+  Run the local Bikeshed build (`build.ps1`).
+- `build_part(part)`
+  Build one part by folder name.
 - `git_status()`
   Return a concise git status summary.
+
+### Next-step authoring tools
+
+- `list_documents(part=None)`
+  List authored `.bs`/`.md` source documents, optionally filtered by part.
+- `validate_links()`
+  Run the repository publication checker.
+- `find_broken_refs(limit=100)`
+  Return broken relative links and duplicate headings from authored specs.
+- `search_rag_reports(query, limit=10)`
+  Search Markdown reports under `rag-authoring-starter/rag/reports/`.
 
 ## Setup
 
