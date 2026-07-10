@@ -42,7 +42,7 @@ jobs:
         working-directory: rag-authoring-starter
         run: python tools/env/install_dashif_boilerplate.py
 
-            - name: Build all specs
+      - name: Build all specs
         working-directory: rag-authoring-starter
         run: python tools/publication/build_all.py --out ../dist
 
@@ -64,3 +64,4 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+

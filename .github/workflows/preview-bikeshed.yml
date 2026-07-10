@@ -52,11 +52,11 @@ jobs:
           python -m pip install bikeshed
           bikeshed update
 
-      - name: Install DASH-IF boilerplate (dashif group)
+            - name: Install DASH-IF boilerplate (dashif group)
         working-directory: rag-authoring-starter
         run: python tools/env/install_dashif_boilerplate.py
 
-            - name: Build all specs
+      - name: Build all specs
         working-directory: rag-authoring-starter
         run: python tools/publication/build_all.py --out ../site-build
 
