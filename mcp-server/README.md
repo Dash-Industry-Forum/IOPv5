@@ -77,6 +77,20 @@ cd mcp-server
 ./start.ps1 -RecreateVenv
 ```
 
+A one-command self-test wrapper is also included:
+
+```powershell
+cd mcp-server
+./self_test.ps1
+```
+
+To self-test and then start the server immediately:
+
+```powershell
+cd mcp-server
+./self_test.ps1 -StartServer
+```
+
 If the corporate TLS environment requires it, keep using the same CA bundle
 approach already documented for Bikeshed.
 
@@ -130,8 +144,79 @@ cd mcp-server
 python smoke_test.py
 ```
 
+or simply:
+
+```powershell
+cd mcp-server
+./self_test.ps1
+```
+
 This checks that the repository paths are present and that a representative set
 of MCP tool functions can be invoked locally.
+
+## How to start and include the server in VS Code
+
+1. Open the `IOPv5` repository in VS Code.
+2. Open a terminal in the repository root.
+3. Run the self-test once:
+
+```powershell
+cd mcp-server
+./self_test.ps1
+```
+
+4. Copy the example MCP configuration from:
+
+```text
+mcp-server/vscode-mcp-config.example.json
+```
+
+5. Add it to the MCP client configuration used by your VS Code AI extension.
+   The exact location depends on the extension, but it is typically a JSON config
+   area for `mcpServers`.
+
+Typical configuration:
+
+```json
+{
+  "mcpServers": {
+    "iopv5": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\tsto\\OneDrive - Qualcomm\\Projects\\DASH-IF\\IOP\\IOPv5\\mcp-server\\server.py"
+      ]
+    }
+  }
+}
+```
+
+6. Restart or reload the AI extension/client if needed.
+7. The client should then discover tools such as:
+   - `search_iop`
+   - `read_clause`
+   - `build_iop`
+   - `git_status`
+   - `list_parts`
+   - `validate_links`
+
+### Manual server start
+
+If your MCP client expects you to start the server yourself first:
+
+```powershell
+cd mcp-server
+./start.ps1
+```
+
+or:
+
+```powershell
+cd mcp-server
+./self_test.ps1 -StartServer
+```
+
+If your MCP client launches the server itself from the JSON config, you usually
+should **not** start it separately.
 
 ## Notes
 
