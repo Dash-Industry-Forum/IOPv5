@@ -164,6 +164,14 @@ def build_part(part: str) -> str:
 
 
 @mcp.tool()
+def build_and_validate_part(part: str) -> str:
+    """Build one part and run repository publication checks."""
+    build = json.loads(build_part(part))
+    validate = json.loads(validate_links())
+    return json.dumps({"build": build, "validate_links": validate}, indent=2)
+
+
+@mcp.tool()
 def build_publication_bundle() -> str:
     """Build the publication bundle into repository-root dist/."""
     script = AUTHORING_ROOT / "tools" / "publication" / "build_all.py"
@@ -211,6 +219,16 @@ def find_broken_refs(limit: int = 100) -> str:
 
 
 @mcp.tool()
+def wrap_modals() -> str:
+    """Run the modal-keyword normalization helper over authored sources."""
+    script = AUTHORING_ROOT / "tools" / "publication" / "wrap_modals.py"
+    if not script.exists():
+        return json.dumps({"error": "wrap_modals.py not found"}, indent=2)
+    result = _run(["python", str(script)], cwd=AUTHORING_ROOT)
+    return json.dumps(result, indent=2)
+
+
+@mcp.tool()
 def modal_keyword_report(part: str | None = None) -> str:
     """Return modal keyword counts for authored spec files."""
     report: list[dict[str, Any]] = []
@@ -224,6 +242,24 @@ def modal_keyword_report(part: str | None = None) -> str:
         if counts:
             report.append({"path": rel, "counts": counts})
     return json.dumps({"part": part, "files": report}, indent=2)
+
+
+@mcp.tool()
+def generate_issue_seed(part: str, topic: str) -> str:
+    """Generate a simple GitHub issue seed using part context and open-issues text."""
+    issues = json.loads(read_open_issues(part))
+    title = f"[{part}] {topic}" if not part.lower().startswith("part") else f"[{part}] {topic}"
+    body = {
+        "title": title,
+        "body": (
+            f"## Summary\n\n{topic}\n\n"
+            f"## Part\n\n{part}\n\n"
+            f"## Context\n\n"
+            + issues.get("text", "Open issues section not found; inspect the part manually.")
+            + "\n\n## Proposed action\n\n- [ ] review source material\n- [ ] update authored text\n- [ ] add examples if applicable\n- [ ] run build and publication checks\n"
+        ),
+    }
+    return json.dumps(body, indent=2)
 
 
 @mcp.tool()
@@ -248,6 +284,49 @@ def read_open_issues(part: str) -> str:
     if not found:
         return json.dumps({"part": part, "error": "open issues section not found"}, indent=2)
     return json.dumps({"part": part, "text": "\n".join(section_lines)}, indent=2)
+
+
+@mcp.tool()
+def read_change_history(part: str) -> str:
+    """Read the Change History section for a given part, if present."""
+    part_root = SPECS / part
+    if not part_root.exists() or not part_root.is_dir():
+        return json.dumps({"error": f"part not found: {part}"}, indent=2)
+    section_lines: list[str] = []
+    found = False
+    for path in sorted(p for p in part_root.glob("*.inc.md")):
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+        for i, line in enumerate(lines):
+            if "Change History" in line or "change-history" in line.lower():
+                found = True
+                section_lines.append(f"FILE: {path.relative_to(ROOT)}")
+                for j in range(i, min(i + 30, len(lines))):
+                    section_lines.append(f"{j+1}: {lines[j]}")
+                break
+        if found:
+            break
+    if not found:
+        return json.dumps({"part": part, "error": "change history section not found"}, indent=2)
+    return json.dumps({"part": part, "text": "\n".join(section_lines)}, indent=2)
+
+
+@mcp.tool()
+def part_status_report(part: str) -> str:
+    """Summarize documents, open issues, change history, and modal counts for one part."""
+    docs = json.loads(list_documents(part))
+    issues = json.loads(read_open_issues(part))
+    history = json.loads(read_change_history(part))
+    modals = json.loads(modal_keyword_report(part))
+    return json.dumps(
+        {
+            "part": part,
+            "documents": docs.get("documents", []),
+            "open_issues": issues.get("text") or issues.get("error"),
+            "change_history": history.get("text") or history.get("error"),
+            "modal_counts": modals.get("files", []),
+        },
+        indent=2,
+    )
 
 
 @mcp.tool()

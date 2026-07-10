@@ -37,8 +37,18 @@ machine and exposing a few repository-specific tools.
   Return broken relative links and duplicate headings from authored specs.
 - `search_rag_reports(query, limit=10)`
   Search Markdown reports under `rag-authoring-starter/rag/reports/`.
+- `build_and_validate_part(part)`
+  Build one part and run publication checks.
 - `build_publication_bundle()`
   Build the publication bundle into repository-root `dist/`.
+- `wrap_modals()`
+  Run the modal-keyword normalization helper.
+- `generate_issue_seed(part, topic)`
+  Generate a simple GitHub issue title/body seed from part context.
+- `read_change_history(part)`
+  Return the change-history section for a part when present.
+- `part_status_report(part)`
+  Summarize documents, open issues, change history, and modal counts for one part.
 - `metanorma_status()`
   Return the current status of the local Metanorma experiment/report.
 
