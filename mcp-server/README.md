@@ -120,6 +120,19 @@ Adjust the path to your local checkout. Example:
 }
 ```
 
+## Smoke test
+
+A small local smoke test is included:
+
+```powershell
+cd mcp-server
+.\.venv\Scripts\Activate.ps1
+python smoke_test.py
+```
+
+This checks that the repository paths are present and that a representative set
+of MCP tool functions can be invoked locally.
+
 ## Notes
 
 - This server is local-only. It is not intended as a shared or deployed service.
