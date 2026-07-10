@@ -60,7 +60,21 @@ From the repository root:
 cd mcp-server
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install mcp
+pip install -r requirements.txt
+```
+
+A helper startup script is also provided:
+
+```powershell
+cd mcp-server
+./start.ps1
+```
+
+To recreate the virtual environment from scratch:
+
+```powershell
+cd mcp-server
+./start.ps1 -RecreateVenv
 ```
 
 If the corporate TLS environment requires it, keep using the same CA bundle
@@ -68,15 +82,30 @@ approach already documented for Bikeshed.
 
 ## Run
 
+Manual start:
+
 ```powershell
 cd mcp-server
 .\.venv\Scripts\Activate.ps1
 python server.py
 ```
 
+Convenience start:
+
+```powershell
+cd mcp-server
+./start.ps1
+```
+
 ## VS Code / MCP client configuration example
 
-Adjust the path to your local checkout.
+A ready-made example file is included:
+
+```text
+mcp-server/vscode-mcp-config.example.json
+```
+
+Adjust the path to your local checkout. Example:
 
 ```json
 {

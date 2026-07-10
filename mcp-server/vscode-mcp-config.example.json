@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "iopv5": {
+      "command": "python",
+      "args": [
+        "C:\\Users\\tsto\\OneDrive - Qualcomm\\Projects\\DASH-IF\\IOP\\IOPv5\\mcp-server\\server.py"
+      ]
+    }
+  }
+}
