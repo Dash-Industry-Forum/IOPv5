@@ -8,7 +8,7 @@
 
 This document specifies DASH-IF IOP v5 Part 7: **Video**. Video interoperability points, CMAF media profiles, codec signalling, DASH MPD parameters, and video-specific constraints.
 
-This is an initial Bikeshed conversion shell. Normative content shall be migrated
+This is an initial Bikeshed conversion shell. Normative content <span class=modal-keyword>shall</span> be migrated
 from the identified source material and reconciled with Part 2 core principles,
 Part 12 conformance interpretation, and the current editions of MPEG-DASH and
 CMAF.

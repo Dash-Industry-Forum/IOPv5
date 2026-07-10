@@ -79,7 +79,7 @@ The architecture defines a set of reference points (interfaces), explained below
         <td>The second interface of the DASH-IF Live Media Ingest Specification, based on MPEG DASH and HLS. It uses the HTTP POST method to transmit media objects, and supports timed metadata and timed text with redundancy and failover guidelines.
       <tr>
         <td>CPIX-IF
-        <td>The Content Protection Information Exchange (CPIX) interface, defined in a separate specification. A CPIX document carries keys and DRM information used to encrypt and protect content, and may itself be encrypted, signed, and authenticated for confidentiality, source, and integrity.
+        <td>The Content Protection Information Exchange (CPIX) interface, defined in a separate specification. A CPIX document carries keys and DRM information used to encrypt and protect content, and <span class=modal-keyword>may</span> itself be encrypted, signed, and authenticated for confidentiality, source, and integrity.
       <tr>
         <td>DASH-IOP-IF
         <td>The main interface defined in the DASH-IF IOP guidelines, providing interoperability between a content provider offering DASH-based services on a CDN and a DASH client.

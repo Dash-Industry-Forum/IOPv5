@@ -86,30 +86,85 @@ need gradual conversion.
 
 ### [Repo] Modal keyword presentation
 
-**Problem:** Modal keywords should be readable without making the document heavy.
+**Problem:** Modal keywords should be readable and consistent without adding
+colours, boxes, or visually heavy markup.
 
-**Decision to trial:** Use the shared CSS class `.modal-keyword` for selected
-introductory/explanatory uses of `shall`, `should`, and `may`, especially in
-keyword interpretation lists. Do not aggressively wrap every occurrence in dense
-normative prose.
+**Decision:** Use the shared CSS class `.modal-keyword` for all authored spec
+occurrences of `shall`, `shall not`, `should`, `should not`, and `may`. The style
+is bold+italic only.
 
 **Tasks:**
 
-- Apply the style in conformance/modal-verb clauses first.
+- Run `python tools/publication/wrap_modals.py` after broad edits.
 - Review visual output in generated HTML.
-- Decide whether to add a small helper script for controlled wrapping in selected
-  clauses only.
+- Extend the helper only if additional modal terms (`need not`, `can`, `cannot`,
+  `will`) need automatic wrapping in normative clauses.
+
+### [Repo] Operate temporary branch previews
+
+**Problem:** Reviewers need a publication-like web view before merge, but GitHub
+Pages has only one live deployment per repository.
+
+**Immediate approach:** Use the manual `preview-bikeshed.yml` workflow for
+unadvertised/noindex temporary previews under `/previews/<branch>/`. Treat it as
+a temporary editorial aid, not a private site and not the official publication.
+
+**Tasks:**
+
+- Enable GitHub Pages with Source: GitHub Actions.
+- Run preview workflow manually from review branches when needed.
+- After preview review, rerun the main publication workflow from `main` to restore
+  the official deployment.
+- Do not preview confidential drafts or access-controlled material.
+
+### [Repo] Create long-term preview environment
+
+**Problem:** Temporary previews can obscure the official Pages deployment.
+
+**Preferred long-term solution:** Create a separate preview Pages repository/site
+or equivalent access-controlled preview environment. Alternative: switch to a
+`gh-pages` branch strategy with stable `/previews/<branch>/` subdirectories and
+cleanup of old previews.
+
+**Tasks:**
+
+- Decide whether DASH-IF wants persistent branch preview URLs.
+- If yes, choose separate preview repository/site vs `gh-pages` branch strategy.
+- Document cleanup and access policy.
+
+### [Repo] Move out of `rag-authoring-starter/` when production-ready
+
+**Problem:** Most production content now lives under `rag-authoring-starter/`, but
+that name describes the initial scaffold rather than the long-term repository.
+
+**Recommended final layout:** Move `specs/`, `tools/`, `rag/`, and `docs/` from
+`rag-authoring-starter/` to the repository root in one dedicated path-cleanup
+commit after the current branch stabilizes.
+
+**Tasks:**
+
+- Agree on final root layout.
+- Update workflows, scripts, README, and AGENTS.md paths.
+- Perform the move in one commit to make review easier.
 
 ### [Metanorma] Continue Part 12 proof of concept
 
 **Problem:** Part 12 AsciiDoc generation has started, but the installed
 Metanorma Generic renderer on Windows currently produces XML/presentation XML and
-then fails during HTML/DOC rendering due to local package/runtime issues.
+then fails during HTML/DOC rendering due to local package/runtime issues. Generic
+PDF is also not supported by the tested package.
 
 **Tasks:**
 
 - Keep Bikeshed Markdown canonical.
 - Finish the generated AsciiDoc cleanup for Part 12.
 - Test Metanorma Generic in CI/Linux or a full Ruby/gem environment.
-- Test ISO flavour for PDF generation if Generic remains HTML/DOC only.
+- Add an ISO-flavoured AsciiDoc generation mode for PDF experiments.
+- Evaluate DASH-IF branding/customization for an ISO-based or DASH-IF-specific
+  Metanorma template.
+- If PDF generation succeeds, publish the PDF as a workflow artifact first.
+- Later, add PDF/DOC download links to the Bikeshed publication bundle or overview
+  page.
 - Compare output fidelity against Bikeshed HTML.
+
+See also `docs/metanorma-dashif-template-plan.md`.

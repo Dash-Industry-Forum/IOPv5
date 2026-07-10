@@ -33,14 +33,14 @@ against that baseline. Low-latency operation is specified separately in
 ## Overview: Dynamic and Live Media Presentations ## {#live-overview}
 
 A DASH Media Presentation with `MPD@type` set to `dynamic` allows media to be
-made available over time, and its availability may also be removed over time.
+made available over time, and its availability <span class=modal-keyword>may</span> also be removed over time.
 This has two major effects:
 
 1. The content author can announce a DASH Media Presentation for which not all
     content is yet available, but only becomes available over time.
 2. Clients follow a timed playout schedule as intended by the content author.
 
-Dynamic services may be used for different types of service:
+Dynamic services <span class=modal-keyword>may</span> be used for different types of service:
 
 : <dfn export>Dynamic Distribution of Available Content</dfn>
 :: Content that is made available as dynamic content but is entirely generated
@@ -59,7 +59,7 @@ Dynamic services may be used for different types of service:
 
 ### Background and Assumptions ### {#live-download-background}
 
-The dynamic segment download function is a key component of live services and may
+The dynamic segment download function is a key component of live services and <span class=modal-keyword>may</span>
 also be used for scheduling a playout. In this clause it is assumed, unless
 stated otherwise, that the client has access to a single instance of an MPD and
 that all information about the entire Media Presentation is contained in that
@@ -75,10 +75,10 @@ of Segment availability, which forms the basis for live services.
 Segment availability is governed by the timing model of ISO/IEC 23009-1. For a
 Media Presentation accessible at time `NOW` at its location:
 
-- All Segments for all Representations in all Periods announced in an MPD shall be
+- All Segments for all Representations in all Periods announced in an MPD <span class=modal-keyword>shall</span> be
     available no later than their announced Segment Availability Start Time
     (SAST) at their derived URLs.
-- All such Segments shall remain available at least until their announced Segment
+- All such Segments <span class=modal-keyword>shall</span> remain available at least until their announced Segment
     Availability End Time (SAET) at their derived URLs.
 - For all Media Segments, the Segment in a Period is available no later than the
     sum of the Period start (in wall-clock time), the earliest presentation time,
@@ -104,10 +104,10 @@ definitions, aligned with ISO/IEC 23009-1, apply:
 :: The wall-clock time on the content server. All wall-clock-related information
     in the MPD is expressed relative to `NOW`.
 
-**MPD information.** For a dynamic service without MPD updates: `MPD@type` shall
-be `dynamic`; `MPD@mediaPresentationDuration` shall be present, or the
-`Period@duration` of the last Period shall be present; `MPD@minimumUpdatePeriod`
-shall not be present. It is recommended to provide `MPD@timeShiftBufferDepth` and
+**MPD information.** For a dynamic service without MPD updates: `MPD@type` <span class=modal-keyword>shall</span>
+be `dynamic`; `MPD@mediaPresentationDuration` <span class=modal-keyword>shall</span> be present, or the
+`Period@duration` of the last Period <span class=modal-keyword>shall</span> be present; `MPD@minimumUpdatePeriod`
+<span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be present. It is recommended to provide `MPD@timeShiftBufferDepth` and
 `MPD@suggestedPresentationDelay`.
 
 **Period information.** Each Period *i* is assigned a Period start time in
@@ -120,7 +120,7 @@ determined per ISO/IEC 23009-1:
     Period start plus that duration (`@start`, if also present, takes precedence).
 - The Period end time PEwc[i] is the start of the next Period (PSwc[i+1]); for the
     last Period it derives from `MPD@mediaPresentationDuration` or the last
-    `Period@duration`, and an MPD update may extend it.
+    `Period@duration`, and an MPD update <span class=modal-keyword>may</span> extend it.
 
 **Representation information.** For a Period *i*, when `SegmentTemplate.SegmentTimeline`
 is present (and `SegmentTemplate@duration` is not), the `SegmentTimeline` contains
@@ -132,27 +132,27 @@ indicate that no media is present for the gap.
 
 **Media time information.** Each Media Segment *k* has an earliest presentation
 time (EPT[k,r,i]) and an accurate duration, measured in media presentation time.
-EPT may be estimated from the MPD (SAST minus announced segment duration) or
+EPT <span class=modal-keyword>may</span> be estimated from the MPD (SAST minus announced segment duration) or
 determined accurately from the Segment itself.
 
 ### Service Offering Requirements and Guidelines ### {#live-so-requirements}
 
-For dynamic service offerings, the MPD shall conform to DASH-IF IOP and shall at
+For dynamic service offerings, the MPD <span class=modal-keyword>shall</span> conform to DASH-IF IOP and <span class=modal-keyword>shall</span> at
 least contain the mandatory information required by ISO/IEC 23009-1 for a dynamic
 Media Presentation:
 
-- `MPD@type` shall be set to `dynamic`.
-- `MPD@availabilityStartTime` shall be present and provides the wall-clock anchor
+- `MPD@type` <span class=modal-keyword>shall</span> be set to `dynamic`.
+- `MPD@availabilityStartTime` <span class=modal-keyword>shall</span> be present and provides the wall-clock anchor
     for the Media Presentation timeline.
-- `MPD@publishTime` shall be present and shall be updated whenever the MPD content
+- `MPD@publishTime` <span class=modal-keyword>shall</span> be present and <span class=modal-keyword>shall</span> be updated whenever the MPD content
     changes, so that clients can detect a changed MPD.
 - Where the presentation end time is not known in advance,
-    `MPD@minimumUpdatePeriod` shall be present; the Period end time of the last
+    `MPD@minimumUpdatePeriod` <span class=modal-keyword>shall</span> be present; the Period end time of the last
     Period is then obtained as the sum of `NOW` and `MPD@minimumUpdatePeriod`.
 
-Content may be offered as a single Period or as multiple Periods (for example for
+Content <span class=modal-keyword>may</span> be offered as a single Period or as multiple Periods (for example for
 ad insertion opportunities, program changes, or operational purposes). Segment
-information may be provided using `SegmentTemplate` with `@duration`, or using
+information <span class=modal-keyword>may</span> be provided using `SegmentTemplate` with `@duration`, or using
 `SegmentTemplate` with `SegmentTimeline`.
 
 ## Live Service Offering including MPD Updates ## {#live-mpd-updates}
@@ -161,7 +161,7 @@ information may be provided using `SegmentTemplate` with `@duration`, or using
 
 To offer a live service with an unknown presentation end time using a single
 evolving MPD, the service provider publishes an initial MPD prior to the
-presentation start so that clients may access it in advance. The MPD is assigned
+presentation start so that clients <span class=modal-keyword>may</span> access it in advance. The MPD is assigned
 a publish time, and clients reload the MPD over time to discover newly available
 Segments and Periods.
 
@@ -171,12 +171,12 @@ For a live service offering that relies on MPD updates:
 
 - The same general dynamic service requirements in [[#live-so-requirements]]
     apply at any time `NOW` that the MPD is present on the server.
-- `MPD@minimumUpdatePeriod` shall be set to a value consistent with the rate at
+- `MPD@minimumUpdatePeriod` <span class=modal-keyword>shall</span> be set to a value consistent with the rate at
     which the timeline is extended and with any change lead time the service
     guarantees.
-- On each change, the service shall write a new MPD with an updated
+- On each change, the service <span class=modal-keyword>shall</span> write a new MPD with an updated
     `MPD@publishTime`; clients detect the change by comparing publish times.
-- `MPD@minimumUpdatePeriod` may be set to `0` to indicate that the client should
+- `MPD@minimumUpdatePeriod` <span class=modal-keyword>may</span> be set to `0` to indicate that the client <span class=modal-keyword>should</span>
     revalidate the MPD before requesting each Segment when the timeline is not
     predictable.
 
@@ -197,12 +197,12 @@ and terminated with lower signalling latency.
 
 For a service offering that relies on segment-based MPD update signalling:
 
-- The service shall carry inband events indicating MPD validity expiry (the
+- The service <span class=modal-keyword>shall</span> carry inband events indicating MPD validity expiry (the
     `urn:mpeg:dash:event:2012` scheme, or the applicable scheme of the current
     edition) so that clients learn when the current MPD is no longer valid.
-- The `InbandEventStream` element shall be signalled for the Adaptation Sets or
+- The `InbandEventStream` element <span class=modal-keyword>shall</span> be signalled for the Adaptation Sets or
     Representations that carry these events.
-- When segment-based updates are used, the client may extend the timeline based
+- When segment-based updates are used, the client <span class=modal-keyword>may</span> extend the timeline based
     on Segment information without reloading the MPD until an MPD validity expiry
     event indicates that a new MPD is required.
 
@@ -211,7 +211,7 @@ For a service offering that relies on segment-based MPD update signalling:
 ### Background ### {#live-sync-background}
 
 According to ISO/IEC 23009-1, in order to correctly access MPDs and Segments that
-become available over time, DASH servers and clients should synchronize their
+become available over time, DASH servers and clients <span class=modal-keyword>should</span> synchronize their
 clocks to a globally accurate time standard. Segment availability times are
 announced in wall-clock time in the MPD, and the client needs access to the same
 time base as the MPD generation in order to request Segments at the right time.
@@ -219,12 +219,12 @@ time base as the MPD generation in order to request Segments at the right time.
 ### Service Provider Requirements and Guidelines ### {#live-sync-service}
 
 If the Media Presentation is dynamic, or if `MPD@availabilityStartTime` is
-present, the service shall provide a Media Presentation as follows:
+present, the service <span class=modal-keyword>shall</span> provide a Media Presentation as follows:
 
-- The Segment availability times announced in the MPD should be generated from a
+- The Segment availability times announced in the MPD <span class=modal-keyword>should</span> be generated from a
     device synchronized to a globally accurate timing source, preferably using
     NTP.
-- The MPD should contain at least one `UTCTiming` element with `@schemeIdUri` set
+- The MPD <span class=modal-keyword>should</span> contain at least one `UTCTiming` element with `@schemeIdUri` set
     to one of the schemes defined by ISO/IEC 23009-1, namely:
     - `urn:mpeg:dash:utc:http-xsdate:2014`
     - `urn:mpeg:dash:utc:http-iso:2014`
@@ -232,24 +232,24 @@ present, the service shall provide a Media Presentation as follows:
     - `urn:mpeg:dash:utc:ntp:2014`
     - `urn:mpeg:dash:utc:http-head:2014`
     - `urn:mpeg:dash:utc:direct:2014`
-- If the MPD does not contain any `UTCTiming` element, then the Segments shall be
+- If the MPD does not contain any `UTCTiming` element, then the Segments <span class=modal-keyword>shall</span> be
     available no later than the announced Segment availability time using a
     globally accurate timing source.
 
 Note: The MPD time does not track leap seconds; if a leap second occurs during a
-live service it may advance or retard the media against real time. DVB-DASH
+live service it <span class=modal-keyword>may</span> advance or retard the media against real time. DVB-DASH
 requires support for `http-xsdate` and `http-head`.
 
 ### Client Requirements and Guidelines ### {#live-sync-client}
 
 If the Media Presentation is dynamic, or if `MPD@availabilityStartTime` is
-present, the client should do the following:
+present, the client <span class=modal-keyword>should</span> do the following:
 
-- If the MPD does not contain any `UTCTiming` element, the client should acquire
+- If the MPD does not contain any `UTCTiming` element, the client <span class=modal-keyword>should</span> acquire
     an accurate wall-clock time from its system. The anticipated inaccuracy of the
-    timing source should be taken into account when requesting Segments close to
+    timing source <span class=modal-keyword>should</span> be taken into account when requesting Segments close to
     their availability-time boundaries.
-- If the MPD contains one or more `UTCTiming` elements, the client should use at
+- If the MPD contains one or more `UTCTiming` elements, the client <span class=modal-keyword>should</span> use at
     least one of the announced timing methods to synchronize its clock. The client
     must not request Segments prior to their Segment Availability Start Time with
     reference to the chosen `UTCTiming` method.
@@ -267,7 +267,7 @@ variation while maintaining the presentation schedule.
 
 ### Joining, Initial Buffering and Playout ### {#live-client-joining}
 
-When joining a live service, the client should:
+When joining a live service, the client <span class=modal-keyword>should</span>:
 
 - Determine the live edge from the MPD timeline and the synchronized wall-clock
     time, taking `MPD@suggestedPresentationDelay` into account where present to
@@ -285,7 +285,7 @@ specified in [[#low-latency]].
 
 ## Provisioning of Live Content in On-Demand Mode ## {#live-to-vod}
 
-A completed live service may be offered subsequently as an on-demand service. In
+A completed live service <span class=modal-keyword>may</span> be offered subsequently as an on-demand service. In
 this case the Media Presentation is converted to `MPD@type` set to `static`, the
 timeline is finalised, and `MPD@minimumUpdatePeriod` and live-only signalling
 (such as `UTCTiming` for availability) are removed or adjusted per ISO/IEC

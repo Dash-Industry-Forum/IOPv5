@@ -8,7 +8,7 @@
 
 This document specifies DASH-IF IOP v5 Part 5: **Ad Insertion and Content Replacement**. Ad insertion and content replacement guidelines, including SSAI and SGAI workflows.
 
-This is an initial Bikeshed conversion shell. Normative content shall be migrated
+This is an initial Bikeshed conversion shell. Normative content <span class=modal-keyword>shall</span> be migrated
 from the identified source material and reconciled with Part 2 core principles,
 Part 12 conformance interpretation, and the current editions of MPEG-DASH and
 CMAF.

@@ -71,7 +71,7 @@ Issue: Redraw the source architecture figure as Mermaid/draw.io. Original at
 :: A Service Offering that contains information to support a [=Low-Latency DASH
     Client=] to provide the service in the target latency of typically 2 to 10
     seconds; the target latency can be defined by the service provider. Target
-    latency may be [=End-to-End Latency=] or [=Encoder-Display Latency=] as
+    latency <span class=modal-keyword>may</span> be [=End-to-End Latency=] or [=Encoder-Display Latency=] as
     defined in [[#ll-introduction]].
 : <dfn>Low-Latency Adaptation Set</dfn>
 :: An Adaptation Set that can be consumed based on the low-latency service
@@ -91,14 +91,14 @@ Issue: Redraw the source architecture figure as Mermaid/draw.io. Original at
 ### General ### {#ll-so-general}
 
 A Media Presentation that follows a DASH-IF [=Low-Latency Service Offering=]
-according to this specification should be signalled with the `@profiles`
+according to this specification <span class=modal-keyword>should</span> be signalled with the `@profiles`
 identifier `http://www.dashif.org/guidelines/low-latency-live-v5`.
 
-If an MPD signals conformance to this profile, it shall follow the requirements
+If an MPD signals conformance to this profile, it <span class=modal-keyword>shall</span> follow the requirements
 and recommendations of [[#ll-so-requirements]] and the referenced clauses.
 
 A legacy service offering is documented in [[#ll-legacy]]. This legacy offering
-does not conform to the DASH-IF [=Low-Latency Service Offering=] profile but may
+does not conform to the DASH-IF [=Low-Latency Service Offering=] profile but <span class=modal-keyword>may</span>
 be used in practice. DVB Low-Latency DASH is documented in ETSI TS 103 285;
 compatibility aspects are documented in [[#ll-dvb]].
 
@@ -107,17 +107,17 @@ compatibility aspects are documented in [[#ll-dvb]].
 A [=Low-Latency Service Offering=] follows these requirements and
 recommendations:
 
-- At least one `ServiceDescription` element shall be present.
-- One or several `Scope` elements may be present. The `Scope` element specifies
+- At least one `ServiceDescription` element <span class=modal-keyword>shall</span> be present.
+- One or several `Scope` elements <span class=modal-keyword>may</span> be present. The `Scope` element specifies
     the scope of the service description element. If present, the service
     description only targets DASH clients within the scope of this descriptor.
     DASH clients not in scope (i.e. not recognizing any of the scope descriptor
     elements) are expected to ignore this service description.
-- A `Latency` element shall be present including a `@target` attribute providing
+- A `Latency` element <span class=modal-keyword>shall</span> be present including a `@target` attribute providing
     the service provider's preferred presentation latency in milliseconds
     computed relative to the producer reference time.
 
-Note: The scope may, for example, be used to offer content to clients on
+Note: The scope <span class=modal-keyword>may</span>, for example, be used to offer content to clients on
 different network conditions for which the expectation of the target latency is
 different. DASH-IF does not define a scope description at this stage; it focuses
 on the interpretation of the Service Description assuming that the client is in
@@ -131,23 +131,23 @@ apply. Service implementation guidelines are provided in
 
 A [=Low-Latency Adaptation Set=] follows these requirements and recommendations:
 
-- It shall include at least one `ProducerReferenceTime` element with the
+- It <span class=modal-keyword>shall</span> include at least one `ProducerReferenceTime` element with the
     following constraints:
     - `@id`: provide a unique id for this reference.
-    - `@type`: shall be set either to `encoder` or `captured`.
-    - A `UTCTiming` element that is identical to one present in the MPD shall be
+    - `@type`: <span class=modal-keyword>shall</span> be set either to `encoder` or `captured`.
+    - A `UTCTiming` element that is identical to one present in the MPD <span class=modal-keyword>shall</span> be
         present and is used for deriving the value of `@wallclockTime`.
-    - `@wallclockTime`: shall be present and provide the value at the
+    - `@wallclockTime`: <span class=modal-keyword>shall</span> be present and provide the value at the
         `@presentationTime`.
-    - `@presentationTime`: shall be the value of `@presentationTimeOffset`, if
+    - `@presentationTime`: <span class=modal-keyword>shall</span> be the value of `@presentationTimeOffset`, if
         present, or 0 otherwise.
-    - `@inband` may be set to `FALSE` or `TRUE`.
-- A [=Low-Latency Adaptation Set=] shall be either a [=Low-Latency Segment
+    - `@inband` <span class=modal-keyword>may</span> be set to `FALSE` or `TRUE`.
+- A [=Low-Latency Adaptation Set=] <span class=modal-keyword>shall</span> be either a [=Low-Latency Segment
     Adaptation Set=] or a [=Low-Latency Chunked Adaptation Set=].
-- One of the following shall be present: the `SegmentTemplate@duration`
+- One of the following <span class=modal-keyword>shall</span> be present: the `SegmentTemplate@duration`
     attribute, or `SegmentTemplate@media` with `$Number$` and `$Time$`.
 
-The segment duration shall not vary more than indicated in the MPD.
+The segment duration <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> vary more than indicated in the MPD.
 
 Note: The producer reference time is provided at the start of the Period.
 
@@ -156,14 +156,14 @@ Note: The producer reference time is provided at the start of the Period.
 A [=Low-Latency Segment Adaptation Set=] follows these requirements and
 recommendations:
 
-- It shall conform to a [=Low-Latency Adaptation Set=].
-- Each Segment should include only a single movie fragment header (`moof`). If a
-    Segment includes only a single `moof`, then it may carry an `smds` brand and
-    shall signal this by including the `smds` brand in `@segmentProfiles`.
+- It <span class=modal-keyword>shall</span> conform to a [=Low-Latency Adaptation Set=].
+- Each Segment <span class=modal-keyword>should</span> include only a single movie fragment header (`moof`). If a
+    Segment includes only a single `moof`, then it <span class=modal-keyword>may</span> carry an `smds` brand and
+    <span class=modal-keyword>shall</span> signal this by including the `smds` brand in `@segmentProfiles`.
 - `@availabilityTimeComplete` and `@availabilityTimeOffset` for all
-    Representations shall be absent, indicating that the Segments are completely
+    Representations <span class=modal-keyword>shall</span> be absent, indicating that the Segments are completely
     available when requested.
-- The Segment duration shall not exceed 50% of the target latency and should not
+- The Segment duration <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> exceed 50% of the target latency and <span class=modal-keyword><span class=modal-keyword>should</span> not</span>
     exceed 30% of the target latency.
 
 A [=Low-Latency Segment Adaptation Set=] is identified by the settings above as
@@ -174,21 +174,21 @@ well as by the absence of the `Resync` element.
 A [=Low-Latency Chunked Adaptation Set=] follows these requirements and
 recommendations:
 
-- It shall conform to a [=Low-Latency Adaptation Set=].
-- Each Adaptation Set shall conform to an Adaptation Set according to the DASH
+- It <span class=modal-keyword>shall</span> conform to a [=Low-Latency Adaptation Set=].
+- Each Adaptation Set <span class=modal-keyword>shall</span> conform to an Adaptation Set according to the DASH
     profile for CMAF content as defined in MPEG DASH.
-- Each Segment shall conform to a CMAF Fragment but may — and typically should —
-    contain more than one CMAF chunk. CMAF chunks should be generated such that
+- Each Segment <span class=modal-keyword>shall</span> conform to a CMAF Fragment but <span class=modal-keyword>may</span> — and typically <span class=modal-keyword>should</span> —
+    contain more than one CMAF chunk. CMAF chunks <span class=modal-keyword>should</span> be generated such that
     the range of presentation times contained in any CMAF chunk of the CMAF Track
     does not overlap with the range of presentation times in any other CMAF chunk
     of the same CMAF Track.
-- A `Resync` element should be assigned to each Representation (possibly
+- A `Resync` element <span class=modal-keyword>should</span> be assigned to each Representation (possibly
     defaulted) signalling the properties of the Segments and the chunks used
     (chunk size, chunk duration, chunk properties). See [[#ll-resync]].
 
 Note: The resynchronization feature was introduced in ISO/IEC
 23009-1:2020/Amd.1. As correct handling is not guaranteed by legacy DASH clients
-(including, for example, DVB LL-DASH clients), content authors should be careful
+(including, for example, DVB LL-DASH clients), content authors <span class=modal-keyword>should</span> be careful
 in relying on this information.
 
 ### Legacy Setup ### {#ll-legacy}
@@ -197,18 +197,18 @@ As low-latency DASH services have developed over time, this clause documents
 legacy aspects compared to the DASH-IF [=Low-Latency Service Offering=] profile.
 In such a legacy setup one or more of the following applies:
 
-- The `ServiceDescription` element may not be present. In particular, the target
-    latency may be absent, but may be provided by external means (for example by
+- The `ServiceDescription` element <span class=modal-keyword>may</span> not be present. In particular, the target
+    latency <span class=modal-keyword>may</span> be absent, but <span class=modal-keyword>may</span> be provided by external means (for example by
     the application setting the value through an API).
-- The `ProducerReferenceTime` element may not be present. In this case, the
+- The `ProducerReferenceTime` element <span class=modal-keyword>may</span> not be present. In this case, the
     Period Start time is assumed to be used as the wall-clock time and the value
     of `@presentationTimeOffset` is assumed as the corresponding presentation
     time.
-- The Segment durations for [=Low-Latency Segment Adaptation Set=]s may exceed
+- The Segment durations for [=Low-Latency Segment Adaptation Set=]s <span class=modal-keyword>may</span> exceed
     the 50% target value.
-- The [=Low-Latency Chunked Adaptation Set=]s may not conform to an Adaptation
+- The [=Low-Latency Chunked Adaptation Set=]s <span class=modal-keyword>may</span> not conform to an Adaptation
     Set according to the DASH profile for CMAF content as defined in MPEG DASH.
-- The `Resync` element may not be present.
+- The `Resync` element <span class=modal-keyword>may</span> not be present.
 
 ### DVB Low-Latency DASH ### {#ll-dvb}
 
@@ -231,13 +231,13 @@ completed prior to the DASH-IF specification, a few issues are documented here:
 
 ## Low-Latency Client ## {#ll-client}
 
-For a DASH-IF [=Low-Latency DASH Client=] the following applies. The client shall
+For a DASH-IF [=Low-Latency DASH Client=] the following applies. The client <span class=modal-keyword>shall</span>
 be able to consume content offered with the DASH-IF [=Low-Latency Service
 Offering=] profile as defined in [[#ll-so-requirements]]. Specifically, this
 includes:
 
 - Support for media segments that contain more than one pair of `moof` and
-    `mdat` boxes, where each `moof`/`mdat` pair may contain any number of ISO
+    `mdat` boxes, where each `moof`/`mdat` pair <span class=modal-keyword>may</span> contain any number of ISO
     BMFF samples between 1 and the full segment duration inclusive.
 - Support for playing two or more Adaptation Sets for which the Segments of one
     Adaptation Set do not align with the Segments of another (e.g. due to
@@ -265,17 +265,17 @@ with a duration of one sample per chunk is not desirable. This applies not only
 to video but also to audio and possibly subtitles.
 
 For **video**, to make each chunk displayable without waiting for more data, it
-is important that all B-frames which should be displayed before the P-frame are
+is important that all B-frames which <span class=modal-keyword>should</span> be displayed before the P-frame are
 included in the chunk. As an example, hierarchical B-frames with the display
 order `I0 B1 B2 B3 P4 | B5 B6 B7 P8 | ...` have a decode (send) order
-`I0 P4 B1 B2 B3 | P8 B6 B5 B7 | ...`; the chunk should therefore be broken after
+`I0 P4 B1 B2 B3 | P8 B6 B5 B7 | ...`; the chunk <span class=modal-keyword>should</span> therefore be broken after
 a multiple of 4–5 frames (160–200 ms for 25 Hz video). The general recommendation
 is to place chunk boundaries so that all display times are before the earliest
 display time of the next chunk.
 
 For **audio**, the bitrate is relatively low (e.g. a 200 ms audio chunk at
-64 kbps is ~1.6 kB), which may be too small to propagate through network or
-receiver buffers. It may therefore make sense to use longer chunks (e.g. 0.5 s
+64 kbps is ~1.6 kB), which <span class=modal-keyword>may</span> be too small to propagate through network or
+receiver buffers. It <span class=modal-keyword>may</span> therefore make sense to use longer chunks (e.g. 0.5 s
 for audio), or not apply chunking for audio and instead run at a shorter Segment
 duration.
 
@@ -294,7 +294,7 @@ clients with information to enable consumption and production to proceed at
 equivalent rates, thus avoiding possible buffer overflow or underflow, and
 (ii) enable measuring and potentially controlling the latency between production
 of the media time and playout. The Producer Reference Time (`prft`) is defined in
-ISO/IEC 14496-12. The information may be provided inband as part of the Segments
+ISO/IEC 14496-12. The information <span class=modal-keyword>may</span> be provided inband as part of the Segments
 (in the `prft` box), in the MPD, or both.
 
 ### Service Description ### {#ll-service-description}
@@ -303,7 +303,7 @@ Annex K of ISO/IEC 23009-1 defines the DASH Service Description. In the DASH
 model, the DASH client has significant control over the algorithms and user
 perception for a DASH service (rate adaptation algorithm, buffer strategy, buffer
 duration, and the resulting latency and channel access times). However, leaving
-all decisions to the client may result in inconsistent behaviour across
+all decisions to the client <span class=modal-keyword>may</span> result in inconsistent behaviour across
 implementations. Hence, Annex K defines a service description reference model for
 the client that the content provider indicates is appropriate for automatically
 adjusting playback latency and buffer occupancy during normal playback.
@@ -374,7 +374,7 @@ command lines.
 
 This clause introduces a reference DASH packager for low-latency that also adds a
 period boundary at indicated times. The implementation is an example only; other
-approaches may be used. The basic operation of the DASH packager is as follows:
+approaches <span class=modal-keyword>may</span> be used. The basic operation of the DASH packager is as follows:
 
 - The DASH packager creates an initial MPD based on the configuration
     information in [[#ll-config-params]].
@@ -397,13 +397,13 @@ normative text exists to migrate yet. Tracked as future work (see
 
 ## Client Implementation Guidelines (Informative) ## {#ll-client-guidelines}
 
-The following should be considered for a low-latency client implementation:
+The following <span class=modal-keyword>should</span> be considered for a low-latency client implementation:
 
-- It should be configurable regarding using the low-latency mode and which
+- It <span class=modal-keyword>should</span> be configurable regarding using the low-latency mode and which
     configuration to use (e.g. how aggressive it is in latency maintenance).
 - Updates and considerations in the ABR logic and throughput estimation apply
     (see [[#ll-bandwidth]]).
-- Start-up operations should be considered to maintain latency and manage
+- Start-up operations <span class=modal-keyword>should</span> be considered to maintain latency and manage
     start-up delays; joining needs to be done carefully (it is better to wait for
     the next RAP than to play out stale content).
 

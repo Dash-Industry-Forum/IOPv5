@@ -38,11 +38,11 @@ table.data > caption {
   color: #222;
 }
 
-/* Light modal-keyword emphasis; use sparingly to avoid noisy prose. */
+/* Modal-keyword emphasis: consistent bold+italic, but no color/no box. */
 .modal-keyword,
 strong em.modal-keyword,
 em strong.modal-keyword {
-  font-weight: 600;
+  font-weight: 700;
   font-style: italic;
   color: inherit;
 }

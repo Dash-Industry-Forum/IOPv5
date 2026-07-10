@@ -16,7 +16,7 @@ DASH-IF Interoperability Guidelines (IOP). In particular, it provides a referenc
 architecture together with the relevant interfaces and functional blocks, and
 describes how the multi-part IOP document set fits together.
 
-Any identified bugs or missing features may be submitted through the DASH-IF
+Any identified bugs or missing features <span class=modal-keyword>may</span> be submitted through the DASH-IF
 issue tracker at
 [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).
 
@@ -111,10 +111,10 @@ For the purposes of the present document, the following abbreviations apply:
 # Conformance and Style # {#conformance-style}
 
 For detailed guidance on conformance and additional interpretation of the
-conformance key words (such as "shall"), see DASH-IF IOP v5 Part 12,
+conformance key words (such as "<span class=modal-keyword>shall</span>"), see DASH-IF IOP v5 Part 12,
 *Conformance and reference tools*.
 
-The key words *shall*, *shall not*, *should*, *should not*, *may*, *need not*,
+The key words *<span class=modal-keyword>shall</span>*, *<span class=modal-keyword><span class=modal-keyword>shall</span> not</span>*, *<span class=modal-keyword>should</span>*, *<span class=modal-keyword><span class=modal-keyword>should</span> not</span>*, *<span class=modal-keyword>may</span>*, *need not*,
 *will*, *will not*, *can*, and *cannot* are to be interpreted as described in the
 ETSI Drafting Rules. The words *must* and *must not* are not used to express
 normative requirements.

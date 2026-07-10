@@ -14,7 +14,8 @@ the canonical source unless the project decides otherwise.
 ```text
 .github/workflows/
   build-pr.yml                 PR build check for all specs
-  publish-bikeshed.yml         GitHub Pages publication workflow
+  publish-bikeshed.yml         GitHub Pages publication workflow from main
+  preview-bikeshed.yml         manual temporary Pages preview for review branches
 
 rag-authoring-starter/
   specs/
@@ -92,9 +93,10 @@ Rules of thumb:
   wrap data tables in `<figure>`.
 - Use `<figure class="diagram">` only for actual diagrams/images. Do not hardcode
   `Figure 1:` in captions; Bikeshed auto-numbers figures.
-- Modal keywords such as ***shall***, ***should***, and ***may*** should be
-  lightly emphasized where this improves readability, especially in explanatory
-  lists. Do not over-format every occurrence if it makes prose noisy.
+- Modal keywords such as ***shall***, ***should***, and ***may*** are formatted
+  consistently in authored spec text using `<span class=modal-keyword>...</span>`.
+  Run `python tools/publication/wrap_modals.py` after broad edits to normalize
+  modal-keyword presentation.
 - Cross-part references should eventually use stable anchors throughout the part
   set. This is an open editorial task; avoid inventing conflicting anchor names.
 - Add examples where they clarify interoperability behaviour. Missing examples
@@ -182,7 +184,7 @@ binary images unless publication rights are confirmed.
 
 ## GitHub Actions and GitHub Pages publication
 
-Two workflows are present:
+Three workflows are present:
 
 ### Pull-request build
 
@@ -199,6 +201,35 @@ Runs on pull requests to `main` when spec sources or the workflow change. It:
 5. uploads the `dist` folder as a workflow artifact.
 
 Use this for review builds before merging.
+
+### Temporary branch preview
+
+```text
+.github/workflows/preview-bikeshed.yml
+```
+
+This is the immediate review environment. It is manual-only (`workflow_dispatch`)
+and is intended for publication-style review of a branch before merge.
+
+It builds the selected branch and deploys a **temporary preview-only** GitHub
+Pages artifact with a URL path such as:
+
+```text
+https://dash-industry-forum.github.io/IOPv5/previews/tstockhammer-rag-workflow/
+```
+
+Important limitations:
+
+- The URL is unadvertised and pages are marked `noindex,nofollow`, but the
+  preview is **not private**.
+- GitHub Pages has one live deployment per repository. While a preview deployment
+  is active, it replaces the repository Pages deployment until the main
+  publication workflow is run again.
+- Do not use preview deployments for confidential drafts or access-controlled
+  material.
+
+Use this workflow when colleagues need a real browser/publication view without
+checking out the repository or downloading artifacts.
 
 ### GitHub Pages publication
 
@@ -225,8 +256,18 @@ https://dash-industry-forum.github.io/IOPv5/
 Recommended workflow policy:
 
 - Pull requests build and expose artifacts for review.
-- Only `main` publishes to GitHub Pages.
-- Branch previews can be added later if needed, but are not enabled by default.
+- Manual branch previews are allowed for temporary publication-style review.
+- Only `main` is the official publication source.
+- After a temporary preview, rerun the main publication workflow to restore the
+  official Pages deployment.
+
+Longer-term preview direction:
+
+- If preview URLs become a regular review mechanism, create a separate preview
+  Pages environment (preferred) or move to a `gh-pages` branch/subdirectory
+  strategy with cleanup of old previews.
+- A separate preview repository/site avoids any risk that branch previews obscure
+  or confuse the official publication.
 
 ## Metanorma / AsciiDoc experiment
 
@@ -246,8 +287,14 @@ Bikeshed Markdown remains canonical. Generated AsciiDoc should not become a
 second edited source of truth unless the project explicitly changes policy.
 
 The current experiment targets Part 12 first because it is relatively small and
-self-contained. Early findings are documented in `rag-authoring-starter/docs/decisions/0004-bikeshed-vs-metanorma.md`
-and follow-up reports under `rag-authoring-starter/rag/reports/`.
+self-contained. Early findings are documented in `rag-authoring-starter/docs/decisions/0004-bikeshed-vs-metanorma.md`,
+`rag-authoring-starter/rag/reports/metanorma-part12-poc-status.md`, and
+`rag-authoring-starter/docs/metanorma-dashif-template-plan.md`.
+
+The planned next step is an ISO-flavoured Metanorma/PDF experiment with DASH-IF
+branding/customization. If reliable PDF/DOC generation is achieved, generated
+PDF/DOC artifacts should first be exposed as workflow artifacts, and only later
+linked from the Bikeshed publication bundle or overview page.
 
 ## Issue tracking
 

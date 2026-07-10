@@ -34,7 +34,7 @@ part:
 :: The DASH-IF on-demand interoperability profile historically identified by
     `http://dashif.org/guidelines/dash-if-ondemand`.
 : <dfn export>Mixed On-Demand Content</dfn>
-:: Multi-Period on-demand content in which different Periods may use different
+:: Multi-Period on-demand content in which different Periods <span class=modal-keyword>may</span> use different
     on-demand-compatible representation structures, subject to explicit profile
     signalling.
 
@@ -57,15 +57,15 @@ common timing and Segment information model.
 
 For an on-demand service:
 
-- `MPD@type` shall be `static`.
-- The Media Presentation duration shall be determinable from
+- `MPD@type` <span class=modal-keyword>shall</span> be `static`.
+- The Media Presentation duration <span class=modal-keyword>shall</span> be determinable from
     `MPD@mediaPresentationDuration` or from the duration of the last Period.
-- `MPD@minimumUpdatePeriod` shall not be present.
-- `MPD@timeShiftBufferDepth` should not be present; if present, a client is
+- `MPD@minimumUpdatePeriod` <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be present.
+- `MPD@timeShiftBufferDepth` <span class=modal-keyword><span class=modal-keyword>should</span> not</span> be present; if present, a client is
     expected to ignore it.
-- `MPD@suggestedPresentationDelay` should not be present; if present, a client is
+- `MPD@suggestedPresentationDelay` <span class=modal-keyword><span class=modal-keyword>should</span> not</span> be present; if present, a client is
     expected to ignore it.
-- Segment availability shall not depend on wall-clock publication over time.
+- Segment availability <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> depend on wall-clock publication over time.
 
 ## Segment Information Derivation ## {#segment-information-derivation}
 
@@ -78,20 +78,20 @@ Representation, the Segment list is computed from `SegmentTemplate`,
 For `SegmentTimeline`-based Representations, the `S` elements and their `@t`,
 `@d`, and `@r` values define the media timeline, including any gaps. Each Media
 Segment has an earliest presentation time and an accurate Segment duration,
-which may be estimated from the MPD or determined from the Segment itself.
+which <span class=modal-keyword>may</span> be estimated from the MPD or determined from the Segment itself.
 
 Synchronized playout and seamless switching are achieved by aligning
-Representations according to presentation time within the Period. Clients shall
+Representations according to presentation time within the Period. Clients <span class=modal-keyword>shall</span>
 use presentation time, not download order, as the synchronization basis across
 Adaptation Sets and within switchable Representations.
 
 ## On-Demand Services Using Live-Profile Segment Structures ## {#ondemand-live-profile-structures}
 
-On-demand content may use Segment structures also used by live services, for
+On-demand content <span class=modal-keyword>may</span> use Segment structures also used by live services, for
 example `SegmentTemplate` with `$Number$` or `$Time$`. This can simplify reuse of
 live packagers and client logic. When such structures are used for an on-demand
 service, the MPD remains static and the dynamic-service attributes listed in
-[[#common-mpd-requirements]] shall not be used.
+[[#common-mpd-requirements]] <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be used.
 
 Issue: Reconstruct the v4.3 table "Information related to Segment Information
 for Using Live Profiles for On-Demand Services" and align it with the Part 2
@@ -99,7 +99,7 @@ SegmentTemplate parameter table. [GROUNDED_BY=dashif-iop-v4-3#74..#80]
 
 ## On-Demand Services Using the MPEG-DASH On-Demand Profile ## {#ondemand-profile}
 
-On-demand services may use on-demand DASH profiles defined by ISO/IEC 23009-1.
+On-demand services <span class=modal-keyword>may</span> use on-demand DASH profiles defined by ISO/IEC 23009-1.
 Historically, DASH-IF defined the DASH-IF On-Demand Profile identified by
 `http://dashif.org/guidelines/dash-if-ondemand`.
 
@@ -107,11 +107,11 @@ The DASH-IF On-Demand Profile is based on the MPEG-DASH Extended ISO BMFF
 On-Demand profile. The following requirements apply unless superseded by an IOP
 v5 profile decision:
 
-- Each Representation shall contain one Segment that complies with the Indexed
+- Each Representation <span class=modal-keyword>shall</span> contain one Segment that complies with the Indexed
     Self-Initializing Media Segment structure.
-- `@indexRange` shall be present in the MPD.
-- Only a single `sidx` box shall be present for the Representation index.
-- The `sidx` box shall describe the subsegments (movie fragments) needed for
+- `@indexRange` <span class=modal-keyword>shall</span> be present in the MPD.
+- Only a single `sidx` box <span class=modal-keyword>shall</span> be present for the Representation index.
+- The `sidx` box <span class=modal-keyword>shall</span> describe the subsegments (movie fragments) needed for
     client request construction.
 
 Note: v4.3 emphasized operational advantages of the on-demand profile: fewer
@@ -124,37 +124,37 @@ the IOP v5 profile identifier, is deprecated, or is replaced by a new v5 URI.
 
 ## Service Offering Requirements and Guidelines ## {#service-offering}
 
-An on-demand service offering shall provide all MPD information required by the
+An on-demand service offering <span class=modal-keyword>shall</span> provide all MPD information required by the
 selected Segment information mode or profile. If the On-Demand profile is used,
-`@indexRange` shall allow the client to retrieve the Segment Index. The Segment
-Index should be sufficient to build the subsegment request timeline for the
+`@indexRange` <span class=modal-keyword>shall</span> allow the client to retrieve the Segment Index. The Segment
+Index <span class=modal-keyword>should</span> be sufficient to build the subsegment request timeline for the
 Representation.
 
-For multi-Period on-demand content, Period timing shall be explicit and
-consistent. Adjacent Periods that are intended for continuous playout should
+For multi-Period on-demand content, Period timing <span class=modal-keyword>shall</span> be explicit and
+consistent. Adjacent Periods that are intended for continuous playout <span class=modal-keyword>should</span>
 follow the Good Multi-Period CMAF Content requirements of Part 2.
 
 ## Client Operation, Requirements and Guidelines ## {#client-operation}
 
-A client supporting on-demand services shall parse the MPD, determine the Period
+A client supporting on-demand services <span class=modal-keyword>shall</span> parse the MPD, determine the Period
 and Representation timing, derive the Segment or byte-range request list, and
 schedule playback according to presentation time.
 
 For the On-Demand profile, the client typically requests the initialization data
 and the Segment Index, parses the `sidx` box, and constructs a list of URL and
-byte-range requests for the referenced subsegments. A client may retrieve only
+byte-range requests for the referenced subsegments. A client <span class=modal-keyword>may</span> retrieve only
 the initial portion of a Representation index to reduce startup delay, provided
 it can continue retrieving index information as needed without violating the
 presentation timeline.
 
 ## Mixed On-Demand Content ## {#mixed-on-demand}
 
-On-demand content may be offered as multiple Periods. Earlier IOP versions
+On-demand content <span class=modal-keyword>may</span> be offered as multiple Periods. Earlier IOP versions
 identified a DASH-IF Mixed Profile `http://dashif.org/guidelines/dash-if-mixed-ondemand`.
-A mixed on-demand service may contain multiple Periods, and each Period shall
+A mixed on-demand service <span class=modal-keyword>may</span> contain multiple Periods, and each Period <span class=modal-keyword>shall</span>
 explicitly signal the applicable profile or representation structure.
 
-A client claiming support for mixed on-demand content shall support multi-Period
+A client claiming support for mixed on-demand content <span class=modal-keyword>shall</span> support multi-Period
 playback and the representation structures used by the Periods. Mixed on-demand
 content does not imply support for dynamic services.
 

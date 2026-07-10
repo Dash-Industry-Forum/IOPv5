@@ -70,7 +70,7 @@ For the purposes of this document, the terms and definitions in ISO/IEC 23009-1
 : <dfn export>CMAF Segment</dfn>
 :: A CMAF addressable media object, analogous in DASH to a Media Segment.
 : <dfn export>CMAF Chunk</dfn>
-:: A CMAF sub-segment object that may be made available progressively; relevant
+:: A CMAF sub-segment object that <span class=modal-keyword>may</span> be made available progressively; relevant
     for low-latency services in Part 4.
 : <dfn export>Good Multi-Period CMAF Content</dfn>
 :: Multi-Period DASH content whose Period boundaries and CMAF Track structure
@@ -122,7 +122,7 @@ for DASH delivery are:
 - **CMAF Track Files**, which in practical DASH usage are analogous to
     self-initializing Media Segments or single-file Representations.
 
-A DASH-IF Media Presentation shall use CMAF-compliant media tracks when the part
+A DASH-IF Media Presentation <span class=modal-keyword>shall</span> use CMAF-compliant media tracks when the part
 or profile requires CMAF content. A DASH client consumes CMAF media through the
 DASH MPD, not directly through the CMAF content model; therefore the CMAF model
 is mapped into Periods, Adaptation Sets, Representations, Initialization
@@ -136,7 +136,7 @@ component. A CMAF Switching Set is typically represented by one DASH Adaptation
 Set containing Representations that are switchable under ISO/IEC 23009-1 and the
 media-specific IOP part. A CMAF Track maps to a DASH Representation.
 
-The mapping shall preserve:
+The mapping <span class=modal-keyword>shall</span> preserve:
 
 - synchronization between media components;
 - random access and switching points required by the relevant media profiles;
@@ -149,9 +149,9 @@ The mapping shall preserve:
 
 ## DASH-IF Media Presentation ## {#dashif-media-presentation}
 
-A DASH-IF Media Presentation shall conform to ISO/IEC 23009-1 [[!MPEGDASH]] and
+A DASH-IF Media Presentation <span class=modal-keyword>shall</span> conform to ISO/IEC 23009-1 [[!MPEGDASH]] and
 the applicable DASH-IF IOP v5 parts. Unless otherwise specified, DASH-IF IOP v5
-uses CMAF media as the segment format baseline. The MPD shall provide sufficient
+uses CMAF media as the segment format baseline. The MPD <span class=modal-keyword>shall</span> provide sufficient
 information for a DASH client to select Adaptation Sets, choose Representations,
 derive Segment URLs, map Segment media times to presentation times, and schedule
 Segment requests.
@@ -161,7 +161,7 @@ Segment requests.
 The MPD is the entry point for a DASH-IF Media Presentation. It describes the
 Media Presentation timeline, Periods, Adaptation Sets, Representations, Segment
 information, BaseURL/Location information, and supplemental descriptors. The MPD
-shall be authored so that each referenced Segment can be resolved using the
+<span class=modal-keyword>shall</span> be authored so that each referenced Segment can be resolved using the
 reference-resolution rules of ISO/IEC 23009-1.
 
 ## DASH Timing Model ## {#timing-model}
@@ -176,7 +176,7 @@ The DASH timing model relates four domains:
 
 For each Representation in a Period, the mapping between Segment media time and
 presentation time is determined by the Period start time and any
-`@presentationTimeOffset`. The client shall use the MPD timing information and
+`@presentationTimeOffset`. The client <span class=modal-keyword>shall</span> use the MPD timing information and
 media timing information to present samples at the intended Media Presentation
 time.
 
@@ -194,14 +194,14 @@ that are now fully specified in the current MPEG-DASH edition.
 ### General ### {#representation-general}
 
 Representations in an Adaptation Set are alternatives for the same media
-component unless otherwise signalled. Adaptation Sets and Representations shall
+component unless otherwise signalled. Adaptation Sets and Representations <span class=modal-keyword>shall</span>
 carry sufficient codec, profile, resolution, language, role, accessibility,
 content-protection, and essential/supplemental property signalling for a client
 to select and play the content.
 
 Adaptation Set constraints from v4.3 remain applicable unless superseded by the
-media-specific parts: Representations in an Adaptation Set should be switchable
-at defined switching points and should use compatible decoder configurations
+media-specific parts: Representations in an Adaptation Set <span class=modal-keyword>should</span> be switchable
+at defined switching points and <span class=modal-keyword>should</span> use compatible decoder configurations
 where switching is expected.
 
 ### Segment Information ### {#segment-information}
@@ -218,7 +218,7 @@ part distinguishes three common `SegmentTemplate` modes:
     <tr><td>Time + SegmentTimeline<td>`$Time$`<td>`SegmentTimeline`<td>Media-time addressing; accurate timeline signalling.
 </table>
 
-A SegmentTemplate-based Representation shall include all attributes and elements
+A SegmentTemplate-based Representation <span class=modal-keyword>shall</span> include all attributes and elements
 required by ISO/IEC 23009-1 for the selected mode. Attributes and elements not
 specified by this part are governed by ISO/IEC 23009-1.
 
@@ -240,15 +240,15 @@ computation examples. [GROUNDED_BY=dashif-iop-v5-part2-draft#45..#51]
 
 ### Subsegment Information ### {#subsegment-information}
 
-Subsegment information may be used by clients for byte-range access, random
+Subsegment information <span class=modal-keyword>may</span> be used by clients for byte-range access, random
 access, trick modes, low-latency operation, and other optimizations. Where CMAF
 Chunks are used, the low-latency constraints of Part 4 apply. Subsegment
-information shall be consistent with the media data and Segment addressing.
+information <span class=modal-keyword>shall</span> be consistent with the media data and Segment addressing.
 
 ### Segment and Representation to Media Presentation Time Mapping ### {#segment-time-mapping}
 
 For each Segment, the media presentation time is derived from media timestamps,
-`@timescale`, `@presentationTimeOffset`, and the Period start. The authoring shall
+`@timescale`, `@presentationTimeOffset`, and the Period start. The authoring <span class=modal-keyword>shall</span>
 ensure that the mapping is unambiguous and continuous unless a gap or discontinuity
 is intentionally signalled.
 
@@ -256,7 +256,7 @@ is intentionally signalled.
 
 ## Introduction ## {#cmaf-to-dash-intro}
 
-The CMAF-to-DASH mapping shall preserve CMAF constraints while exposing DASH
+The CMAF-to-DASH mapping <span class=modal-keyword>shall</span> preserve CMAF constraints while exposing DASH
 client operations through the MPD. In particular:
 
 - a CMAF Header maps to an Initialization Segment;
@@ -265,17 +265,17 @@ client operations through the MPD. In particular:
 - CMAF Switching Sets map to switchable DASH Representation sets; and
 - CMAF Selection Sets map to alternative media-component selections.
 
-The MPD shall not signal switching or selection capabilities that are not
+The MPD <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> signal switching or selection capabilities that are not
 supported by the underlying CMAF media.
 
 ## Good Multi-Period CMAF Content ## {#good-multi-period}
 
 Multi-Period content is common for ad insertion, program boundaries, blackout
 replacement, and service operations. For continuous CMAF multi-Period content,
-the Period boundary shall not require decoder reset or visible/audible disruption
+the Period boundary <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> require decoder reset or visible/audible disruption
 unless such discontinuity is intentionally signalled and expected by the service.
 
-A service offering continuous multi-Period CMAF content should ensure:
+A service offering continuous multi-Period CMAF content <span class=modal-keyword>should</span> ensure:
 
 - Period boundaries align with random access points for the affected media;
 - decoder configurations are compatible across Periods where continuity is
@@ -293,8 +293,8 @@ must be completed with Part 5 ad-insertion alignment. [GROUNDED_BY=dashif-iop-v5
 ## Multi-Period Content Profile Signalling ## {#multi-period-profile-signalling}
 
 Where a DASH-IF profile or identifier is used to signal multi-Period CMAF
-constraints, the signalling shall be present at the MPD or Period level as
-specified by that profile. Clients that claim support for the profile shall
+constraints, the signalling <span class=modal-keyword>shall</span> be present at the MPD or Period level as
+specified by that profile. Clients that claim support for the profile <span class=modal-keyword>shall</span>
 support the associated multi-Period processing rules.
 
 Issue: Confirm whether legacy v4.3 profile identifiers such as the DASH-IF Mixed
@@ -305,9 +305,9 @@ identifiers. [GROUNDED_BY=dashif-iop-v4-3#90]
 
 ## Bandwidth Signalling ## {#bandwidth-signalling}
 
-`Representation@bandwidth` shall be authored according to ISO/IEC 23009-1 and
-shall reflect the bandwidth needed for stable retrieval and playback of the
-Representation. Content authors should ensure that bandwidth values are
+`Representation@bandwidth` <span class=modal-keyword>shall</span> be authored according to ISO/IEC 23009-1 and
+<span class=modal-keyword>shall</span> reflect the bandwidth needed for stable retrieval and playback of the
+Representation. Content authors <span class=modal-keyword>should</span> ensure that bandwidth values are
 sufficiently accurate for adaptation logic and are consistent across equivalent
 Representations.
 
@@ -318,19 +318,19 @@ with media-specific constraints. [GROUNDED_BY=dashif-iop-v5-part2-draft#94..#97]
 ## Static Services ## {#static-services}
 
 A static service uses `MPD@type="static"`. All media announced in the MPD is
-available for consumption without requiring MPD updates. Static services may use
+available for consumption without requiring MPD updates. Static services <span class=modal-keyword>may</span> use
 any Segment or Subsegment information mode permitted by this part and the
 applicable profile.
 
 For static services:
 
-- `MPD@type` shall be `static`;
-- the Media Presentation duration shall be determinable from the MPD;
-- `MPD@minimumUpdatePeriod` shall not be present; and
+- `MPD@type` <span class=modal-keyword>shall</span> be `static`;
+- the Media Presentation duration <span class=modal-keyword>shall</span> be determinable from the MPD;
+- `MPD@minimumUpdatePeriod` <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be present; and
 - dynamic-service-only attributes such as `MPD@timeShiftBufferDepth` and
-    `MPD@suggestedPresentationDelay` should not be present.
+    `MPD@suggestedPresentationDelay` <span class=modal-keyword><span class=modal-keyword>should</span> not</span> be present.
 
-Client implementations shall ignore dynamic-only timing information if it is
+Client implementations <span class=modal-keyword>shall</span> ignore dynamic-only timing information if it is
 erroneously present in a static service unless a referenced profile specifies
 otherwise.
 
@@ -338,8 +338,8 @@ otherwise.
 
 A dynamic service uses `MPD@type="dynamic"`. Media availability evolves over
 wall-clock time, and the client derives Segment availability from the MPD and the
-time-synchronization rules in Part 4. Dynamic services may be MPD-controlled or
-may use segment-based signalling for MPD validity and updates.
+time-synchronization rules in Part 4. Dynamic services <span class=modal-keyword>may</span> be MPD-controlled or
+<span class=modal-keyword>may</span> use segment-based signalling for MPD validity and updates.
 
 The generic timing and addressing principles in this part apply to dynamic
 services; live-service-specific requirements are defined in Part 4.
@@ -347,7 +347,7 @@ services; live-service-specific requirements are defined in Part 4.
 ## MPD Updates ## {#mpd-updates}
 
 An MPD update publishes a new MPD instance for the same Media Presentation. The
-updated MPD shall maintain a consistent MPD timeline and shall update
+updated MPD <span class=modal-keyword>shall</span> maintain a consistent MPD timeline and <span class=modal-keyword>shall</span> update
 `MPD@publishTime` whenever the MPD content changes. Clients use the MPD update
 mechanisms of ISO/IEC 23009-1, including `MPD@minimumUpdatePeriod`, MPD validity
 expiry events, and `MPD.Location` where applicable.
@@ -357,21 +357,21 @@ service text to avoid duplication. [GROUNDED_BY=dashif-iop-v5-part2-draft#105..#
 
 ## MPD and Segment Locations ## {#locations}
 
-The `MPD.Location` element may be used to redirect clients to another MPD update
+The `MPD.Location` element <span class=modal-keyword>may</span> be used to redirect clients to another MPD update
 location. `BaseURL` elements at MPD, Period, Adaptation Set, Representation, or
-Segment levels may be used to resolve Segment URLs, support replication, and
-offer content through multiple CDNs. Content authors shall ensure that reference
+Segment levels <span class=modal-keyword>may</span> be used to resolve Segment URLs, support replication, and
+offer content through multiple CDNs. Content authors <span class=modal-keyword>shall</span> ensure that reference
 resolution is deterministic and follows ISO/IEC 23009-1.
 
-A service may use multiple `BaseURL` elements for redundancy, load distribution,
+A service <span class=modal-keyword>may</span> use multiple `BaseURL` elements for redundancy, load distribution,
 or CDN selection. Client behaviour for multiple Base URLs is governed by
 ISO/IEC 23009-1 and any applicable DASH-IF part.
 
 ## Gap Handling ## {#gap-handling}
 
-Gaps may occur when a Representation has missing media for a portion of the MPD
-timeline. Gaps shall be signalled using the mechanisms of ISO/IEC 23009-1 and the
-selected Segment information mode. A client shall not infer media availability in
+Gaps <span class=modal-keyword>may</span> occur when a Representation has missing media for a portion of the MPD
+timeline. Gaps <span class=modal-keyword>shall</span> be signalled using the mechanisms of ISO/IEC 23009-1 and the
+selected Segment information mode. A client <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> infer media availability in
 an interval that is not signalled by the MPD or media data.
 
 Issue: The Part 2 draft has a placeholder for gap handling. Complete normative
@@ -383,8 +383,8 @@ SegmentTimeline gaps, Period boundaries, and low-latency resynchronization.
 
 Content annotation and media-specific mapping are handled by the media parts and
 by descriptors defined in ISO/IEC 23009-1. This part defines only common
-principles: descriptors shall be used consistently, shall not contradict the
-media data, and shall provide enough information for a DASH client and the
+principles: descriptors <span class=modal-keyword>shall</span> be used consistently, <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> contradict the
+media data, and <span class=modal-keyword>shall</span> provide enough information for a DASH client and the
 application to perform selection, switching, accessibility handling, and
 protection processing.
 

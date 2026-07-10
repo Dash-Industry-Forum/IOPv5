@@ -17,12 +17,12 @@ Part 11 has not yet been substantively drafted. The initial work items are:
     material, into this part where it is not specific to Part 4;
 - migrate **thumbnail tracks** from v4.3;
 - define treatment of **specific metadata tracks**, in coordination with Part 10
-    because timed metadata may also be event-related;
+    because timed metadata <span class=modal-keyword>may</span> also be event-related;
 - define a **registration and documentation process** for additional DASH-IF
     technologies and extension points; and
 - identify examples and conformance/test-asset expectations for each technology.
 
-Normative content shall be migrated from the identified source material and
+Normative content <span class=modal-keyword>shall</span> be migrated from the identified source material and
 reconciled with Part 2 core principles, Part 10 events/metadata processing, Part
 12 conformance interpretation, and the current editions of MPEG-DASH and CMAF.
 
@@ -48,7 +48,7 @@ Part 2 unless defined in this part.
 Issue: Migrate trick-mode requirements and recommendations from DASH-IF IOP v4.3,
 including clause 3.2.9 and live trick-mode text, into Part 11. Separate generic
 trick-mode signalling/client behaviour from live-service-specific constraints
-that may remain in Part 4. [GROUNDED_BY=dashif-iop-v4-3#168..#170]
+that <span class=modal-keyword>may</span> remain in Part 4. [GROUNDED_BY=dashif-iop-v4-3#168..#170]
 
 ## Thumbnail Tracks ## {#thumbnail-tracks}
 
@@ -60,14 +60,14 @@ experiences. [GROUNDED_BY=dashif-iop-v4-3 / uploaded source material]
 ## Specific Metadata Tracks ## {#specific-metadata-tracks}
 
 Issue: Define the scope of specific metadata tracks in Part 11 and coordinate
-with Part 10. If metadata is time-synchronized and event-like, Part 10 may own the
-processing model; Part 11 may own registration, carriage, and deployment
+with Part 10. If metadata is time-synchronized and event-like, Part 10 <span class=modal-keyword>may</span> own the
+processing model; Part 11 <span class=modal-keyword>may</span> own registration, carriage, and deployment
 conventions. [GROUNDED_BY=dashif-iop-v4-3 / iop-docs-overview]
 
 ## Registration and Documentation Process ## {#registration-process}
 
 Issue: Define a registration and documentation process for additional DASH-IF
-technologies. The process should identify: required specification text, signalling
+technologies. The process <span class=modal-keyword>should</span> identify: required specification text, signalling
 scheme ownership, examples/test assets, validator expectations, reference-player
 expectations, and where maintained registries are published.
 

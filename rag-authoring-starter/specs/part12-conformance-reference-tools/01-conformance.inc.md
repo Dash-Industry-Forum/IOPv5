@@ -17,7 +17,7 @@ service offerings, the [=dash.js=] reference client, the [=livesim2=] live sourc
 simulator, and the DASH-IF test assets. It also describes how conformance
 keywords used across the IOP parts are interpreted by these tools.
 
-Any identified bugs or missing features may be submitted through the DASH-IF
+Any identified bugs or missing features <span class=modal-keyword>may</span> be submitted through the DASH-IF
 issue tracker at
 [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).
 
@@ -232,7 +232,7 @@ deployments. As a general model, a new feature is first added to a draft IOP
 document (possibly by reference to or collaboration with the organization owning
 a referenced specification, e.g. MPEG), then supported by test content, the
 conformance validator, and the reference player, and finally — once all pieces
-are complete — promoted to a fully supported feature. Intermediate steps may
+are complete — promoted to a fully supported feature. Intermediate steps <span class=modal-keyword>may</span>
 involve one or more community-review rounds.
 
 # Change History # {#change-history}

@@ -8,7 +8,7 @@
 
 This document specifies DASH-IF IOP v5 Part 10: **Events**. Event signalling and processing, including MPD events, inband events, and timed metadata tracks.
 
-This is an initial Bikeshed conversion shell. Normative content shall be migrated
+This is an initial Bikeshed conversion shell. Normative content <span class=modal-keyword>shall</span> be migrated
 from the identified source material and reconciled with Part 2 core principles,
 Part 12 conformance interpretation, and the current editions of MPEG-DASH and
 CMAF.
