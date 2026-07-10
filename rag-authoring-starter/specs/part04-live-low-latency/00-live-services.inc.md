@@ -94,12 +94,15 @@ Based on an MPD available at time `NOW` on the server, a synchronized DASH clien
 derives the list of Segments for each Representation in each Period. The following
 definitions, aligned with ISO/IEC 23009-1, apply:
 
+: <dfn export>available Segment</dfn>
 :: A Segment that is accessible at its assigned HTTP-URL: an HTTP GET to the URL
     returns the Segment with a 2xx status code.
-: <dfn>valid Segment URL</dfn>
+: <dfn export>valid Segment URL</dfn>
+:: An HTTP-URL that is promised to reference a Segment during its Segment
     availability period.
-: <dfn>NOW</dfn>
+: <dfn export>NOW</dfn>
 :: The wall-clock time on the content server. All wall-clock-related information
+    in the MPD is expressed relative to `NOW`.
 
 **MPD information.** For a dynamic service without MPD updates: `MPD@type` shall
 be `dynamic`; `MPD@mediaPresentationDuration` shall be present, or the

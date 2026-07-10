@@ -1,0 +1,48 @@
+<pre class=metadata>
+Revision: 0.1
+Title: DASH-IF IOP v5 Part 3: On-Demand Services
+Status: LD
+Shortname: iop-v5-part3
+URL: https://dashif.org/Guidelines/iop-v5/part03-on-demand.html
+Group: dashif
+Editor: Thomas Stockhammer, Qualcomm, https://www.linkedin.com/in/stockhammer/
+Abstract: Working draft of DASH-IF IOP v5 Part 3, covering requirements and recommendations for DASH on-demand services. Drafted from DASH-IF IOP v4.3 on-demand service text and aligned with IOP v5 Part 2.
+Repository: Dash-Industry-Forum/IOPv5
+!Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
+!Key Words: On-Demand, Static, DASH, CMAF, Segment Index, Indexed Self-Initializing Media Segment
+</pre>
+
+<pre class=biblio>
+{
+  "MPEGDASH": {
+    "href": "https://www.iso.org/standard/83314.html",
+    "title": "Information technology - Dynamic adaptive streaming over HTTP (DASH) - Part 1: Media presentation description and segment formats",
+    "publisher": "ISO/IEC",
+    "date": "2022"
+  },
+  "ISOBMFF": {
+    "href": "https://www.iso.org/standard/83102.html",
+    "title": "Information technology - Coding of audio-visual objects - Part 12: ISO base media file format",
+    "publisher": "ISO/IEC",
+    "date": "2024"
+  },
+  "MPEGCMAF": {
+    "href": "https://www.iso.org/standard/85623.html",
+    "title": "Information technology - Multimedia application format (MPEG-A) - Part 19: Common media application format (CMAF) for segmented media",
+    "publisher": "ISO/IEC",
+    "date": "2024"
+  }
+}
+</pre>
+
+<pre class=include>
+path: _shared-ipr.inc.md
+</pre>
+
+<pre class=include>
+path: _shared-diagram-style.inc.md
+</pre>
+
+<pre class=include>
+path: 01-on-demand.inc.md
+</pre>

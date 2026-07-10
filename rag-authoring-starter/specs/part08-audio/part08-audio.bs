@@ -1,0 +1,42 @@
+<pre class=metadata>
+Revision: 0.1
+Title: DASH-IF IOP v5 Part 8: Audio
+Status: LD
+Shortname: iop-v5-part8
+URL: https://dashif.org/Guidelines/iop-v5/part08-audio.html
+Group: dashif
+Editor: DASH-IF Technical Working Group
+Abstract: Audio interoperability points, coding profiles, ISO BMFF packaging, MPD parameters, and audio-specific constraints. Working draft authored in the IOPv5 workspace.
+Repository: Dash-Industry-Forum/IOPv5
+!Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
+!Key Words: Audio, CMAF, Codecs, MPD Signalling
+</pre>
+
+<pre class=biblio>
+{
+  "MPEGDASH": {
+    "href": "https://www.iso.org/standard/83314.html",
+    "title": "Information technology - Dynamic adaptive streaming over HTTP (DASH) - Part 1: Media presentation description and segment formats",
+    "publisher": "ISO/IEC",
+    "date": "2022"
+  },
+  "MPEGCMAF": {
+    "href": "https://www.iso.org/standard/85623.html",
+    "title": "Information technology - Multimedia application format (MPEG-A) - Part 19: Common media application format (CMAF) for segmented media",
+    "publisher": "ISO/IEC",
+    "date": "2024"
+  }
+}
+</pre>
+
+<pre class=include>
+path: _shared-ipr.inc.md
+</pre>
+
+<pre class=include>
+path: _shared-diagram-style.inc.md
+</pre>
+
+<pre class=include>
+path: 08-audio.inc.md
+</pre>
