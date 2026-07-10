@@ -56,7 +56,7 @@ jobs:
         working-directory: rag-authoring-starter
         run: python tools/env/install_dashif_boilerplate.py
 
-            - name: Build all specs
+      - name: Build all specs
         working-directory: rag-authoring-starter
         run: python tools/publication/build_all.py --out ../site-build
 
@@ -71,7 +71,6 @@ jobs:
           if [ -z "$PREVIEW_NAME" ]; then
             PREVIEW_NAME="${GITHUB_REF_NAME}"
           fi
-          # Conservative URL slug: keep only common safe path characters.
           PREVIEW_NAME="$(printf '%s' "$PREVIEW_NAME" | tr -c 'A-Za-z0-9._-' '-' | sed -E 's/^-+//; s/-+$//')"
           PREVIEW_PATH="previews/$PREVIEW_NAME"
           rm -rf dist
@@ -129,3 +128,4 @@ jobs:
       - name: Deploy preview to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
