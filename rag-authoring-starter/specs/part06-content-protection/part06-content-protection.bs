@@ -1,30 +1,34 @@
 <pre class=metadata>
-Revision: 0.1
+Revision: 5.0
 Title: DASH-IF IOP v5 Part 6: Content Protection and Security
 Status: LD
 Shortname: iop-v5-part6
 URL: https://dashif.org/Guidelines/iop-v5/part06-content-protection.html
 Group: dashif
 Editor: DASH-IF Technical Working Group
-Abstract: Content protection and security guidelines for encrypted CMAF/DASH content, including CENC, DRM signalling, and DASH-IF content-protection extensions. Working draft authored in the IOPv5 workspace.
+Abstract: Content protection and security guidelines for encrypted CMAF/DASH content, DRM signalling, interoperable license request workflows, and DASH-IF content-protection extensions, migrated from the DASH-IF Guidelines-Security Bikeshed source into the IOP v5 part structure.
 Repository: Dash-Industry-Forum/IOPv5
+Issue Tracking: GitHub https://github.com/Dash-Industry-Forum/IOPv5/issues
 !Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: Content Protection, Security, CENC, DRM, Encryption
 </pre>
 
 <pre class=biblio>
 {
-  "MPEGDASH": {
-    "href": "https://www.iso.org/standard/83314.html",
-    "title": "Information technology - Dynamic adaptive streaming over HTTP (DASH) - Part 1: Media presentation description and segment formats",
-    "publisher": "ISO/IEC",
-    "date": "2022"
+  "DASH": { "aliasOf": "MPEGDASH" },
+  "CMAF": { "aliasOf": "MPEGCMAF" },
+  "CENC": { "aliasOf": "MPEGCENC" },
+  "jws": { "aliasOf": "rfc7515" },
+  "jwe": { "aliasOf": "rfc7516" },
+  "MSPR-EncryptionModes": {
+    "title": "PlayReady Content Encryption Modes",
+    "publisher": "Microsoft",
+    "href": "https://docs.microsoft.com/en-us/playready/packaging/content-encryption-modes"
   },
-  "MPEGCMAF": {
-    "href": "https://www.iso.org/standard/85623.html",
-    "title": "Information technology - Multimedia application format (MPEG-A) - Part 19: Common media application format (CMAF) for segmented media",
-    "publisher": "ISO/IEC",
-    "date": "2024"
+  "HLS-LowLatency": {
+    "title": "Protocol Extension for Low-Latency HLS (Preliminary Specification)",
+    "publisher": "Apple",
+    "href": "https://developer.apple.com/documentation/http_live_streaming/protocol_extension_for_low-latency_hls_preliminary_specification"
   }
 }
 </pre>
@@ -38,5 +42,26 @@ path: _shared-diagram-style.inc.md
 </pre>
 
 <pre class=include>
+path: 01-intro.inc.md
+</pre>
+
+<pre class=include>
+path: 10-general.inc.md
+</pre>
+
+<pre class=include>
+path: 40-license-request-model.inc.md
+</pre>
+
+<pre class=include>
+path: 60-client-workflows.inc.md
+</pre>
+
+<pre class=include>
+path: 80-misc.inc.md
+</pre>
+
+<pre class=include>
 path: 06-content-protection.inc.md
 </pre>
+
