@@ -13,10 +13,15 @@ and published content while aligning metadata, publication paths, and part-level
 editorial management with the IOP v5 multi-part publication.
 
 The standalone repository currently uses the DASH-IF specs builder container for
-HTML publication and GitHub Pages deployment. Its publication workflow also
-exposes a route to a PDF output for the standalone document. That build path
-should be evaluated as an intermediate PDF option for Part 6 while Metanorma
-remains under investigation as the preferred long-term PDF/DOC generation path.
+HTML publication and GitHub Pages deployment. Its publication workflow builds via
+`make -f /tools/Makefile spec SRC=Guidelines-Security.bs.md NAME=Guidelines-Security`
+in the shared DASH-IF container image. The published standalone site also exposes
+an accompanying PDF output, indicating that PDF generation is likely provided by
+that shared builder environment rather than a repository-local script alone. That
+build path should be evaluated as an intermediate PDF option for Part 6 while
+Metanorma remains under investigation as the preferred long-term PDF/DOC
+generation path.
+
 
 # Open Issues and Work Items # {#open-issues}
 
@@ -27,7 +32,8 @@ remains under investigation as the preferred long-term PDF/DOC generation path.
   <tbody>
         <tr><td>Source migration<td>In progress<td>Imported the current Guidelines-Security Bikeshed content and assets into the IOP Part 6 folder structure.
     <tr><td>Cross-part alignment<td>Open<td>Align terminology, references, and any duplicated guidance with Parts 1, 2, and 12.
-    <tr><td>PDF publication path<td>Open<td>Inspect and reuse the standalone Security repo PDF publication method as an intermediate solution, while continuing Metanorma evaluation.
+        <tr><td>PDF publication path<td>In progress<td>The standalone Security workflow has been traced to the shared DASH-IF specs builder container; adapt that environment for Part 6 publication and confirm how the PDF artifact is emitted.
+
     <tr><td>Conformance mapping<td>Open<td>Identify validator/test-asset/reference-player expectations and link them to Part 12.
 
 </table>
