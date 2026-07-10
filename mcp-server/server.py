@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[1]
 AUTHORING_ROOT = ROOT / "rag-authoring-starter"
 SPECS = AUTHORING_ROOT / "specs"
 REPORTS = AUTHORING_ROOT / "rag" / "reports"
+METANORMA_REPORT = REPORTS / "metanorma-part12-poc-status.md"
 
 LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 HEADING = re.compile(r"^(#{1,6})\s+(.*)$")
@@ -58,6 +59,12 @@ def _is_external(target: str) -> bool:
     return target.startswith(("http://", "https://", "mailto:", "#"))
 
 
+def _part_dirs() -> list[Path]:
+    if not SPECS.exists():
+        return []
+    return sorted(p for p in SPECS.iterdir() if p.is_dir() and p.name.startswith("part"))
+
+
 @mcp.tool()
 def search_iop(query: str, limit: int = 10) -> str:
     """Search authored IOP source files for a text/regex query."""
@@ -98,6 +105,13 @@ def read_clause(path: str, start_line: int | None = None, end_line: int | None =
 
 
 @mcp.tool()
+def list_parts() -> str:
+    """List available part directories under specs/."""
+    parts = [p.name for p in _part_dirs()]
+    return json.dumps({"parts": parts}, indent=2)
+
+
+@mcp.tool()
 def list_documents(part: str | None = None) -> str:
     """List authored source documents, optionally filtered by part-folder substring."""
     docs = []
@@ -107,6 +121,28 @@ def list_documents(part: str | None = None) -> str:
             continue
         docs.append(rel)
     return json.dumps({"part": part, "documents": docs}, indent=2)
+
+
+@mcp.tool()
+def search_part(part: str, query: str, limit: int = 10) -> str:
+    """Search within a specific part directory only."""
+    part_root = SPECS / part
+    if not part_root.exists() or not part_root.is_dir():
+        return json.dumps({"error": f"part not found: {part}"}, indent=2)
+    rx = re.compile(query, re.IGNORECASE)
+    hits: list[dict[str, Any]] = []
+    for path in sorted(p for p in part_root.rglob("*") if p.is_file() and p.suffix in {".md", ".bs"}):
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for line_no, line in enumerate(text.splitlines(), 1):
+            if rx.search(line):
+                hits.append({
+                    "path": str(path.relative_to(ROOT)),
+                    "line": line_no,
+                    "text": line.strip(),
+                })
+                if len(hits) >= limit:
+                    return json.dumps({"part": part, "query": query, "hits": hits}, indent=2)
+    return json.dumps({"part": part, "query": query, "hits": hits}, indent=2)
 
 
 @mcp.tool()
@@ -125,6 +161,16 @@ def build_iop(part: str | None = None) -> str:
 def build_part(part: str) -> str:
     """Build one part by folder name, e.g. part12-conformance-reference-tools."""
     return build_iop(part)
+
+
+@mcp.tool()
+def build_publication_bundle() -> str:
+    """Build the publication bundle into repository-root dist/."""
+    script = AUTHORING_ROOT / "tools" / "publication" / "build_all.py"
+    if not script.exists():
+        return json.dumps({"error": "build_all.py not found"}, indent=2)
+    result = _run(["python", str(script), "--out", "../dist"], cwd=AUTHORING_ROOT)
+    return json.dumps(result, indent=2)
 
 
 @mcp.tool()
@@ -165,6 +211,46 @@ def find_broken_refs(limit: int = 100) -> str:
 
 
 @mcp.tool()
+def modal_keyword_report(part: str | None = None) -> str:
+    """Return modal keyword counts for authored spec files."""
+    report: list[dict[str, Any]] = []
+    for path in _authored_files():
+        rel = str(path.relative_to(ROOT))
+        if part and part not in rel:
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace").lower()
+        counts = {modal: len(re.findall(rf"\b{re.escape(modal)}\b", text)) for modal in MODALS}
+        counts = {k: v for k, v in counts.items() if v}
+        if counts:
+            report.append({"path": rel, "counts": counts})
+    return json.dumps({"part": part, "files": report}, indent=2)
+
+
+@mcp.tool()
+def read_open_issues(part: str) -> str:
+    """Read the Open Issues and Work Items section for a given part, if present."""
+    part_root = SPECS / part
+    if not part_root.exists() or not part_root.is_dir():
+        return json.dumps({"error": f"part not found: {part}"}, indent=2)
+    section_lines: list[str] = []
+    found = False
+    for path in sorted(p for p in part_root.glob("*.inc.md")):
+        lines = path.read_text(encoding="utf-8", errors="replace").splitlines()
+        for i, line in enumerate(lines):
+            if "Open Issues and Work Items" in line or "open-issues" in line.lower():
+                found = True
+                section_lines.append(f"FILE: {path.relative_to(ROOT)}")
+                for j in range(i, min(i + 40, len(lines))):
+                    section_lines.append(f"{j+1}: {lines[j]}")
+                break
+        if found:
+            break
+    if not found:
+        return json.dumps({"part": part, "error": "open issues section not found"}, indent=2)
+    return json.dumps({"part": part, "text": "\n".join(section_lines)}, indent=2)
+
+
+@mcp.tool()
 def search_rag_reports(query: str, limit: int = 10) -> str:
     """Search Markdown reports under rag/reports/."""
     rx = re.compile(query, re.IGNORECASE)
@@ -181,6 +267,29 @@ def search_rag_reports(query: str, limit: int = 10) -> str:
                 if len(hits) >= limit:
                     return json.dumps({"query": query, "hits": hits}, indent=2)
     return json.dumps({"query": query, "hits": hits}, indent=2)
+
+
+@mcp.tool()
+def metanorma_status() -> str:
+    """Return current status of the local Metanorma experiment."""
+    if METANORMA_REPORT.exists():
+        text = METANORMA_REPORT.read_text(encoding="utf-8", errors="replace")
+        return json.dumps(
+            {
+                "report": str(METANORMA_REPORT.relative_to(ROOT)),
+                "summary": text[:4000],
+            },
+            indent=2,
+        )
+    converter = AUTHORING_ROOT / "tools" / "metanorma" / "bikeshed_to_adoc.py"
+    return json.dumps(
+        {
+            "report_exists": False,
+            "converter_exists": converter.exists(),
+            "converter": str(converter.relative_to(ROOT)),
+        },
+        indent=2,
+    )
 
 
 @mcp.tool()

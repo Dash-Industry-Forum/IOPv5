@@ -21,14 +21,26 @@ machine and exposing a few repository-specific tools.
 
 ### Next-step authoring tools
 
+- `list_parts()`
+  List available part directories.
 - `list_documents(part=None)`
   List authored `.bs`/`.md` source documents, optionally filtered by part.
+- `search_part(part, query, limit=10)`
+  Search within one specific part only.
+- `read_open_issues(part)`
+  Return the open-issues/work-items section for a part when present.
+- `modal_keyword_report(part=None)`
+  Return modal keyword counts across authored files.
 - `validate_links()`
   Run the repository publication checker.
 - `find_broken_refs(limit=100)`
   Return broken relative links and duplicate headings from authored specs.
 - `search_rag_reports(query, limit=10)`
   Search Markdown reports under `rag-authoring-starter/rag/reports/`.
+- `build_publication_bundle()`
+  Build the publication bundle into repository-root `dist/`.
+- `metanorma_status()`
+  Return the current status of the local Metanorma experiment/report.
 
 ## Setup
 
