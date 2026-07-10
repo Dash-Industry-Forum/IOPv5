@@ -1,0 +1,41 @@
+name: Build Pull Request
+
+# Builds all specifications on pull requests to verify they compile without
+# fatal Bikeshed errors. Mirrors the DASH-IF-IOP build-pr workflow.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'rag-authoring-starter/specs/**'
+      - '.github/workflows/build-pr.yml'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Bikeshed
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install bikeshed
+          bikeshed update
+
+      - name: Install DASH-IF boilerplate (dashif group)
+        working-directory: rag-authoring-starter
+        run: python tools/env/install_dashif_boilerplate.py
+
+      - name: Build all specs (fails on Bikeshed errors)
+        working-directory: rag-authoring-starter
+        run: python tools/publication/build_all.py --out ../dist --die-on warning
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist

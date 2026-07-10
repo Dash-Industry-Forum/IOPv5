@@ -1,0 +1,128 @@
+name: Preview Bikeshed Specs
+
+# Manual, unadvertised GitHub Pages preview for editors/reviewers.
+#
+# Official publication remains the Publish Bikeshed Specs workflow from main.
+# This workflow is for temporary publication-style review of a selected branch.
+# It deploys a preview-only Pages artifact containing:
+#   /index.html                         preview landing/warning
+#   /preview.html                       same landing/warning
+#   /previews/<preview-name>/           built specs
+#
+# Important: GitHub Pages has one live deployment per repository. While this
+# preview is active, it replaces the repository's Pages deployment until the main
+# publication workflow is run again. The preview URL is unadvertised and noindex,
+# but it is NOT private.
+
+on:
+  workflow_dispatch:
+    inputs:
+      preview_name:
+        description: 'Preview path name under /previews/ (default: branch name)'
+        required: false
+        type: string
+      noindex:
+        description: 'Add robots noindex/nofollow marker to preview pages'
+        required: false
+        type: boolean
+        default: true
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-preview
+  cancel-in-progress: true
+
+jobs:
+  build-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Bikeshed
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install bikeshed
+          bikeshed update
+
+      - name: Install DASH-IF boilerplate (dashif group)
+        working-directory: rag-authoring-starter
+        run: python tools/env/install_dashif_boilerplate.py
+
+      - name: Build all specs
+        working-directory: rag-authoring-starter
+        run: python tools/publication/build_all.py --out ../site-build
+
+      - name: Prepare preview-only Pages artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          PREVIEW_NAME="${{ inputs.preview_name }}"
+          if [ -z "$PREVIEW_NAME" ]; then
+            PREVIEW_NAME="${GITHUB_REF_NAME}"
+          fi
+          # Conservative URL slug: keep only common safe path characters.
+          PREVIEW_NAME="$(echo "$PREVIEW_NAME" | tr -c 'A-Za-z0-9._-' '-')"
+          PREVIEW_PATH="previews/$PREVIEW_NAME"
+          rm -rf dist
+          mkdir -p "dist/$PREVIEW_PATH"
+          cp -R site-build/. "dist/$PREVIEW_PATH/"
+
+          if [ "${{ inputs.noindex }}" = "true" ]; then
+            printf 'User-agent: *\nDisallow: /\n' > dist/robots.txt
+            find "dist/$PREVIEW_PATH" -name '*.html' -print0 | \
+              xargs -0 sed -i 's#<head>#<head>\n<meta name="robots" content="noindex,nofollow">#'
+          fi
+
+          cat > dist/index.html <<EOF
+          <!doctype html>
+          <html lang="en">
+          <head>
+            <meta charset="utf-8">
+            <meta name="robots" content="noindex,nofollow">
+            <title>DASH-IF IOP v5 temporary preview</title>
+            <style>
+              body { font-family: system-ui, sans-serif; max-width: 52rem; margin: 2rem auto; padding: 0 1rem; }
+              code { background: #f4f4f4; padding: .1rem .25rem; }
+              .warning { border-left: 4px solid #c70; padding: .75rem 1rem; background: #fff7e6; }
+            </style>
+          </head>
+          <body>
+            <h1>DASH-IF IOP v5 temporary preview</h1>
+            <div class="warning">
+              <p><strong>This is a temporary branch preview, not the official publication.</strong></p>
+              <p>It is unadvertised and marked <code>noindex</code>, but it is not private.</p>
+            </div>
+            <p>Branch/ref: <code>${GITHUB_REF_NAME}</code></p>
+            <p>Preview path: <code>/$PREVIEW_PATH/</code></p>
+            <p><a href="$PREVIEW_PATH/">Open the preview</a></p>
+            <p>Run the main publication workflow again to restore the official Pages deployment.</p>
+          </body>
+          </html>
+          EOF
+          cp dist/index.html dist/preview.html
+          echo "Preview path: /$PREVIEW_PATH/" >> "$GITHUB_STEP_SUMMARY"
+          echo "Preview landing: /preview.html" >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy-preview:
+    runs-on: ubuntu-latest
+    needs: build-preview
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}preview.html
+    steps:
+      - name: Deploy preview to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

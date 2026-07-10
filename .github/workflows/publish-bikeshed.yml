@@ -1,0 +1,63 @@
+name: Publish Bikeshed Specs
+
+# Publishes the built specifications to GitHub Pages on push to main.
+# Aligned with the DASH-IF-IOP workflow (build -> package -> deploy Pages),
+# but builds with a pip-installed Bikeshed instead of the dashif-specs
+# container, and stages shared boilerplate the same way build.ps1 does.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'rag-authoring-starter/specs/**'
+      - '.github/workflows/publish-bikeshed.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Bikeshed
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install bikeshed
+          bikeshed update
+
+      - name: Install DASH-IF boilerplate (dashif group)
+        working-directory: rag-authoring-starter
+        run: python tools/env/install_dashif_boilerplate.py
+
+      - name: Build all specs
+        working-directory: rag-authoring-starter
+        run: python tools/publication/build_all.py --out ../dist
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
