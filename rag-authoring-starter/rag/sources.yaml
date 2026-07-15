@@ -87,7 +87,7 @@ sources:
     canonical_url: ""
     tags: [mpeg, cmaf, iso, external, 2024]
 
-    - id: iso-iec-23009-1-2026-merged-r5
+  - id: iso-iec-23009-1-2026-merged-r5
     title: "ISO/IEC 23009-1:2026 DASH merged r5"
     type: external-standard
     status: draft
@@ -122,6 +122,24 @@ sources:
     corpus_path: rag/corpus/drafts/DASH-IF-IOPv5.0-Part8-DRAFT-20210701.docx
     canonical_url: ""
     tags: [dash-if, iop, v5, part8, audio, draft]
+
+  - id: dashif-iop-v5-part8-v5-1
+    title: "DASH-IF IOP v5.1 Part 8: Audio"
+    type: specification
+    status: published
+    target_part: part08-audio
+    corpus_path: rag/corpus/published/DASH-IF-IOP-Part8-v5.1.0.docx
+    canonical_url: "https://dashif.org/guidelines/iop-v5#part-8-audio"
+    tags: [dash-if, iop, v5, v5.1, part8, audio, published]
+
+  - id: dashif-iop-v5-part9
+    title: "DASH-IF IOP v5 Part 9: Text"
+    type: specification
+    status: published
+    target_part: part09-text
+    corpus_path: rag/corpus/published/DASH-IF-IOPv5.0.0-Part9-FINAL.docx
+    canonical_url: "https://dashif.org/guidelines/iop-v5#part-9-text"
+    tags: [dash-if, iop, v5, part9, text, subtitles, captions, published]
 
   - id: iop-docs-overview
     title: "IOP Documents Overview"

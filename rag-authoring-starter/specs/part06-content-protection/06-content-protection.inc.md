@@ -31,6 +31,9 @@ generation path.
   <thead><tr><th>Topic<th>Status<th>Next action
   <tbody>
         <tr><td>Source migration<td>In progress<td>Imported the current Guidelines-Security Bikeshed content and assets into the IOP Part 6 folder structure.
+    <tr><td>Published v5.1.0 reconciliation<td>In progress<td>Use <code>rag/reports/reconcile-part06-content-protection.md</code> to reconcile this Bikeshed source clause-by-clause against the published Part 6 v5.1.0 document.
+    <tr><td>Published-clause gap verification<td>Open<td>Targeted source search did not find ECCP / Enhanced Clear Key, certificate acquisition URL, HDCP output control, LAURL, ASURL, or CURL terms in the current Markdown source. Verify against the published document and migrate or explicitly defer these clauses.
+    <tr><td>References and terminology mapping<td>Open<td>Cross-check published clauses 2 and 3 (references, terms, symbols, and abbreviations) against the Part 6 Bikeshed metadata, bibliography, and shared terminology conventions.
     <tr><td>Cross-part alignment<td>Open<td>Align terminology, references, and any duplicated guidance with Parts 1, 2, and 12.
         <tr><td>PDF publication path<td>In progress<td>The standalone Security workflow has been traced to the shared DASH-IF specs builder container; adapt that environment for Part 6 publication and confirm how the PDF artifact is emitted.
 

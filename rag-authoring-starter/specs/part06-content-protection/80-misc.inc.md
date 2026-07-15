@@ -88,18 +88,81 @@ Parts of the MPD structure that are not relevant for this chapter have been omit
 
 # XML Schema for DASH-IF MPD extensions # {#CPS-schema}
 
+Issue: This section is under reconciliation against published IOP v5.1.0 Part 6
+clause 5, "DASH-IF XML schema". The published clause defines the `Laurl`,
+`Authzurl`, and `Certurl` elements under the `ContentProtection` descriptor for
+license acquisition, authorization-server discovery, and certificate acquisition.
+The current source preserved `laurl` and `authzurl` schema elements but did not
+explicitly preserve the published certificate-acquisition element or the
+published explanatory subclauses. See
+`rag/reports/reconcile-part06-content-protection.md` for the clause crosswalk.
+
 The namespace for the DASH-IF MPD extensions is `https://dashif.org/`. This document refers to this namespace using the `dashif` prefix. The XML schema of the extensions is:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
     xmlns:dashif="https://dashif.org/"
-    targetNamespace="https://dashif.org/">
+    targetNamespace="https://dashif.org/"
+    elementFormDefault="qualified"
+    attributeFormDefault="unqualified">
 
-    <xs:element name="laurl" type="xs:anyURI"/>
-    <xs:element name="authzurl" type="xs:anyURI"/>
+    <xs:complexType name="typedUrlType">
+        <xs:simpleContent>
+            <xs:extension base="xs:anyURI">
+                <xs:attribute name="licenseType" type="xs:string" use="optional"/>
+                <xs:attribute name="authzType" type="xs:string" use="optional"/>
+                <xs:attribute name="certType" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:element name="laurl" type="dashif:typedUrlType"/>
+    <xs:element name="authzurl" type="dashif:typedUrlType"/>
+    <xs:element name="certurl" type="dashif:typedUrlType"/>
 </xs:schema>
 ```
+
+Issue: Published IOP v5.1.0 Part 6 prose refers to `Laurl`, `Authzurl`, and
+`Certurl`, while the current Bikeshed source and examples use lowercase
+`dashif:laurl`, `dashif:authzurl`, and `dashif:certurl` element names. XML
+element names are case-sensitive; confirm the intended canonical casing before
+marking this section as fully reconciled.
+
+The `dashif:laurl` element identifies a license acquisition URL associated with
+the containing `ContentProtection` descriptor. The optional `@licenseType`
+attribute describes the license type served by this license server; its meaning
+is DRM-specific.
+
+The `dashif:authzurl` element identifies an authorization service URL associated
+with the containing `ContentProtection` descriptor. The optional `@authzType`
+attribute describes the authorization-token type served by this authorization
+server; its meaning is specific to the server serving the token.
+
+The `dashif:certurl` element identifies a certificate acquisition URL associated
+with the containing `ContentProtection` descriptor. The optional `@certType`
+attribute describes the certificate type served by this server; its meaning is
+DRM-specific. When `dashif:certurl` is present, a client is expected to retrieve
+the certificate before using a `dashif:laurl` license acquisition URL when the
+applicable DRM system requires that certificate for license requests.
+
+<div class="example">
+
+The following example illustrates the reconciled schema elements using lowercase
+element names. The canonical casing remains an open reconciliation issue against
+published IOP v5.1.0 Part 6 clause 5.
+
+```xml
+<ContentProtection
+    schemeIdUri="urn:uuid:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+    value="DRMNAME version">
+    <dashif:certurl certType="drm-specific-certificate">https://drm.example.com/cert</dashif:certurl>
+    <dashif:authzurl authzType="jwt">https://authz.example.com/token</dashif:authzurl>
+    <dashif:laurl licenseType="persistent">https://license.example.com/acquire</dashif:laurl>
+</ContentProtection>
+```
+
+</div>
 
 # HTTPS and DASH # {#CPS-HTTPS}
 

@@ -17,6 +17,8 @@ Generated from `rag/sources.yaml`.
 | iso-iec-14496-12-ed8 | ISO/IEC 14496-12 (8th edition, FDIS): ISO Base Media File Format | external-standard | draft | multiple | present | rag/corpus/mpeg/20241016_ISO_IEC FDIS 14496-12ed8.docx | mpeg, isobmff, iso, external, 14496-12, ed8, 2024 |
 | cta-5003-c | CTA-5003-C: Web Application Video Ecosystem (WAVE) Device Playback Capabilities | external-standard | published | multiple | present | rag/corpus/external/cta-5003-c-024-cl.docx | cta, wave, external, device-playback, 5003, revision-c |
 | dashif-iop-v5-part8-draft | DASH-IF IOP v5 Part 8: Audio (DRAFT 2021-07-01) | specification | draft | part08-audio | present | rag/corpus/drafts/DASH-IF-IOPv5.0-Part8-DRAFT-20210701.docx | dash-if, iop, v5, part8, audio, draft |
+| dashif-iop-v5-part8-v5-1 | DASH-IF IOP v5.1 Part 8: Audio | specification | published | part08-audio | present | rag/corpus/published/DASH-IF-IOP-Part8-v5.1.0.docx | dash-if, iop, v5, v5.1, part8, audio, published |
+| dashif-iop-v5-part9 | DASH-IF IOP v5 Part 9: Text | specification | published | part09-text | present | rag/corpus/published/DASH-IF-IOPv5.0.0-Part9-FINAL.docx | dash-if, iop, v5, part9, text, subtitles, captions, published |
 | iop-docs-overview | IOP Documents Overview | planning | working-note | multiple | present | rag/corpus/drafts/IOP-docs.docx | dash-if, planning, roadmap, maintainers, parts |
 | dashif-iop-v5-part12-draft | DASH-IF IOP v5 Part 12: Conformance and Reference Tools (DRAFT) | specification | draft | part12-conformance-reference-tools | present | rag/corpus/drafts/DASH-IF-IOPv5.0-Part12-DRAFT.docx | dash-if, iop, v5, part12, conformance, reference-tools, dashjs, livesim2, draft |
 

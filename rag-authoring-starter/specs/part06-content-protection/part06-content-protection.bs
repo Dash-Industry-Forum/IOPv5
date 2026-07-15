@@ -62,6 +62,10 @@ path: 80-misc.inc.md
 </pre>
 
 <pre class=include>
+path: 90-enhanced-clear-key.inc.md
+</pre>
+
+<pre class=include>
 path: 06-content-protection.inc.md
 </pre>
 

@@ -25,6 +25,53 @@ Repository: Dash-Industry-Forum/IOPv5
     "title": "Information technology - Multimedia application format (MPEG-A) - Part 19: Common media application format (CMAF) for segmented media",
     "publisher": "ISO/IEC",
     "date": "2024"
+  },
+  "ISO14496-30": {
+    "title": "Information technology - Coding of audio-visual objects - Part 30: Timed text and other visual overlays in ISO base media file format",
+    "publisher": "ISO/IEC"
+  },
+  "SCTE214-1": {
+    "title": "MPEG DASH for IP-Based Cable Services Part 1: MPD Constraints and Extensions",
+    "publisher": "SCTE"
+  },
+  "SCTE128-1": {
+    "title": "AVC Video Constraints for Cable Television Part 1 - Coding",
+    "publisher": "SCTE",
+    "date": "2020"
+  },
+  "IMSC1": {
+    "title": "TTML Profiles for Internet Media Subtitles and Captions 1.0.1 (IMSC1)",
+    "publisher": "W3C"
+  },
+  "WEBVTT": {
+    "title": "WebVTT: The Web Video Text Tracks Format",
+    "publisher": "W3C"
+  },
+  "CTA608-E": {
+    "title": "Line 21 Data Services",
+    "publisher": "CTA"
+  },
+  "CTA708-E": {
+    "title": "Digital Television (DTV) Closed Captioning",
+    "publisher": "CTA"
+  },
+  "DASHIF-IOP43": {
+    "title": "DASH-IF Interoperability Points v4.3",
+    "publisher": "DASH-IF",
+    "href": "https://dashif.org/guidelines/earlier-versions/"
+  },
+  "DASHIF-IOP5-PART7": {
+    "title": "DASH-IF IOP v5 Part 7: Video",
+    "publisher": "DASH-IF",
+    "href": "https://dashif.org/guidelines/iop-v5#part-7-video"
+  },
+  "SMPTE2052-10": {
+    "title": "Conversion from CEA-608 Data to SMPTE-TT",
+    "publisher": "SMPTE"
+  },
+  "SMPTE2052-11": {
+    "title": "Conversion from CEA-708 Caption Data to SMPTE-TT",
+    "publisher": "SMPTE"
   }
 }
 </pre>
