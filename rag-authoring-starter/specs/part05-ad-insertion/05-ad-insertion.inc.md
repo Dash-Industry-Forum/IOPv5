@@ -1062,84 +1062,60 @@ ad-content Periods except through signalled metadata or client/application
 policy.
 
 Ad content is spliced into the main content following the Period structure
-identified by the published Part 5 Table 5. The following tables reconstruct the
-source-level requirements extracted from the published document.
+identified by the published Part 5 Table 5.
 
 <table class="data">
-  <caption>Main content MPD requirements relevant to IF-5 insertion.</caption>
+  <caption>Ad Content spliced into main content.</caption>
   <thead><tr><th>Context<th>Element or attribute<th>Use<th>Requirement / description
   <tbody>
-    <tr><td>`MPD`<td>`MPD`<td>—<td>Provides requirements for DASH-IF main content. Values not specified here are identical to ISO/IEC 23009-1.
-    <tr><td>`MPD`<td>`ServiceDescription`<td>0 … N<td>May be present.
-    <tr><td>`ServiceDescription`<td>`Latency@target`<td>O<td>A target latency may be provided.
-    <tr><td>`MPD`<td>`@profiles`<td>M<td>Should include a profile indicator for the DASH CMAF profile `urn:mpeg:dash:profile:cmaf:2019`.
-    <tr><td>`MPD`<td>`InitializationSet`<td>0 … N<td>May be present; `@inAllPeriods` may be set to `true` to express continuity across Period boundaries.
-    <tr><td>`MPD`<td>`ProgramInformation`<td>0 … N<td>Should be used to describe information about the main content.
-    <tr><td>`MPD`<td>`Period`<td>1 … N<td>One or more Periods <span class=modal-keyword>shall</span> be present. Values not specified here are identical to ISO/IEC 23009-1.
-    <tr><td>`Period`<td>`@xlink:href`<td>R<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`Period`<td>`@xlink:actuate`<td>R<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`Period`<td>`@start`<td>M<td><span class=modal-keyword>Shall</span> be present.
-    <tr><td>`Period`<td>`AssetIdentifier`<td>0 … 1<td>Should be used to provide an explicit main content identifier.
-    <tr><td>`Period`<td>`EventStream`<td>0 … N<td>Specifies an event stream. Event streams can terminate in the MPD proxy/ad processor or continue even if an ad is inserted; handling is decided by the proxy.
-    <tr><td>`EventStream`<td>`@presentationTimeOffset`<td>OD<td>Needed for multi-period split events across Period boundaries.
-    <tr><td>`Period`<td>`AdaptationSet`<td>1 … N<td>At least one Adaptation Set <span class=modal-keyword>shall</span> be present.
-    <tr><td>`AdaptationSet`<td>`@xlink:href`<td>R<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`AdaptationSet`<td>`@xlink:actuate`<td>R<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`AdaptationSet`<td>`SegmentBase@presentationTimeOffset`<td>OD<td>Default is `0`; <span class=modal-keyword>shall</span> be set to the correct presentation time of the Adaptation Set at the start of the Period if the presentation time is not equal to `0`.
-    <tr><td>`AdaptationSet`<td>`@contentType`<td>M<td><span class=modal-keyword>Shall</span> be present.
-    <tr><td>`AdaptationSet`<td>`SegmentList`<td>0<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`AdaptationSet`<td>`Representation`<td>1 … N<td>At least one Representation element <span class=modal-keyword>shall</span> be present in each Adaptation Set.
-    <tr><td>`Period`<td>`EmptyAdaptationSet`<td>0<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`MPD`<td>`UTCTiming`<td>1 … N<td>At least one <span class=modal-keyword>shall</span> be present.
+    <tr><td>`MPD`<td>`MPD`<td>—<td>Provides the requirements for content that is combined between main content and ad content. Values not specified here are identical to ISO/IEC 23009-1.
+    <tr><td>`MPD`<td>`ServiceDescription`<td>—<td>Service description information may be present.
+    <tr><td>`ServiceDescription`<td>`Latency@target`<td>0<td>Target latency is provided when applicable.
+    <tr><td>`MPD`<td>`@profiles`<td>M<td>Set to `urn:mpeg:dash:profile:cmaf-extended:2019` or `urn:mpeg:dash:profile:cmaf:2019`. The proxy can change to `urn:mpeg:dash:profile:cmaf-extended:2019` if it cannot exactly condition the ads to the Period durations.
+    <tr><td>`MPD`<td>`@minimumUpdatePeriod`<td>—<td>Adjusted according to the ad-insertion operation.
+    <tr><td>`MPD`<td>`InitializationSet`<td>0 … N<td>If `InitializationSet@inAllPeriods` is `true`, the MPD proxy checks whether it can provide ad content conditioned to the InitializationSet parameters. If it can, it should leave the InitializationSet included. If it cannot, it must set `@inAllPeriods` to `false` or remove the InitializationSet from the MPD.
+    <tr><td>`Period (Main content)`<td>`Period`<td>—<td>Specifies a main-content Period. Information from the main-content Period is reused except where specified differently.
+    <tr><td>`Period (Main content)`<td>`@duration`<td>R<td><span class=modal-keyword>Shall not</span> be present; the duration is determined by the `@start` of the Ad Period.
+    <tr><td>`Period (Main content)`<td>`EventStream`<td>0 … N<td>Reused from the main content.
+    <tr><td>`Period (Main content)`<td>`AdaptationSet`<td>1 … N<td>Reused from the main content.
+    <tr><td>`Period (Main content)`<td>`AssetIdentifier`<td>0 … 1<td>Reused from the main content.
+    <tr><td>`Period (Ad Content)`<td>`Period`<td>0 … N<td>Specifies an Ad Content Period. Information from the Ad Content Period is reused except where specified differently.
+    <tr><td>`Period (Ad Content)`<td>`@id`<td>M<td>A unique identifier, preferably reused from one already present in the main content where applicable.
+    <tr><td>`Period (Ad Content)`<td>`@start`<td>M<td>Set to `tsplice-out` from the main content.
+    <tr><td>`Period (Ad Content)`<td>`@duration`<td>O / remove<td>Typically removed. Detailed operations are described by the MPD proxy operation guidelines.
+    <tr><td>`Period (Ad Content)`<td>`BaseURL`<td>1 … N<td>Reused from the remote Ad Content Period unless the ad content is moved elsewhere.
+    <tr><td>`Period (Ad Content)`<td>`@availabilityTimeOffset`<td>M<td>Set such that the client can download content according to the schedule of the live service.
+    <tr><td>`Period (Ad Content)`<td>`EventStream`<td>0 … N<td>Reused from the remote ad or slate content Period unless the proxy removes events based on business rules.
+    <tr><td>`Period (Ad Content)`<td>`AdaptationSet`<td>1 … N<td>Reused from the remote ad or slate content Period. A subset may be selected based on main content or client information. If compatible with an InitializationSet, it should include `@initializationSetRef` referencing the compatible InitializationSet.
+    <tr><td>`Period (Ad Content)`<td>`AssetIdentifier`<td>0 … 1<td>Reused from the remote Ad Content Period.
+    <tr><td>`Period (Slate Content)`<td>`Period`<td>0 … N<td>Specifies a Slate Content Period. Information from the slate content Period is reused except where specified differently.
+    <tr><td>`Period (Slate Content)`<td>`@id`<td>M<td>A unique identifier, preferably using a unique slate content identifier.
+    <tr><td>`Period (Slate Content)`<td>`@start`<td>M<td>Typically set to the sum of `tsplice-out` and the duration of the previous ad.
+    <tr><td>`Period (Slate Content)`<td>`@duration`<td>O / remove<td>Typically removed. Detailed operations are described by the MPD proxy operation guidelines.
+    <tr><td>`Period (Slate Content)`<td>`BaseURL`<td>1 … N<td>Reused from the remote slate content Period unless the slate content is moved elsewhere.
+    <tr><td>`Period (Slate Content)`<td>`@availabilityTimeOffset`<td>M<td>Set such that the client can download content according to the schedule of the live service.
+    <tr><td>`Period (Slate Content)`<td>`EventStream`<td>0 … N<td>Reused from the remote slate content Period unless the proxy removes events based on business rules. Slate content is not expected to carry Events.
+    <tr><td>`Period (Slate Content)`<td>`AdaptationSet`<td>1 … N<td>Reused from the remote slate content Period. A subset may be selected based on main content or client information. If compatible with an InitializationSet, it should include `@initializationSetRef` referencing the compatible InitializationSet.
+    <tr><td>`Period (Slate Content)`<td>`AssetIdentifier`<td>0 … 1<td>Reused from the slate content Period.
+    <tr><td>`Period (Main Content)`<td>`Period`<td>—<td>Specifies the return-to-main-content Period. Information from the main content Period is reused except where specified differently.
+    <tr><td>`Period (Main Content)`<td>`@start`<td>M<td>Set to `tsplice-in` from the main content.
+    <tr><td>`Period (Main Content)`<td>`@duration`<td>R<td><span class=modal-keyword>Shall not</span> be present.
+    <tr><td>`Period (Main Content)`<td>`EventStream`<td>0 … N<td>Reused from main content.
+    <tr><td>`Period (Main Content)`<td>`AdaptationSet`<td>1 … N<td>Reused from main content.
+    <tr><td>`Period (Main Content)`<td>`AssetIdentifier`<td>0 … 1<td>Reused from the main content.
 </table>
 
-<table class="data">
-  <caption>Ad insertion content MPD requirements relevant to IF-5 insertion.</caption>
-  <thead><tr><th>Context<th>Element or attribute<th>Use<th>Requirement / description
-  <tbody>
-    <tr><td>`MPD`<td>`MPD`<td>—<td>Provides requirements for ad insertion content. Values not specified here are identical to ISO/IEC 23009-1.
-    <tr><td>`MPD`<td>`@profiles`<td>M<td>Should include a profile indicator for `http://dashif.org/guidelines/dashif-ad-content` and <span class=modal-keyword>shall</span> include the DASH CMAF profile identifier `urn:mpeg:dash:profile:cmaf:2019`.
-    <tr><td>`MPD`<td>`@type`<td>M<td><span class=modal-keyword>Shall</span> be set to `static`.
-    <tr><td>`MPD`<td>`@mediaPresentationDuration`<td>R<td><span class=modal-keyword>Shall not</span> be present.
-    <tr><td>`MPD`<td>`@minimumUpdatePeriod`<td>R<td><span class=modal-keyword>Shall not</span> be present; this is implied by `@type="static"`.
-    <tr><td>`MPD`<td>`@minBufferTime`<td>M<td><span class=modal-keyword>Shall</span> be present.
-    <tr><td>`MPD`<td>`@timeShiftBufferDepth`<td>R<td><span class=modal-keyword>Shall not</span> be present.
-    <tr><td>`MPD`<td>`@suggestedPresentationDelay`<td>R<td><span class=modal-keyword>Shall not</span> be present.
-    <tr><td>`MPD`<td>`@maxSegmentDuration`<td>R<td><span class=modal-keyword>Shall not</span> be present.
-    <tr><td>`MPD`<td>`@maxSubsegmentDuration`<td>R<td><span class=modal-keyword>Shall not</span> be present.
-    <tr><td>`MPD`<td>`ProgramInformation`<td>0 … N<td>Should be used to describe information about the ad.
-    <tr><td>`MPD`<td>`BaseURL`<td>0<td><span class=modal-keyword>Shall not</span> be present at MPD level. If a BaseURL is present, it is part of the Period.
-    <tr><td>`MPD`<td>`Period`<td>1<td>Exactly one Period <span class=modal-keyword>shall</span> be present.
-    <tr><td>`Period`<td>`@xlink:href`<td>R<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`Period`<td>`@xlink:actuate`<td>R<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`Period`<td>`@start`<td>R<td><span class=modal-keyword>Shall</span> be absent; the Period is assumed to start at `0`.
-    <tr><td>`Period`<td>`@duration`<td>M<td><span class=modal-keyword>Shall</span> be present and provide the duration of the ad content.
-    <tr><td>`Period`<td>`BaseURL`<td>1 … N<td>At least one <span class=modal-keyword>shall</span> be present and refer to the BaseURL of the ad content.
-    <tr><td>`Period`<td>`AssetIdentifier`<td>0 … 1<td>Should be used to provide an explicit identifier for the ad content.
-    <tr><td>`Period`<td>`EventStream`<td>0 … N<td>Event Streams are permitted in ad content, for example for beaconing.
-    <tr><td>`Period`<td>`AdaptationSet`<td>1 … N<td>At least one Adaptation Set <span class=modal-keyword>shall</span> be present.
-    <tr><td>`AdaptationSet`<td>`@xlink:href`<td>R<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`AdaptationSet`<td>`@xlink:actuate`<td>R<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`AdaptationSet`<td>`InbandEventStream`<td>0 … N<td>Inband Event Streams are permitted in ad content, for example for beaconing.
-    <tr><td>`AdaptationSet`<td>`SegmentBase@presentationTimeOffset`<td>OD<td>Default is `0`; <span class=modal-keyword>shall</span> be absent.
-    <tr><td>`AdaptationSet`<td>`SegmentBase@eptDelta`<td>O<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`AdaptationSet`<td>`SegmentBase@pdDelta`<td>O<td>May be present for non-video tracks. If present, it <span class=modal-keyword>shall</span> be non-negative and should be as small as possible.
-    <tr><td>`AdaptationSet`<td>`@contentType`<td>M<td><span class=modal-keyword>Shall</span> be present.
-    <tr><td>`AdaptationSet`<td>`SegmentList`<td>0<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`AdaptationSet`<td>`Representation`<td>1 … N<td>At least one Representation element <span class=modal-keyword>shall</span> be present in each Adaptation Set.
-    <tr><td>`Period`<td>`EmptyAdaptationSet`<td>0<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>`MPD`<td>`UTCTiming`<td>0<td><span class=modal-keyword>Shall not</span> be present.
-    <tr><td>`MPD`<td>`LeapSecondInformation`<td>0<td><span class=modal-keyword>Shall not</span> be present.
-</table>
+Key: for attributes, `M` means mandatory and `O` means optional. For elements,
+values use `minOccurs … maxOccurs`, where `N` means unbounded. The conditions
+only hold without using `xlink:href`. If linking is used, then all attributes
+are optional and `minOccurs` is `0`.
 
-Key: for attributes, `M` means mandatory, `O` means optional, `R` means removed,
-and `OD` means optional with default value. For elements, values use
-`minOccurs … maxOccurs`, where `N` means unbounded.
-
-Issue: These tables are reconstructed from extracted published text lines
-740–841. They should be visually checked against the published DOCX/PDF Table 5
-because the DOCX extraction duplicated hierarchy columns and may have lost
-formatting.
+Issue: This Table 5 reconstruction has been restructured against the DOCX table
+structure extracted from `DASH-IF-IOP-Part5-v5.0.0.docx`. The extraction
+confirmed 37 rows and the published row groups for `MPD`,
+`Period (Main content)`, `Period (Ad Content)`, `Period (Slate Content)`, and
+return `Period (Main Content)`. A rendered visual DOCX/PDF review is still
+recommended to confirm typography and final row hierarchy.
 
 ### MPD Proxy Operation Guidelines ### {#ad-if5-mpd-proxy-guidelines}
 
