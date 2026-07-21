@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011"
+     profiles="urn:example:profile"
+     type="dynamic"
+     minimumUpdatePeriod="not-a-duration"
+     minBufferTime="PT2S">
+  <InitializationSet id="init1" inAllPeriods="true"/>
+  <Period id="main-before" start="PT90S" duration="PT60S" data-if5-role="main">
+    <AdaptationSet id="1" contentType="video">
+      <Representation id="main-v1" bandwidth="1000000"/>
+    </AdaptationSet>
+  </Period>
+  <Period data-if5-role="ad">
+  </Period>
+  <Period id="slate-1" start="PT70S" duration="PT10S" data-if5-role="slate">
+    <EventStream schemeIdUri="urn:example:unexpected-slate-event"/>
+  </Period>
+  <Period id="main-after" duration="PT30S" data-if5-role="main">
+  </Period>
+</MPD>
