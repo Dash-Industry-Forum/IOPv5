@@ -24,8 +24,9 @@ specs/part12-conformance-reference-tools/01-conformance.inc.md#tools-part5-ad-in
 
 This matrix classifies the reconstructed Table 4 DASH-IF ad content MPD rows as
 validator-error, validator-warning, informational, manual-review, or not
-testable. It is based on the current Bikeshed reconstruction and still requires
-visual DOCX/PDF review before implementation.
+testable. It is based on the current Bikeshed reconstruction and has been
+updated with DOCX table extraction findings. A rendered visual DOCX/PDF review
+is still recommended before final implementation.
 
 ## Classification key
 
@@ -41,6 +42,7 @@ visual DOCX/PDF review before implementation.
 
 | Context | Element / attribute | Current requirement summary | Classification | Proposed validator check | Negative test vector |
 |---|---|---|---|---|---|
+| `MPD` | `MPD` | Provides the requirements for ad insertion content; unspecified values follow ISO/IEC 23009-1. | Informational | Identify the MPD as a candidate DASH-IF ad content MPD when profile/signalling indicates it. | None. |
 | `MPD` | `@profiles` | Should include DASH-IF ad-content profile and shall include DASH CMAF profile. | Error for missing CMAF profile; Warning for missing ad-content profile | Parse `MPD@profiles`; check for `urn:mpeg:dash:profile:cmaf:2019`; check optional `http://dashif.org/guidelines/dashif-ad-content`. | MPD missing CMAF profile; MPD missing ad-content profile. |
 | `MPD` | `@type` | Shall be `static`. | Error | Check `MPD@type == "static"`. | MPD with `@type="dynamic"`. |
 | `MPD` | `@mediaPresentationDuration` | Shall not be present. | Error | Check attribute absent. | Static ad MPD with `@mediaPresentationDuration`. |
@@ -64,6 +66,7 @@ visual DOCX/PDF review before implementation.
 | `AdaptationSet` | `@xlink:href` | Shall be absent. | Error | Check attribute absent. | AdaptationSet with `xlink:href`. |
 | `AdaptationSet` | `@xlink:actuate` | Shall be absent. | Error | Check attribute absent. | AdaptationSet with `xlink:actuate`. |
 | `AdaptationSet` | `InbandEventStream` | Permitted for beaconing. | Informational | Report inband event streams and schemes. | None. |
+| `AdaptationSet` | `CommonAttributesElements` | Common attributes/elements follow ISO/IEC 23009-1 unless specifically constrained. | Informational | No dedicated check beyond constrained rows in this matrix. | None. |
 | `AdaptationSet` | `SegmentBase@presentationTimeOffset` | Shall be absent. | Error | Check absent on segment addressing elements where applicable. | AdaptationSet with nonzero `presentationTimeOffset`. |
 | `AdaptationSet` | `SegmentBase@eptDelta` | Shall be absent. | Error | Check absent where applicable. | AdaptationSet with `eptDelta`. |
 | `AdaptationSet` | `SegmentBase@pdDelta` | May be present for non-video tracks; if present, non-negative and small. | Error for negative; Warning/manual for "small" | Check numeric non-negative; flag large values as warning if threshold is defined. | Negative `pdDelta`; very large `pdDelta`. |
@@ -110,8 +113,9 @@ Recommended negative MPD assets:
 ## Open review questions
 
 - Confirm rendered Table 4 row layout and hierarchy against DOCX/PDF. DOCX table
-  extraction already confirmed the AdaptationSet `@xlink:href` and
-  `@xlink:actuate` rows.
+  extraction already confirmed the published caption, top-level `MPD` row,
+  AdaptationSet `@xlink:href` and `@xlink:actuate` rows, and
+  `CommonAttributesElements` row.
 - Confirm whether missing `ProgramInformation` should produce a warning or only
   informational output.
 - Confirm whether missing `AssetIdentifier` should produce a warning.

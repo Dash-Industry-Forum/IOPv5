@@ -944,9 +944,10 @@ Examples of asset identifier schemes include:
   - `@value` set to a MovieLabs ContentID URN.
 
 <table class="data">
-  <caption>DASH-IF ad content MPD requirements.</caption>
+  <caption>DASH-IF Ad content MPD.</caption>
   <thead><tr><th>Context<th>Element or attribute<th>Use<th>Requirement / description
   <tbody>
+    <tr><td>`MPD`<td>`MPD`<td>—<td>Provides the requirements for ad insertion content. Values not specified here are identical to ISO/IEC 23009-1.
     <tr><td>`MPD`<td>`@profiles`<td>M<td>Should include `http://dashif.org/guidelines/dashif-ad-content` and <span class=modal-keyword>shall</span> include the DASH CMAF profile identifier `urn:mpeg:dash:profile:cmaf:2019`.
     <tr><td>`MPD`<td>`@type`<td>M<td><span class=modal-keyword>Shall</span> be set to `static`.
     <tr><td>`MPD`<td>`@mediaPresentationDuration`<td>R<td><span class=modal-keyword>Shall not</span> be present.
@@ -958,7 +959,7 @@ Examples of asset identifier schemes include:
     <tr><td>`MPD`<td>`@maxSubsegmentDuration`<td>R<td><span class=modal-keyword>Shall not</span> be present.
     <tr><td>`MPD`<td>`ProgramInformation`<td>0 … N<td>Should be used to describe information about the ad.
     <tr><td>`MPD`<td>`BaseURL`<td>0<td><span class=modal-keyword>Shall not</span> be present at MPD level; BaseURL belongs in the Period.
-    <tr><td>`MPD`<td>`Period`<td>1<td>Exactly one Period <span class=modal-keyword>shall</span> be present.
+    <tr><td>`MPD`<td>`Period`<td>1<td>Exactly one Period <span class=modal-keyword>shall</span> be present. Values not specified here are identical to ISO/IEC 23009-1.
     <tr><td>`Period`<td>`@xlink:href`<td>R<td><span class=modal-keyword>Shall</span> be absent.
     <tr><td>`Period`<td>`@xlink:actuate`<td>R<td><span class=modal-keyword>Shall</span> be absent.
     <tr><td>`Period`<td>`@start`<td>R<td><span class=modal-keyword>Shall</span> be absent; assumed to be `0`.
@@ -970,6 +971,7 @@ Examples of asset identifier schemes include:
     <tr><td>`AdaptationSet`<td>`@xlink:href`<td>R<td><span class=modal-keyword>Shall</span> be absent.
     <tr><td>`AdaptationSet`<td>`@xlink:actuate`<td>R<td><span class=modal-keyword>Shall</span> be absent.
     <tr><td>`AdaptationSet`<td>`InbandEventStream`<td>0 … N<td>Inband Event Streams are permitted, for example for beaconing.
+    <tr><td>`AdaptationSet`<td>`CommonAttributesElements`<td>—<td>Specifies the common attributes and elements from `RepresentationBaseType`; values not specified here follow ISO/IEC 23009-1.
     <tr><td>`AdaptationSet`<td>`SegmentBase@presentationTimeOffset`<td>OD<td><span class=modal-keyword>Shall</span> be absent.
     <tr><td>`AdaptationSet`<td>`SegmentBase@eptDelta`<td>O<td><span class=modal-keyword>Shall</span> be absent.
     <tr><td>`AdaptationSet`<td>`SegmentBase@pdDelta`<td>O<td>May be present for non-video tracks. If present, it <span class=modal-keyword>shall</span> be non-negative and should be as small as possible.
@@ -981,11 +983,12 @@ Examples of asset identifier schemes include:
     <tr><td>`MPD`<td>`LeapSecondInformation`<td>0<td><span class=modal-keyword>Shall not</span> be present.
 </table>
 
-Issue: This Table 4 reconstruction has been checked against the DOCX table
+Issue: This Table 4 reconstruction has been restructured against the DOCX table
 structure extracted from `DASH-IF-IOP-Part5-v5.0.0.docx`. The extraction
-confirmed 36 rows and identified the AdaptationSet `@xlink:href` and
-`@xlink:actuate` rows, which are now included. A rendered visual DOCX/PDF review
-is still recommended to confirm caption, typography, and final row hierarchy.
+confirmed 36 rows, the published caption "DASH-IF Ad content MPD", the top-level
+`MPD` description row, the AdaptationSet `@xlink:href` and `@xlink:actuate`
+rows, and the `CommonAttributesElements` row. A rendered visual DOCX/PDF review
+is still recommended to confirm typography and final row hierarchy.
 
 ### IF-4f: DASH-IF Recommended Slate Content ### {#ad-if4f-slate-content}
 
