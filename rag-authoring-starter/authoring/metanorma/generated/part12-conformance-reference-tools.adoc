@@ -292,8 +292,9 @@ M1 synchronization note: execution has started for the Part 5 / F-0010 visual
 review and validator-start work package. The current M1 checklist is tracked in
 `rag/reports/part05-f0010-m1-visual-validator-start.md`.
 
-Initial local validator tools and fixtures are now available for the first three
-Part 5 validator buckets:
+Initial local validator tools, fixtures, and the explicit fixture inventory are
+now available for the first three Part 5 validator buckets. The inventory is
+maintained at `rag/reports/part05-f0010-test-vector-inventory.md`:
 
 .Initial Part 5 validator tool and fixture inventory.
 [cols="1,1,1,1",options="header"]

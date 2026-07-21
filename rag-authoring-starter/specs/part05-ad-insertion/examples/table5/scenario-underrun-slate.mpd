@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011"
+     profiles="urn:mpeg:dash:profile:cmaf-extended:2019"
+     type="dynamic"
+     minimumUpdatePeriod="PT2S"
+     minBufferTime="PT2S">
+  <Period id="main-before" start="PT0S" data-if5-role="main">
+    <AdaptationSet id="main-video-before" contentType="video">
+      <Representation id="main-v1" bandwidth="1000000"/>
+    </AdaptationSet>
+  </Period>
+  <Period id="ad-short" start="PT60S" availabilityTimeOffset="4" data-if5-role="ad">
+    <BaseURL>https://example.com/ad-short/</BaseURL>
+    <AdaptationSet id="ad-video" contentType="video">
+      <Representation id="ad-v1" bandwidth="900000"/>
+    </AdaptationSet>
+  </Period>
+  <Period id="slate-fill" start="PT75S" availabilityTimeOffset="4" data-if5-role="slate">
+    <BaseURL>https://example.com/slate/</BaseURL>
+    <AdaptationSet id="slate-video" contentType="video">
+      <Representation id="slate-v1" bandwidth="500000"/>
+    </AdaptationSet>
+  </Period>
+  <Period id="main-after" start="PT90S" data-if5-role="main">
+    <AdaptationSet id="main-video-after" contentType="video">
+      <Representation id="main-v2" bandwidth="1000000"/>
+    </AdaptationSet>
+  </Period>
+</MPD>
