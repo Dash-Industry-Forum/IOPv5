@@ -189,11 +189,14 @@ def main() -> int:
     rev = meta.get("Revision", ["0.1"])[0]
     editors = meta.get("Editor", [])
     abstract = meta.get("Abstract", [""])[0]
+    shortname = meta.get("Shortname", [bs_path.stem])[0]
+    part_match = re.search(r"part0?(\d+)", shortname, re.I)
+    docnumber = f"IOP-v5-Part{int(part_match.group(1)):02d}" if part_match else f"IOP-v5-{shortname}"
 
     header = [
         f"= {title}",
         ":doctype: standard",
-        ":docnumber: IOP-v5-Part12",
+        f":docnumber: {docnumber}",
         f":revnumber: {rev}",
         ":mn-document-class: generic",
         # Generic Metanorma in the tested winget package supports html/doc/xml;

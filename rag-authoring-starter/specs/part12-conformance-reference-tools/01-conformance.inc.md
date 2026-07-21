@@ -305,16 +305,42 @@ Database before being treated as a complete conformance plan.
 
 M1 synchronization note: execution has started for the Part 5 / F-0010 visual
 review and validator-start work package. The current M1 checklist is tracked in
-`rag/reports/part05-f0010-m1-visual-validator-start.md`. Part 12 should be
-updated after each M1 decision to reflect:
+`rag/reports/part05-f0010-m1-visual-validator-start.md`.
 
-- IF-3 SCTE-35 MPD Event validator checks,
-- IF-4 DASH-IF ad content MPD validator checks,
-- IF-5 multi-Period ad insertion validator checks,
-- IF-5 SSAI scenario/reference-client checks,
-- IF-7 SGAI/livesim2/dash.js checks,
-- IF-8 tracking sample checks,
-- IF-9 clear/encrypted playback checks.
+Initial local validator tools and fixtures are now available for the first three
+Part 5 validator buckets:
+
+<table class="data">
+  <caption>Initial Part 5 validator tool and fixture inventory.</caption>
+  <thead>
+    <tr><th>Bucket<th>Validator tool<th>Fixture directory<th>Status
+  <tbody>
+    <tr>
+      <td>F-0010-A IF-3 SCTE-35 MPD Events
+      <td>`tools/validation/validate_part5_scte35_events.py`
+      <td>`specs/part05-ad-insertion/examples/scte35/`
+      <td>MPD-level checks and initial SCTE-35 command-type parsing implemented.
+    <tr>
+      <td>F-0010-B IF-4 DASH-IF ad content MPD / Table 4
+      <td>`tools/validation/validate_part5_ad_content_mpd.py`
+      <td>`specs/part05-ad-insertion/examples/table4/`
+      <td>Initial structural checks implemented.
+    <tr>
+      <td>F-0010-C IF-5 spliced-output MPD / Table 5
+      <td>`tools/validation/validate_part5_if5_spliced_mpd.py`
+      <td>`specs/part05-ad-insertion/examples/table5/`
+      <td>Initial IF-5 multi-Period structural checks implemented.
+</table>
+
+Remaining Part 5 conformance synchronization items include:
+
+- expand IF-3 SCTE-35 payload-aware checks and test vectors,
+- expand IF-4 and IF-5 fixture coverage from aggregate negative fixtures to
+  per-rule vectors,
+- add IF-5 SSAI scenario/reference-client checks,
+- add IF-7 SGAI/livesim2/dash.js checks,
+- add IF-8 tracking sample checks,
+- add IF-9 clear/encrypted playback checks.
 
 ## Issue Tracking and Coordination ## {#tools-github}
 

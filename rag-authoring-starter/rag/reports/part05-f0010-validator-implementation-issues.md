@@ -188,3 +188,28 @@ is derived from DASH-IF ad-content MPDs.
 - Each scenario is documented with expected validator result.
 - Playback-dependent scenarios are marked for dash.js/reference-client testing.
 - Assets are cross-linked to Part 12 test-assets planning.
+
+## Implementation status update: F-0010-B/C/A initial validators
+
+The initial validator implementation pass has added three standalone Python
+validators under `tools/validation/`:
+
+| Feature | Tool | Fixture directory | Status |
+|---|---|---|---|
+| F-0010-B1 | `validate_part5_ad_content_mpd.py` | `specs/part05-ad-insertion/examples/table4/` | Initial structural checks implemented. |
+| F-0010-C1 | `validate_part5_if5_spliced_mpd.py` | `specs/part05-ad-insertion/examples/table5/` | Initial IF-5 spliced-output checks implemented. |
+| F-0010-A1/A2 | `validate_part5_scte35_events.py` | `specs/part05-ad-insertion/examples/scte35/` | MPD-level checks implemented; initial payload command-type parsing added. |
+
+### Remaining validator implementation issues
+
+- Expand F-0010-B2 with per-rule negative fixtures rather than only aggregate
+  negative fixtures.
+- Expand F-0010-C3 with realistic SSAI scenario vectors for exact-duration,
+  overrun, underrun, multi-ad-pod, and continuity cases.
+- Continue F-0010-A2 with deeper SCTE-35 payload parsing:
+  - `splice_insert()` `out_of_network_indicator`,
+  - `splice_insert()` break duration,
+  - `time_signal()` splice time,
+  - descriptor-loop parsing for `segmentation_descriptor()`,
+  - start/end correlation by `segmentation_event_id`.
+- Add an explicit test-vector inventory and cross-link it from Part 12.
