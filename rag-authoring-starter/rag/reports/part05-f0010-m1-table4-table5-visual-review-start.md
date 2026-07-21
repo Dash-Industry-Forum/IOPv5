@@ -168,9 +168,147 @@ Preliminary recommendation:
    - `05-ad-insertion.inc.md`,
    - Part 12 mapping if validation categories change.
 
+## DOCX table extraction pass
+
+The published Part 5 DOCX is available locally at:
+
+```text
+rag/corpus/published/DASH-IF-IOP-Part5-v5.0.0.docx
+```
+
+A DOCX table extraction helper was added at:
+
+```text
+tools/ingest/extract_part5_tables.py
+```
+
+The extraction found six tables in the DOCX and identified:
+
+```text
+Table 4: 36 rows
+Table 5: 37 rows
+```
+
+This is not a visual rendering review, but it is stronger than plain extracted
+text because it reads the DOCX table structure directly.
+
+## Table 4 extraction findings
+
+DOCX Table 4 confirms the reconstructed Table 4 is largely aligned, including:
+
+- `MPD@profiles`,
+- `MPD@type`,
+- removed dynamic MPD attributes,
+- `MPD@minBufferTime`,
+- `ProgramInformation`,
+- MPD-level `BaseURL` absence,
+- exactly one `Period`,
+- `Period@start` absence,
+- `Period@duration` presence,
+- Period-level `BaseURL`,
+- `AssetIdentifier`,
+- `EventStream`,
+- `AdaptationSet`,
+- `InbandEventStream`,
+- `SegmentBase@presentationTimeOffset`,
+- `SegmentBase@eptDelta`,
+- `SegmentBase@pdDelta`,
+- `@contentType`,
+- `SegmentList`,
+- `Representation`,
+- `EmptyAdaptationSet`,
+- `UTCTiming`,
+- `LeapSecondInformation`.
+
+### Table 4 source deltas to review
+
+The DOCX extraction includes rows that are not currently explicit in the source
+Table 4:
+
+| DOCX row | Current source status | Recommended action |
+|---|---|---|
+| `AdaptationSet@xlink:href` with Use `R` | Missing from source Table 4 | Add to source Table 4. |
+| `AdaptationSet@xlink:actuate` with Use `R` | Missing from source Table 4 | Add to source Table 4. |
+| `CommonAttributesElements` row | Not explicit in source Table 4 | Optional editorial row; likely not needed for validator but note in matrix. |
+
+The DOCX extraction confirms `SegmentBase@pdDelta` has Use `O`, not `OD`, and
+the reconstructed source already matches this.
+
+## Table 5 extraction findings
+
+DOCX Table 5 confirms that the current source is a simplified reconstruction and
+does not yet mirror the published Table 5 row hierarchy.
+
+The published DOCX Table 5 has these major row groups:
+
+1. `MPD`,
+2. `ServiceDescription` / `Latency@target`,
+3. `@profiles`,
+4. `@minimumUpdatePeriod`,
+5. `InitializationSet`,
+6. `Period (Main content)`,
+7. `Period (Ad Content)`,
+8. `Period (Slate Content)`,
+9. final `Period (Main Content)`.
+
+### Table 5 source deltas to review
+
+| DOCX row or group | Current source status | Recommended action |
+|---|---|---|
+| `@minimumUpdatePeriod` adjusted according to operation | Missing from current source Table 5 | Add row or note. |
+| `InitializationSet` operational rules for `@inAllPeriods` | Simplified in source | Replace with fuller DOCX wording. |
+| `Period (Main content) @duration` removed | Missing from current main-content table | Add row. |
+| `Period (Main content) EventStream/AdaptationSet/AssetIdentifier` reused | Partially represented | Align wording. |
+| `Period (Ad Content)` group | Not represented as inserted Period group | Add or restructure source Table 5. |
+| `Period (Ad Content) @id`, `@start`, `@duration`, `BaseURL`, `@availabilityTimeOffset`, `EventStream`, `AdaptationSet`, `AssetIdentifier` | Not represented as a distinct inserted Period group | Add rows. |
+| `Period (Slate Content)` group | Missing | Add rows or document deferral. |
+| final `Period (Main Content)` return group | Missing | Add rows or document deferral. |
+| Table key says conditions hold only without `xlink:href`; if linking is used, attributes are optional and minOccurs is 0 | Missing from source note | Add to source key/note. |
+
+## Updated validator unblock decision
+
+### F-0010-B1
+
+F-0010-B1 can start, but the Table 4 validator matrix should first be updated to
+include deterministic absence checks for:
+
+- `AdaptationSet@xlink:href`,
+- `AdaptationSet@xlink:actuate`.
+
+The rest of the deterministic Table 4 checks remain safe to start.
+
+### F-0010-C1
+
+F-0010-C1 should not be finalized directly from the current source Table 5. The
+DOCX extraction shows that source Table 5 needs a restructuring pass before the
+Table 5 validator matrix is treated as final.
+
+Safe C1 checks that can still start:
+
+- Period sequence is present,
+- inserted ad Period `@start` is present,
+- inserted ad Period `@duration` is optional/typically removed,
+- inserted ad/slate Period `@availabilityTimeOffset` is mandatory,
+- inserted ad/slate Period `BaseURL` is present,
+- return main Period `@start` is present,
+- return main Period `@duration` is removed.
+
+## Recommended next source updates
+
+1. Add the two missing `AdaptationSet` xlink rows to source Table 4.
+2. Update the Table 4 validator matrix for those two removed attributes.
+3. Restructure source Table 5 to follow the DOCX groups:
+   - MPD,
+   - Period (Main content),
+   - Period (Ad Content),
+   - Period (Slate Content),
+   - Period (Main Content).
+4. Update the Table 5 validator matrix after restructuring.
+5. Update Part 12 if the validator categories change.
+
 ## Current blocker
 
-The current environment has the extracted text and reconstructed source, but not
-a visual table extraction suitable for confirming row layout. Therefore this
-report starts the review and identifies safe validator-start areas, but it does
-not claim Table 4 or Table 5 visual review completion.
+The current environment can extract DOCX table structure, but still cannot
+provide a rendered visual table comparison. Therefore Table 4 is now partially
+confirmed by DOCX table extraction, while Table 5 is confirmed to require a
+source restructuring pass before visual review can be considered complete.

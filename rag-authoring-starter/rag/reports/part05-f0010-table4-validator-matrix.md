@@ -61,6 +61,8 @@ visual DOCX/PDF review before implementation.
 | `Period` | `AssetIdentifier` | Should identify ad content. | Warning | Check zero or one `AssetIdentifier`; warn if absent; error if more than one if MPEG restriction applies. | Period without `AssetIdentifier`; Period with multiple identifiers. |
 | `Period` | `EventStream` | Permitted for beaconing. | Informational | Report event streams and schemes. | None. |
 | `Period` | `AdaptationSet` | At least one shall be present. | Error | Count one or more `AdaptationSet`. | Period without AdaptationSet. |
+| `AdaptationSet` | `@xlink:href` | Shall be absent. | Error | Check attribute absent. | AdaptationSet with `xlink:href`. |
+| `AdaptationSet` | `@xlink:actuate` | Shall be absent. | Error | Check attribute absent. | AdaptationSet with `xlink:actuate`. |
 | `AdaptationSet` | `InbandEventStream` | Permitted for beaconing. | Informational | Report inband event streams and schemes. | None. |
 | `AdaptationSet` | `SegmentBase@presentationTimeOffset` | Shall be absent. | Error | Check absent on segment addressing elements where applicable. | AdaptationSet with nonzero `presentationTimeOffset`. |
 | `AdaptationSet` | `SegmentBase@eptDelta` | Shall be absent. | Error | Check absent where applicable. | AdaptationSet with `eptDelta`. |
@@ -96,16 +98,20 @@ Recommended negative MPD assets:
 5. Missing `Period@duration`.
 6. Period with `@start`.
 7. Missing Period-level `BaseURL`.
-8. AdaptationSet with `SegmentList`.
-9. AdaptationSet missing `@contentType`.
-10. AdaptationSet with `SegmentBase@presentationTimeOffset`.
-11. AdaptationSet with `SegmentBase@eptDelta`.
-12. MPD with `UTCTiming`.
-13. MPD with `LeapSecondInformation`.
+8. AdaptationSet with `@xlink:href`.
+9. AdaptationSet with `@xlink:actuate`.
+10. AdaptationSet with `SegmentList`.
+11. AdaptationSet missing `@contentType`.
+12. AdaptationSet with `SegmentBase@presentationTimeOffset`.
+13. AdaptationSet with `SegmentBase@eptDelta`.
+14. MPD with `UTCTiming`.
+15. MPD with `LeapSecondInformation`.
 
 ## Open review questions
 
-- Confirm Table 4 row layout and hierarchy against DOCX/PDF.
+- Confirm rendered Table 4 row layout and hierarchy against DOCX/PDF. DOCX table
+  extraction already confirmed the AdaptationSet `@xlink:href` and
+  `@xlink:actuate` rows.
 - Confirm whether missing `ProgramInformation` should produce a warning or only
   informational output.
 - Confirm whether missing `AssetIdentifier` should produce a warning.

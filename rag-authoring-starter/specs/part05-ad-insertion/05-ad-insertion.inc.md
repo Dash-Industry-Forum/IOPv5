@@ -967,6 +967,8 @@ Examples of asset identifier schemes include:
     <tr><td>`Period`<td>`AssetIdentifier`<td>0 … 1<td>Should be used to provide an explicit identifier for the ad content.
     <tr><td>`Period`<td>`EventStream`<td>0 … N<td>Event Streams are permitted, for example for beaconing.
     <tr><td>`Period`<td>`AdaptationSet`<td>1 … N<td>At least one Adaptation Set <span class=modal-keyword>shall</span> be present.
+    <tr><td>`AdaptationSet`<td>`@xlink:href`<td>R<td><span class=modal-keyword>Shall</span> be absent.
+    <tr><td>`AdaptationSet`<td>`@xlink:actuate`<td>R<td><span class=modal-keyword>Shall</span> be absent.
     <tr><td>`AdaptationSet`<td>`InbandEventStream`<td>0 … N<td>Inband Event Streams are permitted, for example for beaconing.
     <tr><td>`AdaptationSet`<td>`SegmentBase@presentationTimeOffset`<td>OD<td><span class=modal-keyword>Shall</span> be absent.
     <tr><td>`AdaptationSet`<td>`SegmentBase@eptDelta`<td>O<td><span class=modal-keyword>Shall</span> be absent.
@@ -979,10 +981,11 @@ Examples of asset identifier schemes include:
     <tr><td>`MPD`<td>`LeapSecondInformation`<td>0<td><span class=modal-keyword>Shall not</span> be present.
 </table>
 
-Issue: This Table 4 reconstruction reuses the published MPD requirements also
-reflected in IF-5 Table 5. It should be visually reviewed against the published
-DOCX/PDF to confirm table numbering, hierarchy, and whether any rows were lost
-during extraction.
+Issue: This Table 4 reconstruction has been checked against the DOCX table
+structure extracted from `DASH-IF-IOP-Part5-v5.0.0.docx`. The extraction
+confirmed 36 rows and identified the AdaptationSet `@xlink:href` and
+`@xlink:actuate` rows, which are now included. A rendered visual DOCX/PDF review
+is still recommended to confirm caption, typography, and final row hierarchy.
 
 ### IF-4f: DASH-IF Recommended Slate Content ### {#ad-if4f-slate-content}
 
