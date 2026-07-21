@@ -69,15 +69,43 @@ def find_binary(event: ET.Element) -> ET.Element | None:
     return None
 
 
-def validate_binary_base64(binary_text: str) -> bool:
+def decode_binary_payload(binary_text: str) -> bytes | None:
     normalized = "".join(binary_text.split())
     if not normalized:
-        return False
+        return None
     try:
-        base64.b64decode(normalized, validate=True)
+        return base64.b64decode(normalized, validate=True)
     except (binascii.Error, ValueError):
-        return False
-    return True
+        return None
+
+
+def validate_binary_base64(binary_text: str) -> bool:
+    return decode_binary_payload(binary_text) is not None
+
+
+def parse_scte35_command_type(payload: bytes) -> int | None:
+    """Parse splice_command_type from a SCTE-35 splice_info_section.
+
+    This is intentionally minimal for F-0010-A2. It validates the table id and
+    extracts the command type at the fixed byte offset used by SCTE-35 after the
+    encrypted_packet/encryption_algorithm/pts_adjustment/cw_index/tier fields.
+    """
+    if len(payload) < 14:
+        return None
+    if payload[0] != 0xFC:
+        return None
+    return payload[13]
+
+
+def scte35_command_name(command_type: int) -> str:
+    return {
+        0x00: "splice_null",
+        0x04: "splice_schedule",
+        0x05: "splice_insert",
+        0x06: "time_signal",
+        0x07: "bandwidth_reservation",
+        0xFF: "private_command",
+    }.get(command_type, f"unknown_{command_type}")
 
 
 def is_scte35_like_scheme(scheme: str | None) -> bool:
@@ -185,10 +213,32 @@ def validate_mpd(path: Path) -> list[Finding]:
                                 f"{event_label} shall contain scte35:Signal/scte35:Binary for xml+bin.",
                             )
                         )
-                    elif not validate_binary_base64(binary.text or ""):
-                        findings.append(
-                            Finding("ERROR", "SCTE35_XML_BIN_BINARY_INVALID_BASE64", f"{event_label} Binary payload is not valid Base64.")
-                        )
+                    else:
+                        payload = decode_binary_payload(binary.text or "")
+                        if payload is None:
+                            findings.append(
+                                Finding("ERROR", "SCTE35_XML_BIN_BINARY_INVALID_BASE64", f"{event_label} Binary payload is not valid Base64.")
+                            )
+                        else:
+                            command_type = parse_scte35_command_type(payload)
+                            if command_type is None:
+                                findings.append(
+                                    Finding(
+                                        "ERROR",
+                                        "SCTE35_PAYLOAD_COMMAND_TYPE_UNPARSEABLE",
+                                        f"{event_label} Binary payload does not expose a parseable SCTE-35 command type.",
+                                    )
+                                )
+                            else:
+                                command_name = scte35_command_name(command_type)
+                                if command_type not in {0x05, 0x06}:
+                                    findings.append(
+                                        Finding(
+                                            "WARNING",
+                                            "SCTE35_PAYLOAD_COMMAND_TYPE_NOT_OPPORTUNITY_SIGNAL",
+                                            f"{event_label} SCTE-35 command type is {command_name}; expected splice_insert or time_signal for opportunity signalling.",
+                                        )
+                                    )
 
     if scte35_stream_count == 0:
         findings.append(
