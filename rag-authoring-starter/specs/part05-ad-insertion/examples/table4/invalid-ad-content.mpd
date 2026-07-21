@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011"
+     xmlns:xlink="http://www.w3.org/1999/xlink"
+     profiles="http://dashif.org/guidelines/dashif-ad-content"
+     type="dynamic"
+     minBufferTime="PT2S"
+     minimumUpdatePeriod="PT5S">
+  <BaseURL>https://example.com/invalid-mpd-level/</BaseURL>
+  <Period id="p0" start="PT0S">
+    <AdaptationSet id="1" xlink:href="https://example.com/linked" contentType="video">
+      <SegmentTemplate media="video/$Number$.m4s"
+                       initialization="video/init.mp4"
+                       duration="2"
+                       timescale="1"
+                       presentationTimeOffset="10"
+                       eptDelta="1"
+                       pdDelta="-1"/>
+    </AdaptationSet>
+  </Period>
+</MPD>
