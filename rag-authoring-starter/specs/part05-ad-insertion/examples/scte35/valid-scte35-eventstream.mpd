@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011"
+     xmlns:scte35="urn:scte:scte35:2014:xml+bin"
+     type="dynamic"
+     minBufferTime="PT2S">
+  <Period id="p0" start="0" duration="120">
+    <EventStream schemeIdUri="urn:scte:scte35:2014:xml+bin" timescale="1">
+      <Event presentationTime="30" duration="30" id="splice-1">
+        <scte35:Signal>
+          <scte35:Binary>/DAhAAAAAAAAAP/wEAUAAAfPf+9/fgAg9YDAAAAAAAA/APOv</scte35:Binary>
+        </scte35:Signal>
+      </Event>
+    </EventStream>
+    <AdaptationSet id="1" contentType="video">
+      <Representation id="v1" bandwidth="1000000"/>
+    </AdaptationSet>
+  </Period>
+</MPD>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011"
+     xmlns:scte35="urn:scte:scte35:2014:xml+bin"
+     type="dynamic"
+     minBufferTime="PT2S">
+  <Period id="p0" start="0" duration="60">
+    <EventStream schemeIdUri="urn:scte:scte35:2099:unknown" timescale="1">
+      <Event duration="-1" id="dup">
+        <scte35:Signal>
+          <scte35:Binary>not-valid-base64</scte35:Binary>
+        </scte35:Signal>
+      </Event>
+      <Event presentationTime="120" id="dup">
+        <scte35:Signal>
+          <scte35:Binary>AAAA</scte35:Binary>
+        </scte35:Signal>
+      </Event>
+    </EventStream>
+    <EventStream schemeIdUri="urn:scte:scte35:2014:xml+bin">
+      <Event presentationTime="10" id="missing-binary"/>
+    </EventStream>
+    <AdaptationSet id="1" contentType="video">
+      <Representation id="v1" bandwidth="1000000"/>
+    </AdaptationSet>
+  </Period>
+</MPD>
