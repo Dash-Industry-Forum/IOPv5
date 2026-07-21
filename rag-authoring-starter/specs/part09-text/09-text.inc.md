@@ -239,7 +239,7 @@ sets used by clients and services may need careful alignment to ensure mutual
 compatibility. Do not assume that all of IMSC1 is supported by typical clients.
 
 Conversion of CEA-608 and CEA-708 into IMSC1 <span class=modal-keyword>shall</span>
-be done according to SMPTE 2052-10 and SMPTE 2052-11, respectively.
+be done according to SMPTE 2052-10 [[SMPTE2052-10]] and SMPTE 2052-11 [[SMPTE2052-11]], respectively.
 
 One of the following storage formats <span class=modal-keyword>shall</span> be
 used for IMSC1 Representations:
@@ -297,9 +297,12 @@ Note: Text in video tracks does not affect video-track selection.
 # Requirements and Recommendations # {#requirements}
 
 Issue: The above clauses reconcile the initial Part 9 Bikeshed source with the
-published DASH-IF IOP v5.0.0 Part 9 FINAL structure. Remaining migration work is
-to verify exact values in the published tables, confirm bibliographic aliases,
-and link testable requirements to Part 12 conformance mapping.
+published DASH-IF IOP v5.0.0 Part 9 FINAL structure. The CMAF media-profile,
+text-track Adaptation Set, and video-track Adaptation Set table values have been
+checked against the extracted published text. Remaining migration work is to
+review generated HTML against the published DOCX/PDF for table formatting,
+confirm final citation policy for local bibliography aliases, and link testable
+requirements to Part 12 conformance mapping.
 [GROUNDED_BY=rag/corpus/published/DASH-IF-IOPv5.0.0-Part9-FINAL.docx.extracted.txt]
 
 # Open Issues and Work Items # {#open-issues}
@@ -308,8 +311,8 @@ and link testable requirements to Part 12 conformance mapping.
   <caption>Part 9 open issues and topics to progress.</caption>
   <thead><tr><th>Topic<th>Status<th>Next action
   <tbody>
-    <tr><td>Published v5.0.0 reconciliation<td>In progress<td>Initial structure and core requirements migrated. Verify exact published table values against `rag/reports/reconcile-part09-text.md`.
-    <tr><td>Reference mapping<td>Open<td>Confirm bibliographic aliases for ISO/IEC 14496-30, SCTE 214-1, IMSC1/TTML, DASH-IF IOP v4.3, and Part 7 Video.
+    <tr><td>Published v5.0.0 reconciliation<td>Source-level check complete<td>Initial structure, core requirements, and extracted table values have been checked against `rag/reports/reconcile-part09-text.md`; generated HTML still needs visual review against the published DOCX/PDF.
+    <tr><td>Reference mapping<td>In progress<td>Bibliographic aliases exist and SMPTE 2052 aliases are now cited. Confirm final citation policy for ISO/IEC 14496-30, SCTE 214-1, IMSC1/TTML, DASH-IF IOP v4.3, Part 7 Video, and SMPTE 2052 references.
     <tr><td>Cross-part alignment<td>Open<td>Align terminology and references with Parts 1, 2, 7, and 12.
     <tr><td>Conformance mapping<td>Open<td>Identify validator/test-asset/reference-player expectations and link them to Part 12.
 </table>
@@ -323,5 +326,7 @@ and link testable requirements to Part 12 conformance mapping.
     <tr><td>0.1<td>Initial<td>Created initial Bikeshed/Markdown shell for Part 9.
     <tr><td>0.2<td>Migration<td>Migrated CEA-608/708 and IMSC1 text codec clauses from DASH-IF-IOP v5-old-draft.
     <tr><td>0.3<td>Reconciliation<td>Added published DASH-IF IOP v5.0.0 Part 9 FINAL structure, CMAF media-profile table, adaptation-set requirements, chunks/gaps, and client recommendations.
+    <tr><td>0.4<td>Reconciliation<td>Verified initial source against extracted published Part 9 text and connected SMPTE 2052 references used by the IMSC1 conversion requirement.
+    <tr><td>0.5<td>Reconciliation<td>Completed source-level verification of extracted published table values for CMAF media profiles and text/video Adaptation Set signalling.
     <tr><td>5.0.0<td>2022-01-04<td>Version published as Part 9 v5.0.0.
 </table>

@@ -25,6 +25,98 @@ Repository: Dash-Industry-Forum/IOPv5
     "title": "Information technology - Multimedia application format (MPEG-A) - Part 19: Common media application format (CMAF) for segmented media",
     "publisher": "ISO/IEC",
     "date": "2024"
+  },
+  "DASHIF-IOP5-PART1": {
+    "title": "DASH-IF IOP v5 Part 1: Overview, Architectures and Interfaces",
+    "publisher": "DASH-IF",
+    "href": "https://dashif.org/guidelines/iop-v5/#part-1-overview-architecture-and-interfaces"
+  },
+  "SCTE35": {
+    "title": "Digital Program Insertion Cueing Message for Cable",
+    "publisher": "ANSI/SCTE",
+    "date": "2015"
+  },
+  "SCTE104": {
+    "title": "Automation System to Compression System Communications Applications Programming Interface",
+    "publisher": "ANSI/SCTE",
+    "date": "2019A"
+  },
+  "DASHIF-INGEST": {
+    "title": "DASH-IF Live Media Ingest Protocol",
+    "publisher": "DASH-IF",
+    "href": "https://dashif-documents.azurewebsites.net/Ingest/master/DASH-IF-Ingest.html"
+  },
+  "CTA5003": {
+    "title": "Web Application Video Ecosystem - Device Playback Capabilities",
+    "publisher": "CTA"
+  },
+  "SMPTE-RP2079": {
+    "title": "Digital Object Identifier (DOI) Name and Entertainment ID Registry (EIDR) Identifier Representations",
+    "publisher": "SMPTE",
+    "date": "2013"
+  },
+  "EIDR-FORMAT": {
+    "title": "EIDR ID Format",
+    "publisher": "EIDR",
+    "date": "2014",
+    "href": "http://eidr.org/documents/EIDR_ID_Format_v1.2.pdf"
+  },
+  "SCTE214-1": {
+    "title": "MPEG DASH for IP-Based Cable Services, Part 1: MPD Constraints and Extensions",
+    "publisher": "ANSI/SCTE"
+  },
+  "SCTE214-3": {
+    "title": "MPEG DASH for IP-Based Cable Services, Part 3: DASH/FF Profile",
+    "publisher": "ANSI/SCTE"
+  },
+  "SCTE130-3": {
+    "title": "Digital Program Insertion - Advertising Systems Interface Part 3",
+    "publisher": "ANSI/SCTE",
+    "date": "2013"
+  },
+  "SMPTE-RP2092-1": {
+    "title": "Advertising Digital Identifier (Ad-ID) Representations",
+    "publisher": "SMPTE",
+    "date": "2015"
+  },
+  "CABLELABS-VOD": {
+    "title": "CableLabs Video-On-Demand Content Specification",
+    "publisher": "CableLabs",
+    "href": "https://specification-search.cablelabs.com/cablelabs-video-on-demand-content-specification-version-1-1"
+  },
+  "MPEG2-SYSTEMS": {
+    "title": "MPEG-2 Part 1: Systems",
+    "publisher": "ISO/IEC"
+  },
+  "RIST": {
+    "title": "Reliable Internet Stream Transport (RIST), TR-06-1",
+    "publisher": "Video Services Forum",
+    "date": "2018",
+    "href": "https://www.videoservicesforum.org/download/technical_recommendations/VSF_TR-06-1_2018_10_17.pdf"
+  },
+  "MSE": {
+    "title": "Media Source Extensions",
+    "publisher": "W3C",
+    "href": "https://www.w3.org/TR/media-source/"
+  },
+  "EME": {
+    "title": "Encrypted Media Extensions",
+    "publisher": "W3C",
+    "href": "https://www.w3.org/TR/encrypted-media/"
+  },
+  "VAST": {
+    "title": "Video Ad Serving Template",
+    "publisher": "IAB",
+    "href": "https://www.iab.com/guidelines/digital-video-ad-serving-template-vast/"
+  },
+  "OPENMEASUREMENT": {
+    "title": "Open Measurement SDK",
+    "publisher": "IAB Tech Lab",
+    "href": "https://iabtechlab.com/standards/open-measurement-sdk/"
+  },
+  "ITU-R-BS1770-4": {
+    "title": "Algorithms to measure audio programme loudness and true-peak audio level",
+    "publisher": "ITU-R"
   }
 }
 </pre>

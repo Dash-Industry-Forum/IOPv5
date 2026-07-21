@@ -61,11 +61,11 @@ authoring/metanorma/           experimental generated AsciiDoc / outputs (local)
 | 2 | Core Principles and CMAF Mapping | Initial substantive draft; many open technical issues tracked in the part |
 | 3 | On-Demand Services | Initial draft from v4.3 on-demand clauses |
 | 4 | Live and Low-Latency Live Services | Drafted and building; more v4.3 live detail remains to migrate |
-| 5 | Ad Insertion and Content Replacement | Bikeshed/Markdown shell; substantive migration pending |
-| 6 | Content Protection and Security | Bikeshed/Markdown shell; substantive migration pending |
+| 5 | Ad Insertion and Content Replacement | Major source migration completed at initial/hardened draft level; F-0010 conformance/cross-part plan created |
+| 6 | Content Protection and Security | Active reconciliation in progress; general/miscellaneous sections updated and tracked |
 | 7 | Video | Bikeshed/Markdown shell; substantive migration pending |
 | 8 | Audio | Bikeshed/Markdown shell; substantive migration pending |
-| 9 | Text | Bikeshed/Markdown shell; substantive migration pending |
+| 9 | Text | Active source migration and conformance coverage planning in progress |
 | 10 | Events | Bikeshed/Markdown shell; substantive migration pending |
 | 11 | Additional Technologies | Bikeshed/Markdown shell seeded with trick-mode, thumbnails, metadata-track and registration-process work items |
 | 12 | Conformance and Reference Tools | Drafted and building |
@@ -310,4 +310,37 @@ Current issue/backlog seed material is tracked in:
 ```text
 rag-authoring-starter/rag/reports/part02-part03-all-parts-status.md
 rag-authoring-starter/rag/reports/editorial-backlog.md
+rag-authoring-starter/rag/reports/project-status-update-2026-07-21.md
+rag-authoring-starter/rag/reports/part05-f0010-issue-index.md
 ```
+
+## Current project status update
+
+The latest consolidated project status and proposed next-step plan is:
+
+```text
+rag-authoring-starter/rag/reports/project-status-update-2026-07-21.md
+```
+
+The most complete active project-plan package is:
+
+```text
+F-0010 Part 5 ad-insertion conformance and cross-part indexing
+```
+
+Central index:
+
+```text
+rag-authoring-starter/rag/reports/part05-f0010-issue-index.md
+```
+
+F-0010 defines the proposed implementation order for:
+
+- Part 5 table/figure stabilization,
+- DASH-IF ad content MPD validator checks,
+- IF-5 multi-Period ad insertion validator checks,
+- SCTE-35 MPD Event checks,
+- SGAI remote-resolution coverage with dash.js and livesim2,
+- clear/encrypted ad insertion playback assets,
+- VAST/Open Measurement tracking sample coverage,
+- cross-part anchor and terminology harmonization.

@@ -176,7 +176,7 @@ Current Part 6 source headings include:
 | 5.1 | Introduction | `80-misc.inc.md` / `#CPS-schema` | Partial | Published introduction says clause 5 defines MPD elements for license acquisition and authorization servers; current source now includes a reconciliation note but still needs final normative wording. |
 | 5.2 | License acquisition URL | `80-misc.inc.md` / `#CPS-schema`; Clear Key example in `#CPS-AdditionalConstraints-W3C`; related workflows in `40-license-request-model.inc.md` | Partial | Current source has `dashif:laurl` schema/example and a general description. Need final review of published `Laurl` casing, optional `@licenseType`, and examples. |
 | 5.3 | Authorization server URL | `80-misc.inc.md` / `#CPS-schema`; authorization-token model in `40-license-request-model.inc.md` | Partial/reorganized | Current source has `dashif:authzurl` schema and a richer authorization-token model. Need explicit mapping to published `Authzurl` and optional `@authzType`. |
-| 5.4 | Certificate acquisition URL | `80-misc.inc.md` / `#CPS-schema` | Reconciliation placeholder added | Current source now includes provisional `dashif:certurl` schema placeholder and explanatory text. Need final review against published `Certurl`, optional `@certType`, and certificate-before-license semantics. |
+| 5.4 | Certificate acquisition URL | `80-misc.inc.md` / `#CPS-schema` | Backfilled from published text; casing remains open | Current source now preserves the published certificate-acquisition semantics: a certificate URL under `ContentProtection`, optional `@certType`, certificate retrieval before license acquisition when required by the DRM system, and DRM-specific use of the retrieved certificate. Canonical element-name casing (`Certurl` vs `dashif:certurl`) remains open with the rest of clause 5. |
 | 6 | Content protection constraints for CMAF | `10-general.inc.md` / `#CPS-cmaf` | Present | Compare all subclauses. |
 | 6.1 | Introduction | `10-general.inc.md` / `#CPS-cmaf` | Present/reorganized | Compare text. |
 | 6.2 | Content protection data | `10-general.inc.md` / `#CPS-cmaf-structure` | Present, renamed | Compare CENC/CMAF box/signaling constraints. |
@@ -186,7 +186,7 @@ Current Part 6 source headings include:
 | 7.1 | Introduction | `10-general.inc.md` / `#CPS-mpd` | Present/reorganized | Compare text. |
 | 7.2 | Signaling encrypted content | `10-general.inc.md` / `#CPS-mpd-scheme` | Present, renamed | Compare `ContentProtection`/scheme semantics. |
 | 7.3 | Signaling DRM system information | `10-general.inc.md` / `#CPS-mpd-drm-config`; `#CPS-mpd-moof-pssh` | Present/reorganized | Compare MPD vs in-band DRM configuration rules. |
-| 7.4 | Signaling HDCP output control information | Unknown | Missing/unknown | Search for HDCP; add or mark intentional omission. |
+| 7.4 | Signaling HDCP output control information | `10-general.inc.md` / `#CPS-mpd-hdcp-output-control` | Backfilled from published text; needs editorial/build review | Backfilled the published OutputProtection/HDCP semantics, AdaptationSet-level requirement, highest-version rule, and a shortened MPD example. Confirm Bikeshed rendering and references before marking fully reconciled. |
 | 7.5 | Using a content ID | `40-license-request-model.inc.md` / `#CPS-lr-model-contentid` | Present/reorganized | Compare published content-ID semantics. |
 | 8 | Use of W3C Clear Key with DASH | `80-misc.inc.md` / `#CPS-AdditionalConstraints-W3C` | Present | Compare constraints and examples. |
 | 9 | Key rotation | `10-general.inc.md` / `#CPS-default_KID-hierarchy`; `60-client-workflows.inc.md` key-change handling; `80-misc.inc.md` key hierarchy | Partial/reorganized | Needs dedicated comparison because current text splits key rotation across key hierarchy and client workflows. |
@@ -244,16 +244,27 @@ table has been updated to record this verification result.
    - Status: confirmed missing/unknown pending published-text migration decision.
 
 2. **Certificate acquisition URL**
-   - Published clause 5.4 has no obvious current heading.
-   - Search terms `certificate`, `certificate acquisition`, and `CURL` did not
-     produce matches in the current Markdown source.
-   - Status: confirmed missing/unknown pending published-text migration decision.
+   - Published clause 5.4 now has a current-source counterpart in
+     `80-misc.inc.md` / `#CPS-schema`.
+   - The section was compared against the extracted published v5.1.0 text and
+     updated to preserve the published `Certurl` semantics: one or more
+     certificate-acquisition URLs under `ContentProtection`, optional
+     `@certType`, retrieval of the certificate before license acquisition when
+     required, and DRM-specific use of that certificate for requesting a license.
+   - Status: backfilled from published text; element-name casing remains open as
+     part of the broader clause 5 `Laurl`/`Authzurl`/`Certurl` reconciliation.
 
 3. **HDCP output control**
-   - Published clause 7.4 has no obvious current heading.
-   - Search terms `HDCP` and `output control` did not produce matches in the
-     current Markdown source.
-   - Status: confirmed missing/unknown pending published-text migration decision.
+   - Published clause 7.4 now has a current-source counterpart at
+     `10-general.inc.md` / `#CPS-mpd-hdcp-output-control`.
+   - The section was compared against the extracted published v5.1.0 text and
+     updated to preserve the published `OutputProtection`/HDCP semantics:
+     `OutputProtection` is informative, applies independently of DRM systems,
+     uses `schemeIdUri="urn:mpeg:dash:output-protection:hdcp:2020"`, is defined
+     at `AdaptationSet` level, and requires a DASH client selecting multiple
+     adaptation sets to enforce the highest signaled HDCP version.
+   - Status: backfilled from published text; still needs editorial/build review
+     before marking fully reconciled.
 
 4. **License/authorization URL terminology**
    - Search terms `LAURL`, `ASURL`, and `CURL` did not produce matches in the
@@ -302,11 +313,12 @@ Do not start by rewriting the whole part. Use small, auditable edits:
    reconciliation note, explicit `laurl`, `authzurl`, and `certurl`
    explanations, a shared typed URL schema type with optional `@licenseType`,
    `@authzType`, and `@certType` attributes, and an example showing certificate,
-   authorization, and license URLs under `ContentProtection`. Remaining work is
-   to resolve canonical element-name casing (`Laurl`/`Authzurl`/`Certurl` in the
-   published prose versus lowercase `dashif:laurl`/`dashif:authzurl`/
-   `dashif:certurl` in current examples and schema) before marking the text as
-   fully reconciled.
+   authorization, and license URLs under `ContentProtection`. Clause 5.4
+   certificate-acquisition wording has been compared against the extracted
+   published source and backfilled. Remaining work is to resolve canonical
+   element-name casing (`Laurl`/`Authzurl`/`Certurl` in the published prose
+   versus lowercase `dashif:laurl`/`dashif:authzurl`/`dashif:certurl` in current
+   examples and schema) before marking the text as fully reconciled.
 
 4. Reconcile clause 11 second because it appears most likely missing.
 
@@ -318,6 +330,13 @@ Do not start by rewriting the whole part. Use small, auditable edits:
    model.
 
 5. Reconcile clause 7.4 and 5.4 third because they are narrow targeted items.
+
+   Status: clause 7.4 has been compared against the extracted published source
+   and backfilled in `10-general.inc.md` under
+   `#CPS-mpd-hdcp-output-control`. The current text includes the published
+   OutputProtection semantics, HDCP descriptor URI, AdaptationSet-level placement,
+   highest-HDCP-version rule, and a shortened XML example. Remaining work is
+   editorial/build review before marking this row fully reconciled.
 
 6. Finally, compare the already-present major sections:
    - clause 4 core concepts,
@@ -354,5 +373,12 @@ and reference mapping.
 - [x] If adding headings, ensure anchors are stable and non-conflicting.
   - No new headings/anchors were added during the initial clause 5 source edit;
     existing `#CPS-schema` was reused.
-- [ ] Run `python tools/publication/check_links.py`.
+- [x] Add first backfill for published clause 7.4 HDCP output-control signalling.
+- [x] Compare clause 7.4 against extracted published text and refine the backfill.
+- [x] Run `python tools/publication/check_links.py`.
+  - Passed: checked 38 files, no issues found.
 - [ ] Build Part 6 or all specs after source edits.
+  - Attempted, but Bikeshed failed before content generation because remote data
+    update could not complete through the corporate TLS-intercepting proxy
+    (`CERTIFICATE_VERIFY_FAILED`). The direct Part 6 attempt also lacked staged
+    shared include files because it bypassed `tools/publication/build_all.py`.

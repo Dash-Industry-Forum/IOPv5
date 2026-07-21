@@ -96,9 +96,18 @@ Current Part 9 source headings before this reconciliation pass include:
    - Table 2 Text track Adaptation Set attributes and elements.
    - Table 3 Video track Adaptation Set attributes and elements.
 
-   Status: initial table stabilization completed against extracted text. Remaining
-   review should compare generated HTML to the published PDF/DOCX for formatting
-   and any DOCX table extraction artifacts.
+   Status: source-level verification completed against extracted text. The current
+   source preserves the extracted values for:
+   - Table 1: IMSC1 Text (`im1t`, `application/mp4`, `stpp.ttml.im1t`), IMSC1
+     Image (`im1i`, `application/mp4`, `stpp.ttml.im1i`), WebVTT (`cwvt`,
+     `application/mp4`, `wvtt`), and CTA 608/708 (`ccea`, n/a, n/a).
+   - Table 2: text-track `@mimeType`, `@codecs`, `@lang`, `Accessibility`, and
+     `Role` rows including caption/subtitle/easyreader guidance.
+   - Table 3: video-track `Accessibility` row for CTA 608/708 closed captions and
+     Part 7 cross-reference for other video-track text uses.
+
+   Remaining review should compare generated HTML to the published PDF/DOCX for
+   formatting and any DOCX table extraction artifacts.
 
 2. Confirm bibliographic aliases in `part09-text.bs`:
    - MPEG DASH
@@ -108,10 +117,13 @@ Current Part 9 source headings before this reconciliation pass include:
    - IMSC1 / TTML references
    - DASH-IF IOP v4.3
    - Part 7 Video
+   - SMPTE 2052-10 / SMPTE 2052-11
 
-   Status: bibliography aliases added. Remaining review is citation policy and
-   whether any entries should use shared Bikeshed reference names instead of
-   local biblio aliases.
+   Status: bibliography aliases added. Initial source review found that
+   `SMPTE2052-10` and `SMPTE2052-11` were defined but unused; the IMSC1
+   conversion requirement in `09-text.inc.md` now cites both aliases explicitly.
+   Remaining review is citation policy and whether any entries should use shared
+   Bikeshed reference names instead of local biblio aliases.
 
 3. Decide whether symbols and abbreviations should be local or shared.
 
@@ -121,12 +133,31 @@ Current Part 9 source headings before this reconciliation pass include:
 
 5. Link testable Part 9 requirements to Part 12 conformance inventory.
 
+   Status: initial mapping added in
+   `specs/part12-conformance-reference-tools/01-conformance.inc.md` under
+   `#tools-part9-text-conformance`. The mapping covers CMAF text media profiles,
+   text-track Adaptation Set signalling, CTA 608/708 in video tracks, IMSC1
+   storage/signalling, chunks/gaps, and client text-track selection. Feature
+   `F-0009` was added to `docs/governance/feature-registry.md` to track the
+   remaining validator, dash.js, and Test Assets coverage work. A concrete
+   checklist has been created in `rag/reports/part09-conformance-coverage.md`
+   with coverage IDs `P9-COV-001` through `P9-COV-007`. Remaining work is to
+   reconcile the mapping with actual DASH-IF Conformance Validator coverage,
+   dash.js sample coverage, and the DASH-IF Test Assets Database.
+
 ## Recommended next implementation pass
 
 After this first migration pass:
 
 1. Build/validate the current source.
-2. Create focused issues for exact table verification.
+   - `tools/publication/check_links.py` should be run after this citation cleanup.
+   - Bikeshed build remains dependent on resolving the corporate TLS/Bikeshed
+     remote-data update issue documented in the Part 6 reconciliation report.
+2. Create focused issues for generated-HTML verification of table rendering, not
+   source-level table values, because the source-level values have been checked
+   against the extracted published text.
 3. Compare Part 9 generated HTML against published Part 9 for missing tables,
-   anchors, and references.
-4. Start Part 9 conformance mapping once table values are stable.
+   anchors, and references once Bikeshed build is available.
+4. Reconcile feature `F-0009`, the new Part 12 Part 9 conformance mapping, and
+   `rag/reports/part09-conformance-coverage.md` with actual validator, dash.js,
+   and test-assets coverage.

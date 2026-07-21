@@ -22,14 +22,39 @@ docs/            roadmap, decisions, migration maps, open questions
 .github/         optional GitHub workflows and templates
 ```
 
-## Recommended pilot
+## Current active project plan
 
-The first pilot should focus on **Part 4: Live and Low-Latency Services** because it has:
+The starter has moved beyond the original Part 4 pilot into a broader IOP v5
+authoring and reconciliation workspace.
 
-- existing v5 draft material,
-- the Low-Latency r8/r9 change-request inputs,
-- dependencies on MPEG DASH and CMAF updates,
-- clear migration and reconciliation needs.
+The current consolidated status update is:
+
+```text
+rag/reports/project-status-update-2026-07-21.md
+```
+
+The most complete active project-plan package is:
+
+```text
+F-0010 Part 5 ad-insertion conformance and cross-part indexing
+```
+
+Central index:
+
+```text
+rag/reports/part05-f0010-issue-index.md
+```
+
+F-0010 defines the proposed implementation order for:
+
+- Part 5 table/figure stabilization,
+- DASH-IF ad content MPD validator checks,
+- IF-5 multi-Period ad insertion validator checks,
+- SCTE-35 MPD Event checks,
+- SGAI remote-resolution coverage with dash.js and livesim2,
+- clear/encrypted ad insertion playback assets,
+- VAST/Open Measurement tracking sample coverage,
+- cross-part anchor and terminology harmonization.
 
 ## Public/private content policy
 
@@ -60,4 +85,8 @@ python tools/publication/check_links.py    # link / heading / modal-verb checks 
    (see `rag/corpus/README.md`). Paths must match `corpus_path` in `rag/sources.yaml`.
 3. Run `python tools/ingest/build_inventory.py` and review `docs/document-inventory.md`.
 4. Run the extract -> chunk -> index -> query pipeline shown above.
-5. For the Part 4 pilot, add the r8/r9 CR inputs and run `delta_report.py`.
+5. Create GitHub issues from `rag/reports/part05-f0010-issue-index.md`.
+6. Start F-0010-H1 through F-0010-H5 to stabilize Part 5 tables and figures.
+7. Continue Part 6 and Part 9 reconciliation while keeping Part 12 conformance
+   mapping synchronized.
+8. Run `python tools/publication/check_links.py` before commits and pull requests.

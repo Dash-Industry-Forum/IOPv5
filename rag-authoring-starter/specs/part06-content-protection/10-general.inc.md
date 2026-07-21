@@ -268,6 +268,67 @@ A `ContentProtection` descriptor that provides default [=DRM system configuratio
 
 The presence of a [=DRM system=] specific `ContentProtection` descriptor is not required in order to activate the [=DRM system=]; these descriptors are used merely to provide the default [=DRM system configuration=]. Empty `ContentProtection` descriptors **_should not_** be present in an MPD and **_may_** be ignored by DASH clients.
 
+### Signaling HDCP output control information ### {#CPS-mpd-hdcp-output-control}
+
+Issue: This section is a first reconciliation backfill for published IOP v5.1.0
+Part 6 clause 7.4, "Signaling HDCP output control information". The current
+Bikeshed source did not previously contain an explicit HDCP/output-control
+section. The normative details and XML examples still need to be checked against
+the published source text before this clause is marked fully reconciled in
+`rag/reports/reconcile-part06-content-protection.md`.
+
+The `ContentProtection` descriptor provides the description of the [=DRM systems=]
+that allow access to encrypted content. DASH also defines an `OutputProtection`
+descriptor that carries information allowing a DASH client to determine what
+version of an output-protection scheme is required when exporting content
+protected by that output-protection scheme.
+
+The `OutputProtection` descriptor applies to the representations with which it is
+associated, irrespective of the [=DRM systems=] that allow access to those
+representations. As specified by [[!DASH]], the information provided by
+`OutputProtection` is informative: every [=DRM system=] has its own list of
+supported output-protection schemes and compliance rules, and a [=license=]
+**_may_** override the information signaled in the MPD.
+
+For HDCP output control, DASH defines an `OutputProtection` descriptor with
+`schemeIdUri="urn:mpeg:dash:output-protection:hdcp:2020"`. The `value` attribute
+identifies the minimum HDCP version that a device is expected to enforce for the
+representations associated with the descriptor.
+
+If present, the HDCP `OutputProtection` descriptor **_shall_** be defined at the
+`AdaptationSet` level. If a DASH client selects several adaptation sets for
+playback that each contain an HDCP `OutputProtection` descriptor, it **_shall_**
+enforce the highest HDCP version among those descriptors.
+
+Note: It is likely that the highest HDCP version is requested for the adaptation
+set containing the representations with the highest resolution.
+
+<div class="example">
+
+The following MPD snippet shows two adaptation sets with different required HDCP
+versions. A device consuming only adaptation set `1` enforces HDCP 1.4 at
+minimum, while a device consuming both adaptation sets enforces HDCP 2.3 at
+minimum.
+
+```xml
+<AdaptationSet segmentAlignment="true" id="1" group="1" maxWidth="1920" maxHeight="1080">
+  <SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="2" />
+  <ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011"
+                     value="cenc"
+                     cenc:default_KID="c14f0709-f2b9-4427-916b-61b52586506a" />
+  <OutputProtection value="1.4" schemeIdUri="urn:mpeg:dash:output-protection:hdcp:2020" />
+</AdaptationSet>
+<AdaptationSet segmentAlignment="true" id="2" group="1" maxWidth="3840" maxHeight="2160">
+  <SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="1" />
+  <ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011"
+                     value="cenc"
+                     cenc:default_KID="8b029e51-d56a-44bd-910f-d4b5fd90fba2" />
+  <OutputProtection value="2.3" schemeIdUri="urn:mpeg:dash:output-protection:hdcp:2020" />
+</AdaptationSet>
+```
+
+</div>
+
 Because `default_KID` determines the scope of [=DRM system=] interactions, the contents of [=DRM system=] specific `ContentProtection` descriptors with the same `schemeIdUri` **_shall_** be identical in all adaptation sets with the same `default_KID`. This means that a [=DRM system=] will treat equally all adaptation sets that use the same [=content key=].
 
 Note: If you wish to change the default [=DRM system configuration=] associated with a [=content key=], you **_must_** update all the instances where the data is present in the MPD. For live services, this can mean updating the data in multiple periods.

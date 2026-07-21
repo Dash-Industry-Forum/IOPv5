@@ -140,11 +140,17 @@ attribute describes the authorization-token type served by this authorization
 server; its meaning is specific to the server serving the token.
 
 The `dashif:certurl` element identifies a certificate acquisition URL associated
-with the containing `ContentProtection` descriptor. The optional `@certType`
-attribute describes the certificate type served by this server; its meaning is
-DRM-specific. When `dashif:certurl` is present, a client is expected to retrieve
-the certificate before using a `dashif:laurl` license acquisition URL when the
-applicable DRM system requires that certificate for license requests.
+with the containing `ContentProtection` descriptor. It contains a URL for a
+server that allows retrieval of a certificate in the format specific to the
+[=DRM system=] described by the containing `ContentProtection` descriptor. The
+optional `@certType` attribute describes the certificate type served by this
+server; its meaning is DRM-specific.
+
+When `dashif:certurl` is present, a DASH client is expected to retrieve the
+certificate using this URL before using a `dashif:laurl` license acquisition URL
+when the applicable [=DRM system=] requires that certificate for license
+requests. The retrieved certificate is then used in a [=DRM system=] specific
+manner for requesting a [=license=].
 
 <div class="example">
 

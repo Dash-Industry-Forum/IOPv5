@@ -32,6 +32,8 @@ Review`, `Approved`, `Integrated`, `Withdrawn`.
 | F-0006 | Conformance mapping pass (all parts) | Proposed | 2, 4, 5, 6, 7, 8, 9, 10, 11 | — | — | Systematic pass linking each part's requirements to Part 12 validators/test-assets/reference-player expectations. |
 | F-0007 | Cross-part anchor and terminology harmonization | Proposed | All | — | — | Repo-wide editorial pass; see `editorial-backlog` topics in program backlog. |
 | F-0008 | PDF/DOC publication path decision | Proposed | All | — | — | Depends on Metanorma PoC outcome (`0004-bikeshed-vs-metanorma.md`); not part-specific but affects all parts' publication pipeline. |
+| F-0009 | Part 9 text-track conformance coverage | Skeleton | 9, 12 | — | — | Turn the initial Part 9 conformance mapping into concrete validator, dash.js, and Test Assets coverage for CMAF text profiles, text/video Adaptation Set signalling, CTA 608/708, IMSC1, chunks/gaps, and client text-track selection. |
+| F-0010 | Part 5 ad-insertion conformance and cross-part indexing | Skeleton | 1, 2, 5, 6, 10, 12 | — | — | Track Part 5 ad-insertion migration follow-through: conformance mapping, cross-part index entries, Part 2 period/continuity alignment, Part 6 protection alignment, Part 10 event/callback alignment, and Part 12 validator/test-assets coverage. |
 
 > This table starts empty of real owners/issues intentionally — it is the
 > mechanism, seeded with the concrete candidates that came out of the Part 8
@@ -52,3 +54,5 @@ Review`, `Approved`, `Integrated`, `Withdrawn`.
 | F-0006 | | x | x | x | x | x | x | x | x | x | x | |
 | F-0007 | x | x | x | x | x | x | x | x | x | x | x | x |
 | F-0008 | x | x | x | x | x | x | x | x | x | x | x | x |
+| F-0009 | | | | | | | | | x | | | x |
+| F-0010 | x | x | | | x | x | | | | x | | x |
