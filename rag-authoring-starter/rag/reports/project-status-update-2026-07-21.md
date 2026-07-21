@@ -37,6 +37,12 @@ F-0010 Part 5 ad-insertion conformance and cross-part indexing
 This package now includes source migration, cross-part indexing, validator
 matrices, runtime/test planning, and a final GitHub issue index.
 
+The agreed migration execution plan is tracked at:
+
+```text
+rag/reports/project-migration-execution-plan.md
+```
+
 ## Current authored-source status by part
 
 | Part | Title | Current status |
@@ -231,6 +237,21 @@ TLS/Bikeshed remote-data update setup. The recommended local setup remains to
 use the corporate CA bundle tooling before running Bikeshed update/build.
 
 ## Proposed next steps
+
+The detailed execution plan for the agreed migration sequence is:
+
+```text
+rag/reports/project-migration-execution-plan.md
+```
+
+Recommended priority order:
+
+1. stabilize Part 5 Ad Insertion / F-0010,
+2. complete Part 9 Text conformance alignment,
+3. continue Part 6 Content Protection,
+4. keep Part 12 synchronized after each substantive Part 5/6/9 change,
+5. return to Parts 7, 8, 10, and 11 as structured migrations,
+6. run cross-part harmonization.
 
 ### Immediate next steps
 

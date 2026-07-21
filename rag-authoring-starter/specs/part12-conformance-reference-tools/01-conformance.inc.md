@@ -303,6 +303,19 @@ should be reconciled with actual DASH-IF Conformance Validator coverage, dash.js
 SGAI/sample coverage, livesim2 SGAI support, and the DASH-IF Test Assets
 Database before being treated as a complete conformance plan.
 
+M1 synchronization note: execution has started for the Part 5 / F-0010 visual
+review and validator-start work package. The current M1 checklist is tracked in
+`rag/reports/part05-f0010-m1-visual-validator-start.md`. Part 12 should be
+updated after each M1 decision to reflect:
+
+- IF-3 SCTE-35 MPD Event validator checks,
+- IF-4 DASH-IF ad content MPD validator checks,
+- IF-5 multi-Period ad insertion validator checks,
+- IF-5 SSAI scenario/reference-client checks,
+- IF-7 SGAI/livesim2/dash.js checks,
+- IF-8 tracking sample checks,
+- IF-9 clear/encrypted playback checks.
+
 ## Issue Tracking and Coordination ## {#tools-github}
 
 DASH-IF maintains public issue trackers on GitHub for the IOP and the individual
