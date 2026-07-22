@@ -77,6 +77,42 @@ For the purposes of this document, the terms and definitions in ISO/IEC 23009-1
     permit continuous playback, switching, and decoder operation across Periods
     under the requirements of this part.
 
+## Terminology Cross-Reference ## {#terminology-cross-reference}
+
+Different documents often use different terms to refer to the same structural
+components of DASH Media Presentations. The following table provides a
+cross-reference of terms commonly found causing confusion:
+
+<table class="data">
+  <caption>Cross-reference of closely related terms in different standards.</caption>
+  <thead>
+    <tr>
+      <th>ISO/IEC 23009-1 (DASH)
+      <th>ISO/IEC 23000-19 (CMAF)
+      <th>ISO/IEC 14496-12 (ISOBMFF)
+  <tbody>
+    <tr>
+      <td>(media) segment, subsegment
+      <td>CMAF segment, CMAF fragment
+      <td>
+    <tr>
+      <td>initialization segment
+      <td>CMAF header
+      <td>
+    <tr>
+      <td>index segment, segment index
+      <td>
+      <td>segment index box (`sidx`)
+</table>
+
+Note: ISO/IEC 23009-1 [[!MPEGDASH]] has the concept of "segment" (URL-addressable
+media object) and "subsegment" (byte range of URL-addressable media object),
+whereas ISO/IEC 23000-19 [[!MPEGCMAF]] does not make such a distinction. This
+document uses CMAF terminology, with the term "segment" in this document being
+equivalent to "CMAF segment". The term "segment" in this document may be
+equivalent to either "segment" or "subsegment" in ISO/IEC 23009-1, depending on
+the addressing mode used.
+
 ## Symbols and Abbreviations ## {#symbols-abbreviations}
 
 <table class="data">

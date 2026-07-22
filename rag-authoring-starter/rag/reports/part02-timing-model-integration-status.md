@@ -172,12 +172,12 @@ Current Part 2 segment information section (lines 207-246) already covers Segmen
 - [x] Insert expanded segment addressing content into Part 2
 - [ ] Verify modal verb usage with check_links.py (deferred to Phase 1D)
 
-### Phase 1C: Terminology clarification
+### Phase 1C: Terminology clarification ✓ COMPLETE
 
-- [ ] Read Guidelines-TimingModel 01-Intro.inc.md lines 104-140 (terminology)
-- [ ] Add DASH/CMAF/ISOBMFF terminology cross-reference table to Part 2
-- [ ] Add editorial note on segment vs subsegment terminology
-- [ ] Verify consistency with existing Part 2 terms section
+- [x] Read Guidelines-TimingModel 01-Intro.inc.md lines 104-140 (terminology)
+- [x] Add DASH/CMAF/ISOBMFF terminology cross-reference table to Part 2
+- [x] Add editorial note on segment vs subsegment terminology
+- [x] Verify consistency with existing Part 2 terms section
 
 ### Phase 1D: Validation and commit
 
