@@ -18,7 +18,7 @@ This map tracks the porting status of DASH-IF IOP v5 content from the original D
 | Part | Status | Source provenance | Current location | Reconciliation report | Notes |
 |---|---|---|---|---|---|
 | Part 1 Overview | ✓ | DASH-IF-IOPv5.0-Part01-DRAFT.docx | `specs/part01-overview/` | N/A | Architecture and scope ported. |
-| Part 2 Core CMAF | ◐ | DASH-IF-IOPv5.0-Part02-DRAFT.docx | `specs/part02-core-cmaf/01-core-cmaf.inc.md` | Needed | Core CMAF requirements ported; timing model discussion requires Guidelines-TimingModel integration. |
+| Part 2 Core CMAF | ◐ | DASH-IF-IOPv5.0-Part02-DRAFT.docx | `specs/part02-core-cmaf/01-core-cmaf.inc.md` | `rag/reports/reconcile-part02-core-cmaf.md` | Core CMAF requirements ported; Phase 1 Guidelines-TimingModel integration complete (timing model, addressing modes, terminology). Phases 2-3 pending. |
 | Part 3 On-Demand | ◐ | DASH-IF-IOPv5.0-Part03-DRAFT.docx | `specs/part03-on-demand/01-on-demand.inc.md` | Needed | On-demand service requirements ported; timing model cross-references require Guidelines-TimingModel integration. |
 | Part 4 Live/Low-Latency | ◐ | DASH-IF-IOPv5.0-Part04-DRAFT.docx | `specs/part04-live-low-latency/00-live-services.inc.md`; `specs/part04-live-low-latency/02-low-latency.inc.md` | Needed | Live and low-latency requirements ported; timing model and availability window discussion requires Guidelines-TimingModel integration. |
 | Part 5 Ad Insertion | ◐ | DASH-IF-IOPv5.0-Part05-DRAFT.docx | `specs/part05-ad-insertion/05-ad-insertion.inc.md` | `rag/reports/reconcile-part05-ad-insertion.md` | IF-3 through IF-9 ported; M1 visual review and validator-start work in progress. |
@@ -38,14 +38,35 @@ This map tracks the porting status of DASH-IF IOP v5 content from the original D
 
 **Target parts:** Part 2 (primary), Part 3, Part 4
 
-**Integration approach:**
+**Status:** Phase 1 complete (Part 2 core timing model and addressing modes)
 
-1. Clone or fetch Guidelines-TimingModel content locally.
-2. Review timing model discussion in Part 2 Core CMAF.
-3. Identify non-conflicting timing model explanations, examples, and best practices from Guidelines-TimingModel.
-4. Add supplementary timing model discussion to Part 2, ensuring ISO/IEC 23009-1 and existing IOP v5 text takes precedence.
-5. Add cross-references from Parts 3 and 4 where timing model concepts apply to on-demand and live services.
-6. Document any Guidelines-TimingModel content that conflicts with ISO/IEC 23009-1 or existing IOP v5 text, and defer or exclude it.
+**Integration artifacts:**
+
+- `rag/reports/guidelines-timing-model-integration-plan.md` - Overall integration plan
+- `rag/reports/part02-timing-model-integration-status.md` - Part 2 integration tracking
+- `rag/reports/reconcile-part02-core-cmaf.md` - Part 2 reconciliation report
+- `rag/reports/guidelines-timing-model-integration-session-summary.md` - Session summary
+
+**Phase 1 completed (2026-07-22):**
+
+- Phase 1A: MPD timeline and period timing expansion (commit e78bf8c)
+- Phase 1B: Segment addressing modes expansion (commit c3716da)
+- Phase 1C: Terminology cross-reference (commit 4263c1c)
+
+**Content integrated:**
+
+- MPD Timeline subsection with BasicMpdElements.png diagram
+- Period Timing subsection with PeriodsMakeTheMpd.png diagram
+- First and Last Period Timing subsection
+- Indexed Addressing subsection with IndexedAddressing.png diagram
+- Explicit Addressing subsection
+- Simple Addressing subsection
+- Terminology Cross-Reference table
+
+**Remaining phases:**
+
+- Phase 2: Part 3 On-Demand timing constraints
+- Phase 3: Part 4 Live/Low-Latency timing constraints
 
 **Precedence rule:**
 
@@ -53,18 +74,7 @@ This map tracks the porting status of DASH-IF IOP v5 content from the original D
 ISO/IEC 23009-1 > existing IOP v5 text > Guidelines-TimingModel
 ```
 
-**Recommended artifact:**
-
-```text
-rag/reports/guidelines-timing-model-integration-plan.md
-```
-
-This artifact should:
-
-- List Guidelines-TimingModel sections and their relevance to Parts 2, 3, and 4.
-- Identify conflicts with ISO/IEC 23009-1 or existing IOP v5 text.
-- Propose specific integration points in Part 2 (e.g., after segment addressing, before CMAF switching).
-- Provide example text showing how Guidelines-TimingModel content would be adapted.
+All integrated content follows this precedence rule. No conflicts identified.
 
 ### Table and figure porting
 
@@ -95,5 +105,5 @@ All parts use conformance keywords (`shall`, `should`, `may`, etc.). The modal v
 | Parts with partial porting | 6 (Parts 2, 3, 4, 5, 6, 9, 12) |
 | Parts requiring reconciliation | 5 (Parts 7, 8, 10, 11, and timing model integration for Parts 2-4) |
 | Parts with validator-start coverage | 5 (Parts 2, 3, 4, 5, 9) |
-| Parts with reconciliation reports | 3 (Parts 5, 6, 9) |
+| Parts with reconciliation reports | 4 (Parts 2, 5, 6, 9) |
 | Parts requiring Guidelines-TimingModel integration | 3 (Parts 2, 3, 4) |
