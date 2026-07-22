@@ -296,7 +296,28 @@ where switching is expected.
 ### Segment Information ### {#segment-information}
 
 DASH-IF IOP v5 uses the Segment information mechanisms of ISO/IEC 23009-1. This
-part distinguishes three common `SegmentTemplate` modes:
+part defines three <dfn>addressing modes</dfn> for referencing Media Segments,
+Initialization Segments, and Index Segments in interoperable DASH presentations:
+
+1. **Indexed addressing** (SegmentBase) - Uses an index segment to reference all
+   Media Segments via byte ranges in a CMAF track file
+2. **Explicit addressing** (SegmentTemplate with SegmentTimeline) - Uses a
+   segment timeline to explicitly signal each Media Segment's timing
+3. **Simple addressing** (SegmentTemplate with duration) - Uses a nominal
+   duration to derive Media Segment timing
+
+All Representations in the same Adaptation Set <span class=modal-keyword>shall</span> use the same addressing
+mode. Representations in different Adaptation Sets <span class=modal-keyword>may</span> use different addressing
+modes.
+
+Addressing mode selection <span class=modal-keyword>should</span> be based on the nature of the content:
+
+- **Content generated on the fly** (e.g., live encoding): Use explicit addressing
+- **Content generated in advance of publishing** (e.g., VOD): Use indexed
+  addressing or explicit addressing
+- **Simple packager implementations**: <span class=modal-keyword>May</span> use simple addressing, though this
+  comes at a cost of reduced applicability to multi-period scenarios and reduced
+  client compatibility
 
 <table class="data">
   <caption>Common SegmentTemplate modes.</caption>
@@ -310,6 +331,133 @@ part distinguishes three common `SegmentTemplate` modes:
 A SegmentTemplate-based Representation <span class=modal-keyword>shall</span> include all attributes and elements
 required by ISO/IEC 23009-1 for the selected mode. Attributes and elements not
 specified by this part are governed by ISO/IEC 23009-1.
+
+#### Indexed Addressing (SegmentBase) #### {#indexed-addressing}
+
+A Representation that uses indexed addressing consists of a CMAF track file
+containing an index segment, an Initialization Segment, and a sequence of Media
+Segments.
+
+Note: This addressing mode is sometimes called "SegmentBase" in other documents.
+
+<figure>
+  <img src="images/IndexedAddressing.png" />
+  <figcaption>Indexed addressing is based on an index segment that references all Media Segments.</figcaption>
+</figure>
+
+The MPD defines the byte range in the CMAF track file that contains the index
+segment. The index segment informs the client of all the Media Segments that
+exist, the time spans they cover on the sample timeline, and their byte ranges.
+
+Multiple Representations <span class=modal-keyword>shall not</span> be stored in the same CMAF track file (i.e.,
+no multiplexed Representations are to be used).
+
+At least one `Representation/BaseURL` element <span class=modal-keyword>shall</span> be present in the MPD,
+containing a URL pointing to the CMAF track file.
+
+The `SegmentBase@indexRange` attribute <span class=modal-keyword>shall</span> be present in the MPD. The value of
+this attribute identifies the byte range of the index segment in the CMAF track
+file [[!MPEGDASH]]. The value is a `byte-range-spec` as defined in [[!RFC7233]],
+referencing a single range of bytes.
+
+The `SegmentBase@timescale` attribute <span class=modal-keyword>shall</span> be present and its value <span class=modal-keyword>shall</span> match
+the value of the `timescale` field in the index segment (in the [[!ISOBMFF]]
+`sidx` box) and the value of the `timescale` field in the Initialization Segment
+(in the `tkhd` box [[!ISOBMFF]]).
+
+The `SegmentBase/Initialization@range` attribute <span class=modal-keyword>shall</span> identify the byte range of
+the Initialization Segment in the CMAF track file. The value is a
+`byte-range-spec` as defined in [[!RFC7233]], referencing a single range of
+bytes. The `Initialization@sourceURL` attribute <span class=modal-keyword>shall not</span> be used.
+
+Indexed addressing enables all data associated with a single Representation to be
+stored in a single CMAF track file from which byte ranges are served to clients
+to supply Media Segments, the Initialization Segment, and the index segment. This
+gives it unique advantages:
+
+- A single large file is more efficient to transfer and cache than many small
+  files, reducing computational and I/O overhead
+- CDNs are aware of the nature of byte-range requests and can preemptively
+  read-ahead to fill the cache ahead of playback
+
+#### Explicit Addressing (SegmentTemplate with SegmentTimeline) #### {#explicit-addressing}
+
+A Representation that uses explicit addressing consists of a set of Media
+Segments accessed via URLs constructed using a template defined in the MPD, with
+the MPD explicitly signaling the start time and duration of each Media Segment.
+
+Note: This addressing mode is sometimes called "SegmentTemplate with
+SegmentTimeline" in other documents.
+
+The `SegmentTemplate@media` attribute <span class=modal-keyword>shall</span> contain the URL template for
+referencing Media Segments. The `SegmentTemplate@initialization` attribute <span class=modal-keyword>shall</span>
+contain the URL template for referencing Initialization Segments.
+
+Either the `$Time$` or `$Number$` template variable <span class=modal-keyword>shall</span> be present in
+`SegmentTemplate@media` to uniquely identify Media Segments:
+
+- If using `$Number$` addressing, the number of the first segment reference is
+  defined by `SegmentTemplate@startNumber` (default value 1) [[!MPEGDASH]]
+- If using `$Time$` addressing, the template value for each segment reference is
+  the segment start point on the sample timeline [[!MPEGDASH]]
+
+The `SegmentTimeline` element <span class=modal-keyword>shall</span> be present and <span class=modal-keyword>shall</span> contain one or more `S`
+elements that define the sequence of Media Segments. Each `S` element defines:
+
+- `@t` - Start time of the first Media Segment in this sequence (in timescale
+  units). If omitted, the start time is derived from the previous `S` element
+- `@d` - Duration of each Media Segment in this sequence (in timescale units)
+- `@r` - Number of times to repeat this Media Segment duration (optional, default
+  0)
+
+Explicit addressing is particularly suitable for:
+
+- Content generated on the fly (e.g., live encoding)
+- Variable Media Segment durations
+- Signaling gaps in the timeline
+- Accurate timeline signaling for multi-period content
+
+#### Simple Addressing (SegmentTemplate with duration) #### {#simple-addressing}
+
+A Representation that uses simple addressing consists of a set of Media Segments
+accessed via URLs constructed using a template defined in the MPD, with the MPD
+describing the nominal time span of the sample timeline covered by each Media
+Segment.
+
+Note: This addressing mode is sometimes called "SegmentTemplate without
+SegmentTimeline" in other documents.
+
+Advisement: Simple addressing defines the nominal time span of each Media Segment
+in the MPD. The true time span covered by samples within the Media Segment can be
+slightly different than the nominal time span (up to ±50% of the nominal
+duration).
+
+The `SegmentTemplate@duration` attribute defines the nominal duration of a Media
+Segment in timescale units [[!MPEGDASH]].
+
+The `SegmentTemplate@media` attribute <span class=modal-keyword>shall</span> contain the URL template for
+referencing Media Segments. The `SegmentTemplate@initialization` attribute <span class=modal-keyword>shall</span>
+contain the URL template for referencing Initialization Segments.
+
+Either the `$Time$` or `$Number$` template variable <span class=modal-keyword>shall</span> be present in
+`SegmentTemplate@media` to uniquely identify Media Segments:
+
+- If using `$Number$` addressing, the number of the first segment reference is
+  defined by `SegmentTemplate@startNumber` (default value 1) [[!MPEGDASH]]
+- If using `$Time$` addressing, the template value for each segment reference is
+  the segment start point on the sample timeline minus `@eptDelta` [[!MPEGDASH]]
+
+The `@eptDelta` attribute <span class=modal-keyword>may</span> be used to adjust the Period start point relative
+to the first Media Segment. The `@eptDelta` attribute <span class=modal-keyword>shall</span> be present if its
+value is not zero.
+
+Note: `@eptDelta` is expressed as an offset from the Period start point to the
+segment start point of the first Media Segment [[!MPEGDASH]]. The value will be
+negative if the first Media Segment starts before the Period start point.
+
+Simple addressing enables packager logic to be very simple. This simplicity comes
+at a cost of reduced applicability to multi-period scenarios and reduced client
+compatibility.
 
 ### Segment List Computation ### {#segment-list-computation}
 

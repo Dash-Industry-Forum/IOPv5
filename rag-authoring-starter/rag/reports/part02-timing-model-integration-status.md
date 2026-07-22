@@ -161,16 +161,16 @@ Current Part 2 segment information section (lines 207-246) already covers Segmen
 - [x] Add DASHIF-TIMING reference to Bikeshed file
 - [ ] Verify modal verb usage with check_links.py (deferred to Phase 1D)
 
-### Phase 1B: Segment addressing expansion
+### Phase 1B: Segment addressing expansion ✓ COMPLETE
 
-- [ ] Read Guidelines-TimingModel 22-Addressing.inc.md lines 1-200 (addressing modes)
-- [ ] Draft addressing modes overview for Part 2
-- [ ] Draft indexed addressing subsection for Part 2
-- [ ] Draft explicit addressing subsection for Part 2
-- [ ] Draft simple addressing subsection for Part 2
-- [ ] Copy indexed addressing diagram to Part 2 images directory
-- [ ] Insert expanded segment addressing content into Part 2
-- [ ] Verify modal verb usage with check_links.py
+- [x] Read Guidelines-TimingModel 22-Addressing.inc.md lines 1-350 (addressing modes)
+- [x] Draft addressing modes overview for Part 2
+- [x] Draft indexed addressing subsection for Part 2
+- [x] Draft explicit addressing subsection for Part 2
+- [x] Draft simple addressing subsection for Part 2
+- [x] Copy IndexedAddressing.png diagram to Part 2 images directory
+- [x] Insert expanded segment addressing content into Part 2
+- [ ] Verify modal verb usage with check_links.py (deferred to Phase 1D)
 
 ### Phase 1C: Terminology clarification
 
