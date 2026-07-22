@@ -185,9 +185,98 @@ For dynamic services, availability is additionally constrained by
 rules for Segment Availability Start Time and Segment Availability End Time in
 ISO/IEC 23009-1 and Part 4.
 
-Issue: Carry over the full v4.3 timing-model explanatory text and formulae where
-they add interoperability value beyond ISO/IEC 23009-1. Avoid duplicating formulae
-that are now fully specified in the current MPEG-DASH edition.
+Note: For a comprehensive discussion of the DASH timing model, including detailed
+explanations of timing concepts and interoperability constraints, refer to the
+DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]].
+
+### MPD Timeline ### {#mpd-timeline}
+
+The MPD defines the <dfn>MPD timeline</dfn> of a DASH Media Presentation, which
+serves as the baseline for all scheduling decisions made during playback and
+establishes the relative timing of Periods and Media Segments. The MPD timeline
+informs DASH clients when they can download and present which Media Segments.
+
+Values on the MPD timeline are all ultimately relative to the zero point of the
+MPD timeline, though possibly through several layers of indirection (e.g., Period
+A is relative to Period B, which is relative to the zero point).
+
+The following MPD elements are most relevant to locating and scheduling media
+samples:
+
+1. The MPD describes consecutive Periods which map data onto the MPD timeline.
+2. Each Period describes one or more Representations, each of which provides media
+   samples inside a sequence of Media Segments. Representations contain
+   independent sample timelines that are mapped to the time span on the MPD
+   timeline that belongs to the Period.
+3. Representations within a Period are grouped into Adaptation Sets, which
+   associate related Representations and decorate them with metadata.
+
+<figure>
+  <img src="images/BasicMpdElements.png" />
+  <figcaption>The primary contents of a Media Presentation, described by an MPD.</figcaption>
+</figure>
+
+### Period Timing ### {#period-timing}
+
+An MPD defines an ordered list of one or more consecutive non-overlapping Periods
+[[!MPEGDASH]]. A Period is both a time span on the MPD timeline and a definition
+of the data to be presented during this time span. Period timing is relative to
+the zero point of the MPD timeline, though often indirectly (being relative to the
+previous Period).
+
+<figure>
+  <img src="images/PeriodsMakeTheMpd.png" />
+  <figcaption>An MPD defines a collection of consecutive non-overlapping Periods.</figcaption>
+</figure>
+
+The start of a Period is specified either explicitly as an offset from the MPD
+timeline zero point (`Period@start`) or implicitly by the end of the previous
+Period [[!MPEGDASH]]. The duration of a Period is specified either explicitly with
+`Period@duration` or implicitly by the start point of the next Period
+[[!MPEGDASH]].
+
+Periods are self-contained: a service <span class=modal-keyword>shall not</span> require a client to know the
+contents of another Period in order to correctly present a Period. Knowledge of
+the contents of different Periods <span class=modal-keyword>may</span> be used by a client to achieve seamless
+Period transitions, especially when working with period-connected Representations
+(see Part 5 for multi-Period content requirements).
+
+Common reasons for defining multiple Periods are:
+
+- Assembling a presentation from multiple self-contained pieces of content.
+- Inserting ads in the middle of existing content and/or replacing spans of
+  existing content with ads (see Part 5).
+- Adding/removing certain Representations as the nature of the content changes
+  (e.g., a new title starts with a different set of offered languages).
+- Updating period-scoped metadata (e.g., codec configuration or DRM signaling).
+
+A Period <span class=modal-keyword>shall not</span> have a duration of zero. MPD generators are expected to remove
+any Periods that are, for any reason, assigned a duration of zero. Clients <span class=modal-keyword>shall</span>
+ignore Periods with a duration of zero.
+
+#### First and Last Period Timing #### {#first-last-period-timing}
+
+For static presentations (`MPD@type="static"`), the first Period <span class=modal-keyword>shall</span> start at the
+zero point of the MPD timeline (with a `Period@start` value of 0 seconds), and the
+last Period <span class=modal-keyword>shall</span> have a `Period@duration`. See Part 3 for additional on-demand
+service constraints.
+
+For dynamic presentations (`MPD@type="dynamic"`), the first Period <span class=modal-keyword>shall</span> start at or
+after the zero point of the MPD timeline (with a `Period@start` value of 0 seconds
+or greater). The last Period <span class=modal-keyword>may</span> have a `Period@duration`, in which case it has a
+fixed duration. If without `Period@duration`, the last Period in a dynamic
+presentation has an unlimited duration that may later be shortened by an MPD
+update. See Part 4 for additional live and low-latency service constraints.
+
+`MPD@mediaPresentationDuration` <span class=modal-keyword>may</span> be present in an MPD. If present, it <span class=modal-keyword>shall</span>
+accurately match the duration between the zero point on the MPD timeline and the
+end of the last Period. Clients <span class=modal-keyword>shall</span> calculate the total duration of a static
+presentation by adding up the durations of each Period and <span class=modal-keyword>shall not</span> rely on the
+presence of `MPD@mediaPresentationDuration`.
+
+Issue: Carry over additional v4.3 timing-model formulae where they add
+interoperability value beyond ISO/IEC 23009-1. Avoid duplicating formulae that are
+now fully specified in the current MPEG-DASH edition.
 
 ## DASH Representation Structures and Signalling ## {#representation-structures}
 

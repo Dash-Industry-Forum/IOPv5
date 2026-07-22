@@ -150,15 +150,16 @@ Current Part 2 segment information section (lines 207-246) already covers Segmen
 
 ## Implementation checklist
 
-### Phase 1A: Timing model expansion
+### Phase 1A: Timing model expansion ✓ COMPLETE
 
-- [ ] Read Guidelines-TimingModel 21-Timing.inc.md lines 9-100 (MPD timeline and period timing)
-- [ ] Draft MPD timeline subsection for Part 2
-- [ ] Draft period timing subsection for Part 2
-- [ ] Add cross-references to Parts 3, 4, and 5
-- [ ] Copy relevant diagrams to Part 2 images directory
-- [ ] Insert expanded timing model content into Part 2
-- [ ] Verify modal verb usage with check_links.py
+- [x] Read Guidelines-TimingModel 21-Timing.inc.md lines 9-100 (MPD timeline and period timing)
+- [x] Draft MPD timeline subsection for Part 2
+- [x] Draft period timing subsection for Part 2
+- [x] Add cross-references to Parts 3, 4, and 5
+- [x] Copy relevant diagrams to Part 2 images directory
+- [x] Insert expanded timing model content into Part 2
+- [x] Add DASHIF-TIMING reference to Bikeshed file
+- [ ] Verify modal verb usage with check_links.py (deferred to Phase 1D)
 
 ### Phase 1B: Segment addressing expansion
 
