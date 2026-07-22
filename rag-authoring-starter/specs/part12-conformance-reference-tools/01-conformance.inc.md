@@ -254,7 +254,8 @@ define new Part 9 requirements.
 Issue: This Part 9 mapping is an initial source-level conformance inventory. It
 should be reconciled with actual DASH-IF Conformance Validator coverage, dash.js
 sample coverage, and the DASH-IF Test Assets Database before being treated as a
-complete conformance plan.
+complete conformance plan. The corresponding issue-ready coverage index is
+maintained in `rag/reports/part09-f0009-issue-index.md`.
 
 ## Initial Part 5 ad-insertion conformance mapping ## {#tools-part5-ad-insertion-conformance}
 

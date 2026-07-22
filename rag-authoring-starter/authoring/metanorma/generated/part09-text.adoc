@@ -1,0 +1,386 @@
+= DASH-IF IOP v5 Part 9: Text
+:doctype: standard
+:docnumber: IOP-v5-Part09
+:revnumber: 0.1
+:mn-document-class: generic
+:mn-output-extensions: html,doc,xml
+:technical-committee: DASH-IF Technical Working Group
+:copyright-holder: DASH Industry Forum
+:language: en
+:sectnums:
+:toc: left
+
+:fullname_1: DASH-IF Technical Working Group
+
+[abstract]
+== Abstract
+Subtitle and caption interoperability points, coding profiles, packaging, and DASH signalling. Working draft authored in the IOPv5 workspace.
+
+﻿
+
+[[part9-introduction]]
+== Introduction
+
+This document specifies DASH-IF IOP v5 Part 9: *Text*.
+
+The present document defines the CMAF Media Profiles and DASH signalling for
+text tracks, including subtitles and captions, as well as open captions and
+subtitles in video tracks. This work is derived from DASH-IF IOP v4.3, but does
+not include non-CMAF profiles.
+
+[NOTE]
+====
+Issue: This part is under reconciliation against the published DASH-IF IOP
+====
+v5.0.0 Part 9 FINAL document. See
+`rag/reports/reconcile-part09-text.md` for the clause crosswalk and remaining
+table/reference verification items.
+
+[[scope]]
+== Scope
+
+This part defines CMAF media profiles and DASH signalling for text tracks,
+including subtitles and captions, as well as open captions and subtitles in
+video tracks.
+
+The use of sidecar text files is not covered in this part.
+
+[[doc-references]]
+== References
+
+The following referenced documents are necessary for the application of this
+part:
+
+- ISO/IEC 23009-1 <<MPEGDASH>>.
+- ISO/IEC 23000-19 <<MPEGCMAF>>.
+- ISO/IEC 14496-30 <<ISO14496-30>>.
+- SCTE 214-1 <<SCTE214-1>>.
+- SCTE 128-1 <<SCTE128-1>>.
+- W3C TTML Profiles for Internet Media Subtitles and Captions 1.0.1 (IMSC1) <<IMSC1>>.
+- W3C WebVTT <<WEBVTT>>.
+- CTA-608-E <<CTA608-E>>.
+- CTA-708-E <<CTA708-E>>.
+- DASH-IF IOP v4.3 <<DASHIF-IOP43>>.
+- DASH-IF IOP v5 Part 7, *Video* <<DASHIF-IOP5-PART7>>.
+- DASH-IF IOP v5 Part 12, *Conformance and Reference Tools*.
+
+[[terms]]
+== Terms and Definitions
+
+Terms and definitions are inherited from ISO/IEC 23009-1, ISO/IEC 23000-19, and
+Part 2 unless defined in this part.
+
+For the purposes of this part, the following terms apply:
+
+- caption: Text that transcribes audio dialogue, often includes non-verbal sounds, and is primarily provided for accessibility.
+- closed caption: Caption encoded in a separate text track or encoded in video-track SEI messages.
+- closed subtitle: Subtitle encoded in a separate text track or encoded in video-track SEI messages.
+- open caption: Caption encoded in video-track pixels.
+- open subtitle: Subtitle encoded in video-track pixels.
+- subtitle: Text that transcribes audio dialogue, often in a language different from the audio, and is primarily provided for translation.
+
+A text adaptation set is an Adaptation Set that contains visual
+overlay information to be rendered as auxiliary or accessibility information.
+Such an Adaptation Set is identified by one of:
+
+* `@mimeType="application/mp4"` and a `@codecs` parameter of a text coding technology defined in this part.
+* `@mimeType="application/ttml+xml"` with no `@codecs` parameter.
+
+[[symbols-abbreviations]]
+=== Symbols and abbreviations
+
+For the purposes of this part, the following abbreviations apply:
+
+.Part 9 abbreviations.
+[cols="1,1",options="header"]
+|===
+|Abbreviation |Meaning
+|CMAF |Common Media Application Format
+|CTA |Consumer Technology Association
+|DASH |Dynamic Adaptive Streaming over HTTP
+|IEC |International Electrotechnical Commission
+|IMSC |Internet Media Subtitles and Captions
+|IOP |Interoperability Points
+|ISO |International Organization for Standardization
+|Kbps |Kilobits per second
+|MPD |Media Presentation Description
+|SEI |Supplemental Enhancement Information
+|VTT |Video Text Tracks
+|XML |Extensible Markup Language
+|===
+
+[[text-cmaf-media-profiles]]
+== CMAF Media Profiles
+
+Text CMAF media profiles <span class=modal-keyword>shall</span> be as defined
+in <<MPEGCMAF>> clauses 11, A.4 and A.5, including IMSC, WebVTT, and CTA
+608/708. `@codecs` values for WebVTT and IMSC1 <span class=modal-keyword>shall</span>
+be as defined in <<ISO14496-30>>.
+
+CTA 608/708 <span class=modal-keyword>may</span> be carried in a CMAF video track
+in SEI messages and does not have a separate `@mimeType` or `@codecs` value in a
+text Adaptation Set. Its presence is signalled using the applicable video file
+brand and video Adaptation Set descriptors. Only CTA-608 is defined for use here,
+but it is carried in a CTA-708 DTVCC wrapper and is therefore referred to as
+CTA-608/708.
+
+CTA 608/708 does not have an independent timing model; it is bound to video
+frames. To the extent that video is properly groomed for the Period, the CTA
+608/708 data is aligned with it.
+
+Open captions and open subtitles are addressed in DASH-IF IOP v5 Part 7,
+*Video* <<DASHIF-IOP5-PART7>>.
+
+.CMAF Media Profile parameters.
+[cols="1,1,1,1,1",options="header"]
+|===
+|Media Profile |File Brand |`@mimeType` |`@codecs` |Reference
+|IMSC1 Text |`im1t` |`application/mp4` |`stpp.ttml.im1t` |<<MPEGCMAF>>
+|IMSC1 Image |`im1i` |`application/mp4` |`stpp.ttml.im1i` |<<MPEGCMAF>>
+|WebVTT |`cwvt` |`application/mp4` |`wvtt` |<<MPEGCMAF>>
+|CTA 608/708 |`ccea` |n/a |n/a |<<MPEGCMAF>>
+|===
+
+Additional non-CMAF text/subtitle profiles are outside the scope of this part
+and can be found in <<DASHIF-IOP43>>.
+
+[[adaptation-set-requirements]]
+== Adaptation Set requirements and recommendations
+
+Text adaptation sets <span class=modal-keyword>should</span> be annotated using
+descriptors defined by DASH, specifically `Role`, `Accessibility`,
+`EssentialProperty`, and `SupplementalProperty` descriptors.
+
+[[content-requirements]]
+== Content requirements
+
+[[text-tracks]]
+=== Text tracks
+
+In addition to the general provisions defined in IOP v5 Part 2, text Adaptation
+Sets <span class=modal-keyword>shall</span> comply with the provisions of the
+following table.
+
+.Text track Adaptation Set attributes and elements.
+[cols="1,1,1",options="header"]
+|===
+|DASH attribute or element |Use for media type |Detailed usage in DASH-IF IOPs
+|`@mimeType` |M |This shall be set to one of the `@mimeType` values defined in the CMAF Media Profile table.
+|`@codecs` |M |If `@mimeType` is set to `application/mp4`, this attribute shall be present and set to one of the `@codecs` values defined in the CMAF Media Profile table.
+|`@lang` |M |The `@lang` attribute shall be present and set according to DASH language rules. Language is used as the primary selection mechanism based on user preference.
+|`Accessibility` |0 … N |If the text track is closed captions, an `Accessibility` descriptor shall be present with `@schemeIdUri="urn:mpeg:dash:role:2011"` and `@value="caption"`.
+|`Role` |0 … N |`Role` descriptors may be present depending on the nature of the text. Subtitle tracks should use `@value="subtitle"`. Closed-caption tracks shall use `@value="caption"`. Text tailored to beginning readers shall use `@value="easyreader"` when signalled.
+|===
+
+Text Adaptation Sets containing alternative content <span class=modal-keyword>shall</span>
+differ by at least one of the following annotation labels:
+
+- `@codecs`, specifying the codec present within the Representation.
+- `@lang`, specifying the language of the subtitle with a non-null language code.
+- An `Accessibility` descriptor with DASH role scheme `urn:mpeg:dash:role:2011` and value `caption`.
+- One or more `Role` descriptors with DASH role scheme `urn:mpeg:dash:role:2011`.
+
+[[video-tracks]]
+=== Video tracks
+
+In addition to text tracks, CTA 608/708 captions can be carried in video tracks.
+This can be done by open subtitles or open captions coded into video pixels, or
+by carrying closed captions in video SEI messages according to <<SCTE128-1>>.
+This section addresses closed captions in video SEI messages.
+
+.Video track Adaptation Set attributes and elements for text-related signaling.
+[cols="1,1,1",options="header"]
+|===
+|DASH attribute or element |Use for media type |Detailed usage in DASH-IF IOPs
+|`Accessibility` |0 … N |If the video Adaptation Set contains CTA 608/708 closed captions, this element shall be present and used as defined by DASH and <<SCTE214-1>> caption-service signalling. For other uses of `Accessibility` with a video track, including open captions and open subtitles, see DASH-IF IOP v5 Part 7 <<DASHIF-IOP5-PART7>>.
+|===
+
+Since this is a video Adaptation Set, `@mimeType` and `@codecs` are set according
+to the video codec.
+
+[[codecs-cea608]]
+== CEA-608/708 Digital Television (DTV) Closed Captioning
+
+This clause defines requirements for interoperable use of CEA-608/708 Digital
+Television (DTV) Closed Captioning in DASH presentations.
+
+Note: This clause is compatible with SCTE specification DVS 1208 and therefore
+SCTE URNs are used for the descriptor `@schemeIdUri`.
+
+CEA-608/708 captions <span class=modal-keyword>shall</span> be carried in SEI
+messages embedded in Representations of a video Adaptation Set, with the
+encapsulation as defined in SCTE 128-1, section 8.1.
+
+Every Representation in the video Adaptation Set <span class=modal-keyword>shall</span>
+have identical CEA-608/708 captions. Both CEA-608 and CEA-708
+<span class=modal-keyword>may</span> be present simultaneously in the same video
+Adaptation Set.
+
+The presence of CEA-608/708 captions <span class=modal-keyword>shall</span> be
+signaled by an `Accessibility` descriptor on the Adaptation Set level, with
+`@schemeIdUri="urn:scte:dash:cc:cea-608:2015"` or
+`@schemeIdUri="urn:scte:dash:cc:cea-708:2015"`, with an optional `@value`.
+
+When present for CEA-608 captions, the `@value` of this descriptor
+<span class=modal-keyword>shall</span> describe the caption streams and languages
+in conformance to the ABNF below.
+
+```
+@value          = (channel *3 [";" channel]) / (language *3[";" language])
+channel         = channel-number "=" language
+channel-number  = CC1 | CC2 | CC3 | CC4
+language        = 3ALPHA ; language code per ISO 639.2/B
+```
+
+Two variants of `@value` syntax for CEA-608 are described above: a variant with
+plain language codes and a variant with caption channel numbers. Services
+<span class=modal-keyword>should</span> use the variant with channel numbers.
+
+When there is only a single caption channel present, the language-only form
+<span class=modal-keyword>may</span> be used.
+
+When more than one caption channel is present, the language-only form
+<span class=modal-keyword>should not</span> be used.
+
+Note: This part does not provide the `@value` syntax for CEA-708.
+
+<div class="example">
+Signaling of presence of CEA-608 closed caption service in English and Spanish:
+
+<xmp highlight="xml">
+<Accessibility schemeIdUri="urn:scte:dash:cc:cea-608:2015" value="CC1=eng;CC3=spa"/>
+</xmp>
+
+</div>
+
+[[codecs-imsc1]]
+== Timed Text (IMSC1)
+
+This clause defines requirements for using IMSC1 text in DASH presentations.
+
+W3C TTML and its various profiles — W3C IMSC1 text and image profiles, SMPTE
+Timed Text, and EBU Timed Text — provide a rich feature set for text tracks.
+Beyond basic subtitles and closed captioning, graphics-based subtitles and closed
+captioning are also supported by IMSC1.
+
+Advisement: Many clients only implement a subset of IMSC1. The exact feature
+sets used by clients and services may need careful alignment to ensure mutual
+compatibility. Do not assume that all of IMSC1 is supported by typical clients.
+
+Conversion of CEA-608 and CEA-708 into IMSC1 <span class=modal-keyword>shall</span>
+be done according to SMPTE 2052-10 <<SMPTE2052-10>> and SMPTE 2052-11 <<SMPTE2052-11>>, respectively.
+
+One of the following storage formats <span class=modal-keyword>shall</span> be
+used for IMSC1 Representations:
+
+* ISO BMFF media segments.
+* Stand-alone XML file, one file per Representation.
+
+The ISO BMFF encapsulated form <span class=modal-keyword>should</span> be used,
+as stand-alone XML file storage has significant limitations.
+
+The signaling in the MPD <span class=modal-keyword>shall</span> conform to the
+below table.
+
+.IMSC1 signaling parameters.
+[cols="1,1,1,1",options="header"]
+|===
+|Codec |Storage |`@mimeType` |`@codecs`
+|IMSC1 Timed Text |Stand-alone XML file |`application/ttml+xml` |See W3C TTML Profile Registry
+|IMSC1 Timed Text |ISO BMFF encapsulation |`application/mp4`
+|===
+
+[[chunks-and-gaps]]
+== Chunks and gaps
+
+Text is low bitrate, but has different characteristics compared to audio. In
+particular, for IMSC1 there is typically only one sample/document in each
+segment. Text <span class=modal-keyword>should not</span> be chunked but
+delivered as separate segments/documents.
+
+Even with short segment duration, encoders <span class=modal-keyword>shall</span>
+conform to the IMSC1 Hypothetical Render Model (HRM), applied inter-segment.
+
+When a text track contains a period of no content, continuous segments
+<span class=modal-keyword>shall</span> still be present and
+<span class=modal-keyword>shall</span> contain the empty document as defined in
+ISO/IEC 14496-30.
+
+[[client-recommendations]]
+== Client recommendations
+
+It is expected that DASH clients conforming to this IOP recognize the
+descriptors, elements, attributes, and values documented in the text-track and
+video-track Adaptation Set tables.
+
+If caption or subtitle text rendering is enabled, the client selects text
+Adaptation Sets as follows:
+
+1. Any text Adaptation Set for which an `EssentialProperty` descriptor is present and for which the scheme or value is not understood by the DASH client is excluded from the selection.
+2. Any text Adaptation Set for which the client does not have a decoder, such as CTA 608/708, IMSC1, or WebVTT, is excluded from the selection.
+3. If text language preference settings are provided to the client by the system, any Adaptation Set for which `@lang` is absent, null, or set to `und` is excluded from the selection, and any Adaptation Set that is not in the preferred text language is excluded from the selection.
+4. Any text Adaptation Set with one or more `Role` descriptors using `@schemeIdUri="urn:mpeg:dash:role:2011"` where none of the `@value` values is described in this part is excluded from the selection.
+5. If multiple text Adaptation Sets remain, the one with the highest `@selectionPriority` value is chosen.
+6. If multiple text Adaptation Sets remain after the above steps, the DASH client makes a choice for itself.
+
+Note: Text in video tracks does not affect video-track selection.
+
+[[requirements]]
+== Requirements and Recommendations
+
+[NOTE]
+====
+Issue: The above clauses reconcile the initial Part 9 Bikeshed source with the
+====
+published DASH-IF IOP v5.0.0 Part 9 FINAL structure. The CMAF media-profile,
+text-track Adaptation Set, and video-track Adaptation Set table values have been
+checked against the extracted published text. Remaining migration work is to
+review generated HTML against the published DOCX/PDF for table formatting,
+confirm final citation policy for local bibliography aliases, and link testable
+requirements to Part 12 conformance mapping.
+[GROUNDED_BY=rag/corpus/published/DASH-IF-IOPv5.0.0-Part9-FINAL.docx.extracted.txt]
+
+[[open-issues]]
+== Open Issues and Work Items
+
+.Part 9 open issues and topics to progress.
+[cols="1,1,1",options="header"]
+|===
+|Topic |Status |Next action
+|Published v5.0.0 reconciliation |Source-level check complete |Initial structure, core requirements, and extracted table values have been checked against `rag/reports/reconcile-part09-text.md`; generated HTML still needs visual review against the published DOCX/PDF.
+|Reference mapping |In progress |Bibliographic aliases exist and SMPTE 2052 aliases are now cited. Confirm final citation policy for ISO/IEC 14496-30, SCTE 214-1, IMSC1/TTML, DASH-IF IOP v4.3, Part 7 Video, and SMPTE 2052 references.
+|Cross-part alignment |Open |Align terminology and references with Parts 1, 2, 7, and 12.
+|Conformance mapping |Open |Identify validator/test-asset/reference-player expectations and link them to Part 12.
+|===
+
+[[change-history]]
+== Change History
+
+.Part 9 change history.
+[cols="1,1,1",options="header"]
+|===
+|Version |Date |Change
+|0.1 |Initial |Created initial Bikeshed/Markdown shell for Part 9.
+|0.2 |Migration |Migrated CEA-608/708 and IMSC1 text codec clauses from DASH-IF-IOP v5-old-draft.
+|0.3 |Reconciliation |Added published DASH-IF IOP v5.0.0 Part 9 FINAL structure, CMAF media-profile table, adaptation-set requirements, chunks/gaps, and client recommendations.
+|0.4 |Reconciliation |Verified initial source against extracted published Part 9 text and connected SMPTE 2052 references used by the IMSC1 conversion requirement.
+|0.5 |Reconciliation |Completed source-level verification of extracted published table values for CMAF media profiles and text/video Adaptation Set signalling.
+|5.0.0 |2022-01-04 |Version published as Part 9 v5.0.0.
+|===
+
+[bibliography]
+== Bibliography
+
+* [[[CTA608-E]]] _Line 21 Data Services_, CTA.
+* [[[CTA708-E]]] _Digital Television (DTV) Closed Captioning_, CTA.
+* [[[DASHIF-IOP43]]] _DASH-IF Interoperability Points v4.3_, DASH-IF, https://dashif.org/guidelines/earlier-versions/.
+* [[[DASHIF-IOP5-PART7]]] _DASH-IF IOP v5 Part 7: Video_, DASH-IF, https://dashif.org/guidelines/iop-v5#part-7-video.
+* [[[IMSC1]]] _TTML Profiles for Internet Media Subtitles and Captions 1.0.1 (IMSC1)_, W3C.
+* [[[ISO14496-30]]] _Information technology - Coding of audio-visual objects - Part 30: Timed text and other visual overlays in ISO base media file format_, ISO/IEC.
+* [[[MPEGCMAF]]] _Information technology - Multimedia application format (MPEG-A) - Part 19: Common media application format (CMAF) for segmented media_, ISO/IEC, 2024, https://www.iso.org/standard/85623.html.
+* [[[MPEGDASH]]] _Information technology - Dynamic adaptive streaming over HTTP (DASH) - Part 1: Media presentation description and segment formats_, ISO/IEC, 2022, https://www.iso.org/standard/83314.html.
+* [[[SCTE128-1]]] _AVC Video Constraints for Cable Television Part 1 - Coding_, SCTE, 2020.
+* [[[SCTE214-1]]] _MPEG DASH for IP-Based Cable Services Part 1: MPD Constraints and Extensions_, SCTE.
+* [[[SMPTE2052-10]]] _Conversion from CEA-608 Data to SMPTE-TT_, SMPTE.
+* [[[SMPTE2052-11]]] _Conversion from CEA-708 Caption Data to SMPTE-TT_, SMPTE.
+* [[[WEBVTT]]] _WebVTT: The Web Video Text Tracks Format_, W3C.
