@@ -50,6 +50,21 @@ specs/part09-text/09-text.inc.md#text-cmaf-media-profiles
 - Negative: mismatched `@mimeType`/`@codecs`, missing codecs, unsupported text
   codec, and profile/brand mismatch where detectable.
 
+### Initial local implementation
+
+Validator-start script:
+
+```text
+tools/validation/validate_part9_text_mpd.py
+```
+
+Initial fixtures:
+
+```text
+specs/part09-text/examples/text/valid-text-tracks.mpd
+specs/part09-text/examples/text/invalid-text-tracks.mpd
+```
+
 ### Acceptance criteria
 
 - Validator emits deterministic findings for MPD-level signalling errors.
@@ -86,6 +101,12 @@ specs/part09-text/09-text.inc.md#text-tracks
   - accessibility,
   - codec,
   - selection priority.
+
+### Initial local implementation
+
+The validator-start script and initial fixtures listed in F-0009-T1 also cover
+the first MPD-level T2 signalling checks for language, role/accessibility, codec,
+and selection priority.
 
 ### Acceptance criteria
 
