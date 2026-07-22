@@ -26,27 +26,22 @@ development and are not yet DASH-IF published test assets.
 | F-0010-C | `specs/part05-ad-insertion/examples/table5/invalid-if5-spliced.mpd` | Fail/warn | Aggregate negative fixture for profiles, MUP syntax, missing Period starts, inserted ad/slate ID/BaseURL/ATO/AdaptationSet, retained durations, slate EventStream, missing return-main AdaptationSet. |
 | F-0010-C | `specs/part05-ad-insertion/examples/table5/scenario-exact-duration.mpd` | Pass | SSAI exact-duration main/ad/main scenario baseline. |
 | F-0010-C | `specs/part05-ad-insertion/examples/table5/scenario-underrun-slate.mpd` | Pass | SSAI underrun scenario with slate fill Period. |
-| F-0010-B | `specs/part05-ad-insertion/examples/table4/per-rule/*.mpd` | Fail | Initial per-rule negative fixtures for selected deterministic Table 4 checks. |
+| F-0010-B | `specs/part05-ad-insertion/examples/table4/per-rule/*.mpd` | Fail | Per-rule negative fixtures for deterministic Table 4 checks. |
 
 ## Planned fixture expansion
 
 ### F-0010-B2 per-rule Table 4 vectors
 
-Add one negative fixture per deterministic Table 4 rule so CI failures can map
-directly to the violated requirement. Initial per-rule fixtures now cover:
+Per-rule negative fixtures now cover the deterministic Table 4 checks currently
+implemented by `validate_part5_ad_content_mpd.py`:
 
 - missing CMAF profile,
 - dynamic MPD,
+- forbidden MPD timing attribute,
 - MPD-level BaseURL,
+- multiple Periods,
 - Period start present,
 - Period duration missing,
-- SegmentList present,
-- UTCTiming present.
-
-Remaining per-rule fixtures to add:
-
-- forbidden MPD timing attribute,
-- multiple Periods,
 - Period BaseURL missing,
 - AdaptationSet xlink present,
 - SegmentBase presentationTimeOffset present,
@@ -61,15 +56,17 @@ Remaining per-rule fixtures to add:
 
 ### F-0010-C3 IF-5 SSAI scenario vectors
 
-Add scenario-level fixtures and, where needed, playback assets:
+Scenario-level MPD fixtures now cover:
 
 - exact-duration main/ad/main insertion,
 - ad overrun with truncation,
 - ad underrun with slate insertion,
 - multi-ad pod,
 - Period continuity transition,
-- EventStream copied/split across ad opportunity,
-- clear/encrypted playback variants for IF-9 follow-up.
+- EventStream copied/split across ad opportunity.
+
+Remaining follow-up requires playback assets for reference-client validation and
+clear/encrypted playback variants for IF-9 follow-up.
 
 ### F-0010-A2/A3 SCTE-35 payload vectors
 

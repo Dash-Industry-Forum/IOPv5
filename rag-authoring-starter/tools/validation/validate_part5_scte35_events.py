@@ -83,18 +83,92 @@ def validate_binary_base64(binary_text: str) -> bool:
     return decode_binary_payload(binary_text) is not None
 
 
-def parse_scte35_command_type(payload: bytes) -> int | None:
-    """Parse splice_command_type from a SCTE-35 splice_info_section.
+@dataclass(frozen=True)
+class Scte35PayloadInfo:
+    command_type: int
+    command_name: str
+    command_length: int | None
+    has_splice_time: bool = False
+    has_break_duration: bool = False
+    out_of_network_indicator: bool | None = None
+    segmentation_descriptor_count: int = 0
 
-    This is intentionally minimal for F-0010-A2. It validates the table id and
-    extracts the command type at the fixed byte offset used by SCTE-35 after the
-    encrypted_packet/encryption_algorithm/pts_adjustment/cw_index/tier fields.
+
+def bits_from_bytes(data: bytes) -> str:
+    return "".join(f"{byte:08b}" for byte in data)
+
+
+def bits_to_int(bits: str, start: int, length: int) -> int | None:
+    end = start + length
+    if end > len(bits):
+        return None
+    return int(bits[start:end], 2)
+
+
+def parse_scte35_payload_info(payload: bytes) -> Scte35PayloadInfo | None:
+    """Parse a minimal SCTE-35 splice_info_section payload summary.
+
+    The parser intentionally extracts only deterministic fields needed by the
+    Part 5 F-0010-A2 validator-start work: command type, command length,
+    splice_insert out_of_network/break_duration hints, time_signal splice_time
+    presence, and segmentation_descriptor count in the descriptor loop.
     """
-    if len(payload) < 14:
+    if len(payload) < 14 or payload[0] != 0xFC:
         return None
-    if payload[0] != 0xFC:
-        return None
-    return payload[13]
+
+    command_length = payload[12] & 0x0F
+    command_type = payload[13]
+
+    command_start_byte = 14
+    command_end_byte = command_start_byte + command_length
+    command_bits = bits_from_bytes(payload[command_start_byte:command_end_byte]) if command_end_byte <= len(payload) else ""
+
+    has_splice_time = False
+    has_break_duration = False
+    out_of_network_indicator: bool | None = None
+
+    if command_type == 0x06 and len(command_bits) >= 1:
+        time_specified_flag = bits_to_int(command_bits, 0, 1)
+        has_splice_time = time_specified_flag == 1
+    elif command_type == 0x05 and len(command_bits) >= 40:
+        out_of_network_indicator = bits_to_int(command_bits, 32, 1) == 1
+        duration_flag = bits_to_int(command_bits, 38, 1)
+        has_break_duration = duration_flag == 1
+
+    descriptor_count = 0
+    descriptor_loop_length_offset = command_end_byte + 2
+    descriptor_bytes = payload[descriptor_loop_length_offset:] if descriptor_loop_length_offset < len(payload) else b""
+    descriptor_bits = bits_from_bytes(descriptor_bytes)
+    descriptor_loop_length = bits_to_int(descriptor_bits, 0, 16)
+    descriptor_start = 16
+    descriptor_end = descriptor_start + ((descriptor_loop_length or 0) * 8)
+    cursor = descriptor_start
+    while descriptor_loop_length is not None and cursor + 16 <= min(descriptor_end, len(descriptor_bits)):
+        descriptor_tag = bits_to_int(descriptor_bits, cursor, 8)
+        descriptor_length = bits_to_int(descriptor_bits, cursor + 8, 8)
+        if descriptor_tag is None or descriptor_length is None:
+            break
+        descriptor_payload_start = cursor + 16
+        if descriptor_payload_start + descriptor_length * 8 > len(descriptor_bits):
+            break
+        if descriptor_tag == 0x02:
+            descriptor_count += 1
+        cursor = descriptor_payload_start + descriptor_length * 8
+
+    return Scte35PayloadInfo(
+        command_type=command_type,
+        command_name=scte35_command_name(command_type),
+        command_length=command_length,
+        has_splice_time=has_splice_time,
+        has_break_duration=has_break_duration,
+        out_of_network_indicator=out_of_network_indicator,
+        segmentation_descriptor_count=descriptor_count,
+    )
+
+
+def parse_scte35_command_type(payload: bytes) -> int | None:
+    info = parse_scte35_payload_info(payload)
+    return info.command_type if info else None
 
 
 def scte35_command_name(command_type: int) -> str:
@@ -230,6 +304,7 @@ def validate_mpd(path: Path) -> list[Finding]:
                                     )
                                 )
                             else:
+                                payload_info = parse_scte35_payload_info(payload)
                                 command_name = scte35_command_name(command_type)
                                 if command_type not in {0x05, 0x06}:
                                     findings.append(
@@ -237,6 +312,22 @@ def validate_mpd(path: Path) -> list[Finding]:
                                             "WARNING",
                                             "SCTE35_PAYLOAD_COMMAND_TYPE_NOT_OPPORTUNITY_SIGNAL",
                                             f"{event_label} SCTE-35 command type is {command_name}; expected splice_insert or time_signal for opportunity signalling.",
+                                        )
+                                    )
+                                elif payload_info and command_type == 0x06 and not payload_info.has_splice_time:
+                                    findings.append(
+                                        Finding(
+                                            "WARNING",
+                                            "SCTE35_TIME_SIGNAL_SPLICE_TIME_MISSING",
+                                            f"{event_label} time_signal() does not set splice_time().",
+                                        )
+                                    )
+                                if payload_info and command_type == 0x06 and payload_info.segmentation_descriptor_count == 0:
+                                    findings.append(
+                                        Finding(
+                                            "WARNING",
+                                            "SCTE35_SEGMENTATION_DESCRIPTOR_MISSING",
+                                            f"{event_label} SCTE-35 descriptor loop contains no segmentation_descriptor().",
                                         )
                                     )
 
