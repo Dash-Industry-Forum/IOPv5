@@ -148,6 +148,23 @@ specs/part09-text/09-text.inc.md#codecs-cea608
 - Positive CTA 608/708-in-video assets.
 - Negative syntax assets for malformed channel/language mappings.
 
+### Initial local implementation
+
+The Part 9 text MPD validator now checks CEA-608 and CEA-708 video-carried
+caption Accessibility descriptor syntax and duplicate channel/service entries.
+
+Initial fixtures:
+
+```text
+specs/part09-text/examples/cea-captions/valid-cea608-multichannel.mpd
+specs/part09-text/examples/cea-captions/valid-cea608-shorthand.mpd
+specs/part09-text/examples/cea-captions/valid-cea708-service.mpd
+specs/part09-text/examples/cea-captions/invalid-cea608-channel.mpd
+specs/part09-text/examples/cea-captions/invalid-cea608-duplicate-channel.mpd
+specs/part09-text/examples/cea-captions/invalid-cea708-service.mpd
+specs/part09-text/examples/cea-captions/invalid-cea708-duplicate-service.mpd
+```
+
 ## Issue F-0009-T4: IMSC1 and WebVTT storage/sample coverage
 
 ### Scope

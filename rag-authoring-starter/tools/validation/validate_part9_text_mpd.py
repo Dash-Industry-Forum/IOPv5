@@ -114,14 +114,28 @@ def validate_lang(value: str | None) -> bool:
     return re.fullmatch(r"[A-Za-z]{2,3}(-[A-Za-z0-9]{2,8})*", value) is not None
 
 
-def validate_cea608_value(value: str | None) -> bool:
+def parse_caption_entries(value: str | None, prefix: str, first: int, last: int) -> list[tuple[str, str]] | None:
     if not value:
-        return False
-    # Accept CC1=eng;CC3=spa style values and language-only shorthand.
+        return None
+    # Accept language-only shorthand.
     if re.fullmatch(r"[A-Za-z]{2,3}", value):
-        return True
-    entry = r"CC[1-4]=[A-Za-z]{2,3}"
-    return re.fullmatch(entry + r"(;" + entry + r")*", value) is not None
+        return []
+    entry_pattern = re.compile(rf"({prefix}({first}|[{first + 1}-{last}]))=([A-Za-z]{{2,3}})")
+    entries: list[tuple[str, str]] = []
+    for part in value.split(";"):
+        match = entry_pattern.fullmatch(part.strip())
+        if not match:
+            return None
+        entries.append((match.group(1), match.group(3)))
+    return entries
+
+
+def validate_cea608_value(value: str | None) -> bool:
+    return parse_caption_entries(value, "CC", 1, 4) is not None
+
+
+def validate_cea708_value(value: str | None) -> bool:
+    return parse_caption_entries(value, "SERVICE", 1, 63) is not None
 
 
 def validate_mpd(path: Path) -> list[Finding]:
@@ -204,14 +218,42 @@ def validate_mpd(path: Path) -> list[Finding]:
             for scheme, value in descriptor_values(adaptation_set, "Accessibility"):
                 if scheme in {CEA608_SCHEME, CEA708_SCHEME}:
                     caption_signalling_count += 1
-                    if scheme == CEA608_SCHEME and not validate_cea608_value(value):
-                        findings.append(
-                            Finding(
-                                "ERROR",
-                                "CEA608_ACCESSIBILITY_VALUE_INVALID",
-                                f"{label} CEA-608 Accessibility@value should use language shorthand or CCn=lang entries.",
+                    if scheme == CEA608_SCHEME:
+                        entries = parse_caption_entries(value, "CC", 1, 4)
+                        if entries is None:
+                            findings.append(
+                                Finding(
+                                    "ERROR",
+                                    "CEA608_ACCESSIBILITY_VALUE_INVALID",
+                                    f"{label} CEA-608 Accessibility@value should use language shorthand or CCn=lang entries.",
+                                )
                             )
-                        )
+                        elif len({channel for channel, _language in entries}) != len(entries):
+                            findings.append(
+                                Finding(
+                                    "ERROR",
+                                    "CEA608_ACCESSIBILITY_CHANNEL_DUPLICATE",
+                                    f"{label} CEA-608 Accessibility@value shall not duplicate channel identifiers.",
+                                )
+                            )
+                    if scheme == CEA708_SCHEME:
+                        entries = parse_caption_entries(value, "SERVICE", 1, 63)
+                        if entries is None:
+                            findings.append(
+                                Finding(
+                                    "ERROR",
+                                    "CEA708_ACCESSIBILITY_VALUE_INVALID",
+                                    f"{label} CEA-708 Accessibility@value should use language shorthand or SERVICEn=lang entries.",
+                                )
+                            )
+                        elif len({service for service, _language in entries}) != len(entries):
+                            findings.append(
+                                Finding(
+                                    "ERROR",
+                                    "CEA708_ACCESSIBILITY_SERVICE_DUPLICATE",
+                                    f"{label} CEA-708 Accessibility@value shall not duplicate service identifiers.",
+                                )
+                            )
 
     if text_count == 0 and caption_signalling_count == 0:
         findings.append(

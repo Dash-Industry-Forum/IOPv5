@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="static" mediaPresentationDuration="PT30S" minBufferTime="PT2S"><Period id="p0" duration="PT30S"><AdaptationSet id="v" contentType="video" mimeType="video/mp4"><Accessibility schemeIdUri="urn:scte:dash:cc:cea-708:2015" value="SERVICE1=eng;SERVICE1=spa"/><Representation id="v1" bandwidth="1000000" codecs="avc1.4d401f"/></AdaptationSet></Period></MPD>
