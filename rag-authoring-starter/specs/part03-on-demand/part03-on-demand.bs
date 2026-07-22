@@ -31,6 +31,11 @@ Repository: Dash-Industry-Forum/IOPv5
     "title": "Information technology - Multimedia application format (MPEG-A) - Part 19: Common media application format (CMAF) for segmented media",
     "publisher": "ISO/IEC",
     "date": "2024"
+  },
+  "DASHIF-TIMING": {
+    "href": "https://dashif.org/guidelines/timing-model/",
+    "title": "DASH-IF Guidelines: DASH Timing Model",
+    "publisher": "DASH Industry Forum"
   }
 }
 </pre>

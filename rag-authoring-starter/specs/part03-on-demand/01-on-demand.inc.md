@@ -67,6 +67,22 @@ For an on-demand service:
     expected to ignore it.
 - Segment availability <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> depend on wall-clock publication over time.
 
+## Period Timing ## {#period-timing}
+
+For an on-demand service (static presentation):
+
+- The first Period <span class=modal-keyword>shall</span> start at the zero point of the MPD timeline (with a
+  `Period@start` value of 0 seconds).
+- The last Period <span class=modal-keyword>shall</span> have a `Period@duration`.
+
+These constraints ensure that the Media Presentation has a well-defined start and
+end point, enabling clients to accurately determine the total presentation
+duration and support seeking operations throughout the entire presentation.
+
+See Part 2 for general period timing rules that apply to all DASH-IF Media
+Presentations. See the DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]]
+for detailed discussion of the DASH timing model.
+
 ## Segment Information Derivation ## {#segment-information-derivation}
 
 Based on the MPD, a DASH client derives the list of Segments for each
