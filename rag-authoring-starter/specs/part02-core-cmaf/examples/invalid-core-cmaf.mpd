@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="static" minBufferTime="PT2S">
+  <Period id="p0">
+    <AdaptationSet id="v1">
+      <SegmentTemplate timescale="0" duration="bad" startNumber="0"/>
+      <Representation id="v1-r1" bandwidth="0"/>
+    </AdaptationSet>
+  </Period>
+</MPD>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" type="dynamic" profiles="urn:mpeg:dash:profile:isoff-live:2011" availabilityStartTime="2026-07-22T10:00:00Z" minimumUpdatePeriod="PT2S" timeShiftBufferDepth="PT60S" minBufferTime="PT1S">
+  <UTCTiming schemeIdUri="urn:mpeg:dash:utc:http-xsdate:2014" value="https://time.akamai.com/?iso"/>
+  <ServiceDescription id="ll"><Latency target="3000" min="1500" max="5000"/></ServiceDescription>
+  <Period id="p0" start="PT0S">
+    <AdaptationSet id="v1" contentType="video" mimeType="video/mp4">
+      <SegmentTemplate timescale="90000" duration="180000" startNumber="1" media="video/$Number$.m4s" initialization="video/init.mp4" availabilityTimeOffset="1.5"/>
+      <Representation id="v1-r1" bandwidth="1000000" codecs="avc1.4d401f"/>
+    </AdaptationSet>
+  </Period>
+</MPD>

@@ -316,6 +316,29 @@ Remaining Part 5 conformance synchronization items include:
 - add IF-8 tracking sample checks,
 - add IF-9 clear/encrypted playback checks.
 
+[[tools-validator-start-coverage]]
+=== Active local validator-start coverage
+
+The following local MPD-level validator-start tools and fixtures are maintained
+as implementation scaffolding for the current IOP v5 migration. These tools do
+not replace the DASH-IF Conformance Validator; they provide deterministic local
+checks and fixtures that can be promoted into the formal validator and test-asset
+workflow.
+
+.Local validator-start coverage for active migration parts.
+[cols="1,1,1,1,1",options="header"]
+|===
+|Part |Validator-start tool |Fixture root |Planning/report reference |Runtime dependency
+|Part 2 Core CMAF |`tools/validation/validate_part2_core_cmaf_mpd.py` |`specs/part02-core-cmaf/examples/` |`rag/reports/part02-core-cmaf-conformance-plan.md` |Segment parser for CMAF brands, chunks, and switching constraints.
+|Part 3 On-Demand |`tools/validation/validate_part3_on_demand_mpd.py` |`specs/part03-on-demand/examples/` |`rag/reports/part03-on-demand-conformance-plan.md` |dash.js seek and random-access playback checks.
+|Part 4 Live and Low-Latency |`tools/validation/validate_part4_live_mpd.py` |`specs/part04-live-low-latency/examples/` |`rag/reports/part04-live-low-latency-conformance-plan.md` |livesim2 deterministic live streams and dash.js live-edge behavior checks.
+|Part 5 Ad Insertion |`tools/validation/validate_part5_scte35_events.py`; `tools/validation/validate_part5_ad_content_mpd.py`; `tools/validation/validate_part5_if5_spliced_mpd.py` |`specs/part05-ad-insertion/examples/` |`rag/reports/part05-f0010-test-vector-inventory.md`; `rag/reports/part05-f0010-next-implementation-batch.md` |dash.js playback, livesim2 SGAI, and Part 6 EME/DRM coverage.
+|Part 9 Text |`tools/validation/validate_part9_text_mpd.py` |`specs/part09-text/examples/` |`rag/reports/part09-f0009-test-vector-inventory.md` |Segment parser and dash.js rendering/selection behavior checks.
+|===
+
+The roll-up dashboard for this local validator-start coverage is maintained in
+`rag/reports/conformance-validator-start-dashboard.md`.
+
 [[tools-github]]
 === Issue Tracking and Coordination
 

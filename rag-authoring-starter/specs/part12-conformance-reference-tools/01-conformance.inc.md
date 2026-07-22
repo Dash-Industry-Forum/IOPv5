@@ -344,6 +344,54 @@ Remaining Part 5 conformance synchronization items include:
 - add IF-8 tracking sample checks,
 - add IF-9 clear/encrypted playback checks.
 
+## Active local validator-start coverage ## {#tools-validator-start-coverage}
+
+The following local MPD-level validator-start tools and fixtures are maintained
+as implementation scaffolding for the current IOP v5 migration. These tools do
+not replace the DASH-IF Conformance Validator; they provide deterministic local
+checks and fixtures that can be promoted into the formal validator and test-asset
+workflow.
+
+<table class="data">
+  <caption>Local validator-start coverage for active migration parts.</caption>
+  <thead>
+    <tr><th>Part<th>Validator-start tool<th>Fixture root<th>Planning/report reference<th>Runtime dependency
+  <tbody>
+    <tr>
+      <td>Part 2 Core CMAF
+      <td>`tools/validation/validate_part2_core_cmaf_mpd.py`
+      <td>`specs/part02-core-cmaf/examples/`
+      <td>`rag/reports/part02-core-cmaf-conformance-plan.md`
+      <td>Segment parser for CMAF brands, chunks, and switching constraints.
+    <tr>
+      <td>Part 3 On-Demand
+      <td>`tools/validation/validate_part3_on_demand_mpd.py`
+      <td>`specs/part03-on-demand/examples/`
+      <td>`rag/reports/part03-on-demand-conformance-plan.md`
+      <td>dash.js seek and random-access playback checks.
+    <tr>
+      <td>Part 4 Live and Low-Latency
+      <td>`tools/validation/validate_part4_live_mpd.py`
+      <td>`specs/part04-live-low-latency/examples/`
+      <td>`rag/reports/part04-live-low-latency-conformance-plan.md`
+      <td>livesim2 deterministic live streams and dash.js live-edge behavior checks.
+    <tr>
+      <td>Part 5 Ad Insertion
+      <td>`tools/validation/validate_part5_scte35_events.py`; `tools/validation/validate_part5_ad_content_mpd.py`; `tools/validation/validate_part5_if5_spliced_mpd.py`
+      <td>`specs/part05-ad-insertion/examples/`
+      <td>`rag/reports/part05-f0010-test-vector-inventory.md`; `rag/reports/part05-f0010-next-implementation-batch.md`
+      <td>dash.js playback, livesim2 SGAI, and Part 6 EME/DRM coverage.
+    <tr>
+      <td>Part 9 Text
+      <td>`tools/validation/validate_part9_text_mpd.py`
+      <td>`specs/part09-text/examples/`
+      <td>`rag/reports/part09-f0009-test-vector-inventory.md`
+      <td>Segment parser and dash.js rendering/selection behavior checks.
+</table>
+
+The roll-up dashboard for this local validator-start coverage is maintained in
+`rag/reports/conformance-validator-start-dashboard.md`.
+
 ## Issue Tracking and Coordination ## {#tools-github}
 
 DASH-IF maintains public issue trackers on GitHub for the IOP and the individual
