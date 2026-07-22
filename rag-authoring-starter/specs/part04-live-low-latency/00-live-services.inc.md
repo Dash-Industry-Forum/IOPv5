@@ -70,6 +70,28 @@ Segments are made available over time following the schedule of the media
 timeline. Dynamic services are documented primarily to explain the timing model
 of Segment availability, which forms the basis for live services.
 
+### Period Timing ### {#live-period-timing}
+
+For a live service (dynamic presentation):
+
+- The first Period <span class=modal-keyword>shall</span> start at or after the zero point of the MPD timeline
+  (with a `Period@start` value of 0 seconds or greater).
+- The last Period <span class=modal-keyword>may</span> have a `Period@duration`, in which case it has a fixed
+  duration. If without `Period@duration`, the last Period in a dynamic
+  presentation has an unlimited duration that may later be shortened by an MPD
+  update.
+
+Note: A Period with an unlimited duration can be converted to fixed duration by
+an MPD update, so even a nominally unlimited duration is effectively constrained
+by the MPD validity duration of the current MPD snapshot.
+
+These constraints enable live services to start at any point on the MPD timeline
+and support both fixed-duration and open-ended Periods for ongoing live content.
+
+See Part 2 for general period timing rules that apply to all DASH-IF Media
+Presentations. See the DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]]
+for detailed discussion of the DASH timing model.
+
 ### Segment Availability Timing Model ### {#live-timing-model}
 
 Segment availability is governed by the timing model of ISO/IEC 23009-1. For a
