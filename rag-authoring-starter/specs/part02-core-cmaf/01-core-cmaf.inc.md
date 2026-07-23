@@ -1096,6 +1096,37 @@ media mapping (including client processing reference model text). This needs to
 be reconciled with Parts 7, 8, 9, 10, and HTML5/MSE platform processing before it
 can become normative. [GROUNDED_BY=dashif-iop-v5-part2-draft#116..#129]
 
+# Timing Constraints # {#timing-constraints}
+
+## Large Timescales and Time Values ## {#timescale-constraints}
+
+[[!ECMASCRIPT]] is unable to accurately represent numeric values greater than 2<sup>53</sup> (`9007199254740991`) using built-in types. Therefore, interoperable services cannot use such values.
+
+All timescales and start times used in a DASH presentation <span class=modal-keyword>shall</span> be sufficiently small that no timecode value exceeding 2<sup>53</sup> will be encountered, even during the publishing of long-lasting live services.
+
+Note: This may require the use of 64-bit fields, although the values must still be limited to under 2<sup>53</sup>.
+
+<div class="example">
+
+The issue does not arise with the common 90 KHz timescale. Counting time since the Unix epoch until 11 November 2019 we get `141721093260000` which is well within the allowed range of values.
+
+Another common timescale is 10000000 (10 million timescale units per second) often used by Smooth Streaming. Counting time since the Unix epoch until 11 November 2019 we get `15746788140000000` which does exceed the critical value and will result in broken playback on many clients! To correct such an error, use a smaller timescale or an MPD timeline zero point that is not so far in the past.
+
+</div>
+
+## Representing Durations in XML ## {#xml-duration-constraints}
+
+All units expressed in MPD fields of datatype `xs:duration` <span class=modal-keyword>shall</span> be treated as fixed size:
+
+* 60S = 1M (minute)
+* 60M = 1H
+* 24H = 1D
+* 30D = 1M (month)
+* 12M = 1Y
+
+MPD fields having datatype `xs:duration` <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> use the year and month units and <span class=modal-keyword>should</span> be expressed as a count of seconds, without using any of the larger units.
+
+
 # Open Issues and Work Items # {#open-issues}
 
 The following work items remain before Part 2 can be considered complete:
