@@ -735,6 +735,242 @@ Content authors <span class=modal-keyword>shall</span> ensure that:
 For period-disconnected presentations, the first sample of each Period <span class=modal-keyword>shall</span> be a
 random access point, and clients <span class=modal-keyword>shall</span> reinitialize decoders as needed.
 
+## Non-Equal Length Tracks ## {#non-equal-length-tracks}
+
+When creating multi-Period presentations, content authors often encounter situations
+where different media components (video, audio, subtitles) have different durations.
+This creates a challenge: how should the Period structure accommodate tracks of
+varying lengths while maintaining proper synchronization and playback continuity?
+
+<figure>
+  <img src="images/NonequalLengthTracks-Initial.png" />
+  <figcaption>Initial situation: tracks of different lengths need to be
+  organized into Periods.</figcaption>
+</figure>
+
+Several strategies exist for handling non-equal length tracks, each with different
+trade-offs:
+
+### Padding Strategy ### {#padding-strategy}
+
+The padding strategy extends shorter tracks to match the duration of the longest
+track by adding padding content (silence for audio, blank frames for video, empty
+subtitles for text).
+
+<figure>
+  <img src="images/NonequalLengthTracks-PadEverything.png" />
+  <figcaption>Padding strategy: extend all tracks to match the longest
+  track.</figcaption>
+</figure>
+
+**Advantages:**
+- Simple Period structure (single Period for entire presentation)
+- All tracks remain synchronized throughout
+- No Period boundaries to manage
+
+**Disadvantages:**
+- Increases bandwidth consumption for padded content
+- May require generating artificial padding content
+- Padding content must be properly signalled to avoid playback artifacts
+
+When using padding:
+- Padding content <span class=modal-keyword>shall</span> be valid media that decoders can process without errors
+- Audio padding <span class=modal-keyword>should</span> be silence at appropriate sample rate
+- Video padding <span class=modal-keyword>should</span> use minimal bitrate (e.g., static frame)
+- Subtitle padding <span class=modal-keyword>may</span> use empty cues or no active subtitles
+
+### Cutting Strategy ### {#cutting-strategy}
+
+The cutting strategy truncates longer tracks to match the duration of the shortest
+track, discarding content that extends beyond the common duration.
+
+<figure>
+  <img src="images/NonequalLengthTracks-CutEverything.png" />
+  <figcaption>Cutting strategy: truncate all tracks to match the shortest
+  track.</figcaption>
+</figure>
+
+**Advantages:**
+- Simple Period structure (single Period)
+- No artificial content generation required
+- Minimal bandwidth usage
+
+**Disadvantages:**
+- Loses content from longer tracks
+- May not be acceptable if all content must be preserved
+- Requires careful selection of cut point (should align with random access points)
+
+When using cutting:
+- Cut points <span class=modal-keyword>shall</span> align with random access points for affected tracks
+- The final sample of each track <span class=modal-keyword>shall</span> have proper duration signalling
+- Content authors <span class=modal-keyword>should</span> ensure the cut point represents a natural end for all tracks
+
+### Period Splitting Strategy ### {#period-splitting-strategy}
+
+The Period splitting strategy creates multiple Periods, with each Period containing
+only the tracks that have content for that time span. This preserves all original
+content without adding padding.
+
+<figure>
+  <img src="images/NonequalLengthTracks-MakePeriods.png" />
+  <figcaption>Period splitting strategy: create multiple Periods to accommodate
+  different track lengths.</figcaption>
+</figure>
+
+**Advantages:**
+- Preserves all original content
+- No artificial padding required
+- Efficient bandwidth usage
+- Natural representation of content structure
+
+**Disadvantages:**
+- More complex Period structure
+- Requires careful Period boundary management
+- May require Period-connected or period-disconnected signalling
+- Client must handle Period transitions
+
+When using Period splitting:
+- Period boundaries <span class=modal-keyword>shall</span> align with random access points
+- Adaptation Set continuity <span class=modal-keyword>shall</span> be properly signalled across Periods
+- Period timing <span class=modal-keyword>shall</span> ensure no gaps or overlaps on the MPD timeline
+- Content authors <span class=modal-keyword>should</span> consider whether Periods are period-connected or
+  period-disconnected
+
+### Mixed Strategy ### {#mixed-strategy}
+
+The mixed strategy combines elements of padding, cutting, and Period splitting to
+optimize for specific use cases. For example, minor duration differences might be
+handled with padding while major differences trigger Period splitting.
+
+<figure>
+  <img src="images/NonequalLengthTracks-Mix.png" />
+  <figcaption>Mixed strategy: combine padding, cutting, and Period splitting as
+  appropriate.</figcaption>
+</figure>
+
+**Advantages:**
+- Flexible approach tailored to specific content
+- Can optimize for bandwidth, complexity, or content preservation
+- Allows different strategies for different track types
+
+**Disadvantages:**
+- Most complex to implement
+- Requires careful decision logic
+- May be harder to validate and test
+
+When using mixed strategies:
+- Decision criteria <span class=modal-keyword>shall</span> be clearly defined and consistently applied
+- Each strategy component <span class=modal-keyword>shall</span> follow the requirements for that strategy
+- The overall Period structure <span class=modal-keyword>shall</span> remain coherent and unambiguous
+
+### Strategy Selection Guidance ### {#strategy-selection}
+
+Content authors <span class=modal-keyword>should</span> select a strategy based on:
+
+- **Content preservation requirements**: If all content must be preserved, avoid
+  cutting strategy
+- **Bandwidth constraints**: Padding increases bandwidth; Period splitting or cutting
+  minimizes it
+- **Client compatibility**: Some clients may handle Period transitions better than
+  others
+- **Duration differences**: Small differences favor padding; large differences favor
+  Period splitting
+- **Content type**: Audio padding is simpler than video padding; subtitles may
+  naturally end early
+
+## Period Splitting ## {#period-splitting}
+
+Period splitting is the process of dividing a single Period into multiple consecutive
+Periods. This is commonly needed when:
+
+- Handling non-equal length tracks (as described above)
+- Inserting ads or other content into an existing presentation
+- Updating metadata or codec parameters mid-presentation
+- Accommodating content protection changes
+- Managing live service boundaries
+
+### When to Split Periods ### {#when-to-split}
+
+Periods <span class=modal-keyword>should</span> be split when:
+
+- Different media components have significantly different durations
+- Content characteristics change (codec, resolution, DRM, etc.)
+- Ad insertion or content replacement is required
+- Metadata updates cannot be signalled within a single Period
+- Service operations require distinct content segments
+
+Periods <span class=modal-keyword><span class=modal-keyword>should</span> not</span> be split unnecessarily, as each Period boundary introduces
+complexity for both content authoring and client playback.
+
+### How to Split Periods ### {#how-to-split}
+
+<figure>
+  <img src="images/SplitInTwoPeriods-Before.png" />
+  <figcaption>Before splitting: single Period with all tracks.</figcaption>
+</figure>
+
+<figure>
+  <img src="images/SplitInTwoPeriods-After.png" />
+  <figcaption>After splitting: multiple Periods with appropriate track
+  distribution.</figcaption>
+</figure>
+
+When splitting Periods, content authors <span class=modal-keyword>shall</span>:
+
+1. **Identify the split point**: Choose a point on the MPD timeline where the split
+   should occur. This <span class=modal-keyword>shall</span> align with random access points in all affected tracks.
+
+2. **Determine Period connectivity**: Decide whether the Periods should be
+   period-connected (seamless playback) or period-disconnected (discontinuity
+   allowed).
+
+3. **Set Period timing**: Assign `Period@start` and `Period@duration` values such
+   that:
+   - The first Period ends at the split point
+   - The second Period starts at the split point
+   - No gap or overlap exists on the MPD timeline
+
+4. **Distribute Representations**: Assign Representations to the appropriate Period
+   based on their content availability:
+   - Representations that span the split point <span class=modal-keyword>may</span> appear in both Periods (if
+     period-connected)
+   - Representations that end before the split point appear only in the first Period
+   - Representations that start after the split point appear only in the second
+     Period
+
+5. **Maintain Adaptation Set consistency**: If Adaptation Sets span multiple Periods,
+   use matching `@id` values to signal continuity.
+
+6. **Update `@presentationTimeOffset`**: Ensure each Representation's
+   `@presentationTimeOffset` correctly maps its sample timeline to the Period's
+   position on the MPD timeline.
+
+7. **Verify Segment references**: Ensure all Segment references remain valid and
+   correctly address the media data.
+
+### Period Splitting and Decoder State ### {#period-splitting-decoder-state}
+
+For period-connected Periods:
+- Decoder state <span class=modal-keyword>may</span> be preserved across the boundary
+- Samples in the second Period <span class=modal-keyword>may</span> depend on samples in the first Period
+- The split point <span class=modal-keyword>should</span> align with GOP boundaries but need not be an IDR frame
+
+For period-disconnected Periods:
+- Decoder state <span class=modal-keyword>shall</span> be reset at the boundary
+- The first sample in the second Period <span class=modal-keyword>shall</span> be a random access point
+- No sample dependencies <span class=modal-keyword>shall</span> cross the Period boundary
+
+### Period Splitting Best Practices ### {#period-splitting-best-practices}
+
+Content authors <span class=modal-keyword>should</span>:
+
+- Minimize the number of Period splits to reduce complexity
+- Align split points with natural content boundaries (scene changes, chapter marks)
+- Use period-connected Periods when seamless playback is required
+- Use period-disconnected Periods when content characteristics change significantly
+- Test Period transitions with representative client implementations
+- Document the rationale for Period splits in content metadata
+
 ## Good Multi-Period CMAF Content ## {#good-multi-period}
 
 Multi-Period content is common for ad insertion, program boundaries, blackout
