@@ -641,6 +641,100 @@ client operations through the MPD. In particular:
 The MPD <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> signal switching or selection capabilities that are not
 supported by the underlying CMAF media.
 
+## Period Connectivity ## {#period-connectivity}
+
+Period connectivity determines whether playback can continue seamlessly across a
+Period boundary or whether a discontinuity occurs. A presentation is
+*period-connected* when adjacent Periods allow continuous playback without decoder
+reinitialization. A presentation is *period-disconnected* when Period boundaries
+require decoder reset or introduce playback discontinuities.
+
+According to [[!MPEGDASH]] clause 5.3.2.1, Periods are period-connected when:
+
+- Adjacent Periods have no gap in their presentation times on the MPD timeline;
+- Representations in adjacent Periods belong to the same Adaptation Set or to
+  Adaptation Sets with matching `@id` values; and
+- The media characteristics (codec, resolution, sample rate, etc.) allow seamless
+  continuation without decoder reinitialization.
+
+For period-connected presentations:
+
+- CMAF Switching Sets <span class=modal-keyword>should</span> maintain continuity across Period boundaries;
+- Segment timing <span class=modal-keyword>shall</span> ensure that the last sample of a Period and the first
+  sample of the next Period form a continuous timeline;
+- Decoder state <span class=modal-keyword>may</span> be preserved across the Period boundary; and
+- Clients <span class=modal-keyword>may</span> perform seamless switching at the Period boundary.
+
+<figure>
+  <img src="images/PeriodConnectivity.png" />
+  <figcaption>Period connectivity allows continuous playback across Period
+  boundaries when media characteristics and timing are compatible.</figcaption>
+</figure>
+
+For period-disconnected presentations, the Period boundary introduces a
+discontinuity that <span class=modal-keyword>may</span> require decoder reset, buffer flushing, or other client
+operations. Content authors <span class=modal-keyword>should</span> signal period-disconnected boundaries clearly
+through MPD structure and <span class=modal-keyword>should</span> ensure that clients can detect and handle such
+boundaries appropriately.
+
+### Segment Overlap on Period Connectivity ### {#segment-overlap-period-connectivity}
+
+When Periods are period-connected, Media Segments <span class=modal-keyword>may</span> span the Period boundary. In
+such cases:
+
+- The Segment <span class=modal-keyword>shall</span> be referenced by both Periods using appropriate
+  `@presentationTimeOffset` values;
+- The media timeline <span class=modal-keyword>shall</span> remain continuous across the boundary; and
+- Clients <span class=modal-keyword>shall</span> process the overlapping Segment according to the Period timing
+  constraints.
+
+<figure>
+  <img src="images/SegmentOverlapOnPeriodConnectivity.png" />
+  <figcaption>Segments may span Period boundaries in period-connected
+  presentations, requiring careful timing coordination.</figcaption>
+</figure>
+
+Segment overlap at Period boundaries is common in live services with dynamic Period
+insertion (e.g., ad insertion) and in multi-Period static content. Content authors
+<span class=modal-keyword>shall</span> ensure that overlapping Segments are correctly referenced and that timing
+remains unambiguous.
+
+## Samples on Period Boundaries ## {#samples-on-period-boundaries}
+
+Sample alignment at Period boundaries affects seamless playback and switching
+behavior. For period-connected presentations, samples at the Period boundary <span class=modal-keyword>shall</span>
+maintain presentation time continuity and <span class=modal-keyword>shall</span> allow decoder state preservation.
+
+Key considerations for samples at Period boundaries:
+
+- **Presentation Time Continuity**: The presentation time of the first sample in
+  Period N+1 <span class=modal-keyword>shall</span> immediately follow the presentation time of the last sample in
+  Period N, accounting for sample duration.
+- **Decode Time Handling**: Decode timestamps <span class=modal-keyword>shall</span> maintain proper ordering across
+  the boundary, particularly for media with B-frames or other reordering.
+- **Random Access Points**: If a Period boundary requires a random access point
+  (e.g., for period-disconnected presentations), the first sample in the new Period
+  <span class=modal-keyword>shall</span> be a random access point (IDR frame for video, sync sample for audio).
+- **Sample Dependencies**: For period-connected presentations, samples in Period N+1
+  <span class=modal-keyword>may</span> depend on samples in Period N if the decoder state is preserved.
+
+<figure>
+  <img src="images/SamplesOnPeriodBoundary.png" />
+  <figcaption>Sample timing and dependencies at Period boundaries must be
+  carefully managed to ensure seamless playback.</figcaption>
+</figure>
+
+Content authors <span class=modal-keyword>shall</span> ensure that:
+
+- Sample timing is unambiguous at Period boundaries;
+- Decoder requirements are clearly signalled through MPD and media metadata;
+- Period boundaries align with appropriate media structure (e.g., GOP boundaries for
+  period-disconnected presentations); and
+- Switching Sets maintain consistent sample alignment across Periods.
+
+For period-disconnected presentations, the first sample of each Period <span class=modal-keyword>shall</span> be a
+random access point, and clients <span class=modal-keyword>shall</span> reinitialize decoders as needed.
+
 ## Good Multi-Period CMAF Content ## {#good-multi-period}
 
 Multi-Period content is common for ad insertion, program boundaries, blackout
