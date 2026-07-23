@@ -314,6 +314,106 @@ Issue: Carry over additional v4.3 timing-model formulae where they add
 interoperability value beyond ISO/IEC 23009-1. Avoid duplicating formulae that are
 now fully specified in the current MPEG-DASH edition.
 
+### Representation Timing ### {#representation-timing}
+
+Representations provide the content for periods. A representation is a sequence of media segments, an initialization segment, an optional index segment and related metadata (see ISO/IEC 23009-1 [[!MPEGDASH]] clauses 5.3.1 and 5.3.5).
+
+The MPD describes each representation using a `Representation` element. For each representation, the MPD defines a set of <dfn>segment references</dfn> to the media segments and metadata describing the media samples provided by the representation.
+
+#### Sample Timeline #### {#timing-sampletimeline}
+
+The samples within a representation exist on a linear <dfn>sample timeline</dfn> defined by the encoder that creates the samples. Sample timelines are mapped onto the MPD timeline by metadata stored in or referenced by the MPD (see ISO/IEC 23009-1 [[!MPEGDASH]] clause 7.3.2).
+
+<figure>
+	<img src="images/TimelineAlignment.png" />
+	<figcaption>A sample timeline is mapped onto the MPD timeline based on parameters defined in the MPD, relating the media samples provided by a representation to the portion of the MPD timeline covered by the period that references the representation.</figcaption>
+</figure>
+
+The sample timeline does not determine what samples are presented. It merely connects the timing of the representation to the MPD timeline and allows the correct media segments to be identified when a DASH client makes scheduling decisions driven by the MPD timeline.
+
+The same sample timeline <span class=modal-keyword>shall</span> be shared by all representations in the same adaptation set [[!MPEGCMAF]]. Representations in different adaptation sets <span class=modal-keyword>may</span> use different sample timelines.
+
+A sample timeline is measured in <dfn>timescale units</dfn> defined as a number of units per second. This value (the <dfn>timescale</dfn>) <span class=modal-keyword>shall</span> be present in the MPD as `SegmentTemplate@timescale` or `SegmentBase@timescale` (depending on the addressing mode).
+
+<figure>
+	<img src="images/PresentationTimeOffset.png" />
+	<figcaption>`@presentationTimeOffset` is the key component in establishing the relationship between the MPD timeline and a sample timeline.</figcaption>
+</figure>
+
+The zero point of a sample timeline <span class=modal-keyword>may</span> be at the start of the period or at any earlier point. The point on the sample timeline indicated by `@presentationTimeOffset` is equivalent to the period start point on the MPD timeline (see ISO/IEC 23009-1 [[!MPEGDASH]] clause 5.3.9.2).
+
+Note: To transform a sample timeline position `SampleTime` to an MPD timeline position, use the formula `MpdTime = Period@start + (SampleTime - @presentationTimeOffset) / @timescale`.
+
+See the DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]] for detailed discussion of sample timeline mechanics.
+
+### Referencing Media Segments ### {#timing-segment-references}
+
+Each segment reference addresses a media segment that corresponds to a specific time span on the sample timeline. The exact mechanism used to define segment references depends on the addressing mode used by the representation.
+
+#### Necessary Segment References in Static Presentations #### {#necessary-references-static}
+
+In a static presentation, a representation <span class=modal-keyword>shall</span> provide enough media segments to cover the entire time span of the period.
+
+<figure>
+	<img src="images/StaticMpdMustBeCovered.png" />
+	<figcaption>In a static presentation, the entire period must be covered with media segments.</figcaption>
+</figure>
+
+#### Necessary Segment References in Dynamic Presentations #### {#necessary-references-dynamic}
+
+In a dynamic presentation, a representation <span class=modal-keyword>shall</span> provide enough media segments to cover the time span of the period that intersects with the time shift buffer at any point during the MPD validity duration.
+
+<figure>
+	<img src="images/MandatorySegmentReferencesInDynamicMpd.png" />
+	<figcaption>In a dynamic presentation, the time shift buffer and MPD validity duration determine the set of required segment references for each representation.</figcaption>
+</figure>
+
+Note: It is a valid and common situation that a media segment is required to be referenced but is not yet available. See ISO/IEC 23009-1 [[!MPEGDASH]] for segment availability timing rules.
+
+See the DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]] for detailed discussion of segment reference requirements.
+
+### Clock Drift ### {#no-clock-drift}
+
+Some encoders experience clock drift - they do not produce exactly 1 second worth of output per 1 second of input, either stretching or compressing the sample timeline with respect to the MPD timeline.
+
+<figure>
+	<img src="images/ClockDrift.png" />
+	<figcaption>Comparison of an encoder correctly tracking wall clock time (blue) and an encoder with a clock that runs too slowly (yellow), leading it to produce fewer seconds of content than expected.</figcaption>
+</figure>
+
+Clock drift not only causes timing model violations when an insufficient amount of data is produced but also leads to de-synchronization of content in tracks encoded based on different clocks. CMAF [[!MPEGCMAF]] clauses 6.3 and 6.6.8 require tracks to be synchronized.
+
+A DASH service <span class=modal-keyword>shall not</span> publish content that suffers from clock drift.
+
+The solution is to adjust the encoder so that it correctly tracks wall clock time, e.g. by performing regular small adjustments to the encoder clock to counteract any "natural" drift it may be experiencing.
+
+#### Workarounds for Clock Drift #### {#clock-drift-workarounds}
+
+If the encoder cannot be adjusted to not suffer from clock drift, DASH packagers <span class=modal-keyword>should</span> implement workarounds to ensure the presentation conforms to targeted standards. The following are examples of approaches a DASH packager could use:
+
+1. Drop a span of content if input is produced faster than real-time.
+2. Insert regular padding content if input is produced slower than real-time (silence, blank picture, repeating frames, or short-duration periods where affected representations are not present).
+
+Such workarounds can be disruptive and only serve as a backstop to prevent complete playback failure caused by timing model violations.
+
+See the DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]] for detailed discussion of clock drift issues and solutions.
+
+### Clock Synchronization ### {#clock-sync}
+
+During playback of dynamic presentations, a <dfn>wall clock</dfn> is used as the timing reference for DASH client decisions. This is a synchronized clock shared by the DASH client and service.
+
+It is critical to synchronize the clocks of the DASH client and service when using a dynamic presentation because the MPD timeline of a dynamic presentation is mapped to wall clock time and many playback decisions are clock driven.
+
+Clock synchronization mechanisms are described by `UTCTiming` elements in the MPD (see ISO/IEC 23009-1 [[!MPEGDASH]] clause 5.8.4.11).
+
+The MPD of a dynamic presentation <span class=modal-keyword>shall</span> include at least one `UTCTiming` element that defines a clock synchronization mechanism.
+
+A client presenting a dynamic presentation <span class=modal-keyword>shall</span> synchronize its local clock according to the `UTCTiming` elements in the MPD and <span class=modal-keyword>shall</span> emit a warning or error to application developers when clock synchronization fails.
+
+A DASH client <span class=modal-keyword>shall not</span> use a synchronization method that is not listed in the MPD unless explicitly instructed to do so by the application developer.
+
+See Part 4 for detailed requirements on clock synchronization in live services. See the DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]] for comprehensive discussion of clock synchronization.
+
 ## DASH Representation Structures and Signalling ## {#representation-structures}
 
 ### General ### {#representation-general}
