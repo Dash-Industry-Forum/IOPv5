@@ -295,31 +295,16 @@ Safe C1 checks that can still start:
 
 ## Recommended next source updates
 
-1. Add the two missing `AdaptationSet` xlink rows to source Table 4. [done]
-2. Update the Table 4 validator matrix for those two removed attributes. [done]
-3. Restructure source Table 5 to follow the DOCX groups: [done]
+1. Add the two missing `AdaptationSet` xlink rows to source Table 4.
+2. Update the Table 4 validator matrix for those two removed attributes.
+3. Restructure source Table 5 to follow the DOCX groups:
    - MPD,
    - Period (Main content),
    - Period (Ad Content),
    - Period (Slate Content),
    - Period (Main Content).
-4. Update the Table 5 validator matrix after restructuring. [done]
-5. Update Part 12 if the validator categories change. [pending after validator implementation decisions]
-
-## Table 5 restructuring follow-up
-
-Source Table 5 has now been converted from two editorial split tables into one
-published-style table with the DOCX-extracted row groups:
-
-- `MPD`,
-- `Period (Main content)`,
-- `Period (Ad Content)`,
-- `Period (Slate Content)`,
-- return `Period (Main Content)`.
-
-The F-0010-C Table 5 validator matrix was updated to treat Table 5 as the final
-IF-5 spliced-output matrix and to define the reuse boundary with the F-0010-B
-Table 4 source-ad-MPD validator.
+4. Update the Table 5 validator matrix after restructuring.
+5. Update Part 12 if the validator categories change.
 
 ## Current blocker
 

@@ -699,6 +699,33 @@ insertion (e.g., ad insertion) and in multi-Period static content. Content autho
 <span class=modal-keyword>shall</span> ensure that overlapping Segments are correctly referenced and that timing
 remains unambiguous.
 
+### Period Continuity ### {#period-continuity}
+
+In addition to period connectivity, [[!MPEGDASH]] clause 5.3.2.4 defines
+<dfn>period continuity</dfn>. Continuity is a special case of period connectivity
+that indicates no timeline discontinuity is present at the transition point between
+the media samples of the two continuous Periods. Under continuity conditions, the
+client is expected to be able to continue seamless playback by merely appending
+Media Segments from the new Period, without any reconfiguration at the Period
+boundary.
+
+Continuity <span class=modal-keyword>shall</span> not be signalled if the first/last sample in the Media Segment
+on the Period boundary does not exactly start/end on the Period boundary. This
+cannot be expected to be generally true, as Period boundaries are often an
+editorial decision independent of the Media Segment and sample layout.
+
+Period continuity <span class=modal-keyword>may</span> be signalled in the MPD when the above condition is met,
+in which case period connectivity <span class=modal-keyword>shall</span> not be simultaneously signalled on the
+same Representation. Continuity implies connectivity [[!MPEGDASH]].
+
+The signalling of period continuity is the same as for period connectivity, except
+that the value to use for `@schemeIdUri` is `urn:mpeg:dash:period-continuity:2015`
+[[!MPEGDASH]] clause 5.3.2.4.
+
+Clients <span class=modal-keyword>may</span> take advantage of any platform-specific optimizations for seamless
+playback that knowledge of period continuity enables; beyond that, clients <span class=modal-keyword>shall</span>
+treat continuity the same as connectivity.
+
 ## Samples on Period Boundaries ## {#samples-on-period-boundaries}
 
 Sample alignment at Period boundaries affects seamless playback and switching
@@ -1095,6 +1122,85 @@ Issue: The Part 2 draft contains a future framework for content annotation and
 media mapping (including client processing reference model text). This needs to
 be reconciled with Parts 7, 8, 9, 10, and HTML5/MSE platform processing before it
 can become normative. [GROUNDED_BY=dashif-iop-v5-part2-draft#116..#129]
+
+# Segment Loss Handling # {#segment-loss-handling}
+
+Due to network or other faults, it is possible that Media Segments do not reach
+the DASH packager, effectively creating a discontinuity in a Representation. As
+DASH clients typically have difficulties processing content with gaps and the
+timing model forbids gaps in general, missing segments would likely lead to an
+unsatisfactory playback experience for end-users.
+
+<figure>
+  <img src="images/MissingSegment.png" />
+  <figcaption>A DASH packager might not have every Media Segment available when
+  it needs to publish them. Corrective actions must be taken to ensure an
+  uninterrupted timeline is presented to DASH clients.</figcaption>
+</figure>
+
+DASH services <span class=modal-keyword>shall</span> not publish Periods that have missing segments, whether the
+segment loss is described by "missing content segments" ([[!MPEGDASH]] clause
+6.2.6) or by any other means (including not describing it).
+
+<figure>
+  <img src="images/MissingSegment-FixWithPeriodSplitting.png" />
+  <figcaption>The simplest correction is to start a new Period that does not
+  include the affected Representation for the duration of the loss. Other
+  Representations remain present and a client can often continue seamless
+  playback without the missing Representation.</figcaption>
+</figure>
+
+Instead, DASH services <span class=modal-keyword>should</span> start a new Period that does not include the
+Representation that would experience a gap, later restoring the Representation
+with a new Period transition. Period-connected Adaptation Sets can enable DASH
+clients to perform such transitions seamlessly in some scenarios.
+
+<figure>
+  <img src="images/MissingSegment-FixWithPlaceholder.png" />
+  <figcaption>Other solutions might involve replacing the missing Media Segment
+  with a placeholder, either from a different Representation or an entirely
+  artificial one.</figcaption>
+</figure>
+
+Note: Some DASH clients experience difficulties when transitioning to/from a very
+short Period (e.g. with a duration of only 1 Media Segment). Implementations
+<span class=modal-keyword>may</span> extend the transition Period for better compatibility with such clients.
+
+Alternatively, given a sufficiently capable DASH packager and provided that
+technical constraints of Representations are satisfied, the missing Media Segment
+<span class=modal-keyword>may</span> be replaced with an aligned Media Segment from a lower bitrate.
+
+# Stand-alone Text Track Timing # {#standalone-text-timing}
+
+Some services store text Adaptation Sets in stand-alone IMSC1 or WebVTT files,
+without segmentation or [[!ISOBMFF]] encapsulation.
+
+Note: Storing text tracks in stand-alone files is not permitted by [[!MPEGCMAF]].
+If a DASH service is intended to conform to [[!MPEGCMAF]], text tracks <span class=modal-keyword>shall</span> be
+stored as segmented CMAF tracks.
+
+Timecodes in stand-alone text files <span class=modal-keyword>shall</span> be relative to the Period start point.
+
+`@presentationTimeOffset` <span class=modal-keyword>shall</span> not be present in the Representation and <span class=modal-keyword>shall</span>
+be ignored by clients if present.
+
+# Forbidden Techniques # {#forbidden-techniques}
+
+Some aspects of [[!MPEGDASH]] are not compatible with the interoperable timing
+model defined in this document. In the interest of clarity, they are explicitly
+listed here:
+
+- The `@presentationDuration` attribute <span class=modal-keyword>shall</span> not be used. This information
+    serves no purpose under the interoperable timing model.
+- The `@availabilityTimeComplete` attribute <span class=modal-keyword>shall</span> not be used. The concept of
+    "incomplete but available" Media Segments that this attribute enables is not
+    part of the interoperable timing model.
+- There <span class=modal-keyword>shall</span> not be "missing content segments" ([[!MPEGDASH]] clause 6.2.6) in
+    the content. If content is lost during processing, the expectation is that the
+    encoder/packager will either replace it with valid content (e.g. content from
+    a lower Representation or blank picture or silent audio) or start a new Period
+    that does not contain the Representation that incurs data loss (see
+    [[#segment-loss-handling]]).
 
 # Timing Constraints # {#timing-constraints}
 

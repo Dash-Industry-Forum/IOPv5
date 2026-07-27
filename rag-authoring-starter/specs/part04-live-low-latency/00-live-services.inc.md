@@ -322,6 +322,136 @@ Note: MPD updates are the baseline mechanism for live. Additional, lower-latency
 signalling of MPD changes is provided by the segment-based mechanism in
 [[#live-segment-based]].
 
+### MPD Snapshot Validity ### {#live-mpd-snapshot-validity}
+
+The MPD of a dynamic presentation remains valid not only at its moment of initial
+publishing but through the entire <dfn>MPD validity duration</dfn>, which is a
+time span of duration `MPD@minimumUpdatePeriod` starting from the moment the MPD
+download is started by a client [[!MPEGDASH]].
+
+Clients <span class=modal-keyword>shall</span> process state changes that occur during the MPD validity duration.
+For example, new Media Segments will become available over time if they are
+referenced by the MPD and old ones become unavailable, even without downloading a
+new snapshot of the MPD.
+
+The presence or absence of `MPD@minimumUpdatePeriod` <span class=modal-keyword>shall</span> be used by DASH services
+to signal whether and when the MPD might be updated:
+
+- A nonzero value for `MPD@minimumUpdatePeriod` defines the MPD validity duration
+    of the present snapshot of the MPD, starting from the moment its download was
+    initiated. This allows the service to provide regular updates to the MPD while
+    limiting the refresh interval to avoid overload.
+- The value 0 for `MPD@minimumUpdatePeriod` indicates that the MPD has no
+    validity after the moment it is retrieved. In such a situation, the client
+    <span class=modal-keyword>shall</span> acquire a new MPD whenever it wants to make new Media Segments available.
+- Absence of the `MPD@minimumUpdatePeriod` attribute indicates an infinite
+    validity (the MPD will never be updated).
+
+### Adding Content to the MPD ### {#live-mpd-add-content}
+
+[[!MPEGDASH]] allows the following mechanisms for adding content to a dynamic
+presentation:
+
+- Additional Segment references <span class=modal-keyword>may</span> be added to the last Period.
+- Additional Periods <span class=modal-keyword>may</span> be added to the end of the MPD.
+
+Segment references <span class=modal-keyword>shall</span> not be added to any Period other than the last Period.
+
+<figure>
+  <img src="images/MpdUpdate-AddContent.png" />
+  <figcaption>MPD updates can add both Segment references and Periods (additions
+  highlighted in blue).</figcaption>
+</figure>
+
+A live service will typically use a Period with an unlimited duration to
+continuously add new Segment references. An MPD update that adds content <span class=modal-keyword>may</span> be
+combined with an MPD update that removes content.
+
+### Removing Content from the MPD ### {#live-mpd-remove-content}
+
+[[!MPEGDASH]] allows the following mechanisms for removing content from a dynamic
+presentation:
+
+- The last Period <span class=modal-keyword>may</span> change from unlimited duration to fixed duration.
+- The duration of the last Period <span class=modal-keyword>may</span> be shortened.
+- One or more Periods <span class=modal-keyword>may</span> be removed entirely from the end of the MPD timeline.
+- Expired Periods and Segment references that no longer overlap the time shift
+    buffer <span class=modal-keyword>may</span> be removed from the start of the MPD timeline.
+
+Removal of content is only allowed if the content to be removed is expired or not
+yet available to clients and guaranteed not to become available within the MPD
+validity duration of any MPD snapshot potentially downloaded by clients.
+
+To determine the content that may be removed, calculate `EarliestRemovalPoint` as
+follows for each Adaptation Set:
+
+1. Let `PublishingDelay` be the end-to-end delay for MPD update publishing (the
+    time between the MPD generator creating a new version and it becoming published
+    to all clients on the CDN edge).
+2. Let `AvailabilityWindowEnd` be the end point of the availability window.
+3. Let `EarliestRemovalPoint` be `AvailabilityWindowEnd + MPD@minimumUpdatePeriod + PublishingDelay`.
+
+An MPD update removing content <span class=modal-keyword>shall</span> not remove any Segment references to Media
+Segments with a segment start point before or at `EarliestRemovalPoint`.
+
+<figure>
+  <img src="images/MpdUpdate-RemoveContent.png" />
+  <figcaption>MPD updates can remove both Segment references and Periods (removals
+  highlighted in red).</figcaption>
+</figure>
+
+Explicitly defined Segment references (`S` elements) <span class=modal-keyword>shall</span> be removed when they
+have expired (i.e. the segment end point has fallen out of the time shift buffer).
+Periods with their end points before the time shift buffer <span class=modal-keyword>shall</span> be removed.
+
+### End of Live Content ### {#live-mpd-end}
+
+Live services can reach a point where no more content will be produced. When an
+MPD is updated to a state that describes the final content of a live service, the
+service <span class=modal-keyword>shall</span>:
+
+- Define a fixed duration for the last Period.
+- Remove the `MPD@minimumUpdatePeriod` attribute.
+- Cease performing MPD updates.
+
+This signals to clients that no more content will be added to the MPD.
+
+Upon detecting the removal of `MPD@minimumUpdatePeriod`, clients <span class=modal-keyword>should</span> present a
+user experience suitable for end of live content.
+
+Note: A common mistake is to treat the eventual cessation of new content as a
+transient or fatal error, resulting in potentially infinite loading even before
+the final Media Segment is presented to the user.
+
+If the ending live service is to be converted to a static presentation for
+on-demand viewing, the service <span class=modal-keyword>may</span> change `MPD@type` to `static` when
+`MPD@minimumUpdatePeriod` is removed or do so at a later time. Clients <span class=modal-keyword>shall</span> not
+lose track of the playback position if a dynamic presentation becomes a static
+presentation.
+
+### MPD Refreshes ### {#live-mpd-refreshes}
+
+To stay informed of MPD updates, clients need to perform <dfn>MPD refreshes</dfn>
+at appropriate moments to download updated MPD snapshots.
+
+Clients presenting dynamic presentations <span class=modal-keyword>shall</span> execute the following MPD refresh
+logic:
+
+1. When an MPD snapshot is downloaded, it is valid for the MPD validity duration
+    as measured from the moment the download is initiated.
+2. A client can expect to be able to successfully download any Media Segments that
+    the MPD defines as available at any point during the MPD validity duration.
+3. The client <span class=modal-keyword>may</span> refresh the MPD at any point to obtain more Segment references
+    or extend the MPD validity duration.
+
+Note: There is no requirement that clients poll for updates at
+`MPD@minimumUpdatePeriod` interval. They can do so as often or as rarely as they
+wish — this attribute simply defines the MPD validity duration.
+
+Clients using HTTP to perform MPD refreshes <span class=modal-keyword>should</span> use conditional GET requests
+as specified in [[!RFC7232]] to avoid unnecessary data transfers when the contents
+of the MPD do not change between refreshes.
+
 ## MPD- and Segment-based Live Service Offering ## {#live-segment-based}
 
 ### Preliminaries ### {#live-segment-based-preliminaries}
