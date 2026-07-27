@@ -77,6 +77,26 @@ For the purposes of this document, the terms and definitions in ISO/IEC 23009-1
     permit continuous playback, switching, and decoder operation across Periods
     under the requirements of this part.
 
+## Terminology Choices in This Document ## {#terminology-choices}
+
+This document is intended to be a set of guidelines easily understood by solution
+designers and developers. In the interest of ease of understanding, some important
+adjustments in terminology are made compared to the underlying standards.
+
+[[!MPEGDASH]] has the concept of "segment" (URL-addressable media object) and
+"subsegment" (byte range of URL-addressable media object), whereas [[!MPEGCMAF]]
+does not make such a distinction. This document uses [[!MPEGCMAF]] terminology,
+with the term "segment" in this document being equivalent to "CMAF segment". The
+term "segment" in this document may be equivalent to either "segment" or
+"subsegment" in [[!MPEGDASH]], depending on the addressing mode used.
+
+This document's concept of the <dfn>MPD timeline</dfn> is not directly expressed
+in [[!MPEGDASH]]. To improve understandability of the timing model, this document
+splits the DASH concept of "presentation timeline" ([[!MPEGDASH]] clause 7.2.1)
+into two separate concepts: the aggregated component (MPD timeline) and the
+Representation-specific component (sample timeline). These concepts are distinct
+but mutually connected via metadata in the MPD.
+
 ## Terminology Cross-Reference ## {#terminology-cross-reference}
 
 Different documents often use different terms to refer to the same structural
