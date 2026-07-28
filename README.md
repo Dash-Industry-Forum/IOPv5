@@ -9,6 +9,16 @@ Markdown/Bikeshed source and built to HTML. A Metanorma/AsciiDoc proof of concep
 is being evaluated for possible DOC/PDF generation, but Bikeshed Markdown remains
 the canonical source unless the project decides otherwise.
 
+## Quick Links
+
+| Resource | URL |
+|----------|-----|
+| Official publication | https://dashif.org/Guidelines/iop-v5/ |
+| Preview (current branch) | https://dashif.org/IOPv5/previews/tstockhammer-rag-workflow/ |
+| Issue tracker | https://github.com/Dash-Industry-Forum/IOPv5/issues |
+| DASH-IF Identifier Registry | https://dashif.org/identifiers/introduction/ |
+| DASH-IF Codec Registry | https://dashif.org/codecs/introduction/ |
+
 ## What is in this repository
 
 ```text
@@ -20,55 +30,66 @@ the canonical source unless the project decides otherwise.
 rag-authoring-starter/
   specs/
     _boilerplate/              shared IPR/modal-verbs and diagram/table CSS
-    part01-overview/           Part 1 source and generated local HTML
-    part02-core-cmaf/          Part 2 source: core principles and CMAF mapping
-    part03-on-demand/          Part 3 source: on-demand services
-    part04-live-low-latency/   Part 4 source: live and low-latency services
-    part05-ad-insertion/       Part 5 source/shell: ad insertion
-    part06-content-protection/ Part 6 source/shell: content protection
-    part07-video/              Part 7 source/shell: video
-    part08-audio/              Part 8 source/shell: audio
-    part09-text/               Part 9 source/shell: text/subtitles
-    part10-events/             Part 10 source/shell: events
+    part01-overview/           Part 1: Overview, Architecture and Interfaces
+    part02-core-cmaf/          Part 2: Core Principles and CMAF Mapping
+    part03-on-demand/          Part 3: On-Demand Services
+    part04-live-low-latency/   Part 4: Live and Low-Latency Services
+    part05-ad-insertion/       Part 5: Ad Insertion and Content Replacement
+    part06-content-protection/ Part 6: Content Protection and Security
+    part07-video/              Part 7: Video
+    part08-audio/              Part 8: Audio
+    part09-text/               Part 9: Text (Subtitle)
+    part10-events/             Part 10: Events
     part11-additional-technologies/
-                               Part 11 source/shell: additional technologies
+                               Part 11: Additional Functionalities
     part12-conformance-reference-tools/
-                               Part 12 source: conformance and tools
+                               Part 12: Conformance and Reference Tools
 
   tools/
     env/                       local Bikeshed/DASH-IF boilerplate setup
     ingest/                    source inventory and text/image extraction
     rag/                       local offline chunk/index/query tools
     migration/                 source delta/migration helpers
-    publication/               build and publication checks
+    publication/               build and publication checks (build_all.py)
+    validation/                per-part MPD validation scripts
     metanorma/                 experimental Bikeshed-to-AsciiDoc tooling
 
   rag/
     sources.yaml               source manifest
     corpus/                    local source documents (mostly gitignored)
     chunks/, indexes/          derived RAG artifacts (gitignored/generated)
-    reports/                   migration/status reports
+    reports/                   migration/status reports (see below)
 
 AGENTS.md                      conventions for AI agents working in this repo
-authoring/metanorma/           experimental generated AsciiDoc / outputs (local)
+PULL_REQUEST_TEMPLATE.md       PR template with checklist
 ```
 
 ## Current part status
 
-| Part | Title | Status in this repo |
-|---|---|---|
-| 1 | Overview, Architecture and Interfaces | Drafted and building |
-| 2 | Core Principles and CMAF Mapping | Initial substantive draft; many open technical issues tracked in the part |
-| 3 | On-Demand Services | Initial draft from v4.3 on-demand clauses |
-| 4 | Live and Low-Latency Live Services | Drafted and building; more v4.3 live detail remains to migrate |
-| 5 | Ad Insertion and Content Replacement | Major source migration completed at initial/hardened draft level; F-0010 conformance/cross-part plan created |
-| 6 | Content Protection and Security | Active reconciliation in progress; general/miscellaneous sections updated and tracked |
-| 7 | Video | Bikeshed/Markdown shell; substantive migration pending |
-| 8 | Audio | Bikeshed/Markdown shell; substantive migration pending |
-| 9 | Text | Active source migration and conformance coverage planning in progress |
-| 10 | Events | Bikeshed/Markdown shell; substantive migration pending |
-| 11 | Additional Technologies | Bikeshed/Markdown shell seeded with trick-mode, thumbnails, metadata-track and registration-process work items |
-| 12 | Conformance and Reference Tools | Drafted and building |
+All 12 parts are in the Bikeshed authoring workspace as Working Draft documents.
+The publication infrastructure (CI workflow, `build_all.py`, shared boilerplate,
+image copying) is operational.
+
+| Part | Title | WD Version | Status |
+|------|-------|-----------|--------|
+| 1 | Overview, Architecture and Interfaces | 0.3 | Substantially complete: architecture, registries, review workflow |
+| 2 | Core Principles and CMAF Mapping | 0.1 | Substantial content: full timing model, CMAF mapping, Period splitting |
+| 3 | On-Demand Services | 0.1 | Skeleton with initial MPD requirements |
+| 4 | Live and Low-Latency Services | 0.3 | Live services + low-latency (CR r8/r9) migrated |
+| 5 | Ad Insertion and Content Replacement | 0.12 | Substantial: IF-0 through IF-9 migrated from published v5.0.0 |
+| 6 | Content Protection and Security | — | Substantial: DRM workflows, license model, ECCP |
+| 7 | Video | — | Substantial: codec profiles, CMAF signalling |
+| 8 | Audio | — | Substantial: codec profiles, CMAF signalling |
+| 9 | Text (Subtitle) | — | Reconciled against published Part 9 FINAL |
+| 10 | Events | 0.4 | Events model, timed metadata, cross-refs to Parts 4 and 5 |
+| 11 | Additional Functionalities | 0.1 | Skeleton with issue placeholders only |
+| 12 | Conformance and Reference Tools | 0.6 | Substantially complete; conformance mappings for all parts |
+
+For a detailed per-part status with done/remaining checklists, see:
+
+```text
+rag-authoring-starter/rag/reports/iop-v5-authoring-status.md
+```
 
 ## Authoring conventions
 
@@ -78,11 +99,21 @@ Each part follows this structure:
 rag-authoring-starter/specs/<part-folder>/
   <part-folder>.bs        Bikeshed metadata, bibliography, shared includes
   NN-*.inc.md             authored prose in Bikeshed-flavoured Markdown
-  Images/                 static images and triaged extracted images
+  images/ or Images/      static images and triaged extracted images
   Diagrams/               Mermaid/PlantUML/draw.io sources where applicable
 ```
 
-Rules of thumb:
+### Bikeshed metadata
+
+Every `.bs` file uses the following custom metadata fields:
+
+```
+!Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
+!Issue Tracking: File issues at <a href="...">IOPv5 GitHub</a>. Use label <code>Part N</code>.
+!Document Status: Working Draft (x.y). See Part 1 §1 for versioning.
+```
+
+### Rules of thumb
 
 - Edit `.bs` and `.inc.md` source files, not generated HTML.
 - Keep source provenance in comments or `Issue:` notes when migrating from drafts,
@@ -97,10 +128,62 @@ Rules of thumb:
   consistently in authored spec text using `<span class=modal-keyword>...</span>`.
   Run `python tools/publication/wrap_modals.py` after broad edits to normalize
   modal-keyword presentation.
+- Every section that has subsections **must not** have hanging paragraphs (text
+  between the section heading and the first subsection heading). Add a
+  `### General ### {#section-id-general}` subsection if needed.
 - Cross-part references should eventually use stable anchors throughout the part
   set. This is an open editorial task; avoid inventing conflicting anchor names.
 - Add examples where they clarify interoperability behaviour. Missing examples
   should be tracked as issues or in the relevant part's open-issues table.
+
+## DASH-IF Registries
+
+DASH-IF maintains two registries that are authoritative for identifiers and
+codecs used in DASH-IF compliant services:
+
+- **[DASH-IF Identifier Registry](https://dashif.org/identifiers/introduction/)**
+  — `@schemeIdUri` values, profile URIs, and other string identifiers.
+  Source: [Dash-Industry-Forum/Identifiers](https://github.com/Dash-Industry-Forum/Identifiers)
+- **[DASH-IF Codec Registry](https://dashif.org/codecs/introduction/)**
+  — `@codecs` strings and CMAF profiles.
+  Source: [Dash-Industry-Forum/Codecs](https://github.com/Dash-Industry-Forum/Codecs)
+
+To register a new identifier, use the
+[DASH-IF Identifier Registration Form](https://docs.google.com/forms/d/e/1FAIpQLSfoMH4BL-1VwEpnVrYSnlvzwdO_7VAFeP1OfifxKW7nXVeWjg/viewform)
+or file an issue at [Dash-Industry-Forum/Identifiers/issues](https://github.com/Dash-Industry-Forum/Identifiers/issues).
+
+See Part 1 §4 (DASH-IF Registries) for the full description and registration
+workflow.
+
+## Contributing and Reviewing
+
+### Filing issues
+
+All issues, bugs, and feature requests for DASH-IF IOP v5 should be submitted
+through the single IOPv5 issue tracker:
+
+```text
+https://github.com/Dash-Industry-Forum/IOPv5/issues
+```
+
+Use the label `Part N` or the title prefix `[Part N]:` to identify the relevant
+part (e.g. `[Part 2]: Clarify @timescale requirement`).
+
+### Submitting pull requests
+
+1. Fork the IOPv5 repository.
+2. Create a branch from `main` with a descriptive name.
+3. Edit the relevant `.inc.md` or `.bs` files in `rag-authoring-starter/specs/`.
+4. Build locally to verify (see below).
+5. Submit a pull request against `main`. Reference the issue(s) the PR addresses.
+
+### Review phases
+
+- **Working Draft**: file issues or PRs at any time.
+- **WG Review**: WG members review the release candidate; file issues or PRs.
+- **Community Review**: anyone may file issues with label `Community Review`.
+
+See Part 1 §1.4 (Contributing and Reviewing) for the full workflow.
 
 ## Local setup
 
@@ -121,28 +204,21 @@ proxy. Do not disable TLS verification.
 
 ## Building locally
 
-Build all parts in place:
-
-```powershell
-cd rag-authoring-starter
-./build.ps1
-```
-
-Build one part:
-
-```powershell
-cd rag-authoring-starter
-./build.ps1 part02-core-cmaf
-```
-
-Build the publication bundle into repository-root `dist/`:
+Build all parts into `dist/`:
 
 ```powershell
 cd rag-authoring-starter
 python tools/publication/build_all.py --out ../dist
 ```
 
-Open:
+Build one part in place:
+
+```powershell
+cd rag-authoring-starter
+./build.ps1 part02-core-cmaf
+```
+
+Open the result:
 
 ```text
 dist/index.html
@@ -215,7 +291,7 @@ It builds the selected branch and deploys a **temporary preview-only** GitHub
 Pages artifact with a URL path such as:
 
 ```text
-https://dash-industry-forum.github.io/IOPv5/previews/tstockhammer-rag-workflow/
+https://dashif.org/IOPv5/previews/tstockhammer-rag-workflow/
 ```
 
 Important limitations:
@@ -245,12 +321,10 @@ with `workflow_dispatch`. It:
 3. deploys it using `actions/deploy-pages`.
 
 For publication to work, repository administrators must enable GitHub Pages with
-**Source: GitHub Actions** in the repository settings. After deployment, GitHub
-shows the Pages URL in the workflow summary. The expected public URL is typically
-of the form:
+**Source: GitHub Actions** in the repository settings. The expected public URL is:
 
 ```text
-https://dash-industry-forum.github.io/IOPv5/
+https://dashif.org/Guidelines/iop-v5/
 ```
 
 Recommended workflow policy:
@@ -261,13 +335,22 @@ Recommended workflow policy:
 - After a temporary preview, rerun the main publication workflow to restore the
   official Pages deployment.
 
-Longer-term preview direction:
+## Document Status and Versioning
 
-- If preview URLs become a regular review mechanism, create a separate preview
-  Pages environment (preferred) or move to a `gh-pages` branch/subdirectory
-  strategy with cleanup of old previews.
-- A separate preview repository/site avoids any risk that branch previews obscure
-  or confuse the official publication.
+IOP v5 uses a **two-branch model**:
+
+- **`main` branch** — Working Draft. All development happens here. Preview
+  publications are built from `main`.
+- **`stable` branch** — Approved/stable. Updated when a version is formally
+  approved. Official publications are built from `stable`.
+
+Version numbers:
+- `0.x` — Working Draft
+- `1.0-rc` — WG Review release candidate
+- `1.0-beta` — Community Review
+- `1.x` — Approved
+
+See Part 1 §1.2 (Stable and Development Versions) for the full workflow.
 
 ## Metanorma / AsciiDoc experiment
 
@@ -286,16 +369,6 @@ Bikeshed Markdown source  ->  generated AsciiDoc  ->  Metanorma HTML/DOC/PDF
 Bikeshed Markdown remains canonical. Generated AsciiDoc should not become a
 second edited source of truth unless the project explicitly changes policy.
 
-The current experiment targets Part 12 first because it is relatively small and
-self-contained. Early findings are documented in `rag-authoring-starter/docs/decisions/0004-bikeshed-vs-metanorma.md`,
-`rag-authoring-starter/rag/reports/metanorma-part12-poc-status.md`, and
-`rag-authoring-starter/docs/metanorma-dashif-template-plan.md`.
-
-The planned next step is an ISO-flavoured Metanorma/PDF experiment with DASH-IF
-branding/customization. If reliable PDF/DOC generation is achieved, generated
-PDF/DOC artifacts should first be exposed as workflow artifacts, and only later
-linked from the Bikeshed publication bundle or overview page.
-
 ## Issue tracking
 
 Use GitHub issues for migration and editorial work. Recommended title format:
@@ -305,42 +378,18 @@ Use GitHub issues for migration and editorial work. Recommended title format:
 [Part 11] Migrate trick-mode text from v4.3 clause 3.2.9
 ```
 
-Current issue/backlog seed material is tracked in:
+## Status reports
+
+Current status and remaining tasks:
 
 ```text
-rag-authoring-starter/rag/reports/part02-part03-all-parts-status.md
+rag-authoring-starter/rag/reports/iop-v5-authoring-status.md   ← primary status (2026-07-28)
+rag-authoring-starter/rag/reports/project-status-update-2026-07-21.md
 rag-authoring-starter/rag/reports/editorial-backlog.md
-rag-authoring-starter/rag/reports/project-status-update-2026-07-21.md
 rag-authoring-starter/rag/reports/part05-f0010-issue-index.md
 ```
 
-## Current project status update
-
-The latest consolidated project status and proposed next-step plan is:
-
-```text
-rag-authoring-starter/rag/reports/project-status-update-2026-07-21.md
-```
-
-The most complete active project-plan package is:
-
-```text
-F-0010 Part 5 ad-insertion conformance and cross-part indexing
-```
-
-Central index:
-
-```text
-rag-authoring-starter/rag/reports/part05-f0010-issue-index.md
-```
-
-F-0010 defines the proposed implementation order for:
-
-- Part 5 table/figure stabilization,
-- DASH-IF ad content MPD validator checks,
-- IF-5 multi-Period ad insertion validator checks,
-- SCTE-35 MPD Event checks,
-- SGAI remote-resolution coverage with dash.js and livesim2,
-- clear/encrypted ad insertion playback assets,
-- VAST/Open Measurement tracking sample coverage,
-- cross-part anchor and terminology harmonization.
+The `iop-v5-authoring-status.md` report contains:
+- Per-part done/remaining checklists for all 12 parts
+- Infrastructure status table
+- Cross-cutting remaining tasks (high/medium/low priority)
