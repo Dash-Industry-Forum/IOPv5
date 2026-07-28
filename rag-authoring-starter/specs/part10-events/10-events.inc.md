@@ -245,5 +245,5 @@ other timed metadata tracks are governed by this part.
     <tr><td>0.1<td>Initial<td>Created initial Bikeshed/Markdown shell for Part 10.
     <tr><td>0.2<td>Migration<td>Migrated general DASH events model and in-band MPD validity/update signaling from DASH-IF-IOP v5-old-draft.
     <tr><td>0.3<td>Reconciliation<td>Added cross-references to Part 4 (MPD update timing) and Part 5 (SCTE-35, ad tracking). Added timed metadata tracks section. Added terms and definitions. Updated scope to reference Parts 4 and 5 for service-type-specific event requirements.
-    <tr><td>0.4<td>Fix<td>Replaced cross-document [[#...]] anchors with plain-text section references to fix Bikeshed build errors.
+    <tr><td>0.4<td>Fix<td>Replaced cross-document `[[#section-id]]` anchors with plain-text section references to fix Bikeshed build errors.
 </table>
