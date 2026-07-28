@@ -7,6 +7,8 @@
   Editorial: the outdated v4.3 "first/second edition" and "simple vs main live
   interoperability point" framing is intentionally replaced by generic
   references to MPEG-DASH (ISO/IEC 23009-1); normative keywords preserved.
+  Fixed 2026-07-28: removed <img /> self-closing slashes, fixed duplicate dfn
+  IDs, updated obsolete RFC7232 reference.
 -->
 
 # Live Services # {#live-services-clause}
@@ -180,18 +182,18 @@ information <span class=modal-keyword>may</span> be provided using `SegmentTempl
 
 ### Availability Window ### {#availability-window}
 
-A Media Segment is <dfn>available</dfn> when an HTTP request to acquire the Media
+A Media Segment is <dfn export>available</dfn> when an HTTP request to acquire the Media
 Segment can be started and successfully performed to completion by a client
 [[!MPEGDASH]]. During playback of a dynamic presentation, new Media Segments
 continuously become available and stop being available with the passage of time.
 
-An <dfn>availability window</dfn> is a time span on the MPD timeline that
+An <dfn export>availability window</dfn> is a time span on the MPD timeline that
 determines which Media Segments clients can expect to be available. Each Adaptation
 Set has its own availability window. Services <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> define MPD attributes
 that affect the availability window on the Representation level.
 
 <figure>
-  <img src="images/AvailabilityWindow.png" />
+  <img src="images/AvailabilityWindow.png">
   <figcaption>The availability window determines which Media Segments can be
   expected to be available, based on where their segment end point lies.</figcaption>
 </figure>
@@ -227,11 +229,11 @@ implement appropriate retry/fallback behavior.
 
 ### Time Shift Buffer ### {#time-shift-buffer}
 
-The <dfn>time shift buffer</dfn> is a time span on the MPD timeline that defines
+The <dfn export>time shift buffer</dfn> is a time span on the MPD timeline that defines
 the set of Media Segments that a client is allowed to present at the current moment
 in time according to the wall clock (`now`).
 
-This is the mechanism by which clients can introduce a <dfn>time shift</dfn> (an
+This is the mechanism by which clients can introduce a <dfn export>time shift</dfn> (an
 offset) between wall clock time and the MPD timeline when presenting dynamic
 presentations. The time shift is zero when a client is presenting the Media Segment
 at the end point of the time shift buffer.
@@ -249,7 +251,7 @@ the absence of `MPD@timeShiftBufferDepth`, the start of the time shift buffer is
 the effective availability start time.
 
 <figure>
-  <img src="images/TimeShiftBuffer.png" />
+  <img src="images/TimeShiftBuffer.png">
   <figcaption>Media Segments overlapping the time shift buffer may potentially be
   presented by a client if other constraints do not forbid it.</figcaption>
 </figure>
@@ -271,8 +273,8 @@ buffer. It is legal for a client to present Media Segments as soon as they overl
 the time shift buffer, yet such Media Segments might not yet be available.
 
 The mechanism that allows DASH clients to resolve this conflict is the
-<dfn>presentation delay</dfn>, which decreases the time shift buffer by moving its
-end point into the past, creating an <dfn>effective time shift buffer</dfn> with a
+<dfn export>presentation delay</dfn>, which decreases the time shift buffer by moving its
+end point into the past, creating an <dfn export>effective time shift buffer</dfn> with a
 reduced duration.
 
 Clients <span class=modal-keyword>shall</span> calculate a suitable presentation delay to ensure that the Media
@@ -288,7 +290,7 @@ be available to DASH clients. Services <span class=modal-keyword>may</span> defi
 delay. Clients <span class=modal-keyword>should</span> use `MPD@suggestedPresentationDelay` when provided by the MPD.
 
 <figure>
-  <img src="images/WindowInteractions.png" />
+  <img src="images/WindowInteractions.png">
   <figcaption>The interaction between availability window, time shift buffer, and
   presentation delay determines which Media Segments can be presented at any given
   time.</figcaption>
@@ -325,7 +327,7 @@ signalling of MPD changes is provided by the segment-based mechanism in
 ### MPD Snapshot Validity ### {#live-mpd-snapshot-validity}
 
 The MPD of a dynamic presentation remains valid not only at its moment of initial
-publishing but through the entire <dfn>MPD validity duration</dfn>, which is a
+publishing but through the entire <dfn export>MPD validity duration</dfn>, which is a
 time span of duration `MPD@minimumUpdatePeriod` starting from the moment the MPD
 download is started by a client [[!MPEGDASH]].
 
@@ -358,7 +360,7 @@ presentation:
 Segment references <span class=modal-keyword>shall</span> not be added to any Period other than the last Period.
 
 <figure>
-  <img src="images/MpdUpdate-AddContent.png" />
+  <img src="images/MpdUpdate-AddContent.png">
   <figcaption>MPD updates can add both Segment references and Periods (additions
   highlighted in blue).</figcaption>
 </figure>
@@ -395,7 +397,7 @@ An MPD update removing content <span class=modal-keyword>shall</span> not remove
 Segments with a segment start point before or at `EarliestRemovalPoint`.
 
 <figure>
-  <img src="images/MpdUpdate-RemoveContent.png" />
+  <img src="images/MpdUpdate-RemoveContent.png">
   <figcaption>MPD updates can remove both Segment references and Periods (removals
   highlighted in red).</figcaption>
 </figure>
@@ -431,7 +433,7 @@ presentation.
 
 ### MPD Refreshes ### {#live-mpd-refreshes}
 
-To stay informed of MPD updates, clients need to perform <dfn>MPD refreshes</dfn>
+To stay informed of MPD updates, clients need to perform <dfn export>MPD refreshes</dfn>
 at appropriate moments to download updated MPD snapshots.
 
 Clients presenting dynamic presentations <span class=modal-keyword>shall</span> execute the following MPD refresh
@@ -449,8 +451,8 @@ Note: There is no requirement that clients poll for updates at
 wish — this attribute simply defines the MPD validity duration.
 
 Clients using HTTP to perform MPD refreshes <span class=modal-keyword>should</span> use conditional GET requests
-as specified in [[!RFC7232]] to avoid unnecessary data transfers when the contents
-of the MPD do not change between refreshes.
+as specified in [[!RFC7232 obsolete]] to avoid unnecessary data transfers when the
+contents of the MPD do not change between refreshes.
 
 ## MPD- and Segment-based Live Service Offering ## {#live-segment-based}
 

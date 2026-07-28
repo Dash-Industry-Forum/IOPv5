@@ -5,6 +5,7 @@
   - Added cross-references to Part 5 (SCTE-35 cue messages, ad insertion events)
   - Added timed metadata tracks section
   - Updated open issues
+  - Fixed cross-document [[#...]] references (not valid across documents)
   Source grounding:
   - Dash-Industry-Forum/DASH-IF-IOP branch v5-old-draft, 40-Features.inc.md
   - Dash-Industry-Forum/DASH-IF-IOP branch v5-old-draft, 65-AdInsertion.inc.md
@@ -66,7 +67,7 @@ DASH defines events that are processed directly by a DASH client:
 
 - **MPD Validity Expiration** — signals that the current MPD snapshot is no
     longer valid and a new MPD must be fetched. See [[#inband]] and Part 4
-    [[#live-segment-based]].
+    (Section "MPD- and Segment-based Live Service Offering").
 - **MPD Patch** — provides an XML patch that can be applied to the client's
     in-memory representation of the MPD.
 - **MPD Update** — provides a complete new MPD snapshot.
@@ -77,8 +78,8 @@ application willing or registered to process these events. A possible client API
 would allow an application to register callbacks for specific event types,
 triggered when the DASH client parses the `emsg` box in a Segment or the
 `Event` element in the MPD. User-defined events can, for example, be used to
-signal cue messages such as SCTE-35 in an ad-insertion context (see Part 5
-[[#if3-scte35-events]]).
+signal cue messages such as SCTE-35 in an ad-insertion context (see Part 5,
+Section "IF-3 Opportunity Metadata and SCTE-35 MPD Events").
 
 If several `emsg` boxes are present in a Segment and one of them is the MPD
 Validity Expiration event, the `emsg` carrying it <span class=modal-keyword>shall</span> always appear first.
@@ -92,7 +93,7 @@ avoid needless MPD refreshes.
 
 This clause only applies to services and clients that use in-band MPD validity
 signaling. For the complete requirements on MPD updates and snapshot validity in
-live services, see Part 4 [[#live-mpd-updates]].
+live services, see Part 4 (Section "Live Service Offering including MPD Updates").
 
 Services <span class=modal-keyword>shall</span> define `MPD@minimumUpdatePeriod=0` and add an in-band event
 stream to every audio Representation or, if no audio Representations are
@@ -171,8 +172,9 @@ MPD events <span class=modal-keyword>shall</span> be carried in `EventStream` el
 type. The `@timescale` attribute <span class=modal-keyword>shall</span> be present if `Event@presentationTime` or
 `Event@duration` are used.
 
-For ad-insertion cue messages (e.g. SCTE-35), see Part 5 [[#if3-scte35-events]]
-for the specific requirements on MPD event stream signalling.
+For ad-insertion cue messages (e.g. SCTE-35), see Part 5 (Section "IF-3
+Opportunity Metadata and SCTE-35 MPD Events") for the specific requirements on
+MPD event stream signalling.
 
 # DASH Callback Events # {#callback-events}
 
@@ -183,7 +185,7 @@ URL at a given offset from `PeriodStart`. The body of the HTTP response is
 ignored. Callback events <span class=modal-keyword>may</span> be signaled as either MPD events or inband events.
 
 For ad tracking and measurement using DASH Callback events in an ad-insertion
-context, see Part 5 [[#if8-ad-tracking]].
+context, see Part 5 (Section "IF-8 Ad Tracking and Measurement").
 
 # Timed Metadata Tracks # {#timed-metadata}
 
@@ -227,7 +229,7 @@ other timed metadata tracks are governed by this part.
   <caption>Part 10 open issues and topics to progress.</caption>
   <thead><tr><th>Topic<th>Status<th>Next action
   <tbody>
-    <tr><td>Cross-part alignment<td>Partial<td>Cross-references to Part 4 (MPD update timing) and Part 5 (SCTE-35, ad tracking) added. Verify cross-reference anchors once Part 4 and Part 5 are finalized.
+    <tr><td>Cross-part alignment<td>Partial<td>Cross-references to Part 4 (MPD update timing) and Part 5 (SCTE-35, ad tracking) added as plain-text section references. Verify section names once Part 4 and Part 5 are finalized.
     <tr><td>Timed metadata track ownership<td>Partial<td>Ownership boundary with Part 9 (text tracks) defined by @mimeType. Ownership boundary with Part 11 (additional technologies) still needs to be defined.
     <tr><td>Conformance mapping<td>Open<td>Add Part 12 conformance mapping for Part 10 (event stream signalling, inband events, timed metadata).
     <tr><td>Validator-start tool<td>Open<td>Create `tools/validation/validate_part10_events_mpd.py` covering EventStream signalling, InbandEventStream presence, and timed metadata track constraints.
@@ -243,4 +245,5 @@ other timed metadata tracks are governed by this part.
     <tr><td>0.1<td>Initial<td>Created initial Bikeshed/Markdown shell for Part 10.
     <tr><td>0.2<td>Migration<td>Migrated general DASH events model and in-band MPD validity/update signaling from DASH-IF-IOP v5-old-draft.
     <tr><td>0.3<td>Reconciliation<td>Added cross-references to Part 4 (MPD update timing) and Part 5 (SCTE-35, ad tracking). Added timed metadata tracks section. Added terms and definitions. Updated scope to reference Parts 4 and 5 for service-type-specific event requirements.
+    <tr><td>0.4<td>Fix<td>Replaced cross-document [[#...]] anchors with plain-text section references to fix Bikeshed build errors.
 </table>

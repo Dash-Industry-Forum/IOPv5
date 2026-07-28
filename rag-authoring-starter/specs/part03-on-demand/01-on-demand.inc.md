@@ -79,12 +79,12 @@ These constraints ensure that the Media Presentation has a well-defined start an
 end point, enabling clients to accurately determine the total presentation
 duration and support seeking operations throughout the entire presentation.
 
-See [[#necessary-references-static]] in Part 2 for the requirement that every
-Representation in a static presentation <span class=modal-keyword>shall</span> provide enough Media Segments to
-cover the entire time span of its Period.
+In a static presentation, every Representation <span class=modal-keyword>shall</span> provide enough Media
+Segments to cover the entire time span of its Period (see Part 2, Section
+"Necessary Segment References in Static Presentations").
 
 <figure>
-  <img src="images/StaticMpdMustBeCovered.png" />
+  <img src="images/StaticMpdMustBeCovered.png">
   <figcaption>In a static presentation, the entire Period must be covered with
   Media Segments for every Representation.</figcaption>
 </figure>

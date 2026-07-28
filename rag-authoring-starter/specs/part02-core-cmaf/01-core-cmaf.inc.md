@@ -90,7 +90,7 @@ with the term "segment" in this document being equivalent to "CMAF segment". The
 term "segment" in this document may be equivalent to either "segment" or
 "subsegment" in [[!MPEGDASH]], depending on the addressing mode used.
 
-This document's concept of the <dfn>MPD timeline</dfn> is not directly expressed
+This document's concept of the MPD timeline is not directly expressed
 in [[!MPEGDASH]]. To improve understandability of the timing model, this document
 splits the DASH concept of "presentation timeline" ([[!MPEGDASH]] clause 7.2.1)
 into two separate concepts: the aggregated component (MPD timeline) and the
@@ -247,7 +247,7 @@ DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]].
 
 ### MPD Timeline ### {#mpd-timeline}
 
-The MPD defines the <dfn>MPD timeline</dfn> of a DASH Media Presentation, which
+The MPD defines the <dfn export>MPD timeline</dfn> of a DASH Media Presentation, which
 serves as the baseline for all scheduling decisions made during playback and
 establishes the relative timing of Periods and Media Segments. The MPD timeline
 informs DASH clients when they can download and present which Media Segments.
@@ -268,7 +268,7 @@ samples:
    associate related Representations and decorate them with metadata.
 
 <figure>
-  <img src="images/BasicMpdElements.png" />
+  <img src="images/BasicMpdElements.png">
   <figcaption>The primary contents of a Media Presentation, described by an MPD.</figcaption>
 </figure>
 
@@ -281,7 +281,7 @@ the zero point of the MPD timeline, though often indirectly (being relative to t
 previous Period).
 
 <figure>
-  <img src="images/PeriodsMakeTheMpd.png" />
+  <img src="images/PeriodsMakeTheMpd.png">
   <figcaption>An MPD defines a collection of consecutive non-overlapping Periods.</figcaption>
 </figure>
 
@@ -345,7 +345,7 @@ The MPD describes each representation using a `Representation` element. For each
 The samples within a representation exist on a linear <dfn>sample timeline</dfn> defined by the encoder that creates the samples. Sample timelines are mapped onto the MPD timeline by metadata stored in or referenced by the MPD (see ISO/IEC 23009-1 [[!MPEGDASH]] clause 7.3.2).
 
 <figure>
-	<img src="images/TimelineAlignment.png" />
+	<img src="images/TimelineAlignment.png">
 	<figcaption>A sample timeline is mapped onto the MPD timeline based on parameters defined in the MPD, relating the media samples provided by a representation to the portion of the MPD timeline covered by the period that references the representation.</figcaption>
 </figure>
 
@@ -356,7 +356,7 @@ The same sample timeline <span class=modal-keyword>shall</span> be shared by all
 A sample timeline is measured in <dfn>timescale units</dfn> defined as a number of units per second. This value (the <dfn>timescale</dfn>) <span class=modal-keyword>shall</span> be present in the MPD as `SegmentTemplate@timescale` or `SegmentBase@timescale` (depending on the addressing mode).
 
 <figure>
-	<img src="images/PresentationTimeOffset.png" />
+	<img src="images/PresentationTimeOffset.png">
 	<figcaption>`@presentationTimeOffset` is the key component in establishing the relationship between the MPD timeline and a sample timeline.</figcaption>
 </figure>
 
@@ -375,7 +375,7 @@ Each segment reference addresses a media segment that corresponds to a specific 
 In a static presentation, a representation <span class=modal-keyword>shall</span> provide enough media segments to cover the entire time span of the period.
 
 <figure>
-	<img src="images/StaticMpdMustBeCovered.png" />
+	<img src="images/StaticMpdMustBeCovered.png">
 	<figcaption>In a static presentation, the entire period must be covered with media segments.</figcaption>
 </figure>
 
@@ -384,7 +384,7 @@ In a static presentation, a representation <span class=modal-keyword>shall</span
 In a dynamic presentation, a representation <span class=modal-keyword>shall</span> provide enough media segments to cover the time span of the period that intersects with the time shift buffer at any point during the MPD validity duration.
 
 <figure>
-	<img src="images/MandatorySegmentReferencesInDynamicMpd.png" />
+	<img src="images/MandatorySegmentReferencesInDynamicMpd.png">
 	<figcaption>In a dynamic presentation, the time shift buffer and MPD validity duration determine the set of required segment references for each representation.</figcaption>
 </figure>
 
@@ -397,7 +397,7 @@ See the DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]] for detailed d
 Some encoders experience clock drift - they do not produce exactly 1 second worth of output per 1 second of input, either stretching or compressing the sample timeline with respect to the MPD timeline.
 
 <figure>
-	<img src="images/ClockDrift.png" />
+	<img src="images/ClockDrift.png">
 	<figcaption>Comparison of an encoder correctly tracking wall clock time (blue) and an encoder with a clock that runs too slowly (yellow), leading it to produce fewer seconds of content than expected.</figcaption>
 </figure>
 
@@ -497,7 +497,7 @@ Segments.
 Note: This addressing mode is sometimes called "SegmentBase" in other documents.
 
 <figure>
-  <img src="images/IndexedAddressing.png" />
+  <img src="images/IndexedAddressing.png">
   <figcaption>Indexed addressing is based on an index segment that references all Media Segments.</figcaption>
 </figure>
 
@@ -513,7 +513,7 @@ containing a URL pointing to the CMAF track file.
 
 The `SegmentBase@indexRange` attribute <span class=modal-keyword>shall</span> be present in the MPD. The value of
 this attribute identifies the byte range of the index segment in the CMAF track
-file [[!MPEGDASH]]. The value is a `byte-range-spec` as defined in [[!RFC7233]],
+file [[!MPEGDASH]]. The value is a `byte-range-spec` as defined in [[!RFC7233 obsolete]],
 referencing a single range of bytes.
 
 The `SegmentBase@timescale` attribute <span class=modal-keyword>shall</span> be present and its value <span class=modal-keyword>shall</span> match
@@ -523,7 +523,7 @@ the value of the `timescale` field in the index segment (in the [[!ISOBMFF]]
 
 The `SegmentBase/Initialization@range` attribute <span class=modal-keyword>shall</span> identify the byte range of
 the Initialization Segment in the CMAF track file. The value is a
-`byte-range-spec` as defined in [[!RFC7233]], referencing a single range of
+`byte-range-spec` as defined in [[!RFC7233 obsolete]], referencing a single range of
 bytes. The `Initialization@sourceURL` attribute <span class=modal-keyword>shall not</span> be used.
 
 Indexed addressing enables all data associated with a single Representation to be
@@ -686,7 +686,7 @@ For period-connected presentations:
 - Clients <span class=modal-keyword>may</span> perform seamless switching at the Period boundary.
 
 <figure>
-  <img src="images/PeriodConnectivity.png" />
+  <img src="images/PeriodConnectivity.png">
   <figcaption>Period connectivity allows continuous playback across Period
   boundaries when media characteristics and timing are compatible.</figcaption>
 </figure>
@@ -709,7 +709,7 @@ such cases:
   constraints.
 
 <figure>
-  <img src="images/SegmentOverlapOnPeriodConnectivity.png" />
+  <img src="images/SegmentOverlapOnPeriodConnectivity.png">
   <figcaption>Segments may span Period boundaries in period-connected
   presentations, requiring careful timing coordination.</figcaption>
 </figure>
@@ -722,7 +722,7 @@ remains unambiguous.
 ### Period Continuity ### {#period-continuity}
 
 In addition to period connectivity, [[!MPEGDASH]] clause 5.3.2.4 defines
-<dfn>period continuity</dfn>. Continuity is a special case of period connectivity
+<dfn export>period continuity</dfn>. Continuity is a special case of period connectivity
 that indicates no timeline discontinuity is present at the transition point between
 the media samples of the two continuous Periods. Under continuity conditions, the
 client is expected to be able to continue seamless playback by merely appending
@@ -766,7 +766,7 @@ Key considerations for samples at Period boundaries:
   <span class=modal-keyword>may</span> depend on samples in Period N if the decoder state is preserved.
 
 <figure>
-  <img src="images/SamplesOnPeriodBoundary.png" />
+  <img src="images/SamplesOnPeriodBoundary.png">
   <figcaption>Sample timing and dependencies at Period boundaries must be
   carefully managed to ensure seamless playback.</figcaption>
 </figure>
@@ -790,7 +790,7 @@ This creates a challenge: how should the Period structure accommodate tracks of
 varying lengths while maintaining proper synchronization and playback continuity?
 
 <figure>
-  <img src="images/NonequalLengthTracks-Initial.png" />
+  <img src="images/NonequalLengthTracks-Initial.png">
   <figcaption>Initial situation: tracks of different lengths need to be
   organized into Periods.</figcaption>
 </figure>
@@ -805,7 +805,7 @@ track by adding padding content (silence for audio, blank frames for video, empt
 subtitles for text).
 
 <figure>
-  <img src="images/NonequalLengthTracks-PadEverything.png" />
+  <img src="images/NonequalLengthTracks-PadEverything.png">
   <figcaption>Padding strategy: extend all tracks to match the longest
   track.</figcaption>
 </figure>
@@ -832,7 +832,7 @@ The cutting strategy truncates longer tracks to match the duration of the shorte
 track, discarding content that extends beyond the common duration.
 
 <figure>
-  <img src="images/NonequalLengthTracks-CutEverything.png" />
+  <img src="images/NonequalLengthTracks-CutEverything.png">
   <figcaption>Cutting strategy: truncate all tracks to match the shortest
   track.</figcaption>
 </figure>
@@ -859,7 +859,7 @@ only the tracks that have content for that time span. This preserves all origina
 content without adding padding.
 
 <figure>
-  <img src="images/NonequalLengthTracks-MakePeriods.png" />
+  <img src="images/NonequalLengthTracks-MakePeriods.png">
   <figcaption>Period splitting strategy: create multiple Periods to accommodate
   different track lengths.</figcaption>
 </figure>
@@ -890,7 +890,7 @@ optimize for specific use cases. For example, minor duration differences might b
 handled with padding while major differences trigger Period splitting.
 
 <figure>
-  <img src="images/NonequalLengthTracks-Mix.png" />
+  <img src="images/NonequalLengthTracks-Mix.png">
   <figcaption>Mixed strategy: combine padding, cutting, and Period splitting as
   appropriate.</figcaption>
 </figure>
@@ -952,12 +952,12 @@ complexity for both content authoring and client playback.
 ### How to Split Periods ### {#how-to-split}
 
 <figure>
-  <img src="images/SplitInTwoPeriods-Before.png" />
+  <img src="images/SplitInTwoPeriods-Before.png">
   <figcaption>Before splitting: single Period with all tracks.</figcaption>
 </figure>
 
 <figure>
-  <img src="images/SplitInTwoPeriods-After.png" />
+  <img src="images/SplitInTwoPeriods-After.png">
   <figcaption>After splitting: multiple Periods with appropriate track
   distribution.</figcaption>
 </figure>
@@ -1152,7 +1152,7 @@ timing model forbids gaps in general, missing segments would likely lead to an
 unsatisfactory playback experience for end-users.
 
 <figure>
-  <img src="images/MissingSegment.png" />
+  <img src="images/MissingSegment.png">
   <figcaption>A DASH packager might not have every Media Segment available when
   it needs to publish them. Corrective actions must be taken to ensure an
   uninterrupted timeline is presented to DASH clients.</figcaption>
@@ -1163,7 +1163,7 @@ segment loss is described by "missing content segments" ([[!MPEGDASH]] clause
 6.2.6) or by any other means (including not describing it).
 
 <figure>
-  <img src="images/MissingSegment-FixWithPeriodSplitting.png" />
+  <img src="images/MissingSegment-FixWithPeriodSplitting.png">
   <figcaption>The simplest correction is to start a new Period that does not
   include the affected Representation for the duration of the loss. Other
   Representations remain present and a client can often continue seamless
@@ -1176,7 +1176,7 @@ with a new Period transition. Period-connected Adaptation Sets can enable DASH
 clients to perform such transitions seamlessly in some scenarios.
 
 <figure>
-  <img src="images/MissingSegment-FixWithPlaceholder.png" />
+  <img src="images/MissingSegment-FixWithPlaceholder.png">
   <figcaption>Other solutions might involve replacing the missing Media Segment
   with a placeholder, either from a different Representation or an entirely
   artificial one.</figcaption>
