@@ -273,6 +273,50 @@ sample coverage, and the DASH-IF Test Assets Database before being treated as a
 complete conformance plan. The corresponding local validator-start tool is
 `tools/validation/validate_part2_core_cmaf_mpd.py`.
 
+## Initial Part 3 on-demand service conformance mapping ## {#tools-part3-ondemand-conformance}
+
+The following initial mapping identifies test and validation expectations for
+DASH-IF IOP v5 Part 3 on-demand service requirements. This table is a starting
+point for issue creation and test-asset planning; it does not by itself define
+new Part 3 requirements.
+
+<table class="data">
+  <caption>Initial Part 3 on-demand service conformance mapping.</caption>
+  <thead>
+    <tr><th>Part 3 feature<th>Primary validation target<th>Reference/test asset expectation
+  <tbody>
+    <tr>
+      <td>Static presentation requirements (`MPD@type="static"`, no `minimumUpdatePeriod`)
+      <td>The [=DASH-IF Conformance Validator=] checks that `MPD@type="static"` presentations do not carry `MPD@minimumUpdatePeriod`, `MPD@timeShiftBufferDepth`, or `MPD@suggestedPresentationDelay`.
+      <td>Test assets should include static presentations with and without the forbidden dynamic attributes (negative cases).
+    <tr>
+      <td>Determinable presentation duration
+      <td>The validator checks that the total presentation duration is determinable from `MPD@mediaPresentationDuration` or from the sum of Period durations (last Period must have `Period@duration`).
+      <td>Test assets should include static presentations with explicit `mediaPresentationDuration`, with implicit duration from Period structure, and a negative case where the last Period lacks `Period@duration`.
+    <tr>
+      <td>Full period coverage with media segments
+      <td>The validator checks that every Representation in a static presentation provides enough Media Segments to cover the entire time span of its Period.
+      <td>Test assets should include presentations where all Representations fully cover their Periods, plus negative cases with gaps or under-coverage.
+    <tr>
+      <td>On-demand profile (`@indexRange`, single `sidx`)
+      <td>The validator checks that Representations using the DASH-IF On-Demand profile carry `SegmentBase@indexRange` and that only a single `sidx` box is present.
+      <td>Test assets should include on-demand profile Representations with correct `indexRange` signalling and negative cases with missing `indexRange` or multiple `sidx` boxes.
+    <tr>
+      <td>Segment availability independent of wall clock
+      <td>The validator checks that static presentations do not use `@availabilityStartTime`-dependent segment availability (i.e., all segments are immediately available).
+      <td>Test assets should include static presentations served from standard HTTP origins without time-gated availability.
+    <tr>
+      <td>Multi-Period on-demand (mixed profile)
+      <td>The validator checks that multi-Period static presentations have explicit Period timing and that period-connected Adaptation Sets are correctly signalled per Part 2.
+      <td>Test assets should include multi-Period on-demand presentations with period-connected and period-disconnected transitions, covering chapter-based and ad-insertion scenarios.
+</table>
+
+Issue: This Part 3 mapping is an initial source-level conformance inventory. It
+should be reconciled with actual DASH-IF Conformance Validator coverage, dash.js
+seek/random-access sample coverage, and the DASH-IF Test Assets Database before
+being treated as a complete conformance plan. The corresponding local
+validator-start tool is `tools/validation/validate_part3_on_demand_mpd.py`.
+
 ## Initial Part 4 live service conformance mapping ## {#tools-part4-live-conformance}
 
 The following initial mapping identifies test and validation expectations for
@@ -536,4 +580,8 @@ involve one or more community-review rounds.
       <td>0.4
       <td>Reconciliation
       <td>Added initial Part 2 core CMAF and timing model conformance mapping (10 features: Period timing, segment addressing, clock sync, availability window, MPD updates, period connectivity, timing constraints, forbidden techniques, segment loss, stand-alone text). Added initial Part 4 live service conformance mapping (5 features: dynamic service requirements, MPD snapshot validity, segment-based updates, UTCTiming, live client joining).
+    <tr>
+      <td>0.5
+      <td>Reconciliation
+      <td>Added initial Part 3 on-demand service conformance mapping (6 features: static presentation requirements, determinable duration, full period coverage, on-demand profile, wall-clock-independent availability, multi-Period on-demand).
 </table>

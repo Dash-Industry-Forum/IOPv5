@@ -79,6 +79,16 @@ These constraints ensure that the Media Presentation has a well-defined start an
 end point, enabling clients to accurately determine the total presentation
 duration and support seeking operations throughout the entire presentation.
 
+See [[#necessary-references-static]] in Part 2 for the requirement that every
+Representation in a static presentation <span class=modal-keyword>shall</span> provide enough Media Segments to
+cover the entire time span of its Period.
+
+<figure>
+  <img src="images/StaticMpdMustBeCovered.png" />
+  <figcaption>In a static presentation, the entire Period must be covered with
+  Media Segments for every Representation.</figcaption>
+</figure>
+
 See Part 2 for general period timing rules that apply to all DASH-IF Media
 Presentations. See the DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]]
 for detailed discussion of the DASH timing model.
@@ -198,4 +208,5 @@ and define the relationship to Part 2 Good Multi-Period CMAF Content.
   <thead><tr><th>Version<th>Date<th>Change
   <tbody>
     <tr><td>0.1<td>Initial<td>Initial Bikeshed draft from DASH-IF IOP v4.3 on-demand services, aligned with Part 2.
+    <tr><td>0.2<td>Reconciliation<td>Added static period coverage diagram and cross-reference to Part 2 necessary segment references; created images directory.
 </table>
