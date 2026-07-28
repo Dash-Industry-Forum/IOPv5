@@ -1,5 +1,5 @@
 <pre class=metadata>
-Revision: 0.1
+Revision: 0.3
 Title: DASH-IF IOP v5 Part 8: Audio
 Status: LD
 Shortname: iop-v5-part8
@@ -24,6 +24,18 @@ Repository: Dash-Industry-Forum/IOPv5
     "href": "https://www.iso.org/standard/85623.html",
     "title": "Information technology - Multimedia application format (MPEG-A) - Part 19: Common media application format (CMAF) for segmented media",
     "publisher": "ISO/IEC",
+    "date": "2024"
+  },
+  "DASHIF-CODECS": {
+    "href": "https://dashif.org/codecs/introduction/",
+    "title": "DASH-IF Codec Registry",
+    "publisher": "DASH Industry Forum",
+    "date": "2024"
+  },
+  "DASHIF-IDENTIFIERS": {
+    "href": "https://dashif.org/identifiers/audio_source_metadata/",
+    "title": "DASH-IF Identifier Registry: Audio Source Metadata",
+    "publisher": "DASH Industry Forum",
     "date": "2024"
   }
 }

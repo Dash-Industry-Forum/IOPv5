@@ -356,6 +356,88 @@ live-service sample coverage, and livesim2 test stream coverage before being
 treated as a complete conformance plan. The corresponding local validator-start
 tool is `tools/validation/validate_part4_live_mpd.py`.
 
+## Initial Part 7 video conformance mapping ## {#tools-part7-video-conformance}
+
+The following initial mapping identifies test and validation expectations for
+DASH-IF IOP v5 Part 7 video requirements. This table is a starting point for
+issue creation and test-asset planning; it does not by itself define new Part 7
+requirements.
+
+<table class="data">
+  <caption>Initial Part 7 video conformance mapping.</caption>
+  <thead>
+    <tr><th>Part 7 feature<th>Primary validation target<th>Reference/test asset expectation
+  <tbody>
+    <tr>
+      <td>Video adaptation set signalling (`@par`, `@sar`, `@width`, `@height`, `@frameRate`)
+      <td>The [=DASH-IF Conformance Validator=] checks that `AdaptationSet@par`, `Representation@sar`, and either `@width`/`@height`/`@frameRate` at adaptation set or Representation level (but not both) are present in video adaptation sets.
+      <td>Test assets should include video adaptation sets with correct and incorrect signalling of `@par`, `@sar`, `@width`, `@height`, and `@frameRate`.
+    <tr>
+      <td>Color space signalling (Color Primaries, Transfer Characteristics, Matrix Coefficients)
+      <td>The validator checks that Representations in the same video adaptation set do not differ in Color Primaries, Transfer Characteristics, or Matrix Coefficients, and that CICP descriptors are present when different adaptation sets use different color spaces.
+      <td>Test assets should include SDR and HDR video adaptation sets with correct CICP descriptor signalling.
+    <tr>
+      <td>H.264/AVC codec signalling (`avc1`/`avc3`, `@codecs`, SPS/PPS storage)
+      <td>The validator checks that H.264 Representations use permitted `@codecs` strings, that all Initialization Segments in the same adaptation set use the same sample description, and that bitstream-switching adaptation sets use `avc3`.
+      <td>Test assets should include H.264 Representations with `avc1` and `avc3` sample descriptions, correct `@codecs` strings, and bitstream-switching adaptation sets.
+    <tr>
+      <td>H.265/HEVC codec signalling (`hvc1`/`hev1`, `@codecs`, VPS/SPS/PPS storage)
+      <td>The validator checks that H.265 Representations use permitted `@codecs` strings, that all Initialization Segments in the same adaptation set use the same sample description, and that bitstream-switching adaptation sets use `hev1`.
+      <td>Test assets should include H.265 Representations with `hvc1` and `hev1` sample descriptions, correct `@codecs` strings, and bitstream-switching adaptation sets.
+    <tr>
+      <td>DASH-IF Codec Registry compliance
+      <td>The validator checks that `@codecs` strings for video Representations are registered in the DASH-IF Codec Registry (https://dashif.org/codecs/).
+      <td>Test assets should include Representations with registered and unregistered `@codecs` strings (negative cases).
+    <tr>
+      <td>Scan type (`@scanType="progressive"`)
+      <td>The validator checks that `@scanType` is absent or has the value `progressive`.
+      <td>Test assets should include a negative case with `@scanType="interlaced"`.
+</table>
+
+Issue: This Part 7 mapping is an initial source-level conformance inventory. It
+should be reconciled with actual DASH-IF Conformance Validator coverage, dash.js
+sample coverage, and the DASH-IF Test Assets Database before being treated as a
+complete conformance plan.
+
+## Initial Part 8 audio conformance mapping ## {#tools-part8-audio-conformance}
+
+The following initial mapping identifies test and validation expectations for
+DASH-IF IOP v5 Part 8 audio requirements. This table is a starting point for
+issue creation and test-asset planning; it does not by itself define new Part 8
+requirements.
+
+<table class="data">
+  <caption>Initial Part 8 audio conformance mapping.</caption>
+  <thead>
+    <tr><th>Part 8 feature<th>Primary validation target<th>Reference/test asset expectation
+  <tbody>
+    <tr>
+      <td>Audio adaptation set signalling (`@lang`, `@audioSamplingRate`, `AudioChannelConfiguration`)
+      <td>The [=DASH-IF Conformance Validator=] checks that `AdaptationSet@lang` is present on every audio adaptation set, that `@audioSamplingRate` is present at adaptation set or Representation level (but not both), and that `AudioChannelConfiguration` is present with a valid `@schemeIdUri`.
+      <td>Test assets should include audio adaptation sets with correct and incorrect signalling of `@lang`, `@audioSamplingRate`, and `AudioChannelConfiguration`.
+    <tr>
+      <td>HE-AACv2 codec signalling (`mp4a.40.2`, `mp4a.40.5`, `mp4a.40.29`)
+      <td>The validator checks that HE-AACv2 Representations use permitted `@codecs` strings and SAP type 1.
+      <td>Test assets should include HE-AACv2 stereo and multichannel Representations with correct `@codecs` strings.
+    <tr>
+      <td>Enhanced AC-3 / AC-4 `AudioChannelConfiguration` scheme
+      <td>The validator checks that E-AC-3 and AC-4 Representations use `@schemeIdUri="tag:dolby.com,2014:dash:audio_channel_configuration:2011"` for `AudioChannelConfiguration`.
+      <td>Test assets should include E-AC-3 and AC-4 Representations with correct and incorrect `AudioChannelConfiguration` signalling.
+    <tr>
+      <td>MPEG-H 3D Audio constraints (`mhm1.*`, `MHADecoderConfigurationRecord`)
+      <td>The validator checks that MPEG-H Representations use permitted `@codecs` strings and that each Media Segment starts with a SAP of type 1.
+      <td>Test assets should include MPEG-H 3D Audio Representations at LC Profile Levels 1, 2, and 3.
+    <tr>
+      <td>DASH-IF Codec Registry compliance
+      <td>The validator checks that `@codecs` strings for audio Representations are registered in the DASH-IF Codec Registry (https://dashif.org/codecs/).
+      <td>Test assets should include Representations with registered and unregistered `@codecs` strings (negative cases).
+</table>
+
+Issue: This Part 8 mapping is an initial source-level conformance inventory. It
+should be reconciled with actual DASH-IF Conformance Validator coverage, dash.js
+sample coverage, and the DASH-IF Test Assets Database before being treated as a
+complete conformance plan.
+
 ## Initial Part 9 text-track conformance mapping ## {#tools-part9-text-conformance}
 
 The following initial mapping identifies test and validation expectations for
@@ -584,4 +666,8 @@ involve one or more community-review rounds.
       <td>0.5
       <td>Reconciliation
       <td>Added initial Part 3 on-demand service conformance mapping (6 features: static presentation requirements, determinable duration, full period coverage, on-demand profile, wall-clock-independent availability, multi-Period on-demand).
+    <tr>
+      <td>0.6
+      <td>Reconciliation
+      <td>Added initial Part 7 video conformance mapping (6 features: adaptation set signalling, color space, H.264/AVC, H.265/HEVC, Codec Registry compliance, scan type). Added initial Part 8 audio conformance mapping (5 features: adaptation set signalling, HE-AACv2, E-AC-3/AC-4 AudioChannelConfiguration, MPEG-H 3D Audio, Codec Registry compliance).
 </table>

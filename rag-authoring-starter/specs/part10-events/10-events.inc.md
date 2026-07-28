@@ -1,17 +1,30 @@
 <!--
   Part 10: Events.
-  Initial Bikeshed/Markdown shell following the IOPv5 authoring convention.
-  Source grounding / migration target: iop-docs-overview / Part 2 content annotation placeholders.
-  Normative content in this revision is migrated from:
+  Reconciled 2026-07-28:
+  - Added cross-references to Part 4 (MPD update timing, inband events)
+  - Added cross-references to Part 5 (SCTE-35 cue messages, ad insertion events)
+  - Added timed metadata tracks section
+  - Updated open issues
+  Source grounding:
   - Dash-Industry-Forum/DASH-IF-IOP branch v5-old-draft, 40-Features.inc.md
-    (update signaling via in-band events / MPD validity events)
   - Dash-Industry-Forum/DASH-IF-IOP branch v5-old-draft, 65-AdInsertion.inc.md
-    (general DASH events model, MPD events, DASH Callback events)
 -->
 
 # Scope # {#scope}
 
-This document specifies DASH-IF IOP v5 Part 10: **Events**. Event signalling and processing, including MPD events, inband events, and timed metadata tracks.
+This document specifies DASH-IF IOP v5 Part 10: **Events**. Event signalling
+and processing, including MPD events, inband events, timed metadata tracks, and
+DASH Callback events.
+
+This part defines the general event model and the requirements for event
+signalling that are common across service types. Service-type-specific event
+requirements are defined in:
+
+- **Part 4** (Live and Low-Latency Services) — MPD validity expiry events and
+    inband MPD update signalling for live services.
+- **Part 5** (Ad Insertion and Content Replacement) — SCTE-35 cue message
+    events, DASH Callback events for ad tracking, and ad-insertion event
+    stream constraints.
 
 # References # {#doc-references}
 
@@ -21,6 +34,7 @@ part:
 - ISO/IEC 23009-1 [[!MPEGDASH]].
 - ISO/IEC 23000-19 [[!MPEGCMAF]].
 - DASH-IF IOP v5 Part 2, *Core Principles and CMAF Mapping*.
+- DASH-IF IOP v5 Part 4, *Live and Low-Latency Services*.
 - DASH-IF IOP v5 Part 5, *Ad Insertion and Content Replacement*.
 - DASH-IF IOP v5 Part 12, *Conformance and Reference Tools*.
 
@@ -29,81 +43,195 @@ part:
 Terms and definitions are inherited from ISO/IEC 23009-1, ISO/IEC 23000-19, and
 Part 2 unless defined in this part.
 
+: <dfn export>MPD event</dfn>
+:: An event carried in the MPD as an `Event` element within an `EventStream`
+    element at Period level.
+
+: <dfn export>inband event</dfn>
+:: An event carried in a Media Segment as an ISO BMFF `emsg` box.
+
+: <dfn export>timed metadata track</dfn>
+:: A CMAF track carrying timed metadata samples, delivered as a DASH
+    Representation with `@mimeType="application/mp4"`.
+
 # DASH Events Overview # {#events-overview}
 
-DASH events are messages having type, timing and optional payload. They can appear either in the MPD (as a Period-level `EventStream` element) or inband, as ISO BMFF boxes of type `emsg`. The `emsg` boxes <span class=modal-keyword>shall</span> be placed at the very beginning of the Segment, i.e. prior to any media data, so that a DASH client needs a minimal amount of parsing to detect them.
+DASH events are messages having type, timing and optional payload. They can
+appear either in the MPD (as a Period-level `EventStream` element) or inband,
+as ISO BMFF boxes of type `emsg`. The `emsg` boxes <span class=modal-keyword>shall</span> be placed at the very
+beginning of the Segment, i.e. prior to any media data, so that a DASH client
+needs a minimal amount of parsing to detect them.
 
-DASH defines events that are processed directly by a DASH client: MPD Validity Expiration, MPD Patch, and MPD Update. These signal to the client that the MPD needs to be updated, either by providing the publish time of the MPD that should be used, by providing an XML patch that can be applied to the client's in-memory representation of the MPD, or by providing a complete new MPD.
+DASH defines events that are processed directly by a DASH client:
 
-User-defined events are also possible. The DASH client does not process these directly — they are passed to an application, or discarded if there is no application willing or registered to process these events. A possible client API would allow an application to register callbacks for specific event types, triggered when the DASH client parses the `emsg` box in a Segment or the `Event` element in the MPD. User-defined events can, for example, be used to signal cue messages such as SCTE-35 in an ad-insertion context (see Part 5).
+- **MPD Validity Expiration** — signals that the current MPD snapshot is no
+    longer valid and a new MPD must be fetched. See [[#inband]] and Part 4
+    [[#live-segment-based]].
+- **MPD Patch** — provides an XML patch that can be applied to the client's
+    in-memory representation of the MPD.
+- **MPD Update** — provides a complete new MPD snapshot.
 
-If several `emsg` boxes are present in a Segment and one of them is the MPD Validity Expiration event, the `emsg` carrying it <span class=modal-keyword>shall</span> always appear first.
+User-defined events are also possible. The DASH client does not process these
+directly — they are passed to an application, or discarded if there is no
+application willing or registered to process these events. A possible client API
+would allow an application to register callbacks for specific event types,
+triggered when the DASH client parses the `emsg` box in a Segment or the
+`Event` element in the MPD. User-defined events can, for example, be used to
+signal cue messages such as SCTE-35 in an ad-insertion context (see Part 5
+[[#if3-scte35-events]]).
+
+If several `emsg` boxes are present in a Segment and one of them is the MPD
+Validity Expiration event, the `emsg` carrying it <span class=modal-keyword>shall</span> always appear first.
 
 # Update Signaling via In-Band Events # {#inband}
 
-Services <span class=modal-keyword>may</span> signal the MPD validity duration by embedding in-band messages into Representations instead of specifying a fixed validity duration in the MPD. This allows services to trigger MPD refreshes at exactly the desired time and to avoid needless MPD refreshes.
+Services <span class=modal-keyword>may</span> signal the MPD validity duration by embedding in-band messages
+into Representations instead of specifying a fixed validity duration in the MPD.
+This allows services to trigger MPD refreshes at exactly the desired time and to
+avoid needless MPD refreshes.
 
-This clause only applies to services and clients that use in-band MPD validity signaling.
+This clause only applies to services and clients that use in-band MPD validity
+signaling. For the complete requirements on MPD updates and snapshot validity in
+live services, see Part 4 [[#live-mpd-updates]].
 
-Services <span class=modal-keyword>shall</span> define `MPD@minimumUpdatePeriod=0` and add an in-band event stream to every audio Representation or, if no audio Representations are present, to every video Representation. The in-band event stream <span class=modal-keyword>may</span> also be added to other Representations. The in-band event stream <span class=modal-keyword>shall</span> be identical in every Representation where it is present.
+Services <span class=modal-keyword>shall</span> define `MPD@minimumUpdatePeriod=0` and add an in-band event
+stream to every audio Representation or, if no audio Representations are
+present, to every video Representation. The in-band event stream <span class=modal-keyword>may</span> also be
+added to other Representations. The in-band event stream <span class=modal-keyword>shall</span> be identical in
+every Representation where it is present.
 
-The in-band event stream <span class=modal-keyword>shall</span> be signaled on the adaptation set level by an `InbandEventStream` element with `@scheme_id_uri="urn:mpeg:dash:event:2012"` and a `@value` of 1 or 3, where:
+The in-band event stream <span class=modal-keyword>shall</span> be signaled on the adaptation set level by an
+`InbandEventStream` element with `@schemeIdUri="urn:mpeg:dash:event:2012"` and
+a `@value` of 1 or 3, where:
 
-* A value of `1` indicates that in-band events only extend the MPD validity duration.
-* A value of `3` indicates that in-band events also contain the updated MPD snapshot when updates occur.
+* A value of `1` indicates that in-band events only extend the MPD validity
+    duration.
+* A value of `3` indicates that in-band events also contain the updated MPD
+    snapshot when updates occur.
 
-Services <span class=modal-keyword>shall</span> update `MPD@publishTime` to a unique value after every MPD update.
+Services <span class=modal-keyword>shall</span> update `MPD@publishTime` to a unique value after every MPD
+update.
 
-Note: `MPD@publishTime` is merely a version label. The value is not used in timing calculations.
+Note: `MPD@publishTime` is merely a version label. The value is not used in
+timing calculations.
 
 <div class="example">
-Using in-band signaling and `MPD@minimumUpdatePeriod=0`, each Media Segment increases the validity period of the MPD by the duration of the Media Segment by default. When a validity event arrives, it carries the validity end timestamp of the MPD, enabling the client to determine when a new MPD refresh is needed.
+Using in-band signaling and `MPD@minimumUpdatePeriod=0`, each Media Segment
+increases the validity period of the MPD by the duration of the Media Segment
+by default. When a validity event arrives, it carries the validity end timestamp
+of the MPD, enabling the client to determine when a new MPD refresh is needed.
 </div>
 
-Services <span class=modal-keyword>shall</span> emit in-band events as `emsg` boxes to signal the MPD validity duration using the following logic:
+Services <span class=modal-keyword>shall</span> emit in-band events as `emsg` boxes to signal the MPD validity
+duration using the following logic:
 
-* Lack of an in-band MPD validity event in a Media Segment indicates that an MPD that was valid at the start of the Media Segment remains valid up to the end of the Media Segment.
-* The presence of an in-band MPD validity event in a Media Segment indicates that the MPD with `MPD@publishTime` equal to the event's `publish_time` field remains valid up to the event start time.
+* Lack of an in-band MPD validity event in a Media Segment indicates that an
+    MPD that was valid at the start of the Media Segment remains valid up to the
+    end of the Media Segment.
+* The presence of an in-band MPD validity event in a Media Segment indicates
+    that the MPD with `MPD@publishTime` equal to the event's `publish_time`
+    field remains valid up to the event start time.
 
-The in-band events used for signaling MPD validity duration <span class=modal-keyword>shall</span> have `scheme_id_uri` and `value` matching the `InbandEventStream` element. Clients <span class=modal-keyword>shall not</span> use in-band events for MPD validity update signaling if these fields on the events do not match the `InbandEventStream` element or if the `InbandEventStream` element is not present in the MPD.
+The in-band events used for signaling MPD validity duration <span class=modal-keyword>shall</span> have
+`schemeIdUri` and `value` matching the `InbandEventStream` element. Clients
+<span class=modal-keyword>shall not</span> use in-band events for MPD validity update signaling if these fields
+on the events do not match the `InbandEventStream` element or if the
+`InbandEventStream` element is not present in the MPD.
 
-In-band events with `value=3` <span class=modal-keyword>shall</span> provide an updated MPD in the event's `mpd` field as UTF-8 encoded text without a byte order mark.
+In-band events with `value=3` <span class=modal-keyword>shall</span> provide an updated MPD in the event's `mpd`
+field as UTF-8 encoded text without a byte order mark.
 
-Clients <span class=modal-keyword>may</span> perform MPD refreshes or process an event-embedded MPD immediately upon reading the event, without waiting for the moment signaled by the event timestamp. Services <span class=modal-keyword>shall</span> ensure that an updated MPD is available and valid starting from the moment a validity event is signaled.
+Clients <span class=modal-keyword>may</span> perform MPD refreshes or process an event-embedded MPD immediately
+upon reading the event, without waiting for the moment signaled by the event
+timestamp. Services <span class=modal-keyword>shall</span> ensure that an updated MPD is available and valid
+starting from the moment a validity event is signaled.
 
-Multiple Media Segments <span class=modal-keyword>may</span> signal the same validity update event (identified by a matching `id` field on the event), enabling the signal to be delivered several segments in advance of the MPD expiration.
+Multiple Media Segments <span class=modal-keyword>may</span> signal the same validity update event (identified
+by a matching `id` field on the event), enabling the signal to be delivered
+several segments in advance of the MPD expiration.
 
-In-band MPD validity events <span class=modal-keyword>shall not</span> be signaled in a static MPD but <span class=modal-keyword>may</span> be present in the Media Segments referenced by a static MPD, in which case they <span class=modal-keyword>shall</span> be ignored by clients.
+In-band MPD validity events <span class=modal-keyword>shall not</span> be signaled in a static MPD but <span class=modal-keyword>may</span> be
+present in the Media Segments referenced by a static MPD, in which case they
+<span class=modal-keyword>shall</span> be ignored by clients.
 
-Note: The above may happen when a live service is converted to an on-demand service for catchup/recording purposes.
+Note: The above may happen when a live service is converted to an on-demand
+service for catchup/recording purposes.
 
 # MPD Events # {#mpd-events}
 
-In addition to tracking events (e.g. ad starts, quartile tracking), a server may also need to signal additional metadata to the application. There is no need for a generic DASH client to implement this functionality directly — it is enough to provide opaque information that the client passes to an external module. The `Event@schemeIdUri` provides the addressing mechanism, while MPD events allow opaque payloads to be embedded in the MPD.
+In addition to tracking events (e.g. ad starts, quartile tracking), a server
+may also need to signal additional metadata to the application. There is no need
+for a generic DASH client to implement this functionality directly — it is enough
+to provide opaque information that the client passes to an external module. The
+`Event@schemeIdUri` provides the addressing mechanism, while MPD events allow
+opaque payloads to be embedded in the MPD.
+
+MPD events <span class=modal-keyword>shall</span> be carried in `EventStream` elements at Period level. Each
+`EventStream` element <span class=modal-keyword>shall</span> carry a `@schemeIdUri` that identifies the event
+type. The `@timescale` attribute <span class=modal-keyword>shall</span> be present if `Event@presentationTime` or
+`Event@duration` are used.
+
+For ad-insertion cue messages (e.g. SCTE-35), see Part 5 [[#if3-scte35-events]]
+for the specific requirements on MPD event stream signalling.
 
 # DASH Callback Events # {#callback-events}
 
-DASH Callback events, defined in ISO/IEC 23009-1 Amendment 3, are a simple native implementation of time-based impression reporting (e.g. quartiles). A callback event is a promise by the DASH client to issue an HTTP GET request to a provided URL at a given offset from `PeriodStart`. The body of the HTTP response is ignored. Callback events <span class=modal-keyword>may</span> be signaled as either MPD events or inband events.
+DASH Callback events, defined in ISO/IEC 23009-1, are a simple native
+implementation of time-based impression reporting (e.g. quartiles). A callback
+event is a promise by the DASH client to issue an HTTP GET request to a provided
+URL at a given offset from `PeriodStart`. The body of the HTTP response is
+ignored. Callback events <span class=modal-keyword>may</span> be signaled as either MPD events or inband events.
 
-# Requirements and Recommendations # {#requirements}
+For ad tracking and measurement using DASH Callback events in an ad-insertion
+context, see Part 5 [[#if8-ad-tracking]].
 
-Issue: The above clauses migrate the general DASH events model, in-band MPD
-validity/update signaling, MPD events, and DASH Callback events from
-Dash-Industry-Forum/DASH-IF-IOP branch v5-old-draft, 40-Features.inc.md and
-65-AdInsertion.inc.md. Remaining migration work: reconciling event-stream
-constraints with Part 5 (ad insertion cue messages, e.g. SCTE-35) and Part 4
-(low-latency MPD-update timing), and defining the ownership boundary for
-timed-metadata tracks with Part 11.
-[GROUNDED_BY=Dash-Industry-Forum/DASH-IF-IOP@v5-old-draft:40-Features.inc.md;65-AdInsertion.inc.md]
+# Timed Metadata Tracks # {#timed-metadata}
+
+Timed metadata tracks carry time-aligned metadata samples as CMAF tracks
+delivered as DASH Representations. They are used for metadata that must be
+precisely synchronized with media playback, such as:
+
+- Subtitle and caption data (see Part 9 for text-specific requirements).
+- Dynamic metadata for HDR/WCG content.
+- Application-specific metadata (e.g. chapter markers, interactive overlays).
+- Accessibility metadata.
+
+## Signalling ## {#timed-metadata-signalling}
+
+A timed metadata Representation <span class=modal-keyword>shall</span> use `@mimeType="application/mp4"` and
+<span class=modal-keyword>shall</span> carry a `@codecs` string identifying the metadata format.
+
+The `AdaptationSet` containing timed metadata Representations <span class=modal-keyword>shall</span> carry a
+`@mimeType="application/mp4"` and <span class=modal-keyword>should</span> carry a `Role` descriptor indicating
+the purpose of the metadata (e.g. `urn:mpeg:dash:role:2011` with value
+`supplementary`, `caption`, `subtitle`, or `description`).
+
+## Timing ## {#timed-metadata-timing}
+
+Timed metadata tracks <span class=modal-keyword>shall</span> follow the same timing model as media tracks in
+the same Period. The `@presentationTimeOffset` and `@timescale` attributes
+<span class=modal-keyword>shall</span> be consistent with the Period timing as defined in Part 2.
+
+Timed metadata samples <span class=modal-keyword>shall</span> be aligned with the Period boundaries. Metadata
+that spans a Period boundary <span class=modal-keyword>shall</span> be split at the boundary, with each part
+carried in the respective Period.
+
+Note: The ownership boundary between timed metadata tracks (Part 10) and
+text/subtitle tracks (Part 9) is defined by the `@mimeType`: text tracks use
+`application/mp4` with IMSC1 or WebVTT codecs and are governed by Part 9;
+other timed metadata tracks are governed by this part.
+
 # Open Issues and Work Items # {#open-issues}
 
 <table class="data">
   <caption>Part 10 open issues and topics to progress.</caption>
   <thead><tr><th>Topic<th>Status<th>Next action
   <tbody>
-    <tr><td>Source migration<td>In progress<td>General events model and in-band MPD validity/update signaling migrated from DASH-IF-IOP v5-old-draft. Timed metadata track ownership boundary with Part 11 still needs to be defined.
-    <tr><td>Cross-part alignment<td>Open<td>Align terminology and references with Parts 1, 2, 4, 5, and 12.
-    <tr><td>Conformance mapping<td>Open<td>Identify validator/test-asset/reference-player expectations and link them to Part 12.
+    <tr><td>Cross-part alignment<td>Partial<td>Cross-references to Part 4 (MPD update timing) and Part 5 (SCTE-35, ad tracking) added. Verify cross-reference anchors once Part 4 and Part 5 are finalized.
+    <tr><td>Timed metadata track ownership<td>Partial<td>Ownership boundary with Part 9 (text tracks) defined by @mimeType. Ownership boundary with Part 11 (additional technologies) still needs to be defined.
+    <tr><td>Conformance mapping<td>Open<td>Add Part 12 conformance mapping for Part 10 (event stream signalling, inband events, timed metadata).
+    <tr><td>Validator-start tool<td>Open<td>Create `tools/validation/validate_part10_events_mpd.py` covering EventStream signalling, InbandEventStream presence, and timed metadata track constraints.
+    <tr><td>MPD Patch events<td>Open<td>Add normative requirements for MPD Patch events (ISO/IEC 23009-1 Amendment 3) once the amendment is finalized.
 </table>
 
 # Change History # {#change-history}
@@ -114,5 +242,5 @@ timed-metadata tracks with Part 11.
   <tbody>
     <tr><td>0.1<td>Initial<td>Created initial Bikeshed/Markdown shell for Part 10.
     <tr><td>0.2<td>Migration<td>Migrated general DASH events model and in-band MPD validity/update signaling from DASH-IF-IOP v5-old-draft.
+    <tr><td>0.3<td>Reconciliation<td>Added cross-references to Part 4 (MPD update timing) and Part 5 (SCTE-35, ad tracking). Added timed metadata tracks section. Added terms and definitions. Updated scope to reference Parts 4 and 5 for service-type-specific event requirements.
 </table>
-
