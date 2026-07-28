@@ -18,8 +18,11 @@ simulator, and the DASH-IF test assets. It also describes how conformance
 keywords used across the IOP parts are interpreted by these tools.
 
 Any identified bugs or missing features <span class=modal-keyword>may</span> be submitted through the DASH-IF
-issue tracker at
+IOPv5 issue tracker at
 [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).
+Use the label `Part 12` or the title prefix `[Part 12]:` to associate the issue
+with this part. For issues related to other parts, use the corresponding label
+or prefix (e.g. `[Part 2]:`, `[Part 4]:`).
 
 # Terms and Definitions # {#terms}
 

@@ -336,6 +336,8 @@ now fully specified in the current MPEG-DASH edition.
 
 ### Representation Timing ### {#representation-timing}
 
+#### General #### {#representation-timing-general}
+
 Representations provide the content for periods. A representation is a sequence of media segments, an initialization segment, an optional index segment and related metadata (see ISO/IEC 23009-1 [[!MPEGDASH]] clauses 5.3.1 and 5.3.5).
 
 The MPD describes each representation using a `Representation` element. For each representation, the MPD defines a set of <dfn>segment references</dfn> to the media segments and metadata describing the media samples provided by the representation.
@@ -368,6 +370,8 @@ See the DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]] for detailed d
 
 ### Referencing Media Segments ### {#timing-segment-references}
 
+#### General #### {#timing-segment-references-general}
+
 Each segment reference addresses a media segment that corresponds to a specific time span on the sample timeline. The exact mechanism used to define segment references depends on the addressing mode used by the representation.
 
 #### Necessary Segment References in Static Presentations #### {#necessary-references-static}
@@ -393,6 +397,8 @@ Note: It is a valid and common situation that a media segment is required to be 
 See the DASH-IF Guidelines-TimingModel document [[DASHIF-TIMING]] for detailed discussion of segment reference requirements.
 
 ### Clock Drift ### {#no-clock-drift}
+
+#### General #### {#clock-drift-general}
 
 Some encoders experience clock drift - they do not produce exactly 1 second worth of output per 1 second of input, either stretching or compressing the sample timeline with respect to the MPD timeline.
 

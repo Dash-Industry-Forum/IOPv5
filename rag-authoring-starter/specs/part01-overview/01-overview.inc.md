@@ -9,16 +9,66 @@
     - Issue tracker URL points at the IOPv5 repository.
 -->
 
+# Document Status # {#document-status}
+
+## Living Document ## {#living-document}
+
+This document is published as a **Living Document** (LD). A Living Document is
+continuously updated as new content is added, issues are resolved, and the
+technical community provides feedback. It does not represent a final, approved
+specification.
+
+The current status of each part is indicated by its version number in the Change
+History table:
+
+- **Working Draft (0.x)**: Content is being drafted and reviewed by the DASH-IF
+    Technical Working Group. The document is open for community feedback but has
+    not yet been formally approved.
+- **WG Review (1.0-rc)**: The Working Group has completed its internal review and
+    the document is open for broader community review.
+- **Community Review (1.0-beta)**: The document is open for public comment before
+    final approval.
+- **Approved (1.x)**: The document has been formally approved by DASH-IF and
+    represents a stable, normative specification.
+
+All parts of DASH-IF IOP v5 are currently at **Working Draft** status.
+
+## Document Workflow ## {#document-workflow}
+
+The DASH-IF IOP v5 document set follows this publication workflow:
+
+1. **Working Draft**: Editors draft content in the `main` development branch.
+    Issues and pull requests are tracked at
+    [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).
+    Use the label or title prefix `[Part N]` (e.g. `[Part 2]`) to associate an
+    issue with a specific part.
+2. **WG Review**: The Working Group reviews the draft and resolves open issues.
+    A release candidate is tagged on the `main` branch.
+3. **Community Review**: The release candidate is published for public comment.
+    A `stable` branch is created to maintain the approved version independently
+    of ongoing development.
+4. **Approved**: After community review, the document is formally approved and
+    published as a stable release. The `stable` branch is updated; the `main`
+    branch continues development of the next version.
+
+## Issue Reporting ## {#issue-reporting}
+
+All issues, bugs, and feature requests for DASH-IF IOP v5 <span class=modal-keyword>shall</span> be submitted
+through the single DASH-IF IOPv5 issue tracker at
+[https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).
+
+To associate an issue with a specific part, use one of the following conventions:
+
+- **Label**: Apply the GitHub label `Part 1`, `Part 2`, etc. to the issue.
+- **Title prefix**: Begin the issue title with `[Part N]:`, for example
+    `[Part 2]: Clarify @timescale requirement for SegmentTemplate`.
+
 # Scope # {#scope}
 
 The present document provides an overview of the different features in the
 DASH-IF Interoperability Guidelines (IOP). In particular, it provides a reference
 architecture together with the relevant interfaces and functional blocks, and
 describes how the multi-part IOP document set fits together.
-
-Any identified bugs or missing features <span class=modal-keyword>may</span> be submitted through the DASH-IF
-issue tracker at
-[https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).
 
 Note: DASH-IF IOP v5 is published as a multi-part document set. The parts and
 their summaries are described in [[#part-descriptions]].

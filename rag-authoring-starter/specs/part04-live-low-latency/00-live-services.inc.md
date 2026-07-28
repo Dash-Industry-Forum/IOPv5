@@ -193,7 +193,7 @@ Set has its own availability window. Services <span class=modal-keyword><span cl
 that affect the availability window on the Representation level.
 
 <figure>
-  <img src="images/AvailabilityWindow.png">
+  <img src="Images/AvailabilityWindow.png">
   <figcaption>The availability window determines which Media Segments can be
   expected to be available, based on where their segment end point lies.</figcaption>
 </figure>
@@ -251,7 +251,7 @@ the absence of `MPD@timeShiftBufferDepth`, the start of the time shift buffer is
 the effective availability start time.
 
 <figure>
-  <img src="images/TimeShiftBuffer.png">
+  <img src="Images/TimeShiftBuffer.png">
   <figcaption>Media Segments overlapping the time shift buffer may potentially be
   presented by a client if other constraints do not forbid it.</figcaption>
 </figure>
@@ -290,7 +290,7 @@ be available to DASH clients. Services <span class=modal-keyword>may</span> defi
 delay. Clients <span class=modal-keyword>should</span> use `MPD@suggestedPresentationDelay` when provided by the MPD.
 
 <figure>
-  <img src="images/WindowInteractions.png">
+  <img src="Images/WindowInteractions.png">
   <figcaption>The interaction between availability window, time shift buffer, and
   presentation delay determines which Media Segments can be presented at any given
   time.</figcaption>
@@ -360,7 +360,7 @@ presentation:
 Segment references <span class=modal-keyword>shall</span> not be added to any Period other than the last Period.
 
 <figure>
-  <img src="images/MpdUpdate-AddContent.png">
+  <img src="Images/MpdUpdate-AddContent.png">
   <figcaption>MPD updates can add both Segment references and Periods (additions
   highlighted in blue).</figcaption>
 </figure>
@@ -397,7 +397,7 @@ An MPD update removing content <span class=modal-keyword>shall</span> not remove
 Segments with a segment start point before or at `EarliestRemovalPoint`.
 
 <figure>
-  <img src="images/MpdUpdate-RemoveContent.png">
+  <img src="Images/MpdUpdate-RemoveContent.png">
   <figcaption>MPD updates can remove both Segment references and Periods (removals
   highlighted in red).</figcaption>
 </figure>

@@ -188,34 +188,49 @@ Received DASH events are processed for client consumption; see Part 10.
 
 ## DASH-IF IOP Parts ## {#part-descriptions}
 
-The following summarises each part of DASH-IF IOP v5:
+The following summarises each part of DASH-IF IOP v5. Each part is published
+as a separate document; links point to the current published version.
 
-- **Part 1 — Overview, Architecture and Interfaces** (this document): an overview
-    of the features in the DASH-IF Interoperability Guidelines, with a reference
-    architecture, interfaces, and functional blocks.
-- **Part 2 — Core principles and CMAF mapping**: the core principles of DASH
-    including the data and timing model, and the mapping of CMAF data structures
-    to DASH Media Presentations.
-- **Part 3 — On-demand services**: requirements and recommendations for using
-    DASH for on-demand services.
-- **Part 4 — Live and low-latency services**: live service offerings, including
-    low-latency services.
-- **Part 5 — Ad insertion and content replacement**: guidelines for advertisement
-    insertion in a CMAF-based, DASH-delivered workflow, covering conditioning,
-    packaging, and signalling for both SSAI and SGAI.
-- **Part 6 — Content protection and security**: guidelines for encrypted content
-    in CMAF protected by MPEG CENC, key rotation, Enhanced Clear Key Content
-    Protection (ECCP), and the DASH-IF content-protection XML schema.
-- **Part 7 — Video**: the CMAF media profiles and DASH signalling for video
-    tracks.
-- **Part 8 — Audio**: audio interoperability points, coding profiles, ISO BMFF
-    packaging, and MPD parameters.
-- **Part 9 — Text (Subtitle)**: subtitle/caption interoperability points and
-    signalling.
-- **Part 10 — Events**: event signalling and processing.
-- **Part 11 — Additional functionalities**: further interoperability features.
-- **Part 12 — Conformance and reference tools**: the conformance validator,
-    reference player, live source simulator, and test assets.
+- **[Part 1 — Overview, Architecture and Interfaces](https://dashif.org/Guidelines/iop-v5/part01-overview.html)**
+    (this document): an overview of the features in the DASH-IF Interoperability
+    Guidelines, with a reference architecture, interfaces, and functional blocks.
+- **[Part 2 — Core principles and CMAF mapping](https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html)**:
+    the core principles of DASH including the data and timing model, and the
+    mapping of CMAF data structures to DASH Media Presentations.
+- **[Part 3 — On-demand services](https://dashif.org/Guidelines/iop-v5/part03-on-demand.html)**:
+    requirements and recommendations for using DASH for on-demand services.
+- **[Part 4 — Live and low-latency services](https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html)**:
+    live service offerings, including low-latency services.
+- **[Part 5 — Ad insertion and content replacement](https://dashif.org/Guidelines/iop-v5/part05-ad-insertion.html)**:
+    guidelines for advertisement insertion in a CMAF-based, DASH-delivered
+    workflow, covering conditioning, packaging, and signalling for both SSAI
+    and SGAI.
+- **[Part 6 — Content protection and security](https://dashif.org/Guidelines/iop-v5/part06-content-protection.html)**:
+    guidelines for encrypted content in CMAF protected by MPEG CENC, key
+    rotation, Enhanced Clear Key Content Protection (ECCP), and the DASH-IF
+    content-protection XML schema.
+- **[Part 7 — Video](https://dashif.org/Guidelines/iop-v5/part07-video.html)**:
+    the CMAF media profiles and DASH signalling for video tracks, with reference
+    to the [DASH-IF Codec Registry](https://dashif.org/codecs/).
+- **[Part 8 — Audio](https://dashif.org/Guidelines/iop-v5/part08-audio.html)**:
+    audio interoperability points, coding profiles, ISO BMFF packaging, and MPD
+    parameters, with reference to the [DASH-IF Codec Registry](https://dashif.org/codecs/).
+- **[Part 9 — Text (Subtitle)](https://dashif.org/Guidelines/iop-v5/part09-text.html)**:
+    subtitle/caption interoperability points and signalling.
+- **[Part 10 — Events](https://dashif.org/Guidelines/iop-v5/part10-events.html)**:
+    event signalling and processing, including MPD events, inband events, and
+    timed metadata tracks.
+- **[Part 11 — Additional functionalities](https://dashif.org/Guidelines/iop-v5/part11-additional-technologies.html)**:
+    further interoperability features.
+- **[Part 12 — Conformance and reference tools](https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html)**:
+    the conformance validator, reference player ([dash.js](https://github.com/Dash-Industry-Forum/dash.js)),
+    live source simulator ([livesim2](https://github.com/Dash-Industry-Forum/livesim2)),
+    and test assets.
+
+Note: Issues for any part <span class=modal-keyword>should</span> be filed at the single IOPv5 issue tracker:
+[https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).
+Use the label `Part N` or the title prefix `[Part N]:` to identify the relevant
+part (e.g. `[Part 2]: Clarify @timescale requirement`).
 
 # Change History # {#change-history}
 
@@ -232,4 +247,8 @@ The following summarises each part of DASH-IF IOP v5:
       <td>0.2
       <td>Initial
       <td>Ported clause 5 (Architecture and Interfaces: baseline architecture, interfaces, reference client, part descriptions); added editors, contributors, and shared IPR boilerplate.
+    <tr>
+      <td>0.3
+      <td>Enhancement
+      <td>Added Document Status section explaining Living Document status, Working Draft versioning, publication workflow (Working Draft → WG Review → Community Review → Approved), and issue reporting guidance (single IOPv5 tracker with Part N labels). Added hyperlinks to all part descriptions. Added Codec Registry links for Parts 7 and 8.
 </table>
