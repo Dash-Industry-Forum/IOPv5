@@ -1,5 +1,7 @@
 # DASH-IF interoperable license request model # {#CPS-lr-model}
 
+## General ## {#CPS-lr-model-general}
+
 The interactions involved in acquiring [=licenses=] and [=content keys=] in DRM workflows have historically been proprietary, requiring a DASH client to be customized in order to achieve compatibility with specific [=DRM systems=] or license server implementations. This chapter defines an interoperable model to encourage the creation of solutions that do not require custom code in the DASH client in order to play back encrypted content. Use of this model is optional but recommended.
 
 Any conformance statements in this chapter apply to clients and services that opt in to using this model (e.g. a "**_shall_**" statement means "**_shall_**, if using this model," and has no effect on implementations that choose to use proprietary mechanisms for license acquisition). The authorization service and license server are considered part of the DASH service.

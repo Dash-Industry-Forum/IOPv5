@@ -1,5 +1,7 @@
 # DRM workflows in DASH clients # {#CPS-client-workflows}
 
+## General ## {#CPS-client-workflows-general}
+
 To present encrypted content a DASH client needs to:
 
 1. [[#CPS-selection-workflow|Select a DRM system that is capable of decrypting the content.]]

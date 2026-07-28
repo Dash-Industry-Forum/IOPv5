@@ -10,11 +10,11 @@
 
 # Low-Latency Live Services # {#low-latency}
 
+## Introduction ## {#ll-introduction}
+
 Note: This clause is migrated from the agreed Part 4 draft (clause 6). Tables and
 figures referenced below are pending triage; see
 `Images/dashif-iop-v5-part4-draft-r1-images.md`.
-
-## Introduction ## {#ll-introduction}
 
 Based on a report developed jointly between DVB and DASH-IF on Low-Latency DASH,
 this clause defines details on how to support consistent latency in DASH for

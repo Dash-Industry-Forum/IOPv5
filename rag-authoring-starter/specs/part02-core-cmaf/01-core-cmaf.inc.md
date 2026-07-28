@@ -276,6 +276,8 @@ samples:
 
 ### Period Timing ### {#period-timing}
 
+#### General #### {#period-timing-general}
+
 An MPD defines an ordered list of one or more consecutive non-overlapping Periods
 [[!MPEGDASH]]. A Period is both a time span on the MPD timeline and a definition
 of the data to be presented during this time span. Period timing is relative to

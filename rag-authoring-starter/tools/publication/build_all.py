@@ -50,8 +50,11 @@ def stage_shared(spec_dir: Path) -> list[Path]:
 
 
 def copy_images(spec_dir: Path, out_dir: Path) -> None:
-    """Copy images directories from a spec to the output directory."""
-    for img_dir_name in ("images", "Images", "figures", "Figures"):
+    """Copy images/diagrams directories and root-level image files from a spec
+    to the output directory."""
+    # Copy named image subdirectories
+    for img_dir_name in ("images", "Images", "figures", "Figures",
+                         "Diagrams", "diagrams"):
         src = spec_dir / img_dir_name
         if src.is_dir():
             dst = out_dir / img_dir_name
@@ -59,6 +62,11 @@ def copy_images(spec_dir: Path, out_dir: Path) -> None:
             for img_file in src.iterdir():
                 if img_file.is_file():
                     shutil.copy2(img_file, dst / img_file.name)
+    # Copy root-level image files (e.g. Part 4 MpdUpdate-*.png)
+    for img_file in spec_dir.iterdir():
+        if img_file.is_file() and img_file.suffix.lower() in (
+                ".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp"):
+            shutil.copy2(img_file, out_dir / img_file.name)
 
 
 def build_one(spec_dir: Path, out_dir: Path, die_on: str | None) -> bool:

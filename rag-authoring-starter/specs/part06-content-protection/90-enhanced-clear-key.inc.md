@@ -1,5 +1,7 @@
 # Enhanced Clear Key Content Protection (ECCP) # {#CPS-ECCP}
 
+## General ## {#CPS-ECCP-general}
+
 Enhanced Clear Key Content Protection (ECCP) is a constrained use of Clear Key,
 HTTPS delivery, and access-control mechanisms intended to provide stronger
 practical protection than any of those mechanisms used individually.
