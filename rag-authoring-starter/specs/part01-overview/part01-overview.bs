@@ -1,5 +1,5 @@
 <pre class=metadata>
-Revision: 0.2
+Revision: 0.3
 Title: DASH-IF IOP v5 Part 1: Overview, Architecture and Interfaces
 Status: LD
 Shortname: iop-v5-part1
@@ -10,7 +10,7 @@ Editor: Mike Dolan, Pearl TV, https://www.linkedin.com/in/michael-dolan-50872355
 Abstract: Overview of DASH-IF Interoperability Guidelines (IOP) v5: scope, the multi-part document structure, references, terms, symbols, abbreviations, and conformance/style conventions. Working draft authored in the IOPv5 workspace.
 !Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
 !Issue Tracking: File issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a>. Use label <code>Part 1</code> or prefix <code>[Part 1]:</code>. See <a href="#issue-reporting">§1.3 Issue Reporting</a>.
-!Document Status: Working Draft (0.2). See <a href="#document-status">§1 Document Status</a> for versioning and workflow.
+!Document Status: Working Draft (0.3). See <a href="#document-status">§1 Document Status</a> for versioning and workflow.
 !Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: Overview, Architecture, Interfaces
 </pre>
@@ -34,6 +34,16 @@ Abstract: Overview of DASH-IF Interoperability Guidelines (IOP) v5: scope, the m
     "title": "Information technology - Multimedia application format (MPEG-A) - Part 19: Common media application format (CMAF) for segmented media",
     "publisher": "ISO/IEC",
     "date": "2024"
+  },
+  "DASHIF-IDENTIFIERS": {
+    "href": "https://dashif.org/identifiers/introduction/",
+    "title": "DASH-IF Identifier Registry",
+    "publisher": "DASH Industry Forum"
+  },
+  "DASHIF-CODECS": {
+    "href": "https://dashif.org/codecs/introduction/",
+    "title": "DASH-IF Codec Registry",
+    "publisher": "DASH Industry Forum"
   }
 }
 </pre>

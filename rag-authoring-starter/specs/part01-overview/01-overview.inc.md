@@ -157,6 +157,8 @@ present document but assist the user with regard to a particular subject area:
 - DASH-IF, *Content Protection Information Exchange (CPIX)*.
 - DASH-IF Guidelines for Implementation: *DASH-IF Interoperability Point for
     ATSC 3.0*.
+- DASH-IF Identifier Registry [[DASHIF-IDENTIFIERS]].
+- DASH-IF Codec Registry [[DASHIF-CODECS]].
 
 # Terms, Definitions, Symbols and Abbreviations # {#terms}
 

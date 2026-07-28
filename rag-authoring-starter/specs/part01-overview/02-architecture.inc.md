@@ -232,6 +232,159 @@ Note: Issues for any part <span class=modal-keyword>should</span> be filed at th
 Use the label `Part N` or the title prefix `[Part N]:` to identify the relevant
 part (e.g. `[Part 2]: Clarify @timescale requirement`).
 
+# DASH-IF Registries # {#registries}
+
+## Overview ## {#registries-overview}
+
+DASH-IF maintains two publicly accessible registries that serve as authoritative
+references for identifiers and codecs used in DASH-IF compliant services. These
+registries are living documents, continuously updated as new values are registered
+and existing entries are refined.
+
+- **[DASH-IF Identifier Registry](https://dashif.org/identifiers/introduction/)**
+    [[DASHIF-IDENTIFIERS]] — the authoritative registry of `@schemeIdUri` values,
+    profile URIs, and other string identifiers used in DASH MPDs and media.
+- **[DASH-IF Codec Registry](https://dashif.org/codecs/introduction/)**
+    [[DASHIF-CODECS]] — the authoritative registry of `@codecs` strings and CMAF
+    profiles for video and audio codecs supported in DASH-IF compliant services.
+
+Services and clients <span class=modal-keyword>shall</span> use only identifiers and codec strings that are
+registered in the respective DASH-IF registry or explicitly defined in the
+applicable IOP v5 part.
+
+## DASH-IF Identifier Registry ## {#identifier-registry}
+
+### General ### {#identifier-registry-general}
+
+The DASH-IF Identifier Registry at
+[https://dashif.org/identifiers/introduction/](https://dashif.org/identifiers/introduction/)
+provides the canonical `@schemeIdUri` values and other string identifiers used
+across DASH MPD elements. The registry covers:
+
+- **`AudioChannelConfiguration@schemeIdUri`** — schemes for signalling audio
+    channel layout (e.g. MPEG channel configuration, Dolby, DTS).
+- **`Role@schemeIdUri`** — schemes for Adaptation Set role descriptors
+    (e.g. `urn:mpeg:dash:role:2011` for main, alternate, subtitle, etc.).
+- **`Accessibility@schemeIdUri`** — schemes for accessibility descriptors
+    (e.g. closed captions, audio description, sign language).
+- **`EventStream@schemeIdUri`** — schemes for MPD and inband event streams
+    (e.g. `urn:mpeg:dash:event:2012` for MPD validity expiry).
+- **`ContentProtection@schemeIdUri`** — DRM system identifiers
+    (e.g. Common Encryption, Widevine, PlayReady, FairPlay).
+- **Profile URIs** — URIs identifying DASH profiles and interoperability points
+    (e.g. `http://dashif.org/guidelines/dash-if-ondemand`).
+- **Supplemental and Essential Property descriptors** — `@schemeIdUri` values
+    for MPD property descriptors.
+
+The registry source data is maintained at
+[https://github.com/Dash-Industry-Forum/Identifiers](https://github.com/Dash-Industry-Forum/Identifiers).
+
+### Identifier Types in ISO/IEC 23009-1 ### {#identifier-types-23009}
+
+ISO/IEC 23009-1 [[!MPEGDASH]] defines several mechanisms for extensible
+identification in DASH MPDs. The following identifier types are used throughout
+the IOP v5 document set:
+
+<table class="data">
+  <caption>Key identifier types in ISO/IEC 23009-1 and their use in IOP v5.</caption>
+  <thead>
+    <tr><th>Identifier type<th>MPD attribute/element<th>Purpose<th>IOP v5 part(s)
+  <tbody>
+    <tr>
+      <td>`@schemeIdUri` + `@value`
+      <td>`Role`, `Accessibility`, `AudioChannelConfiguration`, `EventStream`, `ContentProtection`, `SupplementalProperty`, `EssentialProperty`
+      <td>Extensible scheme identification for descriptors and event streams
+      <td>Parts 2, 6, 7, 8, 9, 10
+    <tr>
+      <td>`@codecs`
+      <td>`Representation`, `AdaptationSet`
+      <td>Codec and profile identification string (RFC 6381 format)
+      <td>Parts 7, 8, 9
+    <tr>
+      <td>`@mimeType`
+      <td>`Representation`, `AdaptationSet`
+      <td>MIME type of the media container
+      <td>Parts 7, 8, 9, 10
+    <tr>
+      <td>Profile URI
+      <td>`MPD@profiles`, `AdaptationSet@profiles`, `Representation@profiles`
+      <td>URI identifying a DASH profile or interoperability point
+      <td>Parts 2, 3, 4
+    <tr>
+      <td>`@id`
+      <td>`Period`, `AdaptationSet`, `Representation`, `Event`
+      <td>Local identifier within the MPD for cross-referencing
+      <td>Parts 2, 4, 5
+</table>
+
+### Using Identifiers in IOP v5 ### {#identifier-usage}
+
+When an IOP v5 part requires a specific `@schemeIdUri` value, it <span class=modal-keyword>shall</span> reference
+the DASH-IF Identifier Registry as the authoritative source. Services <span class=modal-keyword>shall</span> use
+only registered `@schemeIdUri` values for the applicable scheme. Clients <span class=modal-keyword>shall</span>
+ignore descriptors with unrecognised `@schemeIdUri` values unless the descriptor
+is marked as `EssentialProperty`.
+
+Note: The DASH-IF Identifier Registry is a living document. Services and clients
+<span class=modal-keyword>should</span> consult the current version of the registry rather than relying solely
+on the static tables in individual IOP v5 parts.
+
+## DASH-IF Codec Registry ## {#codec-registry}
+
+### General ### {#codec-registry-general}
+
+The DASH-IF Codec Registry at
+[https://dashif.org/codecs/introduction/](https://dashif.org/codecs/introduction/)
+provides the canonical `@codecs` strings and CMAF profiles for video and audio
+codecs supported in DASH-IF compliant services. The registry source data is
+maintained at
+[https://github.com/Dash-Industry-Forum/Codecs](https://github.com/Dash-Industry-Forum/Codecs).
+
+Detailed codec requirements are defined in:
+
+- **[Part 7 — Video](https://dashif.org/Guidelines/iop-v5/part07-video.html)**:
+    H.264/AVC, H.265/HEVC, and other video codecs.
+- **[Part 8 — Audio](https://dashif.org/Guidelines/iop-v5/part08-audio.html)**:
+    HE-AACv2, E-AC-3, AC-4, MPEG-H 3D Audio, and other audio codecs.
+- **[Part 9 — Text](https://dashif.org/Guidelines/iop-v5/part09-text.html)**:
+    IMSC1, WebVTT, and other text/subtitle codecs.
+
+## Registering New Identifiers and Codecs ## {#registry-registration}
+
+### General ### {#registry-registration-general}
+
+DASH-IF welcomes proposals for new identifiers and codec registrations from the
+community. The registration process ensures that new values are reviewed for
+technical correctness, uniqueness, and alignment with the DASH-IF IOP v5
+framework.
+
+### Registering a New Identifier ### {#register-identifier}
+
+To propose a new `@schemeIdUri` value or other identifier for the DASH-IF
+Identifier Registry:
+
+1. **Submit a registration request** using the DASH-IF Identifier Registration
+    Form at
+    [https://docs.google.com/forms/d/e/1FAIpQLSfoMH4BL-1VwEpnVrYSnlvzwdO_7VAFeP1OfifxKW7nXVeWjg/viewform](https://docs.google.com/forms/d/e/1FAIpQLSfoMH4BL-1VwEpnVrYSnlvzwdO_7VAFeP1OfifxKW7nXVeWjg/viewform).
+2. **Alternatively**, file an issue at the Identifiers repository:
+    [https://github.com/Dash-Industry-Forum/Identifiers/issues](https://github.com/Dash-Industry-Forum/Identifiers/issues).
+3. The DASH-IF Technical Working Group reviews the proposal and, if approved,
+    adds the identifier to the registry.
+
+Note: The Google Forms submission workflow is the current recommended entry
+point. A more streamlined GitHub-based workflow is planned for a future update.
+
+### Registering a New Codec ### {#register-codec}
+
+To propose a new codec for the DASH-IF Codec Registry:
+
+1. File an issue or pull request at the Codecs repository:
+    [https://github.com/Dash-Industry-Forum/Codecs](https://github.com/Dash-Industry-Forum/Codecs).
+2. The registration requires: a defined `@codecs` string, a CMAF media profile
+    or equivalent container format specification, demonstrated interoperability
+    with at least one DASH client and one DASH packager, and alignment with the
+    DASH-IF IOP v5 framework.
+
 # Change History # {#change-history}
 
 <table class="data">
@@ -251,4 +404,8 @@ part (e.g. `[Part 2]: Clarify @timescale requirement`).
       <td>0.3
       <td>Enhancement
       <td>Added Document Status section explaining Living Document status, Working Draft versioning, publication workflow (Working Draft → WG Review → Community Review → Approved), and issue reporting guidance (single IOPv5 tracker with Part N labels). Added hyperlinks to all part descriptions. Added Codec Registry links for Parts 7 and 8.
+    <tr>
+      <td>0.4
+      <td>Enhancement
+      <td>Added DASH-IF Registries section covering the Identifier Registry (schemeIdUri values, profile URIs, ISO/IEC 23009-1 identifier types) and Codec Registry, with registration workflow (Google Forms, GitHub issues). Added DASHIF-IDENTIFIERS and DASHIF-CODECS biblio entries. Updated all 12 .bs files: replaced Repository: with !Repository:, added !Issue Tracking: and !Document Status: custom metadata entries.
 </table>
