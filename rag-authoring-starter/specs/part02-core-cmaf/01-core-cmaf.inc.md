@@ -222,6 +222,8 @@ reference-resolution rules of ISO/IEC 23009-1.
 
 ## DASH Timing Model ## {#timing-model}
 
+### General ### {#timing-model-general}
+
 The DASH timing model relates four domains:
 
 1. **MPD timeline**: Period start times and Period durations.
@@ -669,6 +671,8 @@ supported by the underlying CMAF media.
 
 ## Period Connectivity ## {#period-connectivity}
 
+### General ### {#period-connectivity-general}
+
 Period connectivity determines whether playback can continue seamlessly across a
 Period boundary or whether a discontinuity occurs. A presentation is
 *period-connected* when adjacent Periods allow continuous playback without decoder
@@ -789,6 +793,8 @@ For period-disconnected presentations, the first sample of each Period <span cla
 random access point, and clients <span class=modal-keyword>shall</span> reinitialize decoders as needed.
 
 ## Non-Equal Length Tracks ## {#non-equal-length-tracks}
+
+### General ### {#non-equal-length-tracks-general}
 
 When creating multi-Period presentations, content authors often encounter situations
 where different media components (video, audio, subtitles) have different durations.
@@ -932,6 +938,8 @@ Content authors <span class=modal-keyword>should</span> select a strategy based 
   naturally end early
 
 ## Period Splitting ## {#period-splitting}
+
+### General ### {#period-splitting-general}
 
 Period splitting is the process of dividing a single Period into multiple consecutive
 Periods. This is commonly needed when:

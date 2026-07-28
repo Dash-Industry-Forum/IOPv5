@@ -115,6 +115,8 @@ adaptation set or Representation level (but not both). The scheme and value
 
 # Audio Codecs # {#codecs}
 
+## General ## {#codecs-general}
+
 The following clauses define normative baseline requirements for the audio codecs
 supported in DASH-IF compliant services. For the complete and up-to-date list of
 registered audio codecs, consult the [[DASHIF-CODECS|DASH-IF Codec Registry]].

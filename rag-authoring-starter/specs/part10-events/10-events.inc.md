@@ -189,6 +189,8 @@ context, see Part 5 (Section "IF-8 Ad Tracking and Measurement").
 
 # Timed Metadata Tracks # {#timed-metadata}
 
+## General ## {#timed-metadata-general}
+
 Timed metadata tracks carry time-aligned metadata samples as CMAF tracks
 delivered as DASH Representations. They are used for metadata that must be
 precisely synchronized with media playback, such as:

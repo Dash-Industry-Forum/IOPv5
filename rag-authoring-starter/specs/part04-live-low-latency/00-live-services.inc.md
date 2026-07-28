@@ -13,11 +13,11 @@
 
 # Live Services # {#live-services-clause}
 
+## Introduction ## {#live-introduction}
+
 Note: This clause is migrated from DASH-IF IOP v4.3 (Live Services) and aligned
 to the current edition of MPEG-DASH [[!MPEGDASH]]. References to specific past
 editions of ISO/IEC 23009-1 have been removed in favour of the current edition.
-
-## Introduction ## {#live-introduction}
 
 MPEG-DASH [[!MPEGDASH]] provides several tools to support live services. This
 clause provides requirements and recommendations for both content authoring and

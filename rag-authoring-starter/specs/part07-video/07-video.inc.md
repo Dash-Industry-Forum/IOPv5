@@ -111,6 +111,8 @@ The registration process requires:
 
 # Video Codecs # {#codecs}
 
+## General ## {#codecs-general}
+
 The following clauses define normative baseline requirements for the most widely
 deployed video codecs. For additional codecs, consult the
 [[DASHIF-CODECS|DASH-IF Codec Registry]].
