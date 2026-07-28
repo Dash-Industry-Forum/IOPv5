@@ -100,6 +100,68 @@ To associate an issue with a specific part, use one of the following conventions
 - **Title prefix**: Begin the issue title with `[Part N]:`, for example
     `[Part 2]: Clarify @timescale requirement for SegmentTemplate`.
 
+## Contributing and Reviewing ## {#contributing}
+
+### General ### {#contributing-general}
+
+DASH-IF IOP v5 is developed openly on GitHub. Contributions and reviews are
+welcome at all stages of the publication workflow. The primary mechanisms are
+GitHub issues (for feedback and discussion) and pull requests (for editorial
+contributions).
+
+### During the Working Draft Phase ### {#contributing-wd}
+
+While a part is at Working Draft status:
+
+- **File an issue** at
+    [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues)
+    to report errors, raise technical questions, or propose new content. Use the
+    label `Part N` or the title prefix `[Part N]:` to identify the relevant part.
+- **Submit a pull request** against the `main` branch to propose editorial
+    corrections, add missing content, or improve existing text. Pull requests
+    <span class=modal-keyword>should</span> reference the issue they address.
+- **Discuss** open issues in the GitHub issue tracker. The DASH-IF Technical
+    Working Group reviews issues and pull requests on a regular basis.
+
+### During WG Review ### {#contributing-wg-review}
+
+When a part reaches WG Review status (release candidate tagged on `main`):
+
+- **WG members** review the release candidate and file issues or pull requests
+    for any remaining technical or editorial concerns.
+- **Substantive changes** require a new release candidate; editorial corrections
+    <span class=modal-keyword>may</span> be applied directly.
+- The WG chair coordinates the review schedule and announces the review period
+    via the DASH-IF mailing list and GitHub.
+
+### During Community Review ### {#contributing-community-review}
+
+When a part reaches Community Review status:
+
+- **Anyone** <span class=modal-keyword>may</span> submit feedback by filing a GitHub issue at
+    [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).
+    Use the label `Community Review` or the title prefix `[CR]:` to identify
+    community review comments.
+- **Pull requests** for editorial corrections are also welcome during this phase.
+- The review period is announced on the DASH-IF website and mailing list. At the
+    end of the review period, the WG resolves all open issues and, if no
+    substantive changes are required, approves the document.
+
+### How to Submit a Pull Request ### {#contributing-pr}
+
+1. **Fork** the IOPv5 repository at
+    [https://github.com/Dash-Industry-Forum/IOPv5](https://github.com/Dash-Industry-Forum/IOPv5).
+2. **Create a branch** from `main` with a descriptive name (e.g.
+    `fix-part2-timescale-clarification`).
+3. **Make your changes** to the relevant `.inc.md` or `.bs` files in the
+    `rag-authoring-starter/specs/` directory.
+4. **Build locally** (optional but recommended) using
+    `python tools/publication/build_all.py --out ../dist` to verify the changes
+    compile without errors.
+5. **Submit a pull request** against the `main` branch of the IOPv5 repository.
+    Reference the issue(s) the PR addresses in the PR description.
+6. The DASH-IF Technical Working Group reviews and merges approved pull requests.
+
 # Scope # {#scope}
 
 The present document provides an overview of the different features in the

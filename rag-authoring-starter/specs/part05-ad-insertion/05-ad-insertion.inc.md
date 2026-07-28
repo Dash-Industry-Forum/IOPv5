@@ -229,9 +229,9 @@ identified for migration:
 
 # Use Cases and Scenarios # {#ad-use-cases-scenarios}
 
-This clause will migrate published Part 5 clause 4.1.
-
 ## Overview ## {#ad-use-cases-overview}
+
+This clause will migrate published Part 5 clause 4.1.
 
 Ad insertion allows a service provider to replace or augment portions of a main
 DASH presentation with advertising or slate content. The published Part 5 use
@@ -315,6 +315,8 @@ signalling, CMAF-compatible ad content, and client playback behaviour to support
 seamless transitions.
 
 # Architectures # {#ad-architectures}
+
+## General ## {#ad-architectures-general}
 
 The Part 5 architecture is organized around functional entities and interfaces
 rather than a single deployment topology. The same interfaces can be instantiated

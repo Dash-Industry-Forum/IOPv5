@@ -459,6 +459,8 @@ where switching is expected.
 
 ### Segment Information ### {#segment-information}
 
+#### General #### {#segment-information-general}
+
 DASH-IF IOP v5 uses the Segment information mechanisms of ISO/IEC 23009-1. This
 part defines three <dfn>addressing modes</dfn> for referencing Media Segments,
 Initialization Segments, and Index Segments in interoperable DASH presentations:
