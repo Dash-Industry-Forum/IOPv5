@@ -51,6 +51,43 @@ The DASH-IF IOP v5 document set follows this publication workflow:
     published as a stable release. The `stable` branch is updated; the `main`
     branch continues development of the next version.
 
+## Stable and Development Versions ## {#stable-dev-branches}
+
+DASH-IF IOP v5 uses a **two-branch model** to allow simultaneous maintenance of
+a stable approved version and ongoing development of the next version:
+
+- **`main` branch** — the development branch. All Working Draft content is
+    authored here. The preview publication at
+    [https://dashif.org/IOPv5/previews/](https://dashif.org/IOPv5/previews/)
+    is built from `main`. Version numbers are `0.x` (Working Draft).
+- **`stable` branch** — the approved/stable branch. When a version is formally
+    approved, it is tagged (e.g. `v1.0`) and the `stable` branch is updated to
+    that tag. The official publication at
+    [https://dashif.org/Guidelines/iop-v5/](https://dashif.org/Guidelines/iop-v5/)
+    is built from `stable`. Version numbers are `1.x` or higher.
+
+**Typical workflow for a new version:**
+
+1. Development continues on `main` (Working Draft, version `0.x`).
+2. When ready for WG Review, a release candidate is tagged on `main`
+    (e.g. `v1.0-rc1`).
+3. After WG and Community Review, the approved version is tagged (e.g. `v1.0`)
+    and the `stable` branch is fast-forwarded to that tag.
+4. The official publication is updated from `stable`.
+5. Development of the next version (`0.x` → `2.0-wip`) continues on `main`.
+
+**Working on a new major version while maintaining a stable one:**
+
+If a new major version (e.g. v2) needs to be developed while v1 remains stable:
+
+1. Create a `v2-dev` branch from `main` for the new major version.
+2. The `stable` branch continues to track the approved v1 content.
+3. When v2 is approved, `stable` is updated to the v2 tag.
+
+This model ensures that the official publication always reflects the latest
+approved content, while editors can freely develop the next version without
+affecting the stable publication.
+
 ## Issue Reporting ## {#issue-reporting}
 
 All issues, bugs, and feature requests for DASH-IF IOP v5 <span class=modal-keyword>shall</span> be submitted

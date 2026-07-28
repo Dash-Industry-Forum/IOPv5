@@ -49,6 +49,18 @@ def stage_shared(spec_dir: Path) -> list[Path]:
     return staged
 
 
+def copy_images(spec_dir: Path, out_dir: Path) -> None:
+    """Copy images directories from a spec to the output directory."""
+    for img_dir_name in ("images", "Images", "figures", "Figures"):
+        src = spec_dir / img_dir_name
+        if src.is_dir():
+            dst = out_dir / img_dir_name
+            dst.mkdir(parents=True, exist_ok=True)
+            for img_file in src.iterdir():
+                if img_file.is_file():
+                    shutil.copy2(img_file, dst / img_file.name)
+
+
 def build_one(spec_dir: Path, out_dir: Path, die_on: str | None) -> bool:
     bs = next(iter(sorted(spec_dir.glob("*.bs"))), None)
     if not bs:
@@ -65,6 +77,7 @@ def build_one(spec_dir: Path, out_dir: Path, die_on: str | None) -> bool:
         ok = res.returncode == 0 and out_html.exists()
         if ok:
             print(f"   -> {out_html} ({out_html.stat().st_size} bytes)")
+            copy_images(spec_dir, out_dir)
         else:
             print(f"   !! build failed for {spec_dir.name}", file=sys.stderr)
         return ok

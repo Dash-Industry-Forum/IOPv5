@@ -7,7 +7,9 @@ URL: https://dashif.org/Guidelines/iop-v5/part05-ad-insertion.html
 Group: dashif
 Editor: DASH-IF Technical Working Group
 Abstract: Ad insertion and content replacement guidelines, including SSAI and SGAI workflows. Working draft authored in the IOPv5 workspace.
-Repository: Dash-Industry-Forum/IOPv5
+!Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
+!Issue Tracking: File issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a>. Use label <code>Part 5</code> or prefix <code>[Part 5]:</code>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
+!Document Status: Working Draft (0.1). See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Part 1 §1 Document Status</a> for versioning and workflow.
 !Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: Ad Insertion, Content Replacement, SSAI, SGAI
 </pre>

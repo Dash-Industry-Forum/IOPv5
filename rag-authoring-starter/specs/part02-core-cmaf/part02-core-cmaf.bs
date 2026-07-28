@@ -7,7 +7,9 @@ URL: https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html
 Group: dashif
 Editor: Thomas Stockhammer, Qualcomm, https://www.linkedin.com/in/stockhammer/
 Abstract: Working draft of DASH-IF IOP v5 Part 2, covering core DASH principles and the mapping of CMAF content structures to DASH Media Presentations. Drafted from the Part 2 working draft and carried-over DASH-IF IOP v4.3 basics.
-Repository: Dash-Industry-Forum/IOPv5
+!Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
+!Issue Tracking: File issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a>. Use label <code>Part 2</code> or prefix <code>[Part 2]:</code>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
+!Document Status: Working Draft (0.1). See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Part 1 §1 Document Status</a> for versioning and workflow.
 !Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: Core Principles, CMAF, DASH, Timing Model, SegmentTemplate, SegmentTimeline, Multi-Period
 </pre>
