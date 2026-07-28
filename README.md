@@ -166,8 +166,27 @@ through the single IOPv5 issue tracker:
 https://github.com/Dash-Industry-Forum/IOPv5/issues
 ```
 
-Use the label `Part N` or the title prefix `[Part N]:` to identify the relevant
-part (e.g. `[Part 2]: Clarify @timescale requirement`).
+Use the title prefix `[Part N]:` to identify the relevant part
+(e.g. `[Part 2]: Clarify @timescale requirement`).
+
+After filing, assign the issue to the appropriate **per-part GitHub Project**:
+
+| Part | Project |
+|------|---------|
+| 1 | [Part 1: Overview, Architecture and Interfaces](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+1) |
+| 2 | [Part 2: Core Principles and CMAF Mapping](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+2) |
+| 3 | [Part 3: On-Demand Services](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+3) |
+| 4 | [Part 4: Live and Low-Latency Services](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+4) |
+| 5 | [Part 5: Ad Insertion and Content Replacement](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+5) |
+| 6 | [Part 6: Content Protection and Security](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+6) |
+| 7 | [Part 7: Video](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+7) |
+| 8 | [Part 8: Audio](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+8) |
+| 9 | [Part 9: Text (Subtitle)](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+9) |
+| 10 | [Part 10: Events](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+10) |
+| 11 | [Part 11: Additional Functionalities](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+11) |
+| 12 | [Part 12: Conformance and Reference Tools](https://github.com/orgs/Dash-Industry-Forum/projects?query=Part+12) |
+
+All projects are under the [Dash-Industry-Forum organization](https://github.com/orgs/Dash-Industry-Forum/projects).
 
 ### Submitting pull requests
 

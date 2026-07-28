@@ -8,7 +8,7 @@ Group: dashif
 Editor: DASH-IF Technical Working Group
 Abstract: Event signalling and processing, including MPD events, inband events, and timed metadata tracks. Working draft authored in the IOPv5 workspace.
 !Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
-!Issue Tracking: File issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a>. Use label <code>Part 10</code> or prefix <code>[Part 10]:</code>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
+!Issue Tracking: File issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a> with prefix <code>[Part 10]:</code> and assign to the <a href="https://github.com/orgs/Dash-Industry-Forum/projects">Part 10 GitHub Project</a>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
 !Document Status: Working Draft (0.4). See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Part 1 §1 Document Status</a> for versioning and workflow.
 !Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: Events, Timed Metadata, InbandEventStream, EventStream

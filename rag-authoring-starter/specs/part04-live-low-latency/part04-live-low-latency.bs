@@ -8,7 +8,7 @@ Group: dashif
 Editor: Thomas Stockhammer, Qualcomm, https://www.linkedin.com/in/stockhammer/
 Abstract: Working draft of DASH-IF IOP v5 Part 4, covering interoperability points for live and low-latency live DASH services. Authored in the IOPv5 workspace; not a published DASH-IF document.
 !Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
-!Issue Tracking: File issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a>. Use label <code>Part 4</code> or prefix <code>[Part 4]:</code>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
+!Issue Tracking: File issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a> with prefix <code>[Part 4]:</code> and assign to the <a href="https://github.com/orgs/Dash-Industry-Forum/projects">Part 4 GitHub Project</a>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
 !Document Status: Working Draft (0.1). See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Part 1 §1 Document Status</a> for versioning and workflow.
 !Contributors: DASH-IF Live Task Force. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: Live, Low-Latency, ARR, Segment Sequence, Resync

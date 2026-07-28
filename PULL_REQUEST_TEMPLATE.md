@@ -57,8 +57,8 @@ Addresses [Part 2] Complete SegmentTemplate parameter table
 
 ### Review
 
-- [ ] Issue Tracking label `Part N` applied to the related GitHub issue(s)
 - [ ] PR title uses `[Part N]:` prefix if applicable (e.g. `[Part 2]: Add SegmentTemplate table`)
+- [ ] Related GitHub issue(s) are assigned to the appropriate **per-part GitHub Project** (e.g. `Part 2: Core Principles and CMAF Mapping`) under the [Dash-Industry-Forum organization](https://github.com/orgs/Dash-Industry-Forum/projects)
 
 ## Preview
 

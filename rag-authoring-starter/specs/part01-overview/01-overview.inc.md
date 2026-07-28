@@ -116,7 +116,11 @@ While a part is at Working Draft status:
 - **File an issue** at
     [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues)
     to report errors, raise technical questions, or propose new content. Use the
-    label `Part N` or the title prefix `[Part N]:` to identify the relevant part.
+    title prefix `[Part N]:` to identify the relevant part.
+- **Assign the issue** to the appropriate per-part GitHub Project under the
+    [Dash-Industry-Forum organization](https://github.com/orgs/Dash-Industry-Forum/projects)
+    (e.g. `Part 2: Core Principles and CMAF Mapping`). Each part has a dedicated
+    project for tracking its open issues and work items.
 - **Submit a pull request** against the `main` branch to propose editorial
     corrections, add missing content, or improve existing text. Pull requests
     <span class=modal-keyword>should</span> reference the issue they address.
@@ -160,7 +164,9 @@ When a part reaches Community Review status:
     compile without errors.
 5. **Submit a pull request** against the `main` branch of the IOPv5 repository.
     Reference the issue(s) the PR addresses in the PR description.
-6. The DASH-IF Technical Working Group reviews and merges approved pull requests.
+6. **Assign the related issue(s)** to the appropriate per-part GitHub Project
+    under the [Dash-Industry-Forum organization](https://github.com/orgs/Dash-Industry-Forum/projects).
+7. The DASH-IF Technical Working Group reviews and merges approved pull requests.
 
 # Scope # {#scope}
 

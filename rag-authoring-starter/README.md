@@ -125,7 +125,25 @@ python tools/env/install_dashif_boilerplate.py
 
 File issues at: https://github.com/Dash-Industry-Forum/IOPv5/issues
 
-Use label `Part N` or title prefix `[Part N]:` (e.g. `[Part 2]: Add SegmentTemplate table`).
+Use title prefix `[Part N]:` (e.g. `[Part 2]: Add SegmentTemplate table`).
+
+After filing, assign the issue to the appropriate **per-part GitHub Project**
+under the [Dash-Industry-Forum organization](https://github.com/orgs/Dash-Industry-Forum/projects):
+
+| Part | Project name |
+|------|-------------|
+| 1 | Part 1: Overview, Architecture and Interfaces |
+| 2 | Part 2: Core Principles and CMAF Mapping |
+| 3 | Part 3: On-Demand Services |
+| 4 | Part 4: Live and Low-Latency Services |
+| 5 | Part 5: Ad Insertion and Content Replacement |
+| 6 | Part 6: Content Protection and Security |
+| 7 | Part 7: Video |
+| 8 | Part 8: Audio |
+| 9 | Part 9: Text (Subtitle) |
+| 10 | Part 10: Events |
+| 11 | Part 11: Additional Functionalities |
+| 12 | Part 12: Conformance and Reference Tools |
 
 ---
 
