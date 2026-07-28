@@ -213,6 +213,105 @@ condition, test assets must pass DASH-IF conformance validation.
 Note: CTA-WAVE test content is a common companion asset set and can be fetched
 with `dashfetcher`; see [=livesim2=].
 
+## Initial Part 2 core CMAF and timing model conformance mapping ## {#tools-part2-timing-conformance}
+
+The following initial mapping identifies test and validation expectations for
+DASH-IF IOP v5 Part 2 core CMAF and timing model requirements. This table is a
+starting point for issue creation and test-asset planning; it does not by itself
+define new Part 2 requirements.
+
+<table class="data">
+  <caption>Initial Part 2 core CMAF and timing model conformance mapping.</caption>
+  <thead>
+    <tr><th>Part 2 feature<th>Primary validation target<th>Reference/test asset expectation
+  <tbody>
+    <tr>
+      <td>Period timing (zero-duration, first/last period rules)
+      <td>The [=DASH-IF Conformance Validator=] checks that no Period has zero duration, that the first Period in a static presentation starts at 0, and that the last Period in a static presentation has `Period@duration`.
+      <td>Test assets should include static and dynamic presentations with correct Period timing, plus negative cases for zero-duration Periods and missing `Period@duration` on the last static Period.
+    <tr>
+      <td>Segment addressing modes (SegmentBase, SegmentTemplate, SegmentTimeline)
+      <td>The validator checks that `@timescale` is present, that all Representations in an Adaptation Set use the same addressing mode, and that SegmentTimeline `S` elements are consistent with `@t`, `@d`, and `@r`.
+      <td>Test assets should cover all three addressing modes (indexed, explicit, simple) with correct and incorrect `@timescale` values, mixed-mode Adaptation Sets (negative), and SegmentTimeline gaps.
+    <tr>
+      <td>Clock synchronization (`UTCTiming`)
+      <td>The validator checks that dynamic presentations include at least one `UTCTiming` element using a permitted scheme (`http-xsdate`, `http-iso`, `http-head`, `direct`).
+      <td>Test assets should include dynamic presentations with each permitted `UTCTiming` scheme and a negative case with no `UTCTiming` element.
+    <tr>
+      <td>Availability window and time shift buffer
+      <td>The validator checks `MPD@timeShiftBufferDepth` presence and consistency with `@availabilityTimeOffset` values; checks that `MPD@suggestedPresentationDelay` does not result in a zero or negative effective time shift buffer.
+      <td>Test assets should include dynamic presentations with various `timeShiftBufferDepth` and `suggestedPresentationDelay` combinations, including boundary cases.
+    <tr>
+      <td>MPD updates (`minimumUpdatePeriod`, `publishTime`)
+      <td>The validator checks that `MPD@publishTime` is present in dynamic presentations and that `MPD@minimumUpdatePeriod` is consistent with the announced segment timeline.
+      <td>Test assets (via [=livesim2=]) should include MPD-controlled live services with regular MPD updates, end-of-live signalling (removal of `minimumUpdatePeriod`), and live-to-VoD conversion.
+    <tr>
+      <td>Period connectivity and continuity signalling
+      <td>The validator checks that period-connectivity and period-continuity descriptors (`urn:mpeg:dash:period-connectivity:2015`, `urn:mpeg:dash:period-continuity:2015`) are not simultaneously present on the same Representation, and that `AdaptationSet@id` values match across connected Periods.
+      <td>Test assets should include multi-Period presentations with period-connected and period-continuous Adaptation Sets, including negative cases for conflicting signalling.
+    <tr>
+      <td>Timing constraints (timescale, xs:duration)
+      <td>The validator checks that no timescale or timestamp value exceeds 2<sup>53</sup>, and that `xs:duration` fields do not use year or month units.
+      <td>Test assets should include presentations with 90 KHz and other common timescales, plus negative cases with oversized timescale values and year/month duration units.
+    <tr>
+      <td>Forbidden techniques (`@presentationDuration`, `@availabilityTimeComplete`)
+      <td>The validator checks that `@presentationDuration` and `@availabilityTimeComplete` are absent from all MPD elements.
+      <td>Test assets should include negative cases with these forbidden attributes present.
+    <tr>
+      <td>Segment loss handling (no missing content segments)
+      <td>The validator checks that no Period signals "missing content segments" per [[!MPEGDASH]] clause 6.2.6.
+      <td>Test assets should include multi-Period presentations that correctly handle representation gaps via Period splitting, and negative cases with missing segment signalling.
+    <tr>
+      <td>Stand-alone text track timing (`@presentationTimeOffset` absent)
+      <td>The validator checks that stand-alone IMSC1/WebVTT Representations do not carry `@presentationTimeOffset`.
+      <td>Test assets should include stand-alone text track Representations with and without `@presentationTimeOffset` (negative case).
+</table>
+
+Issue: This Part 2 mapping is an initial source-level conformance inventory. It
+should be reconciled with actual DASH-IF Conformance Validator coverage, dash.js
+sample coverage, and the DASH-IF Test Assets Database before being treated as a
+complete conformance plan. The corresponding local validator-start tool is
+`tools/validation/validate_part2_core_cmaf_mpd.py`.
+
+## Initial Part 4 live service conformance mapping ## {#tools-part4-live-conformance}
+
+The following initial mapping identifies test and validation expectations for
+DASH-IF IOP v5 Part 4 live and low-latency service requirements. This table is a
+starting point for issue creation and test-asset planning.
+
+<table class="data">
+  <caption>Initial Part 4 live service conformance mapping.</caption>
+  <thead>
+    <tr><th>Part 4 feature<th>Primary validation target<th>Reference/test asset expectation
+  <tbody>
+    <tr>
+      <td>Dynamic service requirements (`MPD@type`, `availabilityStartTime`, `publishTime`)
+      <td>The [=DASH-IF Conformance Validator=] checks that `MPD@type="dynamic"` presentations include `MPD@availabilityStartTime` and `MPD@publishTime`.
+      <td>Test assets (via [=livesim2=]) should include dynamic presentations with all mandatory attributes and negative cases with missing `availabilityStartTime` or `publishTime`.
+    <tr>
+      <td>MPD snapshot validity and content add/remove rules
+      <td>The validator checks that `minimumUpdatePeriod` is consistent with the segment timeline, that segment references are not added to non-last Periods, and that expired segment references are removed per the `EarliestRemovalPoint` algorithm.
+      <td>[=livesim2=] test streams should exercise MPD update cycles including content addition, expiry removal, and end-of-live signalling.
+    <tr>
+      <td>Segment-based MPD update signalling (`InbandEventStream`)
+      <td>The validator checks that `InbandEventStream` is signalled for Adaptation Sets carrying MPD validity expiry events.
+      <td>Test assets should include segment-based MPD update streams with `urn:mpeg:dash:event:2012` events and corresponding `InbandEventStream` signalling.
+    <tr>
+      <td>Clock synchronization (`UTCTiming` scheme restriction)
+      <td>The validator checks that only permitted `UTCTiming` schemes are used (`http-xsdate`, `http-iso`, `http-head`, `direct`) and that at least one is present in dynamic presentations.
+      <td>Test assets should cover each permitted scheme and a negative case with a non-permitted scheme.
+    <tr>
+      <td>Live client joining and presentation delay
+      <td>[=dash.js=] exercises live-edge detection, `suggestedPresentationDelay` usage, and initial buffer fill before playout.
+      <td>[=livesim2=] test streams should include presentations with and without `suggestedPresentationDelay`, covering normal join, late join, and seek-to-live-edge scenarios.
+</table>
+
+Issue: This Part 4 mapping is an initial source-level conformance inventory. It
+should be reconciled with actual DASH-IF Conformance Validator coverage, dash.js
+live-service sample coverage, and livesim2 test stream coverage before being
+treated as a complete conformance plan. The corresponding local validator-start
+tool is `tools/validation/validate_part4_live_mpd.py`.
+
 ## Initial Part 9 text-track conformance mapping ## {#tools-part9-text-conformance}
 
 The following initial mapping identifies test and validation expectations for
@@ -433,4 +532,8 @@ involve one or more community-review rounds.
       <td>0.3
       <td>Reconciliation
       <td>Added initial Part 5 ad-insertion conformance mapping covering IF-3 through IF-9 validator, dash.js, livesim2, and test-asset expectations.
+    <tr>
+      <td>0.4
+      <td>Reconciliation
+      <td>Added initial Part 2 core CMAF and timing model conformance mapping (10 features: Period timing, segment addressing, clock sync, availability window, MPD updates, period connectivity, timing constraints, forbidden techniques, segment loss, stand-alone text). Added initial Part 4 live service conformance mapping (5 features: dynamic service requirements, MPD snapshot validity, segment-based updates, UTCTiming, live client joining).
 </table>
