@@ -191,38 +191,38 @@ Received DASH events are processed for client consumption; see Part 10.
 The following summarises each part of DASH-IF IOP v5. Each part is published
 as a separate document; links point to the current published version.
 
-- **[Part 1 — Overview, Architecture and Interfaces](https://dashif.org/Guidelines/iop-v5/part01-overview.html)**
+- <b>[Part 1 — Overview, Architecture and Interfaces](https://dashif.org/Guidelines/iop-v5/part01-overview.html)</b>
     (this document): an overview of the features in the DASH-IF Interoperability
     Guidelines, with a reference architecture, interfaces, and functional blocks.
-- **[Part 2 — Core principles and CMAF mapping](https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html)**:
+- <b>[Part 2 — Core principles and CMAF mapping](https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html)</b>:
     the core principles of DASH including the data and timing model, and the
     mapping of CMAF data structures to DASH Media Presentations.
-- **[Part 3 — On-demand services](https://dashif.org/Guidelines/iop-v5/part03-on-demand.html)**:
+- <b>[Part 3 — On-demand services](https://dashif.org/Guidelines/iop-v5/part03-on-demand.html)</b>:
     requirements and recommendations for using DASH for on-demand services.
-- **[Part 4 — Live and low-latency services](https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html)**:
+- <b>[Part 4 — Live and low-latency services](https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html)</b>:
     live service offerings, including low-latency services.
-- **[Part 5 — Ad insertion and content replacement](https://dashif.org/Guidelines/iop-v5/part05-ad-insertion.html)**:
+- <b>[Part 5 — Ad insertion and content replacement](https://dashif.org/Guidelines/iop-v5/part05-ad-insertion.html)</b>:
     guidelines for advertisement insertion in a CMAF-based, DASH-delivered
     workflow, covering conditioning, packaging, and signalling for both SSAI
     and SGAI.
-- **[Part 6 — Content protection and security](https://dashif.org/Guidelines/iop-v5/part06-content-protection.html)**:
+- <b>[Part 6 — Content protection and security](https://dashif.org/Guidelines/iop-v5/part06-content-protection.html)</b>:
     guidelines for encrypted content in CMAF protected by MPEG CENC, key
     rotation, Enhanced Clear Key Content Protection (ECCP), and the DASH-IF
     content-protection XML schema.
-- **[Part 7 — Video](https://dashif.org/Guidelines/iop-v5/part07-video.html)**:
+- <b>[Part 7 — Video](https://dashif.org/Guidelines/iop-v5/part07-video.html)</b>:
     the CMAF media profiles and DASH signalling for video tracks, with reference
     to the [DASH-IF Codec Registry](https://dashif.org/codecs/).
-- **[Part 8 — Audio](https://dashif.org/Guidelines/iop-v5/part08-audio.html)**:
+- <b>[Part 8 — Audio](https://dashif.org/Guidelines/iop-v5/part08-audio.html)</b>:
     audio interoperability points, coding profiles, ISO BMFF packaging, and MPD
     parameters, with reference to the [DASH-IF Codec Registry](https://dashif.org/codecs/).
-- **[Part 9 — Text (Subtitle)](https://dashif.org/Guidelines/iop-v5/part09-text.html)**:
+- <b>[Part 9 — Text (Subtitle)](https://dashif.org/Guidelines/iop-v5/part09-text.html)</b>:
     subtitle/caption interoperability points and signalling.
-- **[Part 10 — Events](https://dashif.org/Guidelines/iop-v5/part10-events.html)**:
+- <b>[Part 10 — Events](https://dashif.org/Guidelines/iop-v5/part10-events.html)</b>:
     event signalling and processing, including MPD events, inband events, and
     timed metadata tracks.
-- **[Part 11 — Additional functionalities](https://dashif.org/Guidelines/iop-v5/part11-additional-technologies.html)**:
+- <b>[Part 11 — Additional functionalities](https://dashif.org/Guidelines/iop-v5/part11-additional-technologies.html)</b>:
     further interoperability features.
-- **[Part 12 — Conformance and reference tools](https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html)**:
+- <b>[Part 12 — Conformance and reference tools](https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html)</b>:
     the conformance validator, reference player ([dash.js](https://github.com/Dash-Industry-Forum/dash.js)),
     live source simulator ([livesim2](https://github.com/Dash-Industry-Forum/livesim2)),
     and test assets.
@@ -241,10 +241,10 @@ references for identifiers and codecs used in DASH-IF compliant services. These
 registries are living documents, continuously updated as new values are registered
 and existing entries are refined.
 
-- **[DASH-IF Identifier Registry](https://dashif.org/identifiers/introduction/)**
+- <b>[DASH-IF Identifier Registry](https://dashif.org/identifiers/introduction/)</b>
     [[DASHIF-IDENTIFIERS]] — the authoritative registry of `@schemeIdUri` values,
     profile URIs, and other string identifiers used in DASH MPDs and media.
-- **[DASH-IF Codec Registry](https://dashif.org/codecs/introduction/)**
+- <b>[DASH-IF Codec Registry](https://dashif.org/codecs/introduction/)</b>
     [[DASHIF-CODECS]] — the authoritative registry of `@codecs` strings and CMAF
     profiles for video and audio codecs supported in DASH-IF compliant services.
 
@@ -342,11 +342,11 @@ maintained at
 
 Detailed codec requirements are defined in:
 
-- **[Part 7 — Video](https://dashif.org/Guidelines/iop-v5/part07-video.html)**:
+- <b>[Part 7 — Video](https://dashif.org/Guidelines/iop-v5/part07-video.html)</b>:
     H.264/AVC, H.265/HEVC, and other video codecs.
-- **[Part 8 — Audio](https://dashif.org/Guidelines/iop-v5/part08-audio.html)**:
+- <b>[Part 8 — Audio](https://dashif.org/Guidelines/iop-v5/part08-audio.html)</b>:
     HE-AACv2, E-AC-3, AC-4, MPEG-H 3D Audio, and other audio codecs.
-- **[Part 9 — Text](https://dashif.org/Guidelines/iop-v5/part09-text.html)**:
+- <b>[Part 9 — Text](https://dashif.org/Guidelines/iop-v5/part09-text.html)</b>:
     IMSC1, WebVTT, and other text/subtitle codecs.
 
 ## Registering New Identifiers and Codecs ## {#registry-registration}
@@ -410,7 +410,7 @@ To propose a new codec for the DASH-IF Codec Registry:
       <td>Added DASH-IF Registries section covering the Identifier Registry (schemeIdUri values, profile URIs, ISO/IEC 23009-1 identifier types) and Codec Registry, with registration workflow (Google Forms, GitHub issues). Added DASHIF-IDENTIFIERS and DASHIF-CODECS biblio entries. Updated all 12 .bs files: replaced Repository: with !Repository:, added !Issue Tracking: and !Document Status: custom metadata entries.
 </table>
 
-# Annex A: Document Status # {#document-status}
+# Annex A: Document Status # {#document-status .appendix}
 
 ## Living Document ## {#living-document}
 
@@ -457,11 +457,11 @@ The DASH-IF IOP v5 document set follows this publication workflow:
 DASH-IF IOP v5 uses a **two-branch model** to allow simultaneous maintenance of
 a stable approved version and ongoing development of the next version:
 
-- **`main` branch** — the development branch. All Working Draft content is
+- <b>`main` branch</b> — the development branch. All Working Draft content is
     authored here. The preview publication at
     [https://dashif.org/IOPv5/previews/](https://dashif.org/IOPv5/previews/)
     is built from `main`. Version numbers are `0.x` (Working Draft).
-- **`stable` branch** — the approved/stable branch. When a version is formally
+- <b>`stable` branch</b> — the approved/stable branch. When a version is formally
     approved, it is tagged (e.g. `v1.0`) and the `stable` branch is updated to
     that tag. The official publication at
     [https://dashif.org/Guidelines/iop-v5/](https://dashif.org/Guidelines/iop-v5/)
