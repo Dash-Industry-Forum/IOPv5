@@ -6,7 +6,7 @@ Repository: Dash-Industry-Forum/IOPv5
 Shortname: iop-v5-part7
 URL: https://dashif.org/Guidelines/iop-v5/part07-video.html
 Group: dashif
-Editor: DASH-IF Technical Working Group
+Editor: Stephan Schreiner, Dolby, https://www.linkedin.com/in/stephanschreiner/
 Abstract: Video interoperability points, CMAF media profiles, codec signalling, DASH MPD parameters, and video-specific constraints. Working draft authored in the IOPv5 workspace.
 
 !Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+project%3ADash-Industry-Forum%2F33" target="_blank">Currently open Part 7 issues</a><br><a href="https://github.com/Dash-Industry-Forum/IOPv5/issues/new?title=%5BPart+7%5D%3A+" target="_blank">File a new Part 7 issue</a> (then assign to <a href="https://github.com/orgs/Dash-Industry-Forum/projects/33" target="_blank">Part 7 project</a>)

@@ -6,7 +6,7 @@ Repository: Dash-Industry-Forum/IOPv5
 Shortname: iop-v5-part8
 URL: https://dashif.org/Guidelines/iop-v5/part08-audio.html
 Group: dashif
-Editor: DASH-IF Technical Working Group
+Editor: Stephan Schreiner, Dolby, https://www.linkedin.com/in/stephanschreiner/
 Abstract: Audio interoperability points, coding profiles, ISO BMFF packaging, MPD parameters, and audio-specific constraints. Working draft authored in the IOPv5 workspace.
 
 !Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+project%3ADash-Industry-Forum%2F34" target="_blank">Currently open Part 8 issues</a><br><a href="https://github.com/Dash-Industry-Forum/IOPv5/issues/new?title=%5BPart+8%5D%3A+" target="_blank">File a new Part 8 issue</a> (then assign to <a href="https://github.com/orgs/Dash-Industry-Forum/projects/34" target="_blank">Part 8 project</a>)
