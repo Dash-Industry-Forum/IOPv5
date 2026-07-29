@@ -104,7 +104,7 @@ solely on the static codec tables in this part.
 
 # Audio Adaptation Set Constraints # {#audio-constraints}
 
-`AdaptationSet@lang` <span class=modal-keyword>shall</span> be present on every audio adaptation set.
+<code><b>AdaptationSet</b>@lang</code> <span class=modal-keyword>shall</span> be present on every audio adaptation set.
 
 `@audioSamplingRate` <span class=modal-keyword>shall</span> be present either on the adaptation set or
 Representation level (but not both).

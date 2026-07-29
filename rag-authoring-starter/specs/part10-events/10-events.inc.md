@@ -110,10 +110,10 @@ a `@value` of 1 or 3, where:
 * A value of `3` indicates that in-band events also contain the updated MPD
     snapshot when updates occur.
 
-Services <span class=modal-keyword>shall</span> update `MPD@publishTime` to a unique value after every MPD
+Services <span class=modal-keyword>shall</span> update <code><b>MPD</b>@publishTime</code> to a unique value after every MPD
 update.
 
-Note: `MPD@publishTime` is merely a version label. The value is not used in
+Note: <code><b>MPD</b>@publishTime</code> is merely a version label. The value is not used in
 timing calculations.
 
 <div class="example">
@@ -130,7 +130,7 @@ duration using the following logic:
     MPD that was valid at the start of the Media Segment remains valid up to the
     end of the Media Segment.
 * The presence of an in-band MPD validity event in a Media Segment indicates
-    that the MPD with `MPD@publishTime` equal to the event's `publish_time`
+    that the MPD with <code><b>MPD</b>@publishTime</code> equal to the event's `publish_time`
     field remains valid up to the event start time.
 
 The in-band events used for signaling MPD validity duration <span class=modal-keyword>shall</span> have
@@ -164,13 +164,13 @@ In addition to tracking events (e.g. ad starts, quartile tracking), a server
 may also need to signal additional metadata to the application. There is no need
 for a generic DASH client to implement this functionality directly — it is enough
 to provide opaque information that the client passes to an external module. The
-`Event@schemeIdUri` provides the addressing mechanism, while MPD events allow
+<code><b>Event</b>@schemeIdUri</code> provides the addressing mechanism, while MPD events allow
 opaque payloads to be embedded in the MPD.
 
 MPD events <span class=modal-keyword>shall</span> be carried in **EventStream** elements at Period level. Each
 **EventStream** element <span class=modal-keyword>shall</span> carry a `@schemeIdUri` that identifies the event
-type. The `@timescale` attribute <span class=modal-keyword>shall</span> be present if `Event@presentationTime` or
-`Event@duration` are used.
+type. The `@timescale` attribute <span class=modal-keyword>shall</span> be present if <code><b>Event</b>@presentationTime</code> or
+<code><b>Event</b>@duration</code> are used.
 
 For ad-insertion cue messages (e.g. SCTE-35), see Part 5 (Section "IF-3
 Opportunity Metadata and SCTE-35 MPD Events") for the specific requirements on

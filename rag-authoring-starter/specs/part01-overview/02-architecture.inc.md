@@ -261,15 +261,15 @@ The DASH-IF Identifier Registry at
 provides the canonical `@schemeIdUri` values and other string identifiers used
 across DASH MPD elements. The registry covers:
 
-- <b>`AudioChannelConfiguration@schemeIdUri`</b> — schemes for signalling audio
+- <b><code><b>AudioChannelConfiguration</b>@schemeIdUri</code></b> — schemes for signalling audio
     channel layout (e.g. MPEG channel configuration, Dolby, DTS).
-- <b>`Role@schemeIdUri`</b> — schemes for Adaptation Set role descriptors
+- <b><code><b>Role</b>@schemeIdUri</code></b> — schemes for Adaptation Set role descriptors
     (e.g. `urn:mpeg:dash:role:2011` for main, alternate, subtitle, etc.).
-- <b>`Accessibility@schemeIdUri`</b> — schemes for accessibility descriptors
+- <b><code><b>Accessibility</b>@schemeIdUri</code></b> — schemes for accessibility descriptors
     (e.g. closed captions, audio description, sign language).
-- <b>`EventStream@schemeIdUri`</b> — schemes for MPD and inband event streams
+- <b><code><b>EventStream</b>@schemeIdUri</code></b> — schemes for MPD and inband event streams
     (e.g. `urn:mpeg:dash:event:2012` for MPD validity expiry).
-- <b>`ContentProtection@schemeIdUri`</b> — DRM system identifiers
+- <b><code><b>ContentProtection</b>@schemeIdUri</code></b> — DRM system identifiers
     (e.g. Common Encryption, Widevine, PlayReady, FairPlay).
 - **Profile URIs** — URIs identifying DASH profiles and interoperability points
     (e.g. `http://dashif.org/guidelines/dash-if-ondemand`).
@@ -307,7 +307,7 @@ the IOP v5 document set:
       <td>Parts 7, 8, 9, 10
     <tr>
       <td>Profile URI
-      <td>`MPD@profiles`, `AdaptationSet@profiles`, `Representation@profiles`
+      <td><code><b>MPD</b>@profiles</code>, <code><b>AdaptationSet</b>@profiles</code>, <code><b>Representation</b>@profiles</code>
       <td>URI identifying a DASH profile or interoperability point
       <td>Parts 2, 3, 4
     <tr>
