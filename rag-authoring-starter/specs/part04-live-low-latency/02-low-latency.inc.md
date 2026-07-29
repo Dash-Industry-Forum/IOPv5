@@ -144,8 +144,8 @@ A [=Low-Latency Adaptation Set=] follows these requirements and recommendations:
     - `@inband` <span class=modal-keyword>may</span> be set to `FALSE` or `TRUE`.
 - A [=Low-Latency Adaptation Set=] <span class=modal-keyword>shall</span> be either a [=Low-Latency Segment
     Adaptation Set=] or a [=Low-Latency Chunked Adaptation Set=].
-- One of the following <span class=modal-keyword>shall</span> be present: the **SegmentTemplate**@duration
-    attribute, or **SegmentTemplate**@media with `$Number$` and `$Time$`.
+- One of the following <span class=modal-keyword>shall</span> be present: the `SegmentTemplate@duration`
+    attribute, or `SegmentTemplate@media` with `$Number$` and `$Time$`.
 
 The segment duration <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> vary more than indicated in the MPD.
 

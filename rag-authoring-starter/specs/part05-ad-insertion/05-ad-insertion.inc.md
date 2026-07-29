@@ -569,7 +569,7 @@ The following live-content assumptions are used by the published Part 5 model:
   completed;
 - the minimum splice point advance notice time is known; and
 - the DASH packager uses this advance notice to configure
-  **MPD**@minimumUpdatePeriod so that DASH clients and MPD proxies request MPD
+  `MPD@minimumUpdatePeriod` so that DASH clients and MPD proxies request MPD
   updates frequently enough not to miss announced Periods.
 
 For the initial MPD, the DASH packager / MPD generator maps CMAF data to the MPD
@@ -582,12 +582,12 @@ The following **InitializationSet** rules apply:
 
 - every **InitializationSet** gets a unique `@id`;
 - for every CMAF Switching Set not known to be offered continuously,
-  **InitializationSet**@inAllPeriods is set to `false`;
+  `InitializationSet@inAllPeriods` is set to `false`;
 - for every CMAF Switching Set known to be offered continuously,
-  **InitializationSet**@inAllPeriods is set to `true` or omitted.
+  `InitializationSet@inAllPeriods` is set to `true` or omitted.
 
-For live operation, **MPD**@availabilityStartTime is set to an arbitrary value,
-for example `1970-01-01T00:00:00Z`. The **MPD**@minimumUpdatePeriod is set
+For live operation, `MPD@availabilityStartTime` is set to an arbitrary value,
+for example `1970-01-01T00:00:00Z`. The `MPD@minimumUpdatePeriod` is set
 sufficiently small so that DASH clients and MPD proxies do not miss Periods
 created for announced splice points, taking into account minimum splice point
 advance notice time.
@@ -610,11 +610,11 @@ For every splice point `i` at media time `tsplice,i`, if a Period is generated,
 the following Period start rules apply:
 
 - if it is the first Period in the presentation and the media is starting to be
-  produced, **Period**@start is set to the current time minus
-  **MPD**@availabilityStartTime, with possible margins for different segment
+  produced, `Period@start` is set to the current time minus
+  `MPD@availabilityStartTime`, with possible margins for different segment
   availability times such as CDN publication delay;
-- if it is not the first Period in the presentation, **Period**@start is set to the
-  sum of the previous **Period**@start and the interval between splice points,
+- if it is not the first Period in the presentation, `Period@start` is set to the
+  sum of the previous `Period@start` and the interval between splice points,
   `tsplice,i - tsplice,i-1`.
 
 Period continuity should be signalled across Adaptation Sets that continue across
@@ -624,11 +624,11 @@ Every available CMAF Switching Set in the CMAF Presentation is mapped to one
 Adaptation Set using the DASH Core Profile for CMAF content. The following
 additional restrictions apply for each Adaptation Set:
 
-- **SegmentBase**@presentationTimeOffset is set to `tsplice,i`, normalized by the
+- `SegmentBase@presentationTimeOffset` is set to `tsplice,i`, normalized by the
   applicable timescale;
-- for the Splice-Conditioned Packaging option, **SegmentBase**@eptDelta is `0` and
+- for the Splice-Conditioned Packaging option, `SegmentBase@eptDelta` is `0` and
   should therefore be absent;
-- **SegmentTemplate**@startNumber or **SegmentTimeline** is set such that it
+- `SegmentTemplate@startNumber` or **SegmentTimeline** is set such that it
   references the first segment in the Period after the splice point;
 - Period continuity should indicate which Adaptation Set follows continuously
   from the previous one; and
@@ -934,7 +934,7 @@ The following requirements apply to DASH-IF ad content:
 - `@presentationTimeOffset` <span class=modal-keyword>shall</span> be absent, i.e. it is assumed to be zero.
 - `@eptDelta` <span class=modal-keyword>shall</span> be absent, i.e. the earliest presentation time of each segment is `0`.
 - The DASH Media Presentation <span class=modal-keyword>shall</span> contain exactly one Period.
-- **MPD**@type <span class=modal-keyword>shall</span> be set to `static`.
+- `MPD@type` <span class=modal-keyword>shall</span> be set to `static`.
 
 Note: An important assumption for this profile is the availability of content for
 CMAF tracks over the entire Period. Content may overlap at the end of the
@@ -986,9 +986,9 @@ Examples of asset identifier schemes include:
     <tr><td>**AdaptationSet**<td>`@xlink:actuate`<td>R<td><span class=modal-keyword>Shall</span> be absent.
     <tr><td>**AdaptationSet**<td>**InbandEventStream**<td>0 … N<td>Inband Event Streams are permitted, for example for beaconing.
     <tr><td>**AdaptationSet**<td>`CommonAttributesElements`<td>—<td>Specifies the common attributes and elements from `RepresentationBaseType`; values not specified here follow ISO/IEC 23009-1.
-    <tr><td>**AdaptationSet**<td>**SegmentBase**@presentationTimeOffset<td>OD<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>**AdaptationSet**<td>**SegmentBase**@eptDelta<td>O<td><span class=modal-keyword>Shall</span> be absent.
-    <tr><td>**AdaptationSet**<td>**SegmentBase**@pdDelta<td>O<td>May be present for non-video tracks. If present, it <span class=modal-keyword>shall</span> be non-negative and should be as small as possible.
+    <tr><td>**AdaptationSet**<td>`SegmentBase@presentationTimeOffset`<td>OD<td><span class=modal-keyword>Shall</span> be absent.
+    <tr><td>**AdaptationSet**<td>`SegmentBase@eptDelta`<td>O<td><span class=modal-keyword>Shall</span> be absent.
+    <tr><td>**AdaptationSet**<td>`SegmentBase@pdDelta`<td>O<td>May be present for non-video tracks. If present, it <span class=modal-keyword>shall</span> be non-negative and should be as small as possible.
     <tr><td>**AdaptationSet**<td>`@contentType`<td>M<td><span class=modal-keyword>Shall</span> be present.
     <tr><td>**AdaptationSet**<td>**SegmentList**<td>0<td><span class=modal-keyword>Shall</span> be absent.
     <tr><td>**AdaptationSet**<td>**Representation**<td>1 … N<td>At least one Representation <span class=modal-keyword>shall</span> be present in each Adaptation Set.
@@ -1046,7 +1046,7 @@ The ad insertion MPD manipulator operates under the following assumptions:
 - DASH content is provided by IF-2.
 - Opportunity metadata is provided by IF-3.
 - The splice point timing is known as `tsplice-out` when the opportunity starts on media time.
-- `tsplice-out` matches the **Period**@start of the main content at the opportunity.
+- `tsplice-out` matches the `Period@start` of the main content at the opportunity.
 - The end of the ad insertion opportunity, `tsplice-in`, is either known at `tsplice-out` or is initially estimated and later adjusted when `tsplice-in` occurs.
 - Properly conditioned ad content is received through IF-4.
 
@@ -1087,10 +1087,10 @@ identified by the published Part 5 Table 5.
   <tbody>
     <tr><td>**MPD**<td>**MPD**<td>—<td>Provides the requirements for content that is combined between main content and ad content. Values not specified here are identical to ISO/IEC 23009-1.
     <tr><td>**MPD**<td>**ServiceDescription**<td>—<td>Service description information may be present.
-    <tr><td>**ServiceDescription**<td>**Latency**@target<td>0<td>Target latency is provided when applicable.
+    <tr><td>**ServiceDescription**<td>`Latency@target`<td>0<td>Target latency is provided when applicable.
     <tr><td>**MPD**<td>`@profiles`<td>M<td>Set to `urn:mpeg:dash:profile:cmaf-extended:2019` or `urn:mpeg:dash:profile:cmaf:2019`. The proxy can change to `urn:mpeg:dash:profile:cmaf-extended:2019` if it cannot exactly condition the ads to the Period durations.
     <tr><td>**MPD**<td>`@minimumUpdatePeriod`<td>—<td>Adjusted according to the ad-insertion operation.
-    <tr><td>**MPD**<td>**InitializationSet**<td>0 … N<td>If **InitializationSet**@inAllPeriods is `true`, the MPD proxy checks whether it can provide ad content conditioned to the InitializationSet parameters. If it can, it should leave the InitializationSet included. If it cannot, it must set `@inAllPeriods` to `false` or remove the InitializationSet from the MPD.
+    <tr><td>**MPD**<td>**InitializationSet**<td>0 … N<td>If `InitializationSet@inAllPeriods` is `true`, the MPD proxy checks whether it can provide ad content conditioned to the InitializationSet parameters. If it can, it should leave the InitializationSet included. If it cannot, it must set `@inAllPeriods` to `false` or remove the InitializationSet from the MPD.
     <tr><td>`Period (Main content)`<td>**Period**<td>—<td>Specifies a main-content Period. Information from the main-content Period is reused except where specified differently.
     <tr><td>`Period (Main content)`<td>`@duration`<td>R<td><span class=modal-keyword>Shall not</span> be present; the duration is determined by the `@start` of the Ad Period.
     <tr><td>`Period (Main content)`<td>**EventStream**<td>0 … N<td>Reused from the main content.
@@ -1165,7 +1165,7 @@ manipulator must perform splitting operations before replacement.
 A typical MPD proxy operation flow is:
 
 1. Pass through DASH content from IF-2 for Periods that are not ad Periods.
-2. Preserve **MPD**@minimumUpdatePeriod as received from the main server unless an ad-operation constraint requires otherwise.
+2. Preserve `MPD@minimumUpdatePeriod` as received from the main server unless an ad-operation constraint requires otherwise.
 3. Prepare for content replacement when opportunity metadata is provided through IF-3.
 4. Determine or estimate the opportunity duration and request suitable ad content through IF-4a and IF-4b.
 5. Insert one or more selected ad-content Periods into the MPD at `tsplice-out`.
@@ -1175,9 +1175,9 @@ A typical MPD proxy operation flow is:
 For inserted ad Periods:
 
 - Period order follows the order of ads declared in the decisioning response.
-- The first inserted **Period**@start is equal to `tsplice-out`.
-- Each subsequent inserted **Period**@start is equal to the previous **Period**@start plus the previous **Period**@duration.
-- **Period**@duration of each inserted Period is removed.
+- The first inserted `Period@start` is equal to `tsplice-out`.
+- Each subsequent inserted `Period@start` is equal to the previous `Period@start` plus the previous `Period@duration`.
+- `Period@duration` of each inserted Period is removed.
 - Adaptation Sets unnecessary for client operation may be removed when the MPD proxy knows the client only needs a subset.
 - Period continuity signalling is added where compatible CMAF headers are available.
 - Client-targeted Event Streams that exist during the opportunity time in the main content are copied into the insertion Periods, with splitting and signalling updates as needed.

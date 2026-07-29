@@ -258,11 +258,11 @@ of `ColourPrimaries`, `TransferCharacteristics`, or `MatrixCoefficients`.
 
 In any video adaptation set, the following <span class=modal-keyword>shall</span> be present:
 
-* **AdaptationSet**@par (the display aspect ratio)
-* **Representation**@sar (the sample aspect ratio)
-* Either **Representation**@width or **AdaptationSet**@width (but not both)
-* Either **Representation**@height or **AdaptationSet**@height (but not both)
-* Either **Representation**@frameRate or **AdaptationSet**@frameRate (but not both)
+* `AdaptationSet@par` (the display aspect ratio)
+* `Representation@sar` (the sample aspect ratio)
+* Either `Representation@width` or `AdaptationSet@width` (but not both)
+* Either `Representation@height` or `AdaptationSet@height` (but not both)
+* Either `Representation@frameRate` or `AdaptationSet@frameRate` (but not both)
 
 Note: `@width` and `@height` indicate the number of encoded pixels. `@par`
 indicates the final intended display aspect ratio and `@sar` is effectively the
@@ -284,7 +284,7 @@ In any video adaptation set, the following <span class=modal-keyword>should not<
 ignored by clients if present, as these values are trivial to determine at
 runtime:
 
-* **AdaptationSet**@minWidth, `@maxWidth`, `@minHeight`, `@maxHeight`,
+* `AdaptationSet@minWidth`, `@maxWidth`, `@minHeight`, `@maxHeight`,
     `@minFrameRate`, `@maxFrameRate`
 
 `@scanType` <span class=modal-keyword>should not</span> be present and if present <span class=modal-keyword>shall</span> have the value

@@ -57,13 +57,13 @@ common timing and Segment information model.
 
 For an on-demand service:
 
-- **MPD**@type <span class=modal-keyword>shall</span> be `static`.
+- `MPD@type` <span class=modal-keyword>shall</span> be `static`.
 - The Media Presentation duration <span class=modal-keyword>shall</span> be determinable from
-    **MPD**@mediaPresentationDuration or from the duration of the last Period.
-- **MPD**@minimumUpdatePeriod <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be present.
-- **MPD**@timeShiftBufferDepth <span class=modal-keyword><span class=modal-keyword>should</span> not</span> be present; if present, a client is
+    `MPD@mediaPresentationDuration` or from the duration of the last Period.
+- `MPD@minimumUpdatePeriod` <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be present.
+- `MPD@timeShiftBufferDepth` <span class=modal-keyword><span class=modal-keyword>should</span> not</span> be present; if present, a client is
     expected to ignore it.
-- **MPD**@suggestedPresentationDelay <span class=modal-keyword><span class=modal-keyword>should</span> not</span> be present; if present, a client is
+- `MPD@suggestedPresentationDelay` <span class=modal-keyword><span class=modal-keyword>should</span> not</span> be present; if present, a client is
     expected to ignore it.
 - Segment availability <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> depend on wall-clock publication over time.
 
@@ -72,8 +72,8 @@ For an on-demand service:
 For an on-demand service (static presentation):
 
 - The first Period <span class=modal-keyword>shall</span> start at the zero point of the MPD timeline (with a
-  **Period**@start value of 0 seconds).
-- The last Period <span class=modal-keyword>shall</span> have a **Period**@duration.
+  `Period@start` value of 0 seconds).
+- The last Period <span class=modal-keyword>shall</span> have a `Period@duration`.
 
 These constraints ensure that the Media Presentation has a well-defined start and
 end point, enabling clients to accurately determine the total presentation

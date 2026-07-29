@@ -34,7 +34,7 @@ against that baseline. Low-latency operation is specified separately in
 
 ## Overview: Dynamic and Live Media Presentations ## {#live-overview}
 
-A DASH Media Presentation with **MPD**@type set to `dynamic` allows media to be
+A DASH Media Presentation with `MPD@type` set to `dynamic` allows media to be
 made available over time, and its availability <span class=modal-keyword>may</span> also be removed over time.
 This has two major effects:
 
@@ -51,7 +51,7 @@ Dynamic services <span class=modal-keyword>may</span> be used for different type
     MPD without MPD updates.
 : <dfn export>MPD-controlled Live Service</dfn>
 :: A live service for which the client polls and reloads the MPD following
-    **MPD**@minimumUpdatePeriod to discover newly available Segments and Periods.
+    `MPD@minimumUpdatePeriod` to discover newly available Segments and Periods.
 : <dfn export>MPD- and Segment-controlled Live Service</dfn>
 :: A live service for which the client is additionally informed of MPD changes
     by inband information carried in the Segments (for example, MPD validity
@@ -77,9 +77,9 @@ of Segment availability, which forms the basis for live services.
 For a live service (dynamic presentation):
 
 - The first Period <span class=modal-keyword>shall</span> start at or after the zero point of the MPD timeline
-  (with a **Period**@start value of 0 seconds or greater).
-- The last Period <span class=modal-keyword>may</span> have a **Period**@duration, in which case it has a fixed
-  duration. If without **Period**@duration, the last Period in a dynamic
+  (with a `Period@start` value of 0 seconds or greater).
+- The last Period <span class=modal-keyword>may</span> have a `Period@duration`, in which case it has a fixed
+  duration. If without `Period@duration`, the last Period in a dynamic
   presentation has an unlimited duration that may later be shortened by an MPD
   update.
 
@@ -128,26 +128,26 @@ definitions, aligned with ISO/IEC 23009-1, apply:
 :: The wall-clock time on the content server. All wall-clock-related information
     in the MPD is expressed relative to `NOW`.
 
-**MPD information.** For a dynamic service without MPD updates: **MPD**@type <span class=modal-keyword>shall</span>
-be `dynamic`; **MPD**@mediaPresentationDuration <span class=modal-keyword>shall</span> be present, or the
-**Period**@duration of the last Period <span class=modal-keyword>shall</span> be present; **MPD**@minimumUpdatePeriod
-<span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be present. It is recommended to provide **MPD**@timeShiftBufferDepth and
-**MPD**@suggestedPresentationDelay.
+**MPD information.** For a dynamic service without MPD updates: `MPD@type` <span class=modal-keyword>shall</span>
+be `dynamic`; `MPD@mediaPresentationDuration` <span class=modal-keyword>shall</span> be present, or the
+`Period@duration` of the last Period <span class=modal-keyword>shall</span> be present; `MPD@minimumUpdatePeriod`
+<span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be present. It is recommended to provide `MPD@timeShiftBufferDepth` and
+`MPD@suggestedPresentationDelay`.
 
 **Period information.** Each Period *i* is assigned a Period start time in
 wall-clock time (PSwc[i]) and a Period end time in wall-clock time (PEwc[i]),
 determined per ISO/IEC 23009-1:
 
-- If **Period**@start is present, PSwc[i] is the sum of **MPD**@availabilityStartTime
+- If `Period@start` is present, PSwc[i] is the sum of `MPD@availabilityStartTime`
     (AST) and `@start`.
 - Otherwise, if the previous Period has `@duration`, PSwc[i] is the previous
     Period start plus that duration (`@start`, if also present, takes precedence).
 - The Period end time PEwc[i] is the start of the next Period (PSwc[i+1]); for the
-    last Period it derives from **MPD**@mediaPresentationDuration or the last
-    **Period**@duration, and an MPD update <span class=modal-keyword>may</span> extend it.
+    last Period it derives from `MPD@mediaPresentationDuration` or the last
+    `Period@duration`, and an MPD update <span class=modal-keyword>may</span> extend it.
 
-**Representation information.** For a Period *i*, when **SegmentTemplate**.**SegmentTimeline**
-is present (and **SegmentTemplate**@duration is not), the **SegmentTimeline** contains
+**Representation information.** For a Period *i*, when `SegmentTemplate.SegmentTimeline`
+is present (and `SegmentTemplate@duration` is not), the **SegmentTimeline** contains
 `S` elements with `@t` (start time), `@d` (duration), and `@r` (repeat count),
 from which the number and timing of Segments — and hence SAST/SAET and URLs — are
 derived using `@timescale` and any applicable `@availabilityTimeOffset`. A
@@ -165,14 +165,14 @@ For dynamic service offerings, the MPD <span class=modal-keyword>shall</span> co
 least contain the mandatory information required by ISO/IEC 23009-1 for a dynamic
 Media Presentation:
 
-- **MPD**@type <span class=modal-keyword>shall</span> be set to `dynamic`.
-- **MPD**@availabilityStartTime <span class=modal-keyword>shall</span> be present and provides the wall-clock anchor
+- `MPD@type` <span class=modal-keyword>shall</span> be set to `dynamic`.
+- `MPD@availabilityStartTime` <span class=modal-keyword>shall</span> be present and provides the wall-clock anchor
     for the Media Presentation timeline.
-- **MPD**@publishTime <span class=modal-keyword>shall</span> be present and <span class=modal-keyword>shall</span> be updated whenever the MPD content
+- `MPD@publishTime` <span class=modal-keyword>shall</span> be present and <span class=modal-keyword>shall</span> be updated whenever the MPD content
     changes, so that clients can detect a changed MPD.
 - Where the presentation end time is not known in advance,
-    **MPD**@minimumUpdatePeriod <span class=modal-keyword>shall</span> be present; the Period end time of the last
-    Period is then obtained as the sum of `NOW` and **MPD**@minimumUpdatePeriod.
+    `MPD@minimumUpdatePeriod` <span class=modal-keyword>shall</span> be present; the Period end time of the last
+    Period is then obtained as the sum of `NOW` and `MPD@minimumUpdatePeriod`.
 
 Content <span class=modal-keyword>may</span> be offered as a single Period or as multiple Periods (for example for
 ad insertion opportunities, program changes, or operational purposes). Segment
@@ -207,7 +207,7 @@ The availability window is calculated as follows:
 
 1. Let `now` be the current wall clock time according to the synchronized clock.
 2. Let `AvailabilityWindowStart` be `now - MPD@timeShiftBufferDepth`.
-   - If **MPD**@timeShiftBufferDepth is not defined, let `AvailabilityWindowStart`
+   - If `MPD@timeShiftBufferDepth` is not defined, let `AvailabilityWindowStart`
      be the effective availability start time.
 3. Let `TotalAvailabilityTimeOffset` be the sum of all `@availabilityTimeOffset`
    values that apply to the Adaptation Set, either via **SegmentBase**,
@@ -247,7 +247,7 @@ can be presented at the current time:
    a section of the time shift buffer.
 
 The time shift buffer extends from `now - MPD@timeShiftBufferDepth` to `now`. In
-the absence of **MPD**@timeShiftBufferDepth, the start of the time shift buffer is
+the absence of `MPD@timeShiftBufferDepth`, the start of the time shift buffer is
 the effective availability start time.
 
 <figure>
@@ -286,8 +286,8 @@ durations, availability timing, network conditions, and buffer requirements.
 
 The information required to calculate an optimal presentation delay might not always
 be available to DASH clients. Services <span class=modal-keyword>may</span> define the
-**MPD**@suggestedPresentationDelay attribute to provide a suggested presentation
-delay. Clients <span class=modal-keyword>should</span> use **MPD**@suggestedPresentationDelay when provided by the MPD.
+`MPD@suggestedPresentationDelay` attribute to provide a suggested presentation
+delay. Clients <span class=modal-keyword>should</span> use `MPD@suggestedPresentationDelay` when provided by the MPD.
 
 <figure>
   <img src="Images/WindowInteractions.png">
@@ -311,12 +311,12 @@ For a live service offering that relies on MPD updates:
 
 - The same general dynamic service requirements in [[#live-so-requirements]]
     apply at any time `NOW` that the MPD is present on the server.
-- **MPD**@minimumUpdatePeriod <span class=modal-keyword>shall</span> be set to a value consistent with the rate at
+- `MPD@minimumUpdatePeriod` <span class=modal-keyword>shall</span> be set to a value consistent with the rate at
     which the timeline is extended and with any change lead time the service
     guarantees.
 - On each change, the service <span class=modal-keyword>shall</span> write a new MPD with an updated
-    **MPD**@publishTime; clients detect the change by comparing publish times.
-- **MPD**@minimumUpdatePeriod <span class=modal-keyword>may</span> be set to `0` to indicate that the client <span class=modal-keyword>should</span>
+    `MPD@publishTime`; clients detect the change by comparing publish times.
+- `MPD@minimumUpdatePeriod` <span class=modal-keyword>may</span> be set to `0` to indicate that the client <span class=modal-keyword>should</span>
     revalidate the MPD before requesting each Segment when the timeline is not
     predictable.
 
@@ -328,7 +328,7 @@ signalling of MPD changes is provided by the segment-based mechanism in
 
 The MPD of a dynamic presentation remains valid not only at its moment of initial
 publishing but through the entire <dfn export>MPD validity duration</dfn>, which is a
-time span of duration **MPD**@minimumUpdatePeriod starting from the moment the MPD
+time span of duration `MPD@minimumUpdatePeriod` starting from the moment the MPD
 download is started by a client [[!MPEGDASH]].
 
 Clients <span class=modal-keyword>shall</span> process state changes that occur during the MPD validity duration.
@@ -336,17 +336,17 @@ For example, new Media Segments will become available over time if they are
 referenced by the MPD and old ones become unavailable, even without downloading a
 new snapshot of the MPD.
 
-The presence or absence of **MPD**@minimumUpdatePeriod <span class=modal-keyword>shall</span> be used by DASH services
+The presence or absence of `MPD@minimumUpdatePeriod` <span class=modal-keyword>shall</span> be used by DASH services
 to signal whether and when the MPD might be updated:
 
-- A nonzero value for **MPD**@minimumUpdatePeriod defines the MPD validity duration
+- A nonzero value for `MPD@minimumUpdatePeriod` defines the MPD validity duration
     of the present snapshot of the MPD, starting from the moment its download was
     initiated. This allows the service to provide regular updates to the MPD while
     limiting the refresh interval to avoid overload.
-- The value 0 for **MPD**@minimumUpdatePeriod indicates that the MPD has no
+- The value 0 for `MPD@minimumUpdatePeriod` indicates that the MPD has no
     validity after the moment it is retrieved. In such a situation, the client
     <span class=modal-keyword>shall</span> acquire a new MPD whenever it wants to make new Media Segments available.
-- Absence of the **MPD**@minimumUpdatePeriod attribute indicates an infinite
+- Absence of the `MPD@minimumUpdatePeriod` attribute indicates an infinite
     validity (the MPD will never be updated).
 
 ### Adding Content to the MPD ### {#live-mpd-add-content}
@@ -413,12 +413,12 @@ MPD is updated to a state that describes the final content of a live service, th
 service <span class=modal-keyword>shall</span>:
 
 - Define a fixed duration for the last Period.
-- Remove the **MPD**@minimumUpdatePeriod attribute.
+- Remove the `MPD@minimumUpdatePeriod` attribute.
 - Cease performing MPD updates.
 
 This signals to clients that no more content will be added to the MPD.
 
-Upon detecting the removal of **MPD**@minimumUpdatePeriod, clients <span class=modal-keyword>should</span> present a
+Upon detecting the removal of `MPD@minimumUpdatePeriod`, clients <span class=modal-keyword>should</span> present a
 user experience suitable for end of live content.
 
 Note: A common mistake is to treat the eventual cessation of new content as a
@@ -426,8 +426,8 @@ transient or fatal error, resulting in potentially infinite loading even before
 the final Media Segment is presented to the user.
 
 If the ending live service is to be converted to a static presentation for
-on-demand viewing, the service <span class=modal-keyword>may</span> change **MPD**@type to `static` when
-**MPD**@minimumUpdatePeriod is removed or do so at a later time. Clients <span class=modal-keyword>shall</span> not
+on-demand viewing, the service <span class=modal-keyword>may</span> change `MPD@type` to `static` when
+`MPD@minimumUpdatePeriod` is removed or do so at a later time. Clients <span class=modal-keyword>shall</span> not
 lose track of the playback position if a dynamic presentation becomes a static
 presentation.
 
@@ -447,7 +447,7 @@ logic:
     or extend the MPD validity duration.
 
 Note: There is no requirement that clients poll for updates at
-**MPD**@minimumUpdatePeriod interval. They can do so as often or as rarely as they
+`MPD@minimumUpdatePeriod` interval. They can do so as often or as rarely as they
 wish — this attribute simply defines the MPD validity duration.
 
 Clients using HTTP to perform MPD refreshes <span class=modal-keyword>should</span> use conditional GET requests
@@ -488,7 +488,7 @@ time base as the MPD generation in order to request Segments at the right time.
 
 ### Service Provider Requirements and Guidelines ### {#live-sync-service}
 
-If the Media Presentation is dynamic, or if **MPD**@availabilityStartTime is
+If the Media Presentation is dynamic, or if `MPD@availabilityStartTime` is
 present, the service <span class=modal-keyword>shall</span> provide a Media Presentation as follows:
 
 - The Segment availability times announced in the MPD <span class=modal-keyword>should</span> be generated from a
@@ -512,7 +512,7 @@ requires support for `http-xsdate` and `http-head`.
 
 ### Client Requirements and Guidelines ### {#live-sync-client}
 
-If the Media Presentation is dynamic, or if **MPD**@availabilityStartTime is
+If the Media Presentation is dynamic, or if `MPD@availabilityStartTime` is
 present, the client <span class=modal-keyword>should</span> do the following:
 
 - If the MPD does not contain any **UTCTiming** element, the client <span class=modal-keyword>should</span> acquire
@@ -540,10 +540,10 @@ variation while maintaining the presentation schedule.
 When joining a live service, the client <span class=modal-keyword>should</span>:
 
 - Determine the live edge from the MPD timeline and the synchronized wall-clock
-    time, taking **MPD**@suggestedPresentationDelay into account where present to
+    time, taking `MPD@suggestedPresentationDelay` into account where present to
     select the initial presentation time.
 - Begin playout at a presentation time that leaves sufficient buffer within the
-    time-shift buffer (**MPD**@timeShiftBufferDepth) to avoid rebuffering, while
+    time-shift buffer (`MPD@timeShiftBufferDepth`) to avoid rebuffering, while
     honouring any latency target of the service.
 - Prefer to start at a random access point rather than presenting stale media,
     to keep the join latency consistent.
@@ -556,8 +556,8 @@ specified in [[#low-latency]].
 ## Provisioning of Live Content in On-Demand Mode ## {#live-to-vod}
 
 A completed live service <span class=modal-keyword>may</span> be offered subsequently as an on-demand service. In
-this case the Media Presentation is converted to **MPD**@type set to `static`, the
-timeline is finalised, and **MPD**@minimumUpdatePeriod and live-only signalling
+this case the Media Presentation is converted to `MPD@type` set to `static`, the
+timeline is finalised, and `MPD@minimumUpdatePeriod` and live-only signalling
 (such as **UTCTiming** for availability) are removed or adjusted per ISO/IEC
 23009-1.
 
