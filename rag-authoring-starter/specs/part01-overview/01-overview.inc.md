@@ -19,56 +19,6 @@ describes how the multi-part IOP document set fits together.
 Note: DASH-IF IOP v5 is published as a multi-part document set. The parts and
 their summaries are described in [[#part-descriptions]].
 
-# References # {#doc-references}
-
-## Normative references ## {#normative-references}
-
-References are either specific (identified by date of publication and/or edition
-number or version number) or non-specific. For specific references, only the
-cited version applies. For non-specific references, the latest version of the
-referenced document (including any amendments) applies.
-
-Note: While any hyperlinks included in this clause were valid at the time of
-publication, DASH-IF cannot guarantee their long-term validity.
-
-The following referenced documents are necessary for the application of the
-present document:
-
-- ISO/IEC 23009-1, *Dynamic adaptive streaming over HTTP (DASH) — Part 1: Media
-    presentation description and segment formats* [[!MPEGDASH]] (latest edition
-    applies).
-- ISO/IEC 14496-12, *Coding of audio-visual objects — Part 12: ISO base media
-    file format* [[!ISOBMFF]]. The 8th edition (ISO/IEC FDIS 14496-12:2024) is the
-    current edition; the latest edition applies.
-- ISO/IEC 23000-19, *Common media application format (CMAF) for segmented media*
-    [[!MPEGCMAF]].
-- DASH-IF IOP v5, Part 12, *Conformance and reference tools*.
-- DASH-IF IOP v5, Part 2, *Core principles and CMAF mapping*.
-- DASH-IF IOP v5, Part 6, *Content protection*.
-- IETF RFC 9110, *HTTP Semantics*.
-- IETF RFC 9111, *HTTP Caching*.
-- IETF RFC 9112, *HTTP/1.1*.
-- IETF RFC 6265, *HTTP State Management Mechanism*.
-- IETF RFC 8446, *The Transport Layer Security (TLS) Protocol, Version 1.3*.
-
-Note: This clause replaces the following references from earlier editions, which
-have since been obsoleted: the HTTP/1.1 series RFC 7230–7235 (obsoleted by
-RFC 9110/9111/9112) and RFC 5246 (TLS 1.2, obsoleted by RFC 8446 / TLS 1.3).
-TLS 1.2 remains acceptable as a minimum where TLS 1.3 is not available.
-
-## Informative references ## {#informative-references}
-
-The following referenced documents are not necessary for the application of the
-present document but assist the user with regard to a particular subject area:
-
-- CTA-5003-C, *Web Application Video Ecosystem (WAVE) — Device Playback
-    Capabilities* (revision C).
-- DASH-IF, *Content Protection Information Exchange (CPIX)*.
-- DASH-IF Guidelines for Implementation: *DASH-IF Interoperability Point for
-    ATSC 3.0*.
-- DASH-IF Identifier Registry [[DASHIF-IDENTIFIERS]].
-- DASH-IF Codec Registry [[DASHIF-CODECS]].
-
 # Terms, Definitions, Symbols and Abbreviations # {#terms}
 
 ## Terms and Definitions ## {#terms-definitions}
@@ -128,3 +78,7 @@ The following naming conventions apply in this document set:
     specific element, the notation `Element@attribute` is used.
 - **List** values, XML data types, and conditions follow the conventions of
     ISO/IEC 23009-1 [[!MPEGDASH]].
+
+The following normative references apply to this document set:
+[[!MPEGDASH]], [[!ISOBMFF]], [[!MPEGCMAF]], [[!RFC9110]], [[!RFC9111]],
+[[!RFC9112]], [[!RFC6265]], [[!RFC8446]].
