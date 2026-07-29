@@ -21,7 +21,7 @@ based on ISO BMFF (ISO/IEC 14496-12 [[!ISOBMFF]]) and CMAF (ISO/IEC 23000-19
 
 <figure class="diagram" style="max-width:100%;overflow-x:auto;">
 <pre class=mermaid>
-%%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':55,'rankSpacing':80,'padding':14,'htmlLabels':false,'useMaxWidth':true}}}%%
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'15px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':60,'rankSpacing':90,'padding':18,'htmlLabels':true,'useMaxWidth':true,'wrappingWidth':220}}}%%
 flowchart LR
     CP[Contribution Link] -->|Contribution| ENC[ABR Encoder]
     ENC -->|ISO BMFF / CMAF| PKG["ISO BMFF / CMAF Packager (Encryption)"]
@@ -117,7 +117,7 @@ offerings. The following basic workflow is assumed:
 
 <figure class="diagram" style="max-width:100%;overflow-x:auto;">
 <pre class=mermaid>
-%%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':50,'rankSpacing':75,'padding':14,'htmlLabels':false,'useMaxWidth':true}}}%%
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'15px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':55,'rankSpacing':85,'padding':18,'htmlLabels':true,'useMaxWidth':true,'wrappingWidth':200}}}%%
 flowchart TB
     APP[Application] -->|"Client-API (config / notifications / status)"| MGMT
     subgraph Player [DASH Player]
@@ -292,17 +292,17 @@ the IOP v5 document set:
   <tbody>
     <tr>
       <td>`@schemeIdUri` + `@value`
-      <td><b>Role</b>, <b>Accessibility</b>, <b>AudioChannelConfiguration</b>, <b>EventStream</b>, <b>ContentProtection</b>, <b>SupplementalProperty</b>, <b>EssentialProperty</b>
+      <td><code><b>Role</b></code>, <code><b>Accessibility</b></code>, <code><b>AudioChannelConfiguration</b></code>, <code><b>EventStream</b></code>, <code><b>ContentProtection</b></code>, <code><b>SupplementalProperty</b></code>, <code><b>EssentialProperty</b></code>
       <td>Extensible scheme identification for descriptors and event streams
       <td>Parts 2, 6, 7, 8, 9, 10
     <tr>
       <td>`@codecs`
-      <td><b>Representation</b>, <b>AdaptationSet</b>
+      <td><code><b>Representation</b></code>, <code><b>AdaptationSet</b></code>
       <td>Codec and profile identification string (RFC 6381 format)
       <td>Parts 7, 8, 9
     <tr>
       <td>`@mimeType`
-      <td><b>Representation</b>, <b>AdaptationSet</b>
+      <td><code><b>Representation</b></code>, <code><b>AdaptationSet</b></code>
       <td>MIME type of the media container
       <td>Parts 7, 8, 9, 10
     <tr>
@@ -312,7 +312,7 @@ the IOP v5 document set:
       <td>Parts 2, 3, 4
     <tr>
       <td>`@id`
-      <td><b>Period</b>, <b>AdaptationSet</b>, <b>Representation</b>, <b>Event</b>
+      <td><code><b>Period</b></code>, <code><b>AdaptationSet</b></code>, <code><b>Representation</b></code>, <code><b>Event</b></code>
       <td>Local identifier within the MPD for cross-referencing
       <td>Parts 2, 4, 5
 </table>
@@ -410,9 +410,9 @@ To propose a new codec for the DASH-IF Codec Registry:
       <td>Added DASH-IF Registries section covering the Identifier Registry (schemeIdUri values, profile URIs, ISO/IEC 23009-1 identifier types) and Codec Registry, with registration workflow (Google Forms, GitHub issues). Added DASHIF-IDENTIFIERS and DASHIF-CODECS biblio entries. Updated all 12 .bs files: replaced Repository: with !Repository:, added !Issue Tracking: and !Document Status: custom metadata entries.
 </table>
 
-<h2 class="appendix no-num" id="document-status">Annex A: Document Status</h2>
+<h2 class="no-num" id="document-status">Annex A: Document Status</h2>
 
-<h3 id="living-document">Living Document</h3>
+<h3 class="no-num" id="living-document">A.1 Living Document</h3>
 
 This document is published as a <b>Living Document</b> (LD). A Living Document is
 continuously updated as new content is added, issues are resolved, and the
@@ -434,7 +434,7 @@ History table:
     version numbers 1.0 and above.
 
 
-<h3 id="document-workflow">Document Workflow</h3>
+<h3 class="no-num" id="document-workflow">A.2 Document Workflow</h3>
 
 The DASH-IF IOP v5 document set follows this publication workflow:
 
@@ -452,7 +452,7 @@ The DASH-IF IOP v5 document set follows this publication workflow:
     published as a stable release. The `stable` branch is updated; the `main`
     branch continues development of the next version.
 
-<h3 id="stable-dev-branches">Stable and Development Versions</h3>
+<h3 class="no-num" id="stable-dev-branches">A.3 Stable and Development Versions</h3>
 
 DASH-IF IOP v5 uses a <b>two-branch model</b> to allow simultaneous maintenance of
 a stable approved version and ongoing development of the next version:
@@ -489,7 +489,7 @@ This model ensures that the official publication always reflects the latest
 approved content, while editors can freely develop the next version without
 affecting the stable publication.
 
-<h3 id="issue-reporting">Issue Reporting</h3>
+<h3 class="no-num" id="issue-reporting">A.4 Issue Reporting</h3>
 
 All issues, bugs, and feature requests for DASH-IF IOP v5 <span class=modal-keyword>shall</span> be submitted
 through the single DASH-IF IOPv5 issue tracker at
@@ -497,20 +497,20 @@ through the single DASH-IF IOPv5 issue tracker at
 
 To associate an issue with a specific part, use one of the following conventions:
 
-- <b>Label</b>: Apply the GitHub label `Part 1`, `Part 2`, etc. to the issue.
+- <code><b>Label</b></code>: Apply the GitHub label `Part 1`, `Part 2`, etc. to the issue.
 - <b>Title prefix</b>: Begin the issue title with `[Part N]:`, for example
     `[Part 2]: Clarify @timescale requirement for SegmentTemplate`.
 
-<h3 id="contributing">Contributing and Reviewing</h3>
+<h3 class="no-num" id="contributing">A.5 Contributing and Reviewing</h3>
 
-<h4 id="contributing-general">General</h4>
+<h4 class="no-num" id="contributing-general">A.5.1 General</h4>
 
 DASH-IF IOP v5 is developed openly on GitHub. Contributions and reviews are
 welcome at all stages of the publication workflow. The primary mechanisms are
 GitHub issues (for feedback and discussion) and pull requests (for editorial
 contributions).
 
-<h4 id="contributing-wd">During the Working Draft Phase</h4>
+<h4 class="no-num" id="contributing-wd">A.5.2 During the Working Draft Phase</h4>
 
 While a part is at Working Draft status:
 
@@ -528,7 +528,7 @@ While a part is at Working Draft status:
 - <b>Discuss</b> open issues in the GitHub issue tracker. The DASH-IF Technical
     Working Group reviews issues and pull requests on a regular basis.
 
-<h4 id="contributing-wg-review">During WG Review</h4>
+<h4 class="no-num" id="contributing-wg-review">A.5.3 During WG Review</h4>
 
 When a part reaches WG Review status (release candidate tagged on `main`):
 
@@ -539,7 +539,7 @@ When a part reaches WG Review status (release candidate tagged on `main`):
 - The WG chair coordinates the review schedule and announces the review period
     via the DASH-IF mailing list and GitHub.
 
-<h4 id="contributing-community-review">During Community Review</h4>
+<h4 class="no-num" id="contributing-community-review">A.5.4 During Community Review</h4>
 
 When a part reaches Community Review status:
 
@@ -552,7 +552,7 @@ When a part reaches Community Review status:
     end of the review period, the WG resolves all open issues and, if no
     substantive changes are required, approves the document.
 
-<h4 id="contributing-pr">How to Submit a Pull Request</h4>
+<h4 class="no-num" id="contributing-pr">A.5.5 How to Submit a Pull Request</h4>
 
 1. <b>Fork</b> the IOPv5 repository at
     [https://github.com/Dash-Industry-Forum/IOPv5](https://github.com/Dash-Industry-Forum/IOPv5).
