@@ -79,6 +79,3 @@ The following naming conventions apply in this document set:
 - **List** values, XML data types, and conditions follow the conventions of
     ISO/IEC 23009-1 [[!MPEGDASH]].
 
-The following normative references apply to this document set:
-[[!MPEGDASH]], [[!ISOBMFF]], [[!MPEGCMAF]], [[!RFC9110]], [[!RFC9111]],
-[[!RFC9112]], [[!RFC6265]], [[!RFC8446]].

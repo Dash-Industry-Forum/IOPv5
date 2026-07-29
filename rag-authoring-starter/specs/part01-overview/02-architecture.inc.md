@@ -19,7 +19,7 @@ the DASH Segment formats defined in ISO/IEC 23009-1 [[!MPEGDASH]], in particular
 based on ISO BMFF (ISO/IEC 14496-12 [[!ISOBMFF]]) and CMAF (ISO/IEC 23000-19
 [[!MPEGCMAF]]).
 
-<figure class="diagram">
+<figure class="diagram" style="max-width:100%;overflow-x:auto;">
 <pre class=mermaid>
 %%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':55,'rankSpacing':80,'padding':14,'htmlLabels':false,'useMaxWidth':true}}}%%
 flowchart LR
@@ -115,7 +115,7 @@ offerings. The following basic workflow is assumed:
 - A media playback platform and content decryption module are used for secure
     decoding and presentation of the streamed media.
 
-<figure class="diagram">
+<figure class="diagram" style="max-width:100%;overflow-x:auto;">
 <pre class=mermaid>
 %%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':50,'rankSpacing':75,'padding':14,'htmlLabels':false,'useMaxWidth':true}}}%%
 flowchart TB
@@ -143,30 +143,30 @@ flowchart TB
 
 The following functions are part of the reference client:
 
-- **Application**: uses the DASH/media player to play back a DASH Media
+- <b>Application</b>: uses the DASH/media player to play back a DASH Media
     Presentation, typically providing the MPD or its URL to the DASH client.
-- **DASH Player**: a complete player, including media playback platform and
+- <b>DASH Player</b>: a complete player, including media playback platform and
     content decryption module.
-- **DASH Access Client**: accesses and downloads media from the network and uses
+- <b>DASH Access Client</b>: accesses and downloads media from the network and uses
     the media playback platform and content decryption module for decoding and
     playback.
-- **Management**: controls internal processes and communication with the
+- <b>Management</b>: controls internal processes and communication with the
     application.
-- **MPD Processing**: parses and processes the MPD and extracts relevant
+- <b>MPD Processing</b>: parses and processes the MPD and extracts relevant
     information.
-- **Adaptation Set Selection**: selects Adaptation Sets based on user,
+- <b>Adaptation Set Selection</b>: selects Adaptation Sets based on user,
     environment, and capability information.
-- **Dynamic Switching and Request Scheduling**: runs adaptive-bitrate logic and
+- <b>Dynamic Switching and Request Scheduling</b>: runs adaptive-bitrate logic and
     triggers dynamic switching across Representations.
-- **Throughput Estimation**: estimates throughput from a specific
+- <b>Throughput Estimation</b>: estimates throughput from a specific
     network/application server.
-- **Metrics Collection**: collects streaming metrics and offers them to the
+- <b>Metrics Collection</b>: collects streaming metrics and offers them to the
     application for processing and potential reporting to network entities.
-- **Media Playback Management**: moves downloaded information into the media
+- <b>Media Playback Management</b>: moves downloaded information into the media
     playback platform and handles content protection and DRM information.
-- **Media Playback Platform**: plays back CMAF-based media using well-defined
+- <b>Media Playback Platform</b>: plays back CMAF-based media using well-defined
     playback instructions.
-- **Event Processing**: processes DASH events and provides information to the
+- <b>Event Processing</b>: processes DASH events and provides information to the
     application.
 
 Detailed APIs and methods to communicate with a DASH reference client are
@@ -177,11 +177,11 @@ CMAF-capable playback platform is given in Part 2.
 
 Content security is accomplished in a device by two functions:
 
-- **Key management** by a digital rights management (DRM) system that
+- <b>Key management</b> by a digital rights management (DRM) system that
     authenticates a device and authorizes decryption and playback under specific
     conditions (e.g. output protection, rental period, hardware root of trust);
     see Part 6.
-- **Decryption** of an encrypted track using a specific decryption scheme; see
+- <b>Decryption</b> of an encrypted track using a specific decryption scheme; see
     Part 6.
 
 Received DASH events are processed for client consumption; see Part 10.
@@ -271,9 +271,9 @@ across DASH MPD elements. The registry covers:
     (e.g. `urn:mpeg:dash:event:2012` for MPD validity expiry).
 - <b><code><b>ContentProtection</b>@schemeIdUri</code></b> — DRM system identifiers
     (e.g. Common Encryption, Widevine, PlayReady, FairPlay).
-- **Profile URIs** — URIs identifying DASH profiles and interoperability points
+- <b>Profile URIs</b> — URIs identifying DASH profiles and interoperability points
     (e.g. `http://dashif.org/guidelines/dash-if-ondemand`).
-- **Supplemental and Essential Property descriptors** — `@schemeIdUri` values
+- <b>Supplemental and Essential Property descriptors</b> — `@schemeIdUri` values
     for MPD property descriptors.
 
 The registry source data is maintained at
@@ -292,17 +292,17 @@ the IOP v5 document set:
   <tbody>
     <tr>
       <td>`@schemeIdUri` + `@value`
-      <td>**Role**, **Accessibility**, **AudioChannelConfiguration**, **EventStream**, **ContentProtection**, **SupplementalProperty**, **EssentialProperty**
+      <td><b>Role</b>, <b>Accessibility</b>, <b>AudioChannelConfiguration</b>, <b>EventStream</b>, <b>ContentProtection</b>, <b>SupplementalProperty</b>, <b>EssentialProperty</b>
       <td>Extensible scheme identification for descriptors and event streams
       <td>Parts 2, 6, 7, 8, 9, 10
     <tr>
       <td>`@codecs`
-      <td>**Representation**, **AdaptationSet**
+      <td><b>Representation</b>, <b>AdaptationSet</b>
       <td>Codec and profile identification string (RFC 6381 format)
       <td>Parts 7, 8, 9
     <tr>
       <td>`@mimeType`
-      <td>**Representation**, **AdaptationSet**
+      <td><b>Representation</b>, <b>AdaptationSet</b>
       <td>MIME type of the media container
       <td>Parts 7, 8, 9, 10
     <tr>
@@ -312,7 +312,7 @@ the IOP v5 document set:
       <td>Parts 2, 3, 4
     <tr>
       <td>`@id`
-      <td>**Period**, **AdaptationSet**, **Representation**, **Event**
+      <td><b>Period</b>, <b>AdaptationSet</b>, <b>Representation</b>, <b>Event</b>
       <td>Local identifier within the MPD for cross-referencing
       <td>Parts 2, 4, 5
 </table>
@@ -363,10 +363,10 @@ framework.
 To propose a new `@schemeIdUri` value or other identifier for the DASH-IF
 Identifier Registry:
 
-1. **Submit a registration request** using the DASH-IF Identifier Registration
+1. <b>Submit a registration request</b> using the DASH-IF Identifier Registration
     Form at
     [https://docs.google.com/forms/d/e/1FAIpQLSfoMH4BL-1VwEpnVrYSnlvzwdO_7VAFeP1OfifxKW7nXVeWjg/viewform](https://docs.google.com/forms/d/e/1FAIpQLSfoMH4BL-1VwEpnVrYSnlvzwdO_7VAFeP1OfifxKW7nXVeWjg/viewform).
-2. **Alternatively**, file an issue at the Identifiers repository:
+2. <b>Alternatively</b>, file an issue at the Identifiers repository:
     [https://github.com/Dash-Industry-Forum/Identifiers/issues](https://github.com/Dash-Industry-Forum/Identifiers/issues).
 3. The DASH-IF Technical Working Group reviews the proposal and, if approved,
     adds the identifier to the registry.
@@ -414,7 +414,7 @@ To propose a new codec for the DASH-IF Codec Registry:
 
 ## Living Document ## {#living-document}
 
-This document is published as a **Living Document** (LD). A Living Document is
+This document is published as a <b>Living Document</b> (LD). A Living Document is
 continuously updated as new content is added, issues are resolved, and the
 technical community provides feedback. It does not represent a final, approved
 specification.
@@ -422,14 +422,14 @@ specification.
 The current status of each part is indicated by its version number in the Change
 History table:
 
-- **Working Draft (0.x)**: Content is being drafted and reviewed by the DASH-IF
+- <b>Working Draft (0.x)</b>: Content is being drafted and reviewed by the DASH-IF
     Technical Working Group. The document is open for community feedback but has
     not yet been formally approved.
-- **WG Review (0.8.x-wgr)**: The Working Group has completed its internal review
+- <b>WG Review (0.8.x-wgr)</b>: The Working Group has completed its internal review
     and the document is open for broader community review.
-- **Community Review (0.9.x-pr)**: The document is open for public comment before
+- <b>Community Review (0.9.x-pr)</b>: The document is open for public comment before
     final approval (public review).
-- **Approved (1.x)**: The document has been formally approved by DASH-IF and
+- <b>Approved (1.x)</b>: The document has been formally approved by DASH-IF and
     represents a stable, normative specification. Only approved versions use
     version numbers 1.0 and above.
 
@@ -438,23 +438,23 @@ History table:
 
 The DASH-IF IOP v5 document set follows this publication workflow:
 
-1. **Working Draft**: Editors draft content in the `main` development branch.
+1. <b>Working Draft</b>: Editors draft content in the `main` development branch.
     Issues and pull requests are tracked at
     [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).
     Use the label or title prefix `[Part N]` (e.g. `[Part 2]`) to associate an
     issue with a specific part.
-2. **WG Review**: The Working Group reviews the draft and resolves open issues.
+2. <b>WG Review</b>: The Working Group reviews the draft and resolves open issues.
     A release candidate is tagged on the `main` branch.
-3. **Community Review**: The release candidate is published for public comment.
+3. <b>Community Review</b>: The release candidate is published for public comment.
     A `stable` branch is created to maintain the approved version independently
     of ongoing development.
-4. **Approved**: After community review, the document is formally approved and
+4. <b>Approved</b>: After community review, the document is formally approved and
     published as a stable release. The `stable` branch is updated; the `main`
     branch continues development of the next version.
 
 ## Stable and Development Versions ## {#stable-dev-branches}
 
-DASH-IF IOP v5 uses a **two-branch model** to allow simultaneous maintenance of
+DASH-IF IOP v5 uses a <b>two-branch model</b> to allow simultaneous maintenance of
 a stable approved version and ongoing development of the next version:
 
 - <b>`main` branch</b> — the development branch. All Working Draft content is
@@ -467,7 +467,7 @@ a stable approved version and ongoing development of the next version:
     [https://dashif.org/Guidelines/iop-v5/](https://dashif.org/Guidelines/iop-v5/)
     is built from `stable`. Version numbers are `1.x` or higher.
 
-**Typical workflow for a new version:**
+<b>Typical workflow for a new version:</b>
 
 1. Development continues on `main` (Working Draft, version `0.x`).
 2. When ready for WG Review, a release candidate is tagged on `main`
@@ -477,7 +477,7 @@ a stable approved version and ongoing development of the next version:
 4. The official publication is updated from `stable`.
 5. Development of the next version (`0.x` → `2.0-wip`) continues on `main`.
 
-**Working on a new major version while maintaining a stable one:**
+<b>Working on a new major version while maintaining a stable one:</b>
 
 If a new major version (e.g. v2) needs to be developed while v1 remains stable:
 
@@ -497,8 +497,8 @@ through the single DASH-IF IOPv5 issue tracker at
 
 To associate an issue with a specific part, use one of the following conventions:
 
-- **Label**: Apply the GitHub label `Part 1`, `Part 2`, etc. to the issue.
-- **Title prefix**: Begin the issue title with `[Part N]:`, for example
+- <b>Label</b>: Apply the GitHub label `Part 1`, `Part 2`, etc. to the issue.
+- <b>Title prefix</b>: Begin the issue title with `[Part N]:`, for example
     `[Part 2]: Clarify @timescale requirement for SegmentTemplate`.
 
 ## Contributing and Reviewing ## {#contributing}
@@ -514,27 +514,27 @@ contributions).
 
 While a part is at Working Draft status:
 
-- **File an issue** at
+- <b>File an issue</b> at
     [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues)
     to report errors, raise technical questions, or propose new content. Use the
     title prefix `[Part N]:` to identify the relevant part.
-- **Assign the issue** to the appropriate per-part GitHub Project under the
+- <b>Assign the issue</b> to the appropriate per-part GitHub Project under the
     [Dash-Industry-Forum organization](https://github.com/orgs/Dash-Industry-Forum/projects)
     (e.g. `Part 2: Core Principles and CMAF Mapping`). Each part has a dedicated
     project for tracking its open issues and work items.
-- **Submit a pull request** against the `main` branch to propose editorial
+- <b>Submit a pull request</b> against the `main` branch to propose editorial
     corrections, add missing content, or improve existing text. Pull requests
     <span class=modal-keyword>should</span> reference the issue they address.
-- **Discuss** open issues in the GitHub issue tracker. The DASH-IF Technical
+- <b>Discuss</b> open issues in the GitHub issue tracker. The DASH-IF Technical
     Working Group reviews issues and pull requests on a regular basis.
 
 ### During WG Review ### {#contributing-wg-review}
 
 When a part reaches WG Review status (release candidate tagged on `main`):
 
-- **WG members** review the release candidate and file issues or pull requests
+- <b>WG members</b> review the release candidate and file issues or pull requests
     for any remaining technical or editorial concerns.
-- **Substantive changes** require a new release candidate; editorial corrections
+- <b>Substantive changes</b> require a new release candidate; editorial corrections
     <span class=modal-keyword>may</span> be applied directly.
 - The WG chair coordinates the review schedule and announces the review period
     via the DASH-IF mailing list and GitHub.
@@ -543,28 +543,28 @@ When a part reaches WG Review status (release candidate tagged on `main`):
 
 When a part reaches Community Review status:
 
-- **Anyone** <span class=modal-keyword>may</span> submit feedback by filing a GitHub issue at
+- <b>Anyone</b> <span class=modal-keyword>may</span> submit feedback by filing a GitHub issue at
     [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).
     Use the label `Community Review` or the title prefix `[CR]:` to identify
     community review comments.
-- **Pull requests** for editorial corrections are also welcome during this phase.
+- <b>Pull requests</b> for editorial corrections are also welcome during this phase.
 - The review period is announced on the DASH-IF website and mailing list. At the
     end of the review period, the WG resolves all open issues and, if no
     substantive changes are required, approves the document.
 
 ### How to Submit a Pull Request ### {#contributing-pr}
 
-1. **Fork** the IOPv5 repository at
+1. <b>Fork</b> the IOPv5 repository at
     [https://github.com/Dash-Industry-Forum/IOPv5](https://github.com/Dash-Industry-Forum/IOPv5).
-2. **Create a branch** from `main` with a descriptive name (e.g.
+2. <b>Create a branch</b> from `main` with a descriptive name (e.g.
     `fix-part2-timescale-clarification`).
-3. **Make your changes** to the relevant `.inc.md` or `.bs` files in the
+3. <b>Make your changes</b> to the relevant `.inc.md` or `.bs` files in the
     `rag-authoring-starter/specs/` directory.
-4. **Build locally** (optional but recommended) using
+4. <b>Build locally</b> (optional but recommended) using
     `python tools/publication/build_all.py --out ../dist` to verify the changes
     compile without errors.
-5. **Submit a pull request** against the `main` branch of the IOPv5 repository.
+5. <b>Submit a pull request</b> against the `main` branch of the IOPv5 repository.
     Reference the issue(s) the PR addresses in the PR description.
-6. **Assign the related issue(s)** to the appropriate per-part GitHub Project
+6. <b>Assign the related issue(s)</b> to the appropriate per-part GitHub Project
     under the [Dash-Industry-Forum organization](https://github.com/orgs/Dash-Industry-Forum/projects).
 7. The DASH-IF Technical Working Group reviews and merges approved pull requests.
