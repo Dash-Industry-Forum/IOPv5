@@ -410,7 +410,7 @@ To propose a new codec for the DASH-IF Codec Registry:
       <td>Added DASH-IF Registries section covering the Identifier Registry (schemeIdUri values, profile URIs, ISO/IEC 23009-1 identifier types) and Codec Registry, with registration workflow (Google Forms, GitHub issues). Added DASHIF-IDENTIFIERS and DASHIF-CODECS biblio entries. Updated all 12 .bs files: replaced Repository: with !Repository:, added !Issue Tracking: and !Document Status: custom metadata entries.
 </table>
 
-<h2 class="appendix" id="document-status">Annex A: Document Status</h2>
+<h2 class="appendix no-num" id="document-status">Annex A: Document Status</h2>
 
 <h3 id="living-document">Living Document</h3>
 
