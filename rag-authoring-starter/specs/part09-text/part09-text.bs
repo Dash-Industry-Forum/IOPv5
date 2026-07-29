@@ -3,7 +3,6 @@ Revision: 0.1
 Title: DASH-IF IOP v5 Part 9: Text
 Status: LD
 Repository: Dash-Industry-Forum/IOPv5
-Issue Tracking: none
 Shortname: iop-v5-part9
 URL: https://dashif.org/Guidelines/iop-v5/part09-text.html
 Group: dashif

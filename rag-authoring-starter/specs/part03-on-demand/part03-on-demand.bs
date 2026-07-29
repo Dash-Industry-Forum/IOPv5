@@ -3,7 +3,6 @@ Revision: 0.1
 Title: DASH-IF IOP v5 Part 3: On-Demand Services
 Status: LD
 Repository: Dash-Industry-Forum/IOPv5
-Issue Tracking: none
 Shortname: iop-v5-part3
 URL: https://dashif.org/Guidelines/iop-v5/part03-on-demand.html
 Group: dashif

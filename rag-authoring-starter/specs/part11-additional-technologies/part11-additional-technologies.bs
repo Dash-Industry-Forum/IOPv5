@@ -3,7 +3,6 @@ Revision: 0.1
 Title: DASH-IF IOP v5 Part 11: Additional Functionalities
 Status: LD
 Repository: Dash-Industry-Forum/IOPv5
-Issue Tracking: none
 Shortname: iop-v5-part11
 URL: https://dashif.org/Guidelines/iop-v5/part11-additional-technologies.html
 Group: dashif

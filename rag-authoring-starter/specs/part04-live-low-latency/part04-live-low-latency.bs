@@ -3,7 +3,6 @@ Revision: 0.1
 Title: DASH-IF IOP v5 Part 4: Live and Low-Latency Services
 Status: LD
 Repository: Dash-Industry-Forum/IOPv5
-Issue Tracking: none
 Shortname: iop-v5-part4
 URL: https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html
 Group: dashif

@@ -3,7 +3,6 @@ Revision: 0.1
 Title: DASH-IF IOP v5 Part 5: Ad Insertion and Content Replacement
 Status: LD
 Repository: Dash-Industry-Forum/IOPv5
-Issue Tracking: none
 Shortname: iop-v5-part5
 URL: https://dashif.org/Guidelines/iop-v5/part05-ad-insertion.html
 Group: dashif

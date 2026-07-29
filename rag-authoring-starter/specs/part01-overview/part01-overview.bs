@@ -3,7 +3,6 @@ Revision: 0.3
 Title: DASH-IF IOP v5 Part 1: Overview, Architecture and Interfaces
 Status: LD
 Repository: Dash-Industry-Forum/IOPv5
-Issue Tracking: none
 Shortname: iop-v5-part1
 URL: https://dashif.org/Guidelines/iop-v5/part01-overview.html
 Group: dashif

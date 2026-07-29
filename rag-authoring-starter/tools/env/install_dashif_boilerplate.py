@@ -73,6 +73,24 @@ def main() -> None:
     else:
         print(f"[info] 'dashif' already present in {doctypes.name}")
 
+    # Patch defaults.include: remove any Repository: line that points to DASH-IF-IOP
+    # so that each .bs file's own Repository: setting is used instead.
+    defaults_file = dest / "defaults.include"
+    if defaults_file.exists():
+        import re as _re
+        text = defaults_file.read_text(encoding="utf-8")
+        patched = _re.sub(
+            r'^Repository:.*DASH-IF-IOP.*$\n?',
+            '',
+            text,
+            flags=_re.MULTILINE | _re.IGNORECASE
+        )
+        if patched != text:
+            defaults_file.write_text(patched, encoding="utf-8")
+            print("[ok]   patched defaults.include: removed DASH-IF-IOP Repository line")
+        else:
+            print("[info] defaults.include: no DASH-IF-IOP Repository line found")
+
     print(f"\n[done] installed {ok} boilerplate file(s) into org-dashif")
 
 

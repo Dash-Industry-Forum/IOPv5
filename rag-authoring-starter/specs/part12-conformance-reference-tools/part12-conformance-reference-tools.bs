@@ -4,7 +4,6 @@ Revision: 0.1
 Title: DASH-IF IOP v5 Part 12: Conformance and Reference Tools
 Status: LD
 Repository: Dash-Industry-Forum/IOPv5
-Issue Tracking: none
 Shortname: iop-v5-part12
 URL: https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html
 Group: dashif
