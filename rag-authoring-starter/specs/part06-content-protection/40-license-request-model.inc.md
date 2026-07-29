@@ -20,6 +20,9 @@ These benefits increase in value with the size of the solution, as they reduce t
 
 ## Proof of authorization ## {#CPS-lr-model-authz}
 
+
+### General ### {#CPS-lr-model-authz-general}
+
 An <dfn>authorization token</dfn> is a [[!jwt|JSON Web Token]] used to prove to a license server that the caller has the right to use one or more [=content keys=] under certain conditions. Attaching this proof of authorization to a license request is optional, allowing for architectures where a "license proxy" performs authorization checks in a manner transparent to the DASH client.
 
 The basic structural requirements for [=authorization tokens=] are defined in [[!jwt]] and [[!jws]]. This document adds some additional constraints to ensure interoperability. Beyond that, the license server implementation is what defines the contents of the [=authorization token=] (the set of claims it contains), as the data needs to express implementation-specific license server business logic parameters that cannot be generalized.
@@ -194,6 +197,9 @@ A DASH client **_shall not_** make license requests for [=content keys=] that ar
 Note: A [=content key=] requires an [=authorization token=] if there is at least one `dashif:authzurl` in the MPD or if this element is added by [=solution-specific logic and configuration=].
 
 ## Problem signaling and handling ## {#CPS-lr-model-errors}
+
+
+### General ### {#CPS-lr-model-errors-general}
 
 Authorization services and license servers **_should_** indicate an inability to satisfy a request by returning an HTTP response that:
 

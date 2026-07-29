@@ -247,6 +247,9 @@ includes:
 
 ## Guidelines for Low-Latency Service Offering (Informative) ## {#ll-guidelines}
 
+
+### General ### {#ll-guidelines-general}
+
 This clause provides further guidelines and considerations for a [=Low-Latency
 Service Offering=] beyond the requirements and recommendations in
 [[#ll-service-offering]]. It is not meant to provide a normative implementation
@@ -396,6 +399,9 @@ normative text exists to migrate yet. Tracked as future work (see
 `rag/reports/reconcile-low-latency-r8-r9.md`).
 
 ## Client Implementation Guidelines (Informative) ## {#ll-client-guidelines}
+
+
+### General ### {#ll-client-guidelines-general}
 
 The following <span class=modal-keyword>should</span> be considered for a low-latency client implementation:
 

@@ -259,6 +259,9 @@ In many cases, it might be more desirable to instead exclude the UHD quality lev
 
 ## Performing license requests ## {#CPS-license-request-workflow}
 
+
+### General ### {#CPS-license-request-workflow-general}
+
 DASH clients performing license requests **_should_** follow the [[#CPS-lr-model|DASH-IF interoperable license request model]]. The remainder of this chapter only applies to DASH clients that follow this model. Alternative implementations are possible and in common use but are not interoperable and are not described in this document.
 
 [=DRM systems=] generally do not perform license requests on their own. Rather, when they determine that a [=license=] is required, they generate a document that serves as the license request body and expect the DASH client to deliver it to a license server for processing. The latter returns a suitable response that, if a [=license=] is granted, encapsulates the [=content keys=] in an encrypted form only readable to the DRM system.

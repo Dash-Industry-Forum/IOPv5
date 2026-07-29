@@ -46,6 +46,9 @@ part:
 
 # Terms and Definitions # {#terms}
 
+
+## General ## {#terms-general}
+
 Terms and definitions are inherited from ISO/IEC 23009-1, ISO/IEC 23000-19, and
 Part 2 unless defined in this part.
 

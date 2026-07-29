@@ -44,6 +44,9 @@ The guidelines in this document define recommended workflows and default behavio
 
 # Content encryption and DRM # {#CPS-encryption-and-drm}
 
+
+## General ## {#CPS-encryption-and-drm-general}
+
 A DASH presentation **_may_** provide some or all adaptation sets in encrypted form, requiring the use of a [=DRM system=] to decrypt the content for playback. The duty of a [=DRM system=] is to prevent disclosure of the [=content key=] and misuse of the decrypted content (e.g. recording via screen capture software) and **_may_** be to decrypt content.
 
 In a DASH presentation, every representation in an adaptation set **_shall_** be protected using the same [=content key=] (identified by the same `default_KID`).
@@ -103,6 +106,9 @@ Even if multiple variants are available, a DASH client **_should_** map each [=D
 
 # Content protection constraints for CMAF # {#CPS-cmaf}
 
+
+## General ## {#CPS-cmaf-general}
+
 The structure of content protection related information in the CMAF containers used by DASH is largely specified by [[!CMAF]] and [[!CENC]] (in particular section 8). This chapter outlines some additional requirements to ensure interoperable behavior of DASH clients and services.
 
 Note: This document uses the `cenc:` prefix to reference the XML namespace `urn:mpeg:cenc:2013` [[!CENC]].
@@ -147,6 +153,9 @@ When using CMAF chunks for delivery, each CMAF fragment **_may_** be split into 
 Note: While DASH only requires the presence of `moof/pssh` in the first CMAF chunk, the requirement is more extensive in the interest of HLS interoperability [[HLS-LowLatency]].
 
 # Encryption and DRM signaling in the MPD # {#CPS-mpd}
+
+
+## General ## {#CPS-mpd-general}
 
 A DASH client needs to recognize encrypted content and activate a suitable [=DRM system=], configuring it to decrypt content. The MPD informs a DASH client of the [=protection scheme=] used to protect content, identifies the [=content keys=] that are used and optionally provides the default [=DRM system configuration=] for a set of [=DRM systems=].
 
@@ -198,6 +207,9 @@ Advisement: Some Windows-targeting software libraries implement "Microsoft style
 
 ## default_KID defines the scope of DRM system interactions ## {#CPS-default_KID}
 
+
+### General ### {#CPS-default_KID-general}
+
 A DASH client interacts with one or more [=DRM systems=] during playback in order to control the decryption of content. Some of the most important interactions are:
 
 * Activating a [=DRM system=] to play back content protected with a specific set of [=content keys=].
@@ -229,6 +241,9 @@ In a [[#CPS-KeyHierarchy|hierarchical key scenario]], `default_KID` identifies t
 This logic applies to all scenarios that make use of additional keys, regardless of whether they are based on the key hierarchy, key derivation or variant key ([[iso23001-12]]) concepts.
 
 ## Providing default DRM system configuration ## {#CPS-mpd-drm-config}
+
+
+### General ### {#CPS-mpd-drm-config-general}
 
 A DASH service **_should_** supply a default [=DRM system configuration=] in the MPD for all supported [=DRM systems=] in all encrypted adaptation sets. This enables playback without the need for DASH client customization or additional client-side configuration. [=DRM system configuration=] **_may_** also be supplied by [=solution-specific logic and configuration=], replacing or enhancing the defaults provided in the MPD.
 

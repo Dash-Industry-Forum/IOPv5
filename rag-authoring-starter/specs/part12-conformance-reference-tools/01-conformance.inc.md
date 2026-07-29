@@ -216,6 +216,115 @@ condition, test assets must pass DASH-IF conformance validation.
 Note: CTA-WAVE test content is a common companion asset set and can be fetched
 with `dashfetcher`; see [=livesim2=].
 
+## Active local validator-start coverage ## {#tools-validator-start-coverage}
+
+The following local MPD-level validator-start tools and fixtures are maintained
+as implementation scaffolding for the current IOP v5 migration. These tools do
+not replace the DASH-IF Conformance Validator; they provide deterministic local
+checks and fixtures that can be promoted into the formal validator and test-asset
+workflow.
+
+<table class="data">
+  <caption>Local validator-start coverage for active migration parts.</caption>
+  <thead>
+    <tr><th>Part<th>Validator-start tool<th>Fixture root<th>Planning/report reference<th>Runtime dependency
+  <tbody>
+    <tr>
+      <td>Part 2 Core CMAF
+      <td>`tools/validation/validate_part2_core_cmaf_mpd.py`
+      <td>`specs/part02-core-cmaf/examples/`
+      <td>`rag/reports/part02-core-cmaf-conformance-plan.md`
+      <td>Segment parser for CMAF brands, chunks, and switching constraints.
+    <tr>
+      <td>Part 3 On-Demand
+      <td>`tools/validation/validate_part3_on_demand_mpd.py`
+      <td>`specs/part03-on-demand/examples/`
+      <td>`rag/reports/part03-on-demand-conformance-plan.md`
+      <td>dash.js seek and random-access playback checks.
+    <tr>
+      <td>Part 4 Live and Low-Latency
+      <td>`tools/validation/validate_part4_live_mpd.py`
+      <td>`specs/part04-live-low-latency/examples/`
+      <td>`rag/reports/part04-live-low-latency-conformance-plan.md`
+      <td>livesim2 deterministic live streams and dash.js live-edge behavior checks.
+    <tr>
+      <td>Part 5 Ad Insertion
+      <td>`tools/validation/validate_part5_scte35_events.py`; `tools/validation/validate_part5_ad_content_mpd.py`; `tools/validation/validate_part5_if5_spliced_mpd.py`
+      <td>`specs/part05-ad-insertion/examples/`
+      <td>`rag/reports/part05-f0010-test-vector-inventory.md`; `rag/reports/part05-f0010-next-implementation-batch.md`
+      <td>dash.js playback, livesim2 SGAI, and Part 6 EME/DRM coverage.
+    <tr>
+      <td>Part 9 Text
+      <td>`tools/validation/validate_part9_text_mpd.py`
+      <td>`specs/part09-text/examples/`
+      <td>`rag/reports/part09-f0009-test-vector-inventory.md`
+      <td>Segment parser and dash.js rendering/selection behavior checks.
+</table>
+
+The roll-up dashboard for this local validator-start coverage is maintained in
+`rag/reports/conformance-validator-start-dashboard.md`.
+
+## Issue Tracking and Coordination ## {#tools-github}
+
+DASH-IF maintains public issue trackers on GitHub for the IOP and the individual
+tools; new work for IOP v5 is tracked at
+[https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues),
+and each reference tool uses the issue tracker of its own repository.
+
+DASH-IF coordinates with other organizations and open-source projects to support
+interoperable DASH deployment, including DVB, CTA WAVE, MPEG, ATSC, W3C, and
+3GPP, as well as projects such as FFmpeg and GPAC.
+
+## The Desired Approach for Interoperability ## {#tools-approach}
+
+Effective interoperability balances good specifications, test and conformance
+tools, reference implementations, open-source software, and lessons learned from
+deployments. As a general model, a new feature is first added to a draft IOP
+document (possibly by reference to or collaboration with the organization owning
+a referenced specification, e.g. MPEG), then supported by test content, the
+conformance validator, and the reference player, and finally — once all pieces
+are complete — promoted to a fully supported feature. Intermediate steps <span class=modal-keyword>may</span>
+involve one or more community-review rounds.
+
+# Change History # {#change-history}
+
+<table class="data">
+  <caption>Part 12 change history.</caption>
+  <thead>
+    <tr><th>Version<th>Date<th>Change
+  <tbody>
+    <tr>
+      <td>0.1
+      <td>Initial
+      <td>Migrated from the Part 12 draft; reference-tool sections updated to current dash.js and the second-generation livesim2 (CMAF Ingest, SGAI, stateless URL parameters).
+    <tr>
+      <td>0.2
+      <td>Reconciliation
+      <td>Added initial Part 9 text-track conformance mapping for CMAF text profiles, text/video Adaptation Set signalling, CTA 608/708, IMSC1, chunks/gaps, and client selection.
+    <tr>
+      <td>0.3
+      <td>Reconciliation
+      <td>Added initial Part 5 ad-insertion conformance mapping covering IF-3 through IF-9 validator, dash.js, livesim2, and test-asset expectations.
+    <tr>
+      <td>0.4
+      <td>Reconciliation
+      <td>Added initial Part 2 core CMAF and timing model conformance mapping (10 features: Period timing, segment addressing, clock sync, availability window, MPD updates, period connectivity, timing constraints, forbidden techniques, segment loss, stand-alone text). Added initial Part 4 live service conformance mapping (5 features: dynamic service requirements, MPD snapshot validity, segment-based updates, UTCTiming, live client joining).
+    <tr>
+      <td>0.5
+      <td>Reconciliation
+      <td>Added initial Part 3 on-demand service conformance mapping (6 features: static presentation requirements, determinable duration, full period coverage, on-demand profile, wall-clock-independent availability, multi-Period on-demand).
+    <tr>
+      <td>0.6
+      <td>Reconciliation
+      <td>Added initial Part 7 video conformance mapping (6 features: adaptation set signalling, color space, H.264/AVC, H.265/HEVC, Codec Registry compliance, scan type). Added initial Part 8 audio conformance mapping (5 features: adaptation set signalling, HE-AACv2, E-AC-3/AC-4 AudioChannelConfiguration, MPEG-H 3D Audio, Codec Registry compliance).
+</table>
+
+# Conformance Mapping # {#conformance-mapping}
+
+## Overview ## {#conformance-mapping-overview}
+
+This clause provides initial conformance mapping tables for each IOP v5 part, identifying test and validation expectations for the DASH-IF Conformance Validator, dash.js reference player, and DASH-IF Test Assets Database. These tables are starting points for issue creation and test-asset planning.
+
 ## Initial Part 2 core CMAF and timing model conformance mapping ## {#tools-part2-timing-conformance}
 
 The following initial mapping identifies test and validation expectations for
@@ -571,106 +680,3 @@ Remaining Part 5 conformance synchronization items include:
 - add IF-7 SGAI/livesim2/dash.js checks,
 - add IF-8 tracking sample checks,
 - add IF-9 clear/encrypted playback checks.
-
-## Active local validator-start coverage ## {#tools-validator-start-coverage}
-
-The following local MPD-level validator-start tools and fixtures are maintained
-as implementation scaffolding for the current IOP v5 migration. These tools do
-not replace the DASH-IF Conformance Validator; they provide deterministic local
-checks and fixtures that can be promoted into the formal validator and test-asset
-workflow.
-
-<table class="data">
-  <caption>Local validator-start coverage for active migration parts.</caption>
-  <thead>
-    <tr><th>Part<th>Validator-start tool<th>Fixture root<th>Planning/report reference<th>Runtime dependency
-  <tbody>
-    <tr>
-      <td>Part 2 Core CMAF
-      <td>`tools/validation/validate_part2_core_cmaf_mpd.py`
-      <td>`specs/part02-core-cmaf/examples/`
-      <td>`rag/reports/part02-core-cmaf-conformance-plan.md`
-      <td>Segment parser for CMAF brands, chunks, and switching constraints.
-    <tr>
-      <td>Part 3 On-Demand
-      <td>`tools/validation/validate_part3_on_demand_mpd.py`
-      <td>`specs/part03-on-demand/examples/`
-      <td>`rag/reports/part03-on-demand-conformance-plan.md`
-      <td>dash.js seek and random-access playback checks.
-    <tr>
-      <td>Part 4 Live and Low-Latency
-      <td>`tools/validation/validate_part4_live_mpd.py`
-      <td>`specs/part04-live-low-latency/examples/`
-      <td>`rag/reports/part04-live-low-latency-conformance-plan.md`
-      <td>livesim2 deterministic live streams and dash.js live-edge behavior checks.
-    <tr>
-      <td>Part 5 Ad Insertion
-      <td>`tools/validation/validate_part5_scte35_events.py`; `tools/validation/validate_part5_ad_content_mpd.py`; `tools/validation/validate_part5_if5_spliced_mpd.py`
-      <td>`specs/part05-ad-insertion/examples/`
-      <td>`rag/reports/part05-f0010-test-vector-inventory.md`; `rag/reports/part05-f0010-next-implementation-batch.md`
-      <td>dash.js playback, livesim2 SGAI, and Part 6 EME/DRM coverage.
-    <tr>
-      <td>Part 9 Text
-      <td>`tools/validation/validate_part9_text_mpd.py`
-      <td>`specs/part09-text/examples/`
-      <td>`rag/reports/part09-f0009-test-vector-inventory.md`
-      <td>Segment parser and dash.js rendering/selection behavior checks.
-</table>
-
-The roll-up dashboard for this local validator-start coverage is maintained in
-`rag/reports/conformance-validator-start-dashboard.md`.
-
-## Issue Tracking and Coordination ## {#tools-github}
-
-DASH-IF maintains public issue trackers on GitHub for the IOP and the individual
-tools; new work for IOP v5 is tracked at
-[https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues),
-and each reference tool uses the issue tracker of its own repository.
-
-DASH-IF coordinates with other organizations and open-source projects to support
-interoperable DASH deployment, including DVB, CTA WAVE, MPEG, ATSC, W3C, and
-3GPP, as well as projects such as FFmpeg and GPAC.
-
-## The Desired Approach for Interoperability ## {#tools-approach}
-
-Effective interoperability balances good specifications, test and conformance
-tools, reference implementations, open-source software, and lessons learned from
-deployments. As a general model, a new feature is first added to a draft IOP
-document (possibly by reference to or collaboration with the organization owning
-a referenced specification, e.g. MPEG), then supported by test content, the
-conformance validator, and the reference player, and finally — once all pieces
-are complete — promoted to a fully supported feature. Intermediate steps <span class=modal-keyword>may</span>
-involve one or more community-review rounds.
-
-# Change History # {#change-history}
-
-<table class="data">
-  <caption>Part 12 change history.</caption>
-  <thead>
-    <tr><th>Version<th>Date<th>Change
-  <tbody>
-    <tr>
-      <td>0.1
-      <td>Initial
-      <td>Migrated from the Part 12 draft; reference-tool sections updated to current dash.js and the second-generation livesim2 (CMAF Ingest, SGAI, stateless URL parameters).
-    <tr>
-      <td>0.2
-      <td>Reconciliation
-      <td>Added initial Part 9 text-track conformance mapping for CMAF text profiles, text/video Adaptation Set signalling, CTA 608/708, IMSC1, chunks/gaps, and client selection.
-    <tr>
-      <td>0.3
-      <td>Reconciliation
-      <td>Added initial Part 5 ad-insertion conformance mapping covering IF-3 through IF-9 validator, dash.js, livesim2, and test-asset expectations.
-    <tr>
-      <td>0.4
-      <td>Reconciliation
-      <td>Added initial Part 2 core CMAF and timing model conformance mapping (10 features: Period timing, segment addressing, clock sync, availability window, MPD updates, period connectivity, timing constraints, forbidden techniques, segment loss, stand-alone text). Added initial Part 4 live service conformance mapping (5 features: dynamic service requirements, MPD snapshot validity, segment-based updates, UTCTiming, live client joining).
-    <tr>
-      <td>0.5
-      <td>Reconciliation
-      <td>Added initial Part 3 on-demand service conformance mapping (6 features: static presentation requirements, determinable duration, full period coverage, on-demand profile, wall-clock-independent availability, multi-Period on-demand).
-    <tr>
-      <td>0.6
-      <td>Reconciliation
-      <td>Added initial Part 7 video conformance mapping (6 features: adaptation set signalling, color space, H.264/AVC, H.265/HEVC, Codec Registry compliance, scan type). Added initial Part 8 audio conformance mapping (5 features: adaptation set signalling, HE-AACv2, E-AC-3/AC-4 AudioChannelConfiguration, MPEG-H 3D Audio, Codec Registry compliance).
-</table>

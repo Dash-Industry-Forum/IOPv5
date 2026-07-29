@@ -316,6 +316,9 @@ runtime:
 
 # Annex A: Legacy Codec Profiles (Informative) # {#annex-legacy-codecs}
 
+
+## General ## {#annex-legacy-codecs-general}
+
 This annex documents codec profiles that were specified in earlier versions of
 DASH-IF IOP (v4.x and earlier). These profiles are provided for reference only
 and are not normative in IOP v5. Services wishing to use these codecs <span class=modal-keyword>should</span>
