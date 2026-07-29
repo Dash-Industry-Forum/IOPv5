@@ -107,13 +107,13 @@ compatibility aspects are documented in [[#ll-dvb]].
 A [=Low-Latency Service Offering=] follows these requirements and
 recommendations:
 
-- At least one `ServiceDescription` element <span class=modal-keyword>shall</span> be present.
-- One or several `Scope` elements <span class=modal-keyword>may</span> be present. The `Scope` element specifies
+- At least one **ServiceDescription** element <span class=modal-keyword>shall</span> be present.
+- One or several **Scope** elements <span class=modal-keyword>may</span> be present. The **Scope** element specifies
     the scope of the service description element. If present, the service
     description only targets DASH clients within the scope of this descriptor.
     DASH clients not in scope (i.e. not recognizing any of the scope descriptor
     elements) are expected to ignore this service description.
-- A `Latency` element <span class=modal-keyword>shall</span> be present including a `@target` attribute providing
+- A **Latency** element <span class=modal-keyword>shall</span> be present including a `@target` attribute providing
     the service provider's preferred presentation latency in milliseconds
     computed relative to the producer reference time.
 
@@ -131,11 +131,11 @@ apply. Service implementation guidelines are provided in
 
 A [=Low-Latency Adaptation Set=] follows these requirements and recommendations:
 
-- It <span class=modal-keyword>shall</span> include at least one `ProducerReferenceTime` element with the
+- It <span class=modal-keyword>shall</span> include at least one **ProducerReferenceTime** element with the
     following constraints:
     - `@id`: provide a unique id for this reference.
     - `@type`: <span class=modal-keyword>shall</span> be set either to `encoder` or `captured`.
-    - A `UTCTiming` element that is identical to one present in the MPD <span class=modal-keyword>shall</span> be
+    - A **UTCTiming** element that is identical to one present in the MPD <span class=modal-keyword>shall</span> be
         present and is used for deriving the value of `@wallclockTime`.
     - `@wallclockTime`: <span class=modal-keyword>shall</span> be present and provide the value at the
         `@presentationTime`.
@@ -144,8 +144,8 @@ A [=Low-Latency Adaptation Set=] follows these requirements and recommendations:
     - `@inband` <span class=modal-keyword>may</span> be set to `FALSE` or `TRUE`.
 - A [=Low-Latency Adaptation Set=] <span class=modal-keyword>shall</span> be either a [=Low-Latency Segment
     Adaptation Set=] or a [=Low-Latency Chunked Adaptation Set=].
-- One of the following <span class=modal-keyword>shall</span> be present: the `SegmentTemplate@duration`
-    attribute, or `SegmentTemplate@media` with `$Number$` and `$Time$`.
+- One of the following <span class=modal-keyword>shall</span> be present: the **SegmentTemplate**@duration
+    attribute, or **SegmentTemplate**@media with `$Number$` and `$Time$`.
 
 The segment duration <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> vary more than indicated in the MPD.
 
@@ -167,7 +167,7 @@ recommendations:
     exceed 30% of the target latency.
 
 A [=Low-Latency Segment Adaptation Set=] is identified by the settings above as
-well as by the absence of the `Resync` element.
+well as by the absence of the **Resync** element.
 
 ### Low-Latency Chunked Adaptation Set ### {#ll-chunked-as}
 
@@ -182,7 +182,7 @@ recommendations:
     the range of presentation times contained in any CMAF chunk of the CMAF Track
     does not overlap with the range of presentation times in any other CMAF chunk
     of the same CMAF Track.
-- A `Resync` element <span class=modal-keyword>should</span> be assigned to each Representation (possibly
+- A **Resync** element <span class=modal-keyword>should</span> be assigned to each Representation (possibly
     defaulted) signalling the properties of the Segments and the chunks used
     (chunk size, chunk duration, chunk properties). See [[#ll-resync]].
 
@@ -197,10 +197,10 @@ As low-latency DASH services have developed over time, this clause documents
 legacy aspects compared to the DASH-IF [=Low-Latency Service Offering=] profile.
 In such a legacy setup one or more of the following applies:
 
-- The `ServiceDescription` element <span class=modal-keyword>may</span> not be present. In particular, the target
+- The **ServiceDescription** element <span class=modal-keyword>may</span> not be present. In particular, the target
     latency <span class=modal-keyword>may</span> be absent, but <span class=modal-keyword>may</span> be provided by external means (for example by
     the application setting the value through an API).
-- The `ProducerReferenceTime` element <span class=modal-keyword>may</span> not be present. In this case, the
+- The **ProducerReferenceTime** element <span class=modal-keyword>may</span> not be present. In this case, the
     Period Start time is assumed to be used as the wall-clock time and the value
     of `@presentationTimeOffset` is assumed as the corresponding presentation
     time.
@@ -208,7 +208,7 @@ In such a legacy setup one or more of the following applies:
     the 50% target value.
 - The [=Low-Latency Chunked Adaptation Set=]s <span class=modal-keyword>may</span> not conform to an Adaptation
     Set according to the DASH profile for CMAF content as defined in MPEG DASH.
-- The `Resync` element <span class=modal-keyword>may</span> not be present.
+- The **Resync** element <span class=modal-keyword>may</span> not be present.
 
 ### DVB Low-Latency DASH ### {#ll-dvb}
 
@@ -216,17 +216,17 @@ DVB Low-Latency DASH is documented in ETSI TS 103 285. As that specification was
 completed prior to the DASH-IF specification, a few issues are documented here:
 
 - Per TS 103 285 clause 10.20.3, DVB DASH clients consider themselves in scope
-    where a `ServiceDescription` element contains a `Scope` element with
+    where a **ServiceDescription** element contains a **Scope** element with
     `@schemeIdUri` set to `urn:dvb:dash:lowlatency:scope:2019`.
 - The DVB-DASH Content Provider Guidelines (informative) recommend the use of
     `@duration` together with `$Number$`, whereas DASH-IF makes no such
     recommendation.
-- DVB DASH does not mention the `Resync` element, but the presence of the element
+- DVB DASH does not mention the **Resync** element, but the presence of the element
     would not break a DVB-DASH client.
 - DVB DASH signals Adaptation Sets used for low-latency purposes with an
-    `EssentialProperty` or `SupplementalProperty` descriptor with `@schemeIdUri`
+    **EssentialProperty** or **SupplementalProperty** descriptor with `@schemeIdUri`
     set to `urn:dvb:dash:lowlatency:critical:2019` and `@value` set to `true`. If
-    the `SupplementalProperty` descriptor is used, this does not impact regular
+    the **SupplementalProperty** descriptor is used, this does not impact regular
     low-latency DASH clients.
 
 ## Low-Latency Client ## {#ll-client}
@@ -323,8 +323,8 @@ used by DASH clients for several purposes:
 - Understanding the applied chunk size and duration and hence support for rate
     adaptation.
 
-The following is recommended: provide `Resync` signalling for each [=Low-Latency
-Chunked Adaptation Set=] by adding a `Resync` element with the known parameters
+The following is recommended: provide **Resync** signalling for each [=Low-Latency
+Chunked Adaptation Set=] by adding a **Resync** element with the known parameters
 (for example, on Adaptation Set level, `@dT` providing the maximum and nominal
 duration of each chunk).
 
@@ -333,7 +333,7 @@ duration of each chunk).
 Issue: Fast Switching Adaptation Set generation and signalling is for further
 study. Reconciliation against Low-Latency CR r8/r9 (see
 `rag/reports/reconcile-low-latency-r8-r9.md`) found no new normative construct:
-both CRs specify resynchronization via the existing `Resync` element (see
+both CRs specify resynchronization via the existing **Resync** element (see
 [[#ll-resync]]) rather than a distinct "Addressable Resync Representation". The
 ARR concept is retained only as a forward-looking term pending MPEG-DASH.
 
@@ -390,7 +390,7 @@ approaches <span class=modal-keyword>may</span> be used. The basic operation of 
 Two backward-compatible reference profiles are described in the source:
 **Simple Live** (using `$Number$` and `@duration` for duration signalling, with
 `@minimumUpdatePeriod` or inband MPD validity expirations) and **Main Live**
-(using `$Time$` and `SegmentTimeline`). In both, each CMAF fragment generates one
+(using `$Time$` and **SegmentTimeline**). In both, each CMAF fragment generates one
 DASH segment and each CMAF chunk is offered as an HTTP chunk.
 
 Issue: A **Broadcast TV Profile** extension is explicitly deferred to a future

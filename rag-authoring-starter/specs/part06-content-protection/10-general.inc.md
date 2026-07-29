@@ -113,7 +113,7 @@ The structure of content protection related information in the CMAF containers u
 
 Note: This document uses the `cenc:` prefix to reference the XML namespace `urn:mpeg:cenc:2013` [[!CENC]].
 
-Initialization segments **_should not_** contain any `moov/pssh` box ([[!CMAF]], section 7.4.3) and DASH clients **_may_** ignore such boxes when encountered. Instead, `pssh` boxes required for [=DRM system=] initialization are part of the [=DRM system configuration=] and **_should_** be placed in the MPD as `cenc:pssh` elements in [=DRM system=] specific `ContentProtection` descriptors.
+Initialization segments **_should not_** contain any `moov/pssh` box ([[!CMAF]], section 7.4.3) and DASH clients **_may_** ignore such boxes when encountered. Instead, `pssh` boxes required for [=DRM system=] initialization are part of the [=DRM system configuration=] and **_should_** be placed in the MPD as `cenc:pssh` elements in [=DRM system=] specific **ContentProtection** descriptors.
 
 Note: Placing the `pssh` boxes in the MPD has become common for purposes of operational agility - it is often easier to update MPD files than rewrite initialization segments when the default [=DRM system configuration=] needs to be updated or when a new [=DRM system=] needs to be supported. Furthermore, in some scenarios the appropriate set of `pssh` boxes is not known when the initialization segment is created.
 
@@ -178,7 +178,7 @@ The [=DRM system configuration=] **_may_** change over time, both due to MPD upd
 
 ## Signaling presence of encrypted content ## {#CPS-mpd-scheme}
 
-The presence of a `ContentProtection` descriptor with `schemeIdUri="urn:mpeg:dash:mp4protection:2011"` on an adaptation set informs a DASH client that all representations in the adaptation set are encrypted in conformance to Common Encryption ([[!DASH]] sections 5.8.4.1 and 5.8.5.2 and [[!CENC]] section 11) and require a [=DRM system=] to provide access.
+The presence of a **ContentProtection** descriptor with `schemeIdUri="urn:mpeg:dash:mp4protection:2011"` on an adaptation set informs a DASH client that all representations in the adaptation set are encrypted in conformance to Common Encryption ([[!DASH]] sections 5.8.4.1 and 5.8.5.2 and [[!CENC]] section 11) and require a [=DRM system=] to provide access.
 
 This descriptor is present for all encrypted content ([[!DASH]] section 5.8.4.1). It **_shall_** be defined on the adaptation set level. The `value` attribute indicates the used protection scheme ([[!DASH]] section 5.8.5.2). The `cenc:default_KID` attribute **_shall_** be present and have a value matching the `default_KID` in the `tenc` box.
 
@@ -247,28 +247,28 @@ This logic applies to all scenarios that make use of additional keys, regardless
 
 A DASH service **_should_** supply a default [=DRM system configuration=] in the MPD for all supported [=DRM systems=] in all encrypted adaptation sets. This enables playback without the need for DASH client customization or additional client-side configuration. [=DRM system configuration=] **_may_** also be supplied by [=solution-specific logic and configuration=], replacing or enhancing the defaults provided in the MPD.
 
-Any number of `ContentProtection` descriptors ([[!DASH]] section 5.8.4.1) **_may_** be present in the MPD to provide [=DRM system configuration=]. These descriptors **_shall_** be defined on the adaptation set level. The contents **_may_** be ignored by the DASH client if overridden by [=solution-specific logic and configuration=] - the [=DRM system configuration=] in the MPD simply provides default values known at content authoring time.
+Any number of **ContentProtection** descriptors ([[!DASH]] section 5.8.4.1) **_may_** be present in the MPD to provide [=DRM system configuration=]. These descriptors **_shall_** be defined on the adaptation set level. The contents **_may_** be ignored by the DASH client if overridden by [=solution-specific logic and configuration=] - the [=DRM system configuration=] in the MPD simply provides default values known at content authoring time.
 
-A `ContentProtection` descriptor providing a default [=DRM system configuration=] **_shall_** use  `schemeIdUri="urn:uuid:<systemid>"` to identify the [=DRM system=], with the `<systemid>` matching a value in the [DASH-IF system-specific identifier registry](https://dashif.org/identifiers/content_protection/). The `value` attribute of the `ContentProtection` descriptor **_should_** contain the DRM system name and version number in a human readable form (for diagnostic purposes).
+A **ContentProtection** descriptor providing a default [=DRM system configuration=] **_shall_** use  `schemeIdUri="urn:uuid:<systemid>"` to identify the [=DRM system=], with the `<systemid>` matching a value in the [DASH-IF system-specific identifier registry](https://dashif.org/identifiers/content_protection/). The `value` attribute of the **ContentProtection** descriptor **_should_** contain the DRM system name and version number in a human readable form (for diagnostic purposes).
 
 Note: W3C defines the Clear Key mechanism ([[!encrypted-media]] section 9.1), which is a "dummy" DRM system implementation intended for client and platform development/testing purposes. **Understand that Clear Key does not fulfill the content protection and content key protection duties ordinarily expected from a DRM system.** For more guidelines on Clear Key usage, see [[#CPS-AdditionalConstraints-W3C]].
 
-Each DRM system specific `ContentProtection` descriptor can contain a mix of XML elements and attributes defined by [[!CENC]], the [=DRM system=] author, DASH-IF or any other party.
+Each DRM system specific **ContentProtection** descriptor can contain a mix of XML elements and attributes defined by [[!CENC]], the [=DRM system=] author, DASH-IF or any other party.
 
-For [=DRM systems=] initialized by supplying `pssh` boxes, the `cenc:pssh` element **_should_** be present under the `ContentProtection` descriptor if the value is known at MPD authoring time. The base64 encoded contents of the element **_shall_** be equivalent to a complete `pssh` box including its length and header fields ([[!CENC]] section 11.3.3). See also [[#CPS-cmaf]].
+For [=DRM systems=] initialized by supplying `pssh` boxes, the `cenc:pssh` element **_should_** be present under the **ContentProtection** descriptor if the value is known at MPD authoring time. The base64 encoded contents of the element **_shall_** be equivalent to a complete `pssh` box including its length and header fields ([[!CENC]] section 11.3.3). See also [[#CPS-cmaf]].
 
-[=DRM systems=] generally use the concept of license requests as the mechanism for obtaining [=content keys=] and associated usage constraints (see [[#CPS-license-request-workflow]]). For [=DRM systems=] that use this concept, one or more `dashif:laurl` elements **_should_** be present under the `ContentProtection` descriptor, with the value of the element being the URL to send license requests to. This URL **_may_** contain [[#CPS-lr-model-contentid|content identifiers]].
+[=DRM systems=] generally use the concept of license requests as the mechanism for obtaining [=content keys=] and associated usage constraints (see [[#CPS-license-request-workflow]]). For [=DRM systems=] that use this concept, one or more `dashif:laurl` elements **_should_** be present under the **ContentProtection** descriptor, with the value of the element being the URL to send license requests to. This URL **_may_** contain [[#CPS-lr-model-contentid|content identifiers]].
 
 Multiple mechanisms have historically been used to provide the license server URL in the MPD (e.g. embedding in the `cenc:pssh` data or passing by deprecated DRM system specific DASH-IF `Laurl` elements). A DASH client **_shall_** prefer `dashif:laurl` if multiple data sources for the URL are present in the MPD.
 
-For [=DRM systems=] that require proof of authorization to be attached to the license request in a manner conforming to [[#CPS-lr-model]], one or more `dashif:authzurl` elements **_should_** be present under the `ContentProtection` descriptor, containing the default URL to send authorization requests to (see [[#CPS-license-request-workflow]]).
+For [=DRM systems=] that require proof of authorization to be attached to the license request in a manner conforming to [[#CPS-lr-model]], one or more `dashif:authzurl` elements **_should_** be present under the **ContentProtection** descriptor, containing the default URL to send authorization requests to (see [[#CPS-license-request-workflow]]).
 
-Multiple `dashif:laurl` or `dashif:authzurl` elements under the same `ContentProtection` descriptor define sets of equivalent alternatives for the DASH client to choose from. A DASH client **_should_** select a random item from the set every time the value of such an element is used.
+Multiple `dashif:laurl` or `dashif:authzurl` elements under the same **ContentProtection** descriptor define sets of equivalent alternatives for the DASH client to choose from. A DASH client **_should_** select a random item from the set every time the value of such an element is used.
 
 Issue: The above paragraph on URL handling **_should_** be generalized to all sets of alternative URLs but there does not seem to be a suitable chapter in v4.3 If such a chapter is created in v5, we could replace the above paragraph with a reference to the general URL handling guidelines.
 
 <div class="example">
-A `ContentProtection` descriptor that provides default [=DRM system configuration=] for a fictional [=DRM system=].
+A **ContentProtection** descriptor that provides default [=DRM system configuration=] for a fictional [=DRM system=].
 
 <xmp highlight="xml">
 <ContentProtection
@@ -281,7 +281,7 @@ A `ContentProtection` descriptor that provides default [=DRM system configuratio
 </xmp>
 </div>
 
-The presence of a [=DRM system=] specific `ContentProtection` descriptor is not required in order to activate the [=DRM system=]; these descriptors are used merely to provide the default [=DRM system configuration=]. Empty `ContentProtection` descriptors **_should not_** be present in an MPD and **_may_** be ignored by DASH clients.
+The presence of a [=DRM system=] specific **ContentProtection** descriptor is not required in order to activate the [=DRM system=]; these descriptors are used merely to provide the default [=DRM system configuration=]. Empty **ContentProtection** descriptors **_should not_** be present in an MPD and **_may_** be ignored by DASH clients.
 
 ### Signaling HDCP output control information ### {#CPS-mpd-hdcp-output-control}
 
@@ -292,7 +292,7 @@ section. The normative details and XML examples still need to be checked against
 the published source text before this clause is marked fully reconciled in
 `rag/reports/reconcile-part06-content-protection.md`.
 
-The `ContentProtection` descriptor provides the description of the [=DRM systems=]
+The **ContentProtection** descriptor provides the description of the [=DRM systems=]
 that allow access to encrypted content. DASH also defines an `OutputProtection`
 descriptor that carries information allowing a DASH client to determine what
 version of an output-protection scheme is required when exporting content
@@ -311,7 +311,7 @@ identifies the minimum HDCP version that a device is expected to enforce for the
 representations associated with the descriptor.
 
 If present, the HDCP `OutputProtection` descriptor **_shall_** be defined at the
-`AdaptationSet` level. If a DASH client selects several adaptation sets for
+**AdaptationSet** level. If a DASH client selects several adaptation sets for
 playback that each contain an HDCP `OutputProtection` descriptor, it **_shall_**
 enforce the highest HDCP version among those descriptors.
 
@@ -344,7 +344,7 @@ minimum.
 
 </div>
 
-Because `default_KID` determines the scope of [=DRM system=] interactions, the contents of [=DRM system=] specific `ContentProtection` descriptors with the same `schemeIdUri` **_shall_** be identical in all adaptation sets with the same `default_KID`. This means that a [=DRM system=] will treat equally all adaptation sets that use the same [=content key=].
+Because `default_KID` determines the scope of [=DRM system=] interactions, the contents of [=DRM system=] specific **ContentProtection** descriptors with the same `schemeIdUri` **_shall_** be identical in all adaptation sets with the same `default_KID`. This means that a [=DRM system=] will treat equally all adaptation sets that use the same [=content key=].
 
 Note: If you wish to change the default [=DRM system configuration=] associated with a [=content key=], you **_must_** update all the instances where the data is present in the MPD. For live services, this can mean updating the data in multiple periods.
 

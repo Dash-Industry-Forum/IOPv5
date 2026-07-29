@@ -56,7 +56,7 @@ The workflows defined in this document contain the necessary extension points to
 
 ## Selecting the DRM system ## {#CPS-selection-workflow}
 
-The MPD describes the [=protection scheme=] used to encrypt content, with the `default_KID` values identifying the [=content keys=] required for playback, and optionally provides the default [=DRM system configuration=] for one or more [=DRM systems=] via `ContentProtection` descriptors. It also identifies the codecs used by each representation, enabling a DASH client to determine the set of required [=DRM system=] capabilities.
+The MPD describes the [=protection scheme=] used to encrypt content, with the `default_KID` values identifying the [=content keys=] required for playback, and optionally provides the default [=DRM system configuration=] for one or more [=DRM systems=] via **ContentProtection** descriptors. It also identifies the codecs used by each representation, enabling a DASH client to determine the set of required [=DRM system=] capabilities.
 
 Neither an initialization segment nor a media segment is required to select a [=DRM system=]. The MPD is the only component of the presentation used for [=DRM system=] selection.
 
@@ -122,7 +122,7 @@ When encrypted adaptation sets are initially selected for playback or when the s
 <div algorithm="drm-selection">
 
 1. Let <var>adaptation_sets</var> be the set of encrypted adaptation sets selected for playback.
-1. Let <var>signaled_system_ids</var> be the set of DRM system IDs for which a `ContentProtection` descriptor is present in the MPD on any entries in <var>adaptation_sets</var>.
+1. Let <var>signaled_system_ids</var> be the set of DRM system IDs for which a **ContentProtection** descriptor is present in the MPD on any entries in <var>adaptation_sets</var>.
 1. Let <var>candidate_system_ids</var> be an ordered list initialized with items of <var>signaled_system_ids</var> in any order.
 1. Provide <var>candidate_system_ids</var> to [=solution-specific logic and configuration=] for inspection/modification.
     * This enables business logic to establish an order of preference where multiple [=DRM systems=] are present.
@@ -132,8 +132,8 @@ When encrypted adaptation sets are initially selected for playback or when the s
 1. Let <var>default_kids</var> be the set of all distinct `default_KID` values in <var>adaptation_sets</var>.
 1. Let <var>system_configurations</var> be an empty map of `system ID -> map(default_kid -> configuration)`, representing the [=DRM system configuration=] of each `default_KID` for each [=DRM system=].<br><img src="Images/SelectionAlgorithm-SystemConfigurations.png" >
 1. For each <var>system_id</var> in <var>candidate_system_ids</var>:
-    1. Let <var>configurations</var> be a map of `default_kid -> configuration` where the keys are <var>default_kids</var> and the values are the [=DRM system configurations=] initialized with data from `ContentProtection` descriptors in the MPD (matching on `default_KID` and <var>system_id</var>).
-        * If there is no matching `ContentProtection` descriptors in the MPD, the map still contains a partially initialized [=DRM system configuration=] for the `default_KID`.
+    1. Let <var>configurations</var> be a map of `default_kid -> configuration` where the keys are <var>default_kids</var> and the values are the [=DRM system configurations=] initialized with data from **ContentProtection** descriptors in the MPD (matching on `default_KID` and <var>system_id</var>).
+        * If there is no matching **ContentProtection** descriptors in the MPD, the map still contains a partially initialized [=DRM system configuration=] for the `default_KID`.
         * Enhance the MPD-provided default [=DRM system configuration=] with synthesized data where appropriate (e.g. [[#CPS-AdditionalConstraints-W3C|to generate W3C Clear Key initialization data in a format supported by the platform API]]).
     1. Provide <var>configurations</var> to [=solution-specific logic and configuration=] for inspection and modification, passing <var>system_id</var> along as contextual information.
         * This enables business logic to override the default [=DRM system configuration=] provided by the MPD.

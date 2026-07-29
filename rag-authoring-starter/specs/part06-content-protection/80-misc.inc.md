@@ -58,7 +58,7 @@ Similar functionality could be implemented without a key hierarchy by using a se
 
 Clear Key is a [=DRM system=] defined by W3C in [[!encrypted-media]]. It is intended primarily for client and [=media platform=] development/test purposes and does not perform the content protection and [=content key=] protection duties ordinarily expected from a [=DRM system=]. Nevertheless, in DASH client DRM workflows, it is equivalent to a real [=DRM system=].
 
-A DRM system specific `ContentProtection` descriptor for Clear Key **_shall_** use the system ID `e2719d58-a985-b3c9-781a-b030af78d30e` and `value="ClearKey1.0"`.
+A DRM system specific **ContentProtection** descriptor for Clear Key **_shall_** use the system ID `e2719d58-a985-b3c9-781a-b030af78d30e` and `value="ClearKey1.0"`.
 
 The `dashif:laurl` element **_should_** be used to indicate the license server URL. Legacy content **_may_** also use an equivalent `Laurl` element from the `http://dashif.org/guidelines/clearKey` namespace, as this was defined in previous versions of this document (the definition is now expanded to also cover non-clearkey scenarios). Clients **_should_** process the legacy element if it exists and `dashif:laurl` does not.
 
@@ -68,7 +68,7 @@ W3C describes the use of the system ID `1077efec-c0b2-4d02-ace3-3c1e52e2fb4b` in
 
 <div class="example">
 
-An example of a Clear Key `ContentProtection` descriptor using `laurl` is as follows.
+An example of a Clear Key **ContentProtection** descriptor using `laurl` is as follows.
 
 ```xml
 <MPD xmlns="urn:mpeg:dash:schema:mpd:2011" xmlns:dashif="https://dashif.org/">
@@ -90,7 +90,7 @@ Parts of the MPD structure that are not relevant for this chapter have been omit
 
 Issue: This section is under reconciliation against published IOP v5.1.0 Part 6
 clause 5, "DASH-IF XML schema". The published clause defines the `Laurl`,
-`Authzurl`, and `Certurl` elements under the `ContentProtection` descriptor for
+`Authzurl`, and `Certurl` elements under the **ContentProtection** descriptor for
 license acquisition, authorization-server discovery, and certificate acquisition.
 The current source preserved `laurl` and `authzurl` schema elements but did not
 explicitly preserve the published certificate-acquisition element or the
@@ -130,19 +130,19 @@ element names are case-sensitive; confirm the intended canonical casing before
 marking this section as fully reconciled.
 
 The `dashif:laurl` element identifies a license acquisition URL associated with
-the containing `ContentProtection` descriptor. The optional `@licenseType`
+the containing **ContentProtection** descriptor. The optional `@licenseType`
 attribute describes the license type served by this license server; its meaning
 is DRM-specific.
 
 The `dashif:authzurl` element identifies an authorization service URL associated
-with the containing `ContentProtection` descriptor. The optional `@authzType`
+with the containing **ContentProtection** descriptor. The optional `@authzType`
 attribute describes the authorization-token type served by this authorization
 server; its meaning is specific to the server serving the token.
 
 The `dashif:certurl` element identifies a certificate acquisition URL associated
-with the containing `ContentProtection` descriptor. It contains a URL for a
+with the containing **ContentProtection** descriptor. It contains a URL for a
 server that allows retrieval of a certificate in the format specific to the
-[=DRM system=] described by the containing `ContentProtection` descriptor. The
+[=DRM system=] described by the containing **ContentProtection** descriptor. The
 optional `@certType` attribute describes the certificate type served by this
 server; its meaning is DRM-specific.
 
@@ -179,14 +179,14 @@ Transport security in HTTP-based delivery **_may_** be achieved by using HTTP ov
 
 As an MPD carries links to media resources, web browsers follow the W3C recommendation [[!mixed-content]]. To ensure that HTTPS benefits are maintained once the MPD is delivered, it is recommended that if the MPD is delivered with HTTPS, then the media also be delivered with HTTPS.
 
-DASH also explicitly permits the use of HTTPS as a URI scheme and hence, HTTP over TLS as a transport protocol. When using HTTPS in an MPD, one can for instance specify that all media segments are delivered over HTTPS, by declaring that all the `BaseURL`'s are HTTPS based, as follow:
+DASH also explicitly permits the use of HTTPS as a URI scheme and hence, HTTP over TLS as a transport protocol. When using HTTPS in an MPD, one can for instance specify that all media segments are delivered over HTTPS, by declaring that all the **BaseURL**'s are HTTPS based, as follow:
 
 ```xml
 <BaseURL>https://cdn1.example.com/</BaseURL>
 <BaseURL>https://cdn2.example.com/</BaseURL>
 ```
 
-One can also use HTTPS for retrieving other types of data carried with a MPD that are HTTP-URL based, such as, for example, DRM [=licenses=] specified within the `ContentProtection` descriptor:
+One can also use HTTPS for retrieving other types of data carried with a MPD that are HTTP-URL based, such as, for example, DRM [=licenses=] specified within the **ContentProtection** descriptor:
 
 ```xml
 <ContentProtection

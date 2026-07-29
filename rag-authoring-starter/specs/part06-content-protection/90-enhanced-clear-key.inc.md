@@ -46,8 +46,8 @@ Implementations of W3C Clear Key content protection used with ECCP ***shall***
 follow the Clear Key requirements defined in this part.
 
 Note: ECCP support is not announced in the MPD using an additional
-`ContentProtection` descriptor or a separate ECCP system identifier. A
-`ContentProtection` descriptor using the Clear Key system identifier is
+**ContentProtection** descriptor or a separate ECCP system identifier. A
+**ContentProtection** descriptor using the Clear Key system identifier is
 sufficient. The additional ECCP restrictions are enforced through the
 interactions with media servers and content-key servers.
 

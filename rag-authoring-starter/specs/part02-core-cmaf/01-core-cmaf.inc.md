@@ -139,7 +139,7 @@ the addressing mode used.
   <caption>Common symbols and abbreviations used in Part 2.</caption>
   <thead><tr><th>Term<th>Meaning
   <tbody>
-    <tr><td>AST<td>`MPD@availabilityStartTime`
+    <tr><td>AST<td>**MPD**@availabilityStartTime
     <tr><td>EPT<td>Earliest presentation time of a Segment
     <tr><td>MPD<td>Media Presentation Description
     <tr><td>PS<td>Period start time on the MPD timeline
@@ -157,8 +157,8 @@ Part 2 provides the common model used by the rest of the IOP v5 document set:
 - a mapping between CMAF structures and DASH MPD structures;
 - the timing model that relates Period time, media presentation time, decode
     time, and wall-clock availability time;
-- Segment addressing and segment-list derivation using `SegmentTemplate`,
-    `$Number$`, `$Time$`, `@duration`, and `SegmentTimeline`;
+- Segment addressing and segment-list derivation using **SegmentTemplate**,
+    `$Number$`, `$Time$`, `@duration`, and **SegmentTimeline**;
 - common service types (`static`, `dynamic`, MPD updates, locations); and
 - interoperability requirements for multi-Period CMAF content and gap handling.
 
@@ -239,7 +239,7 @@ media timing information to present samples at the intended Media Presentation
 time.
 
 For dynamic services, availability is additionally constrained by
-`MPD@availabilityStartTime`, `@availabilityTimeOffset`, Segment duration, and the
+**MPD**@availabilityStartTime, `@availabilityTimeOffset`, Segment duration, and the
 rules for Segment Availability Start Time and Segment Availability End Time in
 ISO/IEC 23009-1 and Part 4.
 
@@ -290,9 +290,9 @@ previous Period).
 </figure>
 
 The start of a Period is specified either explicitly as an offset from the MPD
-timeline zero point (`Period@start`) or implicitly by the end of the previous
+timeline zero point (**Period**@start) or implicitly by the end of the previous
 Period [[!MPEGDASH]]. The duration of a Period is specified either explicitly with
-`Period@duration` or implicitly by the start point of the next Period
+**Period**@duration or implicitly by the start point of the next Period
 [[!MPEGDASH]].
 
 Periods are self-contained: a service <span class=modal-keyword>shall not</span> require a client to know the
@@ -317,22 +317,22 @@ ignore Periods with a duration of zero.
 #### First and Last Period Timing #### {#first-last-period-timing}
 
 For static presentations (`MPD@type="static"`), the first Period <span class=modal-keyword>shall</span> start at the
-zero point of the MPD timeline (with a `Period@start` value of 0 seconds), and the
-last Period <span class=modal-keyword>shall</span> have a `Period@duration`. See Part 3 for additional on-demand
+zero point of the MPD timeline (with a **Period**@start value of 0 seconds), and the
+last Period <span class=modal-keyword>shall</span> have a **Period**@duration. See Part 3 for additional on-demand
 service constraints.
 
 For dynamic presentations (`MPD@type="dynamic"`), the first Period <span class=modal-keyword>shall</span> start at or
-after the zero point of the MPD timeline (with a `Period@start` value of 0 seconds
-or greater). The last Period <span class=modal-keyword>may</span> have a `Period@duration`, in which case it has a
-fixed duration. If without `Period@duration`, the last Period in a dynamic
+after the zero point of the MPD timeline (with a **Period**@start value of 0 seconds
+or greater). The last Period <span class=modal-keyword>may</span> have a **Period**@duration, in which case it has a
+fixed duration. If without **Period**@duration, the last Period in a dynamic
 presentation has an unlimited duration that may later be shortened by an MPD
 update. See Part 4 for additional live and low-latency service constraints.
 
-`MPD@mediaPresentationDuration` <span class=modal-keyword>may</span> be present in an MPD. If present, it <span class=modal-keyword>shall</span>
+**MPD**@mediaPresentationDuration <span class=modal-keyword>may</span> be present in an MPD. If present, it <span class=modal-keyword>shall</span>
 accurately match the duration between the zero point on the MPD timeline and the
 end of the last Period. Clients <span class=modal-keyword>shall</span> calculate the total duration of a static
 presentation by adding up the durations of each Period and <span class=modal-keyword>shall not</span> rely on the
-presence of `MPD@mediaPresentationDuration`.
+presence of **MPD**@mediaPresentationDuration.
 
 Issue: Carry over additional v4.3 timing-model formulae where they add
 interoperability value beyond ISO/IEC 23009-1. Avoid duplicating formulae that are
@@ -344,7 +344,7 @@ now fully specified in the current MPEG-DASH edition.
 
 Representations provide the content for periods. A representation is a sequence of media segments, an initialization segment, an optional index segment and related metadata (see ISO/IEC 23009-1 [[!MPEGDASH]] clauses 5.3.1 and 5.3.5).
 
-The MPD describes each representation using a `Representation` element. For each representation, the MPD defines a set of <dfn>segment references</dfn> to the media segments and metadata describing the media samples provided by the representation.
+The MPD describes each representation using a **Representation** element. For each representation, the MPD defines a set of <dfn>segment references</dfn> to the media segments and metadata describing the media samples provided by the representation.
 
 #### Sample Timeline #### {#timing-sampletimeline}
 
@@ -359,7 +359,7 @@ The sample timeline does not determine what samples are presented. It merely con
 
 The same sample timeline <span class=modal-keyword>shall</span> be shared by all representations in the same adaptation set [[!MPEGCMAF]]. Representations in different adaptation sets <span class=modal-keyword>may</span> use different sample timelines.
 
-A sample timeline is measured in <dfn>timescale units</dfn> defined as a number of units per second. This value (the <dfn>timescale</dfn>) <span class=modal-keyword>shall</span> be present in the MPD as `SegmentTemplate@timescale` or `SegmentBase@timescale` (depending on the addressing mode).
+A sample timeline is measured in <dfn>timescale units</dfn> defined as a number of units per second. This value (the <dfn>timescale</dfn>) <span class=modal-keyword>shall</span> be present in the MPD as **SegmentTemplate**@timescale or **SegmentBase**@timescale (depending on the addressing mode).
 
 <figure>
 	<img src="images/PresentationTimeOffset.png">
@@ -434,11 +434,11 @@ During playback of dynamic presentations, a <dfn>wall clock</dfn> is used as the
 
 It is critical to synchronize the clocks of the DASH client and service when using a dynamic presentation because the MPD timeline of a dynamic presentation is mapped to wall clock time and many playback decisions are clock driven.
 
-Clock synchronization mechanisms are described by `UTCTiming` elements in the MPD (see ISO/IEC 23009-1 [[!MPEGDASH]] clause 5.8.4.11).
+Clock synchronization mechanisms are described by **UTCTiming** elements in the MPD (see ISO/IEC 23009-1 [[!MPEGDASH]] clause 5.8.4.11).
 
-The MPD of a dynamic presentation <span class=modal-keyword>shall</span> include at least one `UTCTiming` element that defines a clock synchronization mechanism.
+The MPD of a dynamic presentation <span class=modal-keyword>shall</span> include at least one **UTCTiming** element that defines a clock synchronization mechanism.
 
-A client presenting a dynamic presentation <span class=modal-keyword>shall</span> synchronize its local clock according to the `UTCTiming` elements in the MPD and <span class=modal-keyword>shall</span> emit a warning or error to application developers when clock synchronization fails.
+A client presenting a dynamic presentation <span class=modal-keyword>shall</span> synchronize its local clock according to the **UTCTiming** elements in the MPD and <span class=modal-keyword>shall</span> emit a warning or error to application developers when clock synchronization fails.
 
 A DASH client <span class=modal-keyword>shall not</span> use a synchronization method that is not listed in the MPD unless explicitly instructed to do so by the application developer.
 
@@ -492,8 +492,8 @@ Addressing mode selection <span class=modal-keyword>should</span> be based on th
   <thead><tr><th>Mode<th>Addressing<th>Timeline information<th>Typical use
   <tbody>
     <tr><td>Number + Duration<td>`$Number$`<td>`@duration`<td>Regular Segment duration.
-    <tr><td>Number + SegmentTimeline<td>`$Number$`<td>`SegmentTimeline`<td>Variable durations or gaps with sequence-number addressing.
-    <tr><td>Time + SegmentTimeline<td>`$Time$`<td>`SegmentTimeline`<td>Media-time addressing; accurate timeline signalling.
+    <tr><td>Number + SegmentTimeline<td>`$Number$`<td>**SegmentTimeline**<td>Variable durations or gaps with sequence-number addressing.
+    <tr><td>Time + SegmentTimeline<td>`$Time$`<td>**SegmentTimeline**<td>Media-time addressing; accurate timeline signalling.
 </table>
 
 A SegmentTemplate-based Representation <span class=modal-keyword>shall</span> include all attributes and elements
@@ -523,12 +523,12 @@ no multiplexed Representations are to be used).
 At least one `Representation/BaseURL` element <span class=modal-keyword>shall</span> be present in the MPD,
 containing a URL pointing to the CMAF track file.
 
-The `SegmentBase@indexRange` attribute <span class=modal-keyword>shall</span> be present in the MPD. The value of
+The **SegmentBase**@indexRange attribute <span class=modal-keyword>shall</span> be present in the MPD. The value of
 this attribute identifies the byte range of the index segment in the CMAF track
 file [[!MPEGDASH]]. The value is a `byte-range-spec` as defined in [[!RFC7233 obsolete]],
 referencing a single range of bytes.
 
-The `SegmentBase@timescale` attribute <span class=modal-keyword>shall</span> be present and its value <span class=modal-keyword>shall</span> match
+The **SegmentBase**@timescale attribute <span class=modal-keyword>shall</span> be present and its value <span class=modal-keyword>shall</span> match
 the value of the `timescale` field in the index segment (in the [[!ISOBMFF]]
 `sidx` box) and the value of the `timescale` field in the Initialization Segment
 (in the `tkhd` box [[!ISOBMFF]]).
@@ -536,7 +536,7 @@ the value of the `timescale` field in the index segment (in the [[!ISOBMFF]]
 The `SegmentBase/Initialization@range` attribute <span class=modal-keyword>shall</span> identify the byte range of
 the Initialization Segment in the CMAF track file. The value is a
 `byte-range-spec` as defined in [[!RFC7233 obsolete]], referencing a single range of
-bytes. The `Initialization@sourceURL` attribute <span class=modal-keyword>shall not</span> be used.
+bytes. The **Initialization**@sourceURL attribute <span class=modal-keyword>shall not</span> be used.
 
 Indexed addressing enables all data associated with a single Representation to be
 stored in a single CMAF track file from which byte ranges are served to clients
@@ -557,19 +557,19 @@ the MPD explicitly signaling the start time and duration of each Media Segment.
 Note: This addressing mode is sometimes called "SegmentTemplate with
 SegmentTimeline" in other documents.
 
-The `SegmentTemplate@media` attribute <span class=modal-keyword>shall</span> contain the URL template for
-referencing Media Segments. The `SegmentTemplate@initialization` attribute <span class=modal-keyword>shall</span>
+The **SegmentTemplate**@media attribute <span class=modal-keyword>shall</span> contain the URL template for
+referencing Media Segments. The **SegmentTemplate**@initialization attribute <span class=modal-keyword>shall</span>
 contain the URL template for referencing Initialization Segments.
 
 Either the `$Time$` or `$Number$` template variable <span class=modal-keyword>shall</span> be present in
-`SegmentTemplate@media` to uniquely identify Media Segments:
+**SegmentTemplate**@media to uniquely identify Media Segments:
 
 - If using `$Number$` addressing, the number of the first segment reference is
-  defined by `SegmentTemplate@startNumber` (default value 1) [[!MPEGDASH]]
+  defined by **SegmentTemplate**@startNumber (default value 1) [[!MPEGDASH]]
 - If using `$Time$` addressing, the template value for each segment reference is
   the segment start point on the sample timeline [[!MPEGDASH]]
 
-The `SegmentTimeline` element <span class=modal-keyword>shall</span> be present and <span class=modal-keyword>shall</span> contain one or more `S`
+The **SegmentTimeline** element <span class=modal-keyword>shall</span> be present and <span class=modal-keyword>shall</span> contain one or more `S`
 elements that define the sequence of Media Segments. Each `S` element defines:
 
 - `@t` - Start time of the first Media Segment in this sequence (in timescale
@@ -600,18 +600,18 @@ in the MPD. The true time span covered by samples within the Media Segment can b
 slightly different than the nominal time span (up to ±50% of the nominal
 duration).
 
-The `SegmentTemplate@duration` attribute defines the nominal duration of a Media
+The **SegmentTemplate**@duration attribute defines the nominal duration of a Media
 Segment in timescale units [[!MPEGDASH]].
 
-The `SegmentTemplate@media` attribute <span class=modal-keyword>shall</span> contain the URL template for
-referencing Media Segments. The `SegmentTemplate@initialization` attribute <span class=modal-keyword>shall</span>
+The **SegmentTemplate**@media attribute <span class=modal-keyword>shall</span> contain the URL template for
+referencing Media Segments. The **SegmentTemplate**@initialization attribute <span class=modal-keyword>shall</span>
 contain the URL template for referencing Initialization Segments.
 
 Either the `$Time$` or `$Number$` template variable <span class=modal-keyword>shall</span> be present in
-`SegmentTemplate@media` to uniquely identify Media Segments:
+**SegmentTemplate**@media to uniquely identify Media Segments:
 
 - If using `$Number$` addressing, the number of the first segment reference is
-  defined by `SegmentTemplate@startNumber` (default value 1) [[!MPEGDASH]]
+  defined by **SegmentTemplate**@startNumber (default value 1) [[!MPEGDASH]]
 - If using `$Time$` addressing, the template value for each segment reference is
   the segment start point on the sample timeline minus `@eptDelta` [[!MPEGDASH]]
 
@@ -632,7 +632,7 @@ compatibility.
 A DASH client derives the Segment list for a Representation from the MPD. For
 `@duration`-based addressing, the segment sequence is derived from Period timing,
 `@duration`, `@timescale`, `@startNumber`, and `@presentationTimeOffset`. For
-`SegmentTimeline`-based addressing, the sequence is derived from the ordered `S`
+**SegmentTimeline**-based addressing, the sequence is derived from the ordered `S`
 elements and their `@t`, `@d`, and `@r` values.
 
 For `$Time$` addressing, the value substituted into the URL is the media time of
@@ -989,7 +989,7 @@ When splitting Periods, content authors <span class=modal-keyword>shall</span>:
    period-connected (seamless playback) or period-disconnected (discontinuity
    allowed).
 
-3. **Set Period timing**: Assign `Period@start` and `Period@duration` values such
+3. **Set Period timing**: Assign **Period**@start and **Period**@duration values such
    that:
    - The first Period ends at the split point
    - The second Period starts at the split point
@@ -1073,7 +1073,7 @@ identifiers. [GROUNDED_BY=dashif-iop-v4-3#90]
 
 ## Bandwidth Signalling ## {#bandwidth-signalling}
 
-`Representation@bandwidth` <span class=modal-keyword>shall</span> be authored according to ISO/IEC 23009-1 and
+**Representation**@bandwidth <span class=modal-keyword>shall</span> be authored according to ISO/IEC 23009-1 and
 <span class=modal-keyword>shall</span> reflect the bandwidth needed for stable retrieval and playback of the
 Representation. Content authors <span class=modal-keyword>should</span> ensure that bandwidth values are
 sufficiently accurate for adaptation logic and are consistent across equivalent
@@ -1092,11 +1092,11 @@ applicable profile.
 
 For static services:
 
-- `MPD@type` <span class=modal-keyword>shall</span> be `static`;
+- **MPD**@type <span class=modal-keyword>shall</span> be `static`;
 - the Media Presentation duration <span class=modal-keyword>shall</span> be determinable from the MPD;
-- `MPD@minimumUpdatePeriod` <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be present; and
-- dynamic-service-only attributes such as `MPD@timeShiftBufferDepth` and
-    `MPD@suggestedPresentationDelay` <span class=modal-keyword><span class=modal-keyword>should</span> not</span> be present.
+- **MPD**@minimumUpdatePeriod <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be present; and
+- dynamic-service-only attributes such as **MPD**@timeShiftBufferDepth and
+    **MPD**@suggestedPresentationDelay <span class=modal-keyword><span class=modal-keyword>should</span> not</span> be present.
 
 Client implementations <span class=modal-keyword>shall</span> ignore dynamic-only timing information if it is
 erroneously present in a static service unless a referenced profile specifies
@@ -1116,22 +1116,22 @@ services; live-service-specific requirements are defined in Part 4.
 
 An MPD update publishes a new MPD instance for the same Media Presentation. The
 updated MPD <span class=modal-keyword>shall</span> maintain a consistent MPD timeline and <span class=modal-keyword>shall</span> update
-`MPD@publishTime` whenever the MPD content changes. Clients use the MPD update
-mechanisms of ISO/IEC 23009-1, including `MPD@minimumUpdatePeriod`, MPD validity
-expiry events, and `MPD.Location` where applicable.
+**MPD**@publishTime whenever the MPD content changes. Clients use the MPD update
+mechanisms of ISO/IEC 23009-1, including **MPD**@minimumUpdatePeriod, MPD validity
+expiry events, and **MPD**.**Location** where applicable.
 
 Issue: Complete the Part 2 draft MPD update rules and reconcile with Part 4 live
 service text to avoid duplication. [GROUNDED_BY=dashif-iop-v5-part2-draft#105..#108]
 
 ## MPD and Segment Locations ## {#locations}
 
-The `MPD.Location` element <span class=modal-keyword>may</span> be used to redirect clients to another MPD update
-location. `BaseURL` elements at MPD, Period, Adaptation Set, Representation, or
+The **MPD**.**Location** element <span class=modal-keyword>may</span> be used to redirect clients to another MPD update
+location. **BaseURL** elements at MPD, Period, Adaptation Set, Representation, or
 Segment levels <span class=modal-keyword>may</span> be used to resolve Segment URLs, support replication, and
 offer content through multiple CDNs. Content authors <span class=modal-keyword>shall</span> ensure that reference
 resolution is deterministic and follows ISO/IEC 23009-1.
 
-A service <span class=modal-keyword>may</span> use multiple `BaseURL` elements for redundancy, load distribution,
+A service <span class=modal-keyword>may</span> use multiple **BaseURL** elements for redundancy, load distribution,
 or CDN selection. Client behaviour for multiple Base URLs is governed by
 ISO/IEC 23009-1 and any applicable DASH-IF part.
 
