@@ -410,9 +410,9 @@ To propose a new codec for the DASH-IF Codec Registry:
       <td>Added DASH-IF Registries section covering the Identifier Registry (schemeIdUri values, profile URIs, ISO/IEC 23009-1 identifier types) and Codec Registry, with registration workflow (Google Forms, GitHub issues). Added DASHIF-IDENTIFIERS and DASHIF-CODECS biblio entries. Updated all 12 .bs files: replaced Repository: with !Repository:, added !Issue Tracking: and !Document Status: custom metadata entries.
 </table>
 
-# Annex A: Document Status # {#document-status .appendix}
+<h2 class="appendix" id="document-status">Annex A: Document Status</h2>
 
-## Living Document ## {#living-document}
+<h3 id="living-document">Living Document</h3>
 
 This document is published as a <b>Living Document</b> (LD). A Living Document is
 continuously updated as new content is added, issues are resolved, and the
@@ -434,7 +434,7 @@ History table:
     version numbers 1.0 and above.
 
 
-## Document Workflow ## {#document-workflow}
+<h3 id="document-workflow">Document Workflow</h3>
 
 The DASH-IF IOP v5 document set follows this publication workflow:
 
@@ -452,7 +452,7 @@ The DASH-IF IOP v5 document set follows this publication workflow:
     published as a stable release. The `stable` branch is updated; the `main`
     branch continues development of the next version.
 
-## Stable and Development Versions ## {#stable-dev-branches}
+<h3 id="stable-dev-branches">Stable and Development Versions</h3>
 
 DASH-IF IOP v5 uses a <b>two-branch model</b> to allow simultaneous maintenance of
 a stable approved version and ongoing development of the next version:
@@ -489,7 +489,7 @@ This model ensures that the official publication always reflects the latest
 approved content, while editors can freely develop the next version without
 affecting the stable publication.
 
-## Issue Reporting ## {#issue-reporting}
+<h3 id="issue-reporting">Issue Reporting</h3>
 
 All issues, bugs, and feature requests for DASH-IF IOP v5 <span class=modal-keyword>shall</span> be submitted
 through the single DASH-IF IOPv5 issue tracker at
@@ -501,16 +501,16 @@ To associate an issue with a specific part, use one of the following conventions
 - <b>Title prefix</b>: Begin the issue title with `[Part N]:`, for example
     `[Part 2]: Clarify @timescale requirement for SegmentTemplate`.
 
-## Contributing and Reviewing ## {#contributing}
+<h3 id="contributing">Contributing and Reviewing</h3>
 
-### General ### {#contributing-general}
+<h4 id="contributing-general">General</h4>
 
 DASH-IF IOP v5 is developed openly on GitHub. Contributions and reviews are
 welcome at all stages of the publication workflow. The primary mechanisms are
 GitHub issues (for feedback and discussion) and pull requests (for editorial
 contributions).
 
-### During the Working Draft Phase ### {#contributing-wd}
+<h4 id="contributing-wd">During the Working Draft Phase</h4>
 
 While a part is at Working Draft status:
 
@@ -528,7 +528,7 @@ While a part is at Working Draft status:
 - <b>Discuss</b> open issues in the GitHub issue tracker. The DASH-IF Technical
     Working Group reviews issues and pull requests on a regular basis.
 
-### During WG Review ### {#contributing-wg-review}
+<h4 id="contributing-wg-review">During WG Review</h4>
 
 When a part reaches WG Review status (release candidate tagged on `main`):
 
@@ -539,7 +539,7 @@ When a part reaches WG Review status (release candidate tagged on `main`):
 - The WG chair coordinates the review schedule and announces the review period
     via the DASH-IF mailing list and GitHub.
 
-### During Community Review ### {#contributing-community-review}
+<h4 id="contributing-community-review">During Community Review</h4>
 
 When a part reaches Community Review status:
 
@@ -552,7 +552,7 @@ When a part reaches Community Review status:
     end of the review period, the WG resolves all open issues and, if no
     substantive changes are required, approves the document.
 
-### How to Submit a Pull Request ### {#contributing-pr}
+<h4 id="contributing-pr">How to Submit a Pull Request</h4>
 
 1. <b>Fork</b> the IOPv5 repository at
     [https://github.com/Dash-Industry-Forum/IOPv5](https://github.com/Dash-Industry-Forum/IOPv5).
