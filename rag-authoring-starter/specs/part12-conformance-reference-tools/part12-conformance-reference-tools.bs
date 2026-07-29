@@ -9,10 +9,11 @@ Group: dashif
 Editor: Daniel Silhavy, Fraunhofer FOKUS, https://www.linkedin.com/in/daniel-silhavy-21650a129/
 Editor: Thomas Stockhammer, Qualcomm, https://www.linkedin.com/in/stockhammer/
 Abstract: Overview of the DASH-IF conformance and reference tools: the DASH-IF Conformance Validator, the dash.js reference player, the livesim2 live source simulator, and the DASH-IF test assets, together with the contextual interpretation of conformance keywords. Working draft authored in the IOPv5 workspace.
-!Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
-!Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+%5BPart+12%5D">Open Part 12 issues</a>. File new issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a> with prefix <code>[Part 12]:</code> and assign to the <a href="https://github.com/orgs/Dash-Industry-Forum/projects">Part 12 GitHub Project</a>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
-!Document Status: Working Draft (0.6). See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Part 1 §1 Document Status</a> for versioning and workflow.
-!Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
+
+!Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+project%3ADash-Industry-Forum%2F38">Currently open Part 12 issues</a> | <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues/new?title=%5BPart+12%5D%3A+">File a new Part 12 issue</a>
+!Document Status: <strong>Working Draft 0.6</strong>. Note: See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Annex A: Document Status</a> for versioning and workflow.
+!Contributors: Contributors are maintained via GitHub pull requests to the <a href="https://github.com/Dash-Industry-Forum/IOPv5">IOPv5 repository</a>.
+!Contributing: See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#contributing">Part 1 §1.4 Contributing and Reviewing</a>.
 !Key Words: Conformance, Reference Tools, Validator, dash.js, livesim2, Test Assets
 </pre>
 

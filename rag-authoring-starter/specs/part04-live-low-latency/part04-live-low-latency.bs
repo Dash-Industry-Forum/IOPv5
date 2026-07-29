@@ -7,10 +7,11 @@ URL: https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html
 Group: dashif
 Editor: Thomas Stockhammer, Qualcomm, https://www.linkedin.com/in/stockhammer/
 Abstract: Working draft of DASH-IF IOP v5 Part 4, covering interoperability points for live and low-latency live DASH services. Authored in the IOPv5 workspace; not a published DASH-IF document.
-!Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
-!Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+%5BPart+4%5D">Open Part 4 issues</a>. File new issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a> with prefix <code>[Part 4]:</code> and assign to the <a href="https://github.com/orgs/Dash-Industry-Forum/projects">Part 4 GitHub Project</a>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
-!Document Status: Working Draft (0.1). See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Part 1 §1 Document Status</a> for versioning and workflow.
-!Contributors: DASH-IF Live Task Force. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
+
+!Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+project%3ADash-Industry-Forum%2F30">Currently open Part 4 issues</a> | <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues/new?title=%5BPart+4%5D%3A+">File a new Part 4 issue</a>
+!Document Status: <strong>Working Draft 0.1</strong>. Note: See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Annex A: Document Status</a> for versioning and workflow.
+!Contributors: Contributors are maintained via GitHub pull requests to the <a href="https://github.com/Dash-Industry-Forum/IOPv5">IOPv5 repository</a>.
+!Contributing: See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#contributing">Part 1 §1.4 Contributing and Reviewing</a>.
 !Key Words: Live, Low-Latency, ARR, Segment Sequence, Resync
 !Related Features: Live, Low-Latency
 </pre>

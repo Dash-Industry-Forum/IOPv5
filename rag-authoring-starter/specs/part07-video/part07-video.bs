@@ -7,10 +7,11 @@ URL: https://dashif.org/Guidelines/iop-v5/part07-video.html
 Group: dashif
 Editor: DASH-IF Technical Working Group
 Abstract: Video interoperability points, CMAF media profiles, codec signalling, DASH MPD parameters, and video-specific constraints. Working draft authored in the IOPv5 workspace.
-!Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
-!Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+%5BPart+7%5D">Open Part 7 issues</a>. File new issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a> with prefix <code>[Part 7]:</code> and assign to the <a href="https://github.com/orgs/Dash-Industry-Forum/projects">Part 7 GitHub Project</a>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
-!Document Status: Working Draft (0.3). See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Part 1 §1 Document Status</a> for versioning and workflow.
-!Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
+
+!Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+project%3ADash-Industry-Forum%2F33">Currently open Part 7 issues</a> | <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues/new?title=%5BPart+7%5D%3A+">File a new Part 7 issue</a>
+!Document Status: <strong>Working Draft 0.3</strong>. Note: See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Annex A: Document Status</a> for versioning and workflow.
+!Contributors: Contributors are maintained via GitHub pull requests to the <a href="https://github.com/Dash-Industry-Forum/IOPv5">IOPv5 repository</a>.
+!Contributing: See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#contributing">Part 1 §1.4 Contributing and Reviewing</a>.
 !Key Words: Video, CMAF, Codecs, HDR, MPD Signalling
 </pre>
 
