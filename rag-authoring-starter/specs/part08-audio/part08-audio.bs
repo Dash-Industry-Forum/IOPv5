@@ -8,7 +8,7 @@ Group: dashif
 Editor: DASH-IF Technical Working Group
 Abstract: Audio interoperability points, coding profiles, ISO BMFF packaging, MPD parameters, and audio-specific constraints. Working draft authored in the IOPv5 workspace.
 !Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
-!Issue Tracking: File issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a> with prefix <code>[Part 8]:</code> and assign to the <a href="https://github.com/orgs/Dash-Industry-Forum/projects">Part 8 GitHub Project</a>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
+!Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+%5BPart+8%5D">Open Part 8 issues</a>. File new issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a> with prefix <code>[Part 8]:</code> and assign to the <a href="https://github.com/orgs/Dash-Industry-Forum/projects">Part 8 GitHub Project</a>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
 !Document Status: Working Draft (0.3). See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Part 1 §1 Document Status</a> for versioning and workflow.
 !Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: Audio, CMAF, Codecs, MPD Signalling

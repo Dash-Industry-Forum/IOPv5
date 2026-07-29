@@ -8,7 +8,7 @@ Group: dashif
 Editor: Thomas Stockhammer, Qualcomm, https://www.linkedin.com/in/stockhammer/
 Abstract: Working draft of DASH-IF IOP v5 Part 3, covering requirements and recommendations for DASH on-demand services. Drafted from DASH-IF IOP v4.3 on-demand service text and aligned with IOP v5 Part 2.
 !Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
-!Issue Tracking: File issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a> with prefix <code>[Part 3]:</code> and assign to the <a href="https://github.com/orgs/Dash-Industry-Forum/projects">Part 3 GitHub Project</a>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
+!Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+%5BPart+3%5D">Open Part 3 issues</a>. File new issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a> with prefix <code>[Part 3]:</code> and assign to the <a href="https://github.com/orgs/Dash-Industry-Forum/projects">Part 3 GitHub Project</a>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
 !Document Status: Working Draft (0.1). See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Part 1 §1 Document Status</a> for versioning and workflow.
 !Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: On-Demand, Static, DASH, CMAF, Segment Index, Indexed Self-Initializing Media Segment

@@ -9,7 +9,7 @@ Editor: Thomas Stockhammer, Qualcomm, https://www.linkedin.com/in/stockhammer/
 Editor: Mike Dolan, Pearl TV, https://www.linkedin.com/in/michael-dolan-50872355/
 Abstract: Overview of DASH-IF Interoperability Guidelines (IOP) v5: scope, the multi-part document structure, references, terms, symbols, abbreviations, and conformance/style conventions. Working draft authored in the IOPv5 workspace.
 !Repository: <a href="https://github.com/Dash-Industry-Forum/IOPv5">Dash-Industry-Forum/IOPv5</a>
-!Issue Tracking: File issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a> with prefix <code>[Part 1]:</code> and assign to the <a href="https://github.com/orgs/Dash-Industry-Forum/projects">Part 1 GitHub Project</a>. See <a href="#issue-reporting">§1.3</a>.
+!Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+%5BPart+1%5D">Open Part 1 issues</a>. File new issues at <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues">IOPv5 GitHub</a> with prefix <code>[Part 1]:</code> and assign to the <a href="https://github.com/orgs/Dash-Industry-Forum/projects">Part 1 GitHub Project</a>. See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#issue-reporting">Part 1 §1.3</a>.
 !Document Status: Working Draft (0.3). See <a href="#document-status">§1 Document Status</a> for versioning and workflow.
 !Contributors: DASH-IF Technical Working Group. Editors and contributors are maintained via GitHub pull requests to the IOPv5 repository.
 !Key Words: Overview, Architecture, Interfaces
