@@ -3,6 +3,7 @@ Revision: 0.1
 Title: DASH-IF IOP v5 Part 9: Text
 Status: LD
 Repository: Dash-Industry-Forum/IOPv5
+Issue Tracking: none
 Shortname: iop-v5-part9
 URL: https://dashif.org/Guidelines/iop-v5/part09-text.html
 Group: dashif
@@ -10,7 +11,7 @@ Editor: DASH-IF Technical Working Group
 Abstract: Subtitle and caption interoperability points, coding profiles, packaging, and DASH signalling. Working draft authored in the IOPv5 workspace.
 
 !Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+project%3ADash-Industry-Forum%2F35" target="_blank">Currently open Part 9 issues</a><br><a href="https://github.com/Dash-Industry-Forum/IOPv5/issues/new?title=%5BPart+9%5D%3A+" target="_blank">File a new Part 9 issue</a> (then assign to <a href="https://github.com/orgs/Dash-Industry-Forum/projects/35" target="_blank">Part 9 project</a>)
-!Document Status: <strong>Working Draft 0.1</strong>. Note: See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Annex A: Document Status</a> for versioning and workflow.
+!Document Status: <strong>Working Draft 0.1</strong>.<br><small>See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Annex A: Document Status</a> for versioning and workflow.</small>
 !Contributors: Contributors are maintained via GitHub pull requests to the <a href="https://github.com/Dash-Industry-Forum/IOPv5">IOPv5 repository</a>.
 !Contributing: See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#contributing">Part 1 §1.4 Contributing and Reviewing</a>.
 !Key Words: Text, Subtitles, Captions, TTML, WebVTT
