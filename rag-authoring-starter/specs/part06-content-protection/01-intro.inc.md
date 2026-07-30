@@ -18,7 +18,7 @@ This document is an update to the "Content Protection and Security" section of t
 
 In addition, this document:
 
-* Introduces the **Interoperable license request model** that describes how players take content and consume it in ways that make sense on a platform that supports EME. From the Platform capabilities discovery and DRM selection to the license request protocol, this optional request model allows a player to obtain authorization tokens that can be used for retrieving licenses and content keys from a license server for rendering content. Any processing step in the proposed model can be redefined by the application logic.
+* Introduces the <b>Interoperable license request model</b> that describes how players take content and consume it in ways that make sense on a platform that supports EME. From the Platform capabilities discovery and DRM selection to the license request protocol, this optional request model allows a player to obtain authorization tokens that can be used for retrieving licenses and content keys from a license server for rendering content. Any processing step in the proposed model can be redefined by the application logic.
 
 * Introduces DASH-IF XML schema where two elements are defined for supporting the license request model. These elements are namely the `laurl` (license acquisition server URL) and `authzurl` (Authorization server URL).
 
@@ -26,23 +26,23 @@ In addition, this document:
 
 Requirements in this document describe service and client behaviors that DASH-IF considers interoperable.
 
-If a **service provider** follows these requirements in a published DASH service, the published DASH service is likely to experience successful playback on a wide variety of clients and exhibit graceful degradation when a client does not support all features used by the service.
+If a <b>service provider</b> follows these requirements in a published DASH service, the published DASH service is likely to experience successful playback on a wide variety of clients and exhibit graceful degradation when a client does not support all features used by the service.
 
-If a **client implementer** follows the client-oriented requirements described in this document, the DASH client will play content conforming to this document provided that the client device media platform supports all features used by a particular DASH service (e.g. the codecs and DRM systems).
+If a <b>client implementer</b> follows the client-oriented requirements described in this document, the DASH client will play content conforming to this document provided that the client device media platform supports all features used by a particular DASH service (e.g. the codecs and DRM systems).
 
 This document uses statements of fact when describing normative requirements defined in referenced specifications such as [[!DASH]] and [[!CMAF]]. References are typically provided to indicate where the requirements are defined.
 
-[[!RFC2119]] statements (e.g. **_shall_**, **_should_** and **_may_**) are used when this document defines a new requirement or further constrains a requirement from a referenced document.
+[[!RFC2119]] statements (e.g. <b>_shall_</b>, <b>_should_</b> and <b>_may_</b>) are used when this document defines a new requirement or further constrains a requirement from a referenced document.
 
 
 <div class="example">
 Statement of fact:
 
-* A DASH presentation **is** a sequence of consecutive non-overlapping periods [[!DASH]].
+* A DASH presentation <b>is</b> a sequence of consecutive non-overlapping periods [[!DASH]].
 
 New or more constrained requirement:
 
-* Segments ****_shall not_**** use the MPEG-2 TS container format.
+* Segments **<b>_shall not_</b>** use the MPEG-2 TS container format.
 
 </div>
 

@@ -157,8 +157,8 @@ Part 2 provides the common model used by the rest of the IOP v5 document set:
 - a mapping between CMAF structures and DASH MPD structures;
 - the timing model that relates Period time, media presentation time, decode
     time, and wall-clock availability time;
-- Segment addressing and segment-list derivation using **SegmentTemplate**,
-    `$Number$`, `$Time$`, `@duration`, and **SegmentTimeline**;
+- Segment addressing and segment-list derivation using <b>SegmentTemplate</b>,
+    `$Number$`, `$Time$`, `@duration`, and <b>SegmentTimeline</b>;
 - common service types (`static`, `dynamic`, MPD updates, locations); and
 - interoperability requirements for multi-Period CMAF content and gap handling.
 
@@ -171,11 +171,11 @@ Sets, CMAF Switching Sets, CMAF Tracks, CMAF Headers, CMAF Segments, CMAF
 Fragments, and CMAF Chunks [[!MPEGCMAF]]. The relevant addressable CMAF objects
 for DASH delivery are:
 
-- **CMAF Headers**, which map to DASH Initialization Segments;
-- **CMAF Segments**, which map to DASH Media Segments;
-- **CMAF Chunks**, which map to addressable or progressively delivered subparts
+- <b>CMAF Headers</b>, which map to DASH Initialization Segments;
+- <b>CMAF Segments</b>, which map to DASH Media Segments;
+- <b>CMAF Chunks</b>, which map to addressable or progressively delivered subparts
     of Segments for low-latency operation; and
-- **CMAF Track Files**, which in practical DASH usage are analogous to
+- <b>CMAF Track Files</b>, which in practical DASH usage are analogous to
     self-initializing Media Segments or single-file Representations.
 
 A DASH-IF Media Presentation <span class=modal-keyword>shall</span> use CMAF-compliant media tracks when the part
@@ -226,10 +226,10 @@ reference-resolution rules of ISO/IEC 23009-1.
 
 The DASH timing model relates four domains:
 
-1. **MPD timeline**: Period start times and Period durations.
-2. **Media presentation time**: sample presentation times inside the media.
-3. **Segment addressing time**: `$Time$`, `$Number$`, and SegmentTimeline values.
-4. **Wall-clock availability time**: used for dynamic services and Segment
+1. <b>MPD timeline</b>: Period start times and Period durations.
+2. <b>Media presentation time</b>: sample presentation times inside the media.
+3. <b>Segment addressing time</b>: `$Time$`, `$Number$`, and SegmentTimeline values.
+4. <b>Wall-clock availability time</b>: used for dynamic services and Segment
     availability.
 
 For each Representation in a Period, the mapping between Segment media time and
@@ -344,7 +344,7 @@ now fully specified in the current MPEG-DASH edition.
 
 Representations provide the content for periods. A representation is a sequence of media segments, an initialization segment, an optional index segment and related metadata (see ISO/IEC 23009-1 [[!MPEGDASH]] clauses 5.3.1 and 5.3.5).
 
-The MPD describes each representation using a **Representation** element. For each representation, the MPD defines a set of <dfn>segment references</dfn> to the media segments and metadata describing the media samples provided by the representation.
+The MPD describes each representation using a <b>Representation</b> element. For each representation, the MPD defines a set of <dfn>segment references</dfn> to the media segments and metadata describing the media samples provided by the representation.
 
 #### Sample Timeline #### {#timing-sampletimeline}
 
@@ -434,11 +434,11 @@ During playback of dynamic presentations, a <dfn>wall clock</dfn> is used as the
 
 It is critical to synchronize the clocks of the DASH client and service when using a dynamic presentation because the MPD timeline of a dynamic presentation is mapped to wall clock time and many playback decisions are clock driven.
 
-Clock synchronization mechanisms are described by **UTCTiming** elements in the MPD (see ISO/IEC 23009-1 [[!MPEGDASH]] clause 5.8.4.11).
+Clock synchronization mechanisms are described by <b>UTCTiming</b> elements in the MPD (see ISO/IEC 23009-1 [[!MPEGDASH]] clause 5.8.4.11).
 
-The MPD of a dynamic presentation <span class=modal-keyword>shall</span> include at least one **UTCTiming** element that defines a clock synchronization mechanism.
+The MPD of a dynamic presentation <span class=modal-keyword>shall</span> include at least one <b>UTCTiming</b> element that defines a clock synchronization mechanism.
 
-A client presenting a dynamic presentation <span class=modal-keyword>shall</span> synchronize its local clock according to the **UTCTiming** elements in the MPD and <span class=modal-keyword>shall</span> emit a warning or error to application developers when clock synchronization fails.
+A client presenting a dynamic presentation <span class=modal-keyword>shall</span> synchronize its local clock according to the <b>UTCTiming</b> elements in the MPD and <span class=modal-keyword>shall</span> emit a warning or error to application developers when clock synchronization fails.
 
 A DASH client <span class=modal-keyword>shall not</span> use a synchronization method that is not listed in the MPD unless explicitly instructed to do so by the application developer.
 
@@ -467,11 +467,11 @@ DASH-IF IOP v5 uses the Segment information mechanisms of ISO/IEC 23009-1. This
 part defines three <dfn>addressing modes</dfn> for referencing Media Segments,
 Initialization Segments, and Index Segments in interoperable DASH presentations:
 
-1. **Indexed addressing** (SegmentBase) - Uses an index segment to reference all
+1. <b>Indexed addressing</b> (SegmentBase) - Uses an index segment to reference all
    Media Segments via byte ranges in a CMAF track file
-2. **Explicit addressing** (SegmentTemplate with SegmentTimeline) - Uses a
+2. <b>Explicit addressing</b> (SegmentTemplate with SegmentTimeline) - Uses a
    segment timeline to explicitly signal each Media Segment's timing
-3. **Simple addressing** (SegmentTemplate with duration) - Uses a nominal
+3. <b>Simple addressing</b> (SegmentTemplate with duration) - Uses a nominal
    duration to derive Media Segment timing
 
 All Representations in the same Adaptation Set <span class=modal-keyword>shall</span> use the same addressing
@@ -480,10 +480,10 @@ modes.
 
 Addressing mode selection <span class=modal-keyword>should</span> be based on the nature of the content:
 
-- **Content generated on the fly** (e.g., live encoding): Use explicit addressing
-- **Content generated in advance of publishing** (e.g., VOD): Use indexed
+- <b>Content generated on the fly</b> (e.g., live encoding): Use explicit addressing
+- <b>Content generated in advance of publishing</b> (e.g., VOD): Use indexed
   addressing or explicit addressing
-- **Simple packager implementations**: <span class=modal-keyword>May</span> use simple addressing, though this
+- <b>Simple packager implementations</b>: <span class=modal-keyword>May</span> use simple addressing, though this
   comes at a cost of reduced applicability to multi-period scenarios and reduced
   client compatibility
 
@@ -492,8 +492,8 @@ Addressing mode selection <span class=modal-keyword>should</span> be based on th
   <thead><tr><th>Mode<th>Addressing<th>Timeline information<th>Typical use
   <tbody>
     <tr><td>Number + Duration<td>`$Number$`<td>`@duration`<td>Regular Segment duration.
-    <tr><td>Number + SegmentTimeline<td>`$Number$`<td>**SegmentTimeline**<td>Variable durations or gaps with sequence-number addressing.
-    <tr><td>Time + SegmentTimeline<td>`$Time$`<td>**SegmentTimeline**<td>Media-time addressing; accurate timeline signalling.
+    <tr><td>Number + SegmentTimeline<td>`$Number$`<td><b>SegmentTimeline</b><td>Variable durations or gaps with sequence-number addressing.
+    <tr><td>Time + SegmentTimeline<td>`$Time$`<td><b>SegmentTimeline</b><td>Media-time addressing; accurate timeline signalling.
 </table>
 
 A SegmentTemplate-based Representation <span class=modal-keyword>shall</span> include all attributes and elements
@@ -569,7 +569,7 @@ Either the `$Time$` or `$Number$` template variable <span class=modal-keyword>sh
 - If using `$Time$` addressing, the template value for each segment reference is
   the segment start point on the sample timeline [[!MPEGDASH]]
 
-The **SegmentTimeline** element <span class=modal-keyword>shall</span> be present and <span class=modal-keyword>shall</span> contain one or more `S`
+The <b>SegmentTimeline</b> element <span class=modal-keyword>shall</span> be present and <span class=modal-keyword>shall</span> contain one or more `S`
 elements that define the sequence of Media Segments. Each `S` element defines:
 
 - `@t` - Start time of the first Media Segment in this sequence (in timescale
@@ -632,7 +632,7 @@ compatibility.
 A DASH client derives the Segment list for a Representation from the MPD. For
 `@duration`-based addressing, the segment sequence is derived from Period timing,
 `@duration`, `@timescale`, `@startNumber`, and `@presentationTimeOffset`. For
-**SegmentTimeline**-based addressing, the sequence is derived from the ordered `S`
+<b>SegmentTimeline</b>-based addressing, the sequence is derived from the ordered `S`
 elements and their `@t`, `@d`, and `@r` values.
 
 For `$Time$` addressing, the value substituted into the URL is the media time of
@@ -768,15 +768,15 @@ maintain presentation time continuity and <span class=modal-keyword>shall</span>
 
 Key considerations for samples at Period boundaries:
 
-- **Presentation Time Continuity**: The presentation time of the first sample in
+- <b>Presentation Time Continuity</b>: The presentation time of the first sample in
   Period N+1 <span class=modal-keyword>shall</span> immediately follow the presentation time of the last sample in
   Period N, accounting for sample duration.
-- **Decode Time Handling**: Decode timestamps <span class=modal-keyword>shall</span> maintain proper ordering across
+- <b>Decode Time Handling</b>: Decode timestamps <span class=modal-keyword>shall</span> maintain proper ordering across
   the boundary, particularly for media with B-frames or other reordering.
-- **Random Access Points**: If a Period boundary requires a random access point
+- <b>Random Access Points</b>: If a Period boundary requires a random access point
   (e.g., for period-disconnected presentations), the first sample in the new Period
   <span class=modal-keyword>shall</span> be a random access point (IDR frame for video, sync sample for audio).
-- **Sample Dependencies**: For period-connected presentations, samples in Period N+1
+- <b>Sample Dependencies</b>: For period-connected presentations, samples in Period N+1
   <span class=modal-keyword>may</span> depend on samples in Period N if the decoder state is preserved.
 
 <figure>
@@ -826,12 +826,12 @@ subtitles for text).
   track.</figcaption>
 </figure>
 
-**Advantages:**
+<b>Advantages:</b>
 - Simple Period structure (single Period for entire presentation)
 - All tracks remain synchronized throughout
 - No Period boundaries to manage
 
-**Disadvantages:**
+<b>Disadvantages:</b>
 - Increases bandwidth consumption for padded content
 - May require generating artificial padding content
 - Padding content must be properly signalled to avoid playback artifacts
@@ -853,12 +853,12 @@ track, discarding content that extends beyond the common duration.
   track.</figcaption>
 </figure>
 
-**Advantages:**
+<b>Advantages:</b>
 - Simple Period structure (single Period)
 - No artificial content generation required
 - Minimal bandwidth usage
 
-**Disadvantages:**
+<b>Disadvantages:</b>
 - Loses content from longer tracks
 - May not be acceptable if all content must be preserved
 - Requires careful selection of cut point (should align with random access points)
@@ -880,13 +880,13 @@ content without adding padding.
   different track lengths.</figcaption>
 </figure>
 
-**Advantages:**
+<b>Advantages:</b>
 - Preserves all original content
 - No artificial padding required
 - Efficient bandwidth usage
 - Natural representation of content structure
 
-**Disadvantages:**
+<b>Disadvantages:</b>
 - More complex Period structure
 - Requires careful Period boundary management
 - May require Period-connected or period-disconnected signalling
@@ -911,12 +911,12 @@ handled with padding while major differences trigger Period splitting.
   appropriate.</figcaption>
 </figure>
 
-**Advantages:**
+<b>Advantages:</b>
 - Flexible approach tailored to specific content
 - Can optimize for bandwidth, complexity, or content preservation
 - Allows different strategies for different track types
 
-**Disadvantages:**
+<b>Disadvantages:</b>
 - Most complex to implement
 - Requires careful decision logic
 - May be harder to validate and test
@@ -930,15 +930,15 @@ When using mixed strategies:
 
 Content authors <span class=modal-keyword>should</span> select a strategy based on:
 
-- **Content preservation requirements**: If all content must be preserved, avoid
+- <b>Content preservation requirements</b>: If all content must be preserved, avoid
   cutting strategy
-- **Bandwidth constraints**: Padding increases bandwidth; Period splitting or cutting
+- <b>Bandwidth constraints</b>: Padding increases bandwidth; Period splitting or cutting
   minimizes it
-- **Client compatibility**: Some clients may handle Period transitions better than
+- <b>Client compatibility</b>: Some clients may handle Period transitions better than
   others
-- **Duration differences**: Small differences favor padding; large differences favor
+- <b>Duration differences</b>: Small differences favor padding; large differences favor
   Period splitting
-- **Content type**: Audio padding is simpler than video padding; subtitles may
+- <b>Content type</b>: Audio padding is simpler than video padding; subtitles may
   naturally end early
 
 ## Period Splitting ## {#period-splitting}
@@ -982,20 +982,20 @@ complexity for both content authoring and client playback.
 
 When splitting Periods, content authors <span class=modal-keyword>shall</span>:
 
-1. **Identify the split point**: Choose a point on the MPD timeline where the split
+1. <b>Identify the split point</b>: Choose a point on the MPD timeline where the split
    should occur. This <span class=modal-keyword>shall</span> align with random access points in all affected tracks.
 
-2. **Determine Period connectivity**: Decide whether the Periods should be
+2. <b>Determine Period connectivity</b>: Decide whether the Periods should be
    period-connected (seamless playback) or period-disconnected (discontinuity
    allowed).
 
-3. **Set Period timing**: Assign <code><b>Period</b>@start</code> and <code><b>Period</b>@duration</code> values such
+3. <b>Set Period timing</b>: Assign <code><b>Period</b>@start</code> and <code><b>Period</b>@duration</code> values such
    that:
    - The first Period ends at the split point
    - The second Period starts at the split point
    - No gap or overlap exists on the MPD timeline
 
-4. **Distribute Representations**: Assign Representations to the appropriate Period
+4. <b>Distribute Representations</b>: Assign Representations to the appropriate Period
    based on their content availability:
    - Representations that span the split point <span class=modal-keyword>may</span> appear in both Periods (if
      period-connected)
@@ -1003,14 +1003,14 @@ When splitting Periods, content authors <span class=modal-keyword>shall</span>:
    - Representations that start after the split point appear only in the second
      Period
 
-5. **Maintain Adaptation Set consistency**: If Adaptation Sets span multiple Periods,
+5. <b>Maintain Adaptation Set consistency</b>: If Adaptation Sets span multiple Periods,
    use matching `@id` values to signal continuity.
 
 6. **Update `@presentationTimeOffset`**: Ensure each Representation's
    `@presentationTimeOffset` correctly maps its sample timeline to the Period's
    position on the MPD timeline.
 
-7. **Verify Segment references**: Ensure all Segment references remain valid and
+7. <b>Verify Segment references</b>: Ensure all Segment references remain valid and
    correctly address the media data.
 
 ### Period Splitting and Decoder State ### {#period-splitting-decoder-state}
@@ -1126,12 +1126,12 @@ service text to avoid duplication. [GROUNDED_BY=dashif-iop-v5-part2-draft#105..#
 ## MPD and Segment Locations ## {#locations}
 
 The <code><b>MPD</b>.<b>Location</b></code> element <span class=modal-keyword>may</span> be used to redirect clients to another MPD update
-location. **BaseURL** elements at MPD, Period, Adaptation Set, Representation, or
+location. <b>BaseURL</b> elements at MPD, Period, Adaptation Set, Representation, or
 Segment levels <span class=modal-keyword>may</span> be used to resolve Segment URLs, support replication, and
 offer content through multiple CDNs. Content authors <span class=modal-keyword>shall</span> ensure that reference
 resolution is deterministic and follows ISO/IEC 23009-1.
 
-A service <span class=modal-keyword>may</span> use multiple **BaseURL** elements for redundancy, load distribution,
+A service <span class=modal-keyword>may</span> use multiple <b>BaseURL</b> elements for redundancy, load distribution,
 or CDN selection. Client behaviour for multiple Base URLs is governed by
 ISO/IEC 23009-1 and any applicable DASH-IF part.
 

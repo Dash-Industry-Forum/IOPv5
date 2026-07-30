@@ -109,7 +109,7 @@ Media Presentation accessible at time `NOW` at its location:
     and the segment duration.
 
 Note: The derivation of SAST, SAET, and Segment URLs follows the addressing and
-timing rules of ISO/IEC 23009-1 (**SegmentTemplate**, **SegmentTimeline**,
+timing rules of ISO/IEC 23009-1 (<b>SegmentTemplate</b>, <b>SegmentTimeline</b>,
 `@availabilityStartTime`, `@availabilityTimeOffset`, `@presentationTimeOffset`).
 
 ### Segment Information Derivation ### {#live-segment-derivation}
@@ -128,13 +128,13 @@ definitions, aligned with ISO/IEC 23009-1, apply:
 :: The wall-clock time on the content server. All wall-clock-related information
     in the MPD is expressed relative to `NOW`.
 
-**MPD information.** For a dynamic service without MPD updates: <code><b>MPD</b>@type</code> <span class=modal-keyword>shall</span>
+<b>MPD information.</b> For a dynamic service without MPD updates: <code><b>MPD</b>@type</code> <span class=modal-keyword>shall</span>
 be `dynamic`; <code><b>MPD</b>@mediaPresentationDuration</code> <span class=modal-keyword>shall</span> be present, or the
 <code><b>Period</b>@duration</code> of the last Period <span class=modal-keyword>shall</span> be present; <code><b>MPD</b>@minimumUpdatePeriod</code>
 <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be present. It is recommended to provide <code><b>MPD</b>@timeShiftBufferDepth</code> and
 <code><b>MPD</b>@suggestedPresentationDelay</code>.
 
-**Period information.** Each Period *i* is assigned a Period start time in
+<b>Period information.</b> Each Period *i* is assigned a Period start time in
 wall-clock time (PSwc[i]) and a Period end time in wall-clock time (PEwc[i]),
 determined per ISO/IEC 23009-1:
 
@@ -146,15 +146,15 @@ determined per ISO/IEC 23009-1:
     last Period it derives from <code><b>MPD</b>@mediaPresentationDuration</code> or the last
     <code><b>Period</b>@duration</code>, and an MPD update <span class=modal-keyword>may</span> extend it.
 
-**Representation information.** For a Period *i*, when <code><b>SegmentTemplate</b>.<b>SegmentTimeline</b></code>
-is present (and <code><b>SegmentTemplate</b>@duration</code> is not), the **SegmentTimeline** contains
+<b>Representation information.</b> For a Period *i*, when <code><b>SegmentTemplate</b>.<b>SegmentTimeline</b></code>
+is present (and <code><b>SegmentTemplate</b>@duration</code> is not), the <b>SegmentTimeline</b> contains
 `S` elements with `@t` (start time), `@d` (duration), and `@r` (repeat count),
 from which the number and timing of Segments — and hence SAST/SAET and URLs — are
 derived using `@timescale` and any applicable `@availabilityTimeOffset`. A
 negative `@r` repeats until the next `@t` or the Period end. Gaps are possible and
 indicate that no media is present for the gap.
 
-**Media time information.** Each Media Segment *k* has an earliest presentation
+<b>Media time information.</b> Each Media Segment *k* has an earliest presentation
 time (EPT[k,r,i]) and an accurate duration, measured in media presentation time.
 EPT <span class=modal-keyword>may</span> be estimated from the MPD (SAST minus announced segment duration) or
 determined accurately from the Segment itself.
@@ -176,8 +176,8 @@ Media Presentation:
 
 Content <span class=modal-keyword>may</span> be offered as a single Period or as multiple Periods (for example for
 ad insertion opportunities, program changes, or operational purposes). Segment
-information <span class=modal-keyword>may</span> be provided using **SegmentTemplate** with `@duration`, or using
-**SegmentTemplate** with `SegmentTimeline`.
+information <span class=modal-keyword>may</span> be provided using <b>SegmentTemplate</b> with `@duration`, or using
+<b>SegmentTemplate</b> with `SegmentTimeline`.
 
 
 ### Availability Window ### {#availability-window}
@@ -210,8 +210,8 @@ The availability window is calculated as follows:
    - If <code><b>MPD</b>@timeShiftBufferDepth</code> is not defined, let `AvailabilityWindowStart`
      be the effective availability start time.
 3. Let `TotalAvailabilityTimeOffset` be the sum of all `@availabilityTimeOffset`
-   values that apply to the Adaptation Set, either via **SegmentBase**,
-   **SegmentTemplate**, or **BaseURL** elements [[!MPEGDASH]].
+   values that apply to the Adaptation Set, either via <b>SegmentBase</b>,
+   <b>SegmentTemplate</b>, or <b>BaseURL</b> elements [[!MPEGDASH]].
 4. The availability window is the time span from `AvailabilityWindowStart` to
    `now + TotalAvailabilityTimeOffset`.
 
@@ -470,7 +470,7 @@ For a service offering that relies on segment-based MPD update signalling:
 - The service <span class=modal-keyword>shall</span> carry inband events indicating MPD validity expiry (the
     `urn:mpeg:dash:event:2012` scheme, or the applicable scheme of the current
     edition) so that clients learn when the current MPD is no longer valid.
-- The **InbandEventStream** element <span class=modal-keyword>shall</span> be signalled for the Adaptation Sets or
+- The <b>InbandEventStream</b> element <span class=modal-keyword>shall</span> be signalled for the Adaptation Sets or
     Representations that carry these events.
 - When segment-based updates are used, the client <span class=modal-keyword>may</span> extend the timeline based
     on Segment information without reloading the MPD until an MPD validity expiry
@@ -494,7 +494,7 @@ present, the service <span class=modal-keyword>shall</span> provide a Media Pres
 - The Segment availability times announced in the MPD <span class=modal-keyword>should</span> be generated from a
     device synchronized to a globally accurate timing source, preferably using
     NTP.
-- The MPD <span class=modal-keyword>should</span> contain at least one **UTCTiming** element with `@schemeIdUri` set
+- The MPD <span class=modal-keyword>should</span> contain at least one <b>UTCTiming</b> element with `@schemeIdUri` set
     to one of the schemes defined by ISO/IEC 23009-1, namely:
     - `urn:mpeg:dash:utc:http-xsdate:2014`
     - `urn:mpeg:dash:utc:http-iso:2014`
@@ -502,7 +502,7 @@ present, the service <span class=modal-keyword>shall</span> provide a Media Pres
     - `urn:mpeg:dash:utc:ntp:2014`
     - `urn:mpeg:dash:utc:http-head:2014`
     - `urn:mpeg:dash:utc:direct:2014`
-- If the MPD does not contain any **UTCTiming** element, then the Segments <span class=modal-keyword>shall</span> be
+- If the MPD does not contain any <b>UTCTiming</b> element, then the Segments <span class=modal-keyword>shall</span> be
     available no later than the announced Segment availability time using a
     globally accurate timing source.
 
@@ -515,14 +515,14 @@ requires support for `http-xsdate` and `http-head`.
 If the Media Presentation is dynamic, or if <code><b>MPD</b>@availabilityStartTime</code> is
 present, the client <span class=modal-keyword>should</span> do the following:
 
-- If the MPD does not contain any **UTCTiming** element, the client <span class=modal-keyword>should</span> acquire
+- If the MPD does not contain any <b>UTCTiming</b> element, the client <span class=modal-keyword>should</span> acquire
     an accurate wall-clock time from its system. The anticipated inaccuracy of the
     timing source <span class=modal-keyword>should</span> be taken into account when requesting Segments close to
     their availability-time boundaries.
-- If the MPD contains one or more **UTCTiming** elements, the client <span class=modal-keyword>should</span> use at
+- If the MPD contains one or more <b>UTCTiming</b> elements, the client <span class=modal-keyword>should</span> use at
     least one of the announced timing methods to synchronize its clock. The client
     must not request Segments prior to their Segment Availability Start Time with
-    reference to the chosen **UTCTiming** method.
+    reference to the chosen <b>UTCTiming</b> method.
 
 ## Client Operation, Requirements and Guidelines ## {#live-client}
 
@@ -548,7 +548,7 @@ When joining a live service, the client <span class=modal-keyword>should</span>:
 - Prefer to start at a random access point rather than presenting stale media,
     to keep the join latency consistent.
 - Not request Segments prior to their Segment Availability Start Time with
-    reference to the chosen **UTCTiming** method (see [[#live-sync-client]]).
+    reference to the chosen <b>UTCTiming</b> method (see [[#live-sync-client]]).
 
 Note: Detailed low-latency joining, buffer management, and resynchronisation are
 specified in [[#low-latency]].
@@ -558,7 +558,7 @@ specified in [[#low-latency]].
 A completed live service <span class=modal-keyword>may</span> be offered subsequently as an on-demand service. In
 this case the Media Presentation is converted to <code><b>MPD</b>@type</code> set to `static`, the
 timeline is finalised, and <code><b>MPD</b>@minimumUpdatePeriod</code> and live-only signalling
-(such as **UTCTiming** for availability) are removed or adjusted per ISO/IEC
+(such as <b>UTCTiming</b> for availability) are removed or adjusted per ISO/IEC
 23009-1.
 
 Issue: Reconcile detailed live-to-VoD conversion guidance with the DASH-IF

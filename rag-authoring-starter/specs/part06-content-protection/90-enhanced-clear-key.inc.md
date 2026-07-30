@@ -34,7 +34,7 @@ ECCP is therefore a collective set of restrictions on:
 
 ## Constraints on DASH content generation ## {#CPS-ECCP-content-generation}
 
-Media segments used with ECCP ***shall*** be packaged in CMAF containers
+Media segments used with ECCP *<b>shall</b>* be packaged in CMAF containers
 according to the applicable DASH-IF IOP Part 1 and Part 2 constraints. Additional
 constraints for encryption are defined in the content-protection constraints for
 CMAF, and content-protection constraints for the MPD are defined in the MPD
@@ -42,26 +42,26 @@ content-protection signaling sections of this part.
 
 ## Constraints on content protection ## {#CPS-ECCP-content-protection}
 
-Implementations of W3C Clear Key content protection used with ECCP ***shall***
+Implementations of W3C Clear Key content protection used with ECCP *<b>shall</b>*
 follow the Clear Key requirements defined in this part.
 
 Note: ECCP support is not announced in the MPD using an additional
-**ContentProtection** descriptor or a separate ECCP system identifier. A
-**ContentProtection** descriptor using the Clear Key system identifier is
+<b>ContentProtection</b> descriptor or a separate ECCP system identifier. A
+<b>ContentProtection</b> descriptor using the Clear Key system identifier is
 sufficient. The additional ECCP restrictions are enforced through the
 interactions with media servers and content-key servers.
 
 ## Constraints on transport ## {#CPS-ECCP-transport}
 
 All URLs referencing manifests, media objects, and license servers used with
-ECCP ***shall*** use the `https` URI scheme. The TLS version used for those
-resources ***shall*** be TLS 1.2 or higher.
+ECCP *<b>shall</b>* use the `https` URI scheme. The TLS version used for those
+resources *<b>shall</b>* be TLS 1.2 or higher.
 
 ## Constraints on access control ## {#CPS-ECCP-access-control}
 
 Access control to the manifest, the license-key URL, and all media segments
-containing encrypted content ***shall*** be present. No object described by the
-manifest, including the manifest itself, ***shall*** be openly available to an
+containing encrypted content *<b>shall</b>* be present. No object described by the
+manifest, including the manifest itself, *<b>shall</b>* be openly available to an
 unauthenticated or unauthorized client.
 
 Access control may invoke authorization, authentication, or both. Enforcement
@@ -72,13 +72,13 @@ mechanisms include, for example:
 - proxy solutions, such as a license proxy that performs authorization checks
   before forwarding license requests to the actual license server.
 
-If tokens are used, they ***shall*** be transmitted either as part of the URL
+If tokens are used, they *<b>shall</b>* be transmitted either as part of the URL
 path or as a query argument, so that native implementations transfer the token
 information automatically when making the relevant `GET` or `POST` request.
 
 ## Client requirements ## {#CPS-ECCP-client-requirements}
 
-To support ECCP, a client ***shall*** support:
+To support ECCP, a client *<b>shall</b>* support:
 
 - Clear Key as constrained in this part, and
 - HTTPS as constrained by the ECCP transport requirements.

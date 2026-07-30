@@ -55,13 +55,13 @@ Where an IOP document associates a conformance keyword with a content-authoring
 statement, the following applies:
 
 - <span class=modal-keyword>shall</span> / <span class=modal-keyword>shall not</span>:
-    the [=DASH-IF Conformance Validator=] provides a check and issues an **error**
+    the [=DASH-IF Conformance Validator=] provides a check and issues an <b>error</b>
     if the requirement is not fulfilled.
 - <span class=modal-keyword>should</span> / <span class=modal-keyword>should not</span>:
-    the validator provides a check and issues a **warning** if the recommendation
+    the validator provides a check and issues a <b>warning</b> if the recommendation
     is not fulfilled.
 - <span class=modal-keyword>should</span> / <span class=modal-keyword>may</span>:
-    where present, the validator's feature check **documents** the feature of the
+    where present, the validator's feature check <b>documents</b> the feature of the
     content (informational).
 
 ## Client Processing ## {#conformance-client}
@@ -99,9 +99,9 @@ assets must pass DASH-IF conformance validation.
 
 Note: The relationships between the tools are shown in Figure 1.
 
-<figure class="diagram">
+<figure class="diagram" style="max-width:100%;overflow-x:auto;">
 <pre class=mermaid>
-%%{init: {'theme':'neutral','themeVariables':{'fontSize':'18px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':55,'rankSpacing':80,'padding':14,'htmlLabels':false,'useMaxWidth':true}}}%%
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'15px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':55,'rankSpacing':80,'padding':14,'htmlLabels':true,'useMaxWidth':true,'wrappingWidth':200}}}%%
 flowchart LR
     CA["Content author / service provider"] --> V["DASH-IF Conformance Validator"]
     V -->|errors / warnings| CA
@@ -171,22 +171,22 @@ and hosted by DASH-IF at
 
 Notable characteristics relevant to conformance testing:
 
-- **Stateless, URL-parameterized generation.** Configuration is carried in the
+- <b>Stateless, URL-parameterized generation.</b> Configuration is carried in the
     URL (in both MPD and segment requests), so the server can generate a large
     number of parameter variations without server-side state. Examples include
     `/segtimeline_1` (SegmentTimeline with `$Time$`), `/segtimelinenr_1`
     (SegmentTimeline with `$Number$`), and generated subtitles via
     `/timesubsstpp_en,sv` (`stpp`) or `/timesubswvtt_en,sv` (`wvtt`).
-- **Deterministic time testing.** The `?nowMS=...` query parameter sets the
+- <b>Deterministic time testing.</b> The `?nowMS=...` query parameter sets the
     reference wall-clock time for any request, enabling deterministic testing of
     time-dependent behaviour (segment availability, clock skew, early/late
     requests). A request that is too early or too late receives an HTTP 404 whose
     body reports by how much.
-- **CMAF Ingest (v1.1).** livesim2 can act as a CMAF ingest source, pushing live
+- <b>CMAF Ingest (v1.1).</b> livesim2 can act as a CMAF ingest source, pushing live
     segments to a destination via HTTP PUT, useful for testing ingest receivers.
-- **Server-Guided Ad Insertion (SGAI).** livesim2 can signal SGAI using
+- <b>Server-Guided Ad Insertion (SGAI).</b> livesim2 can signal SGAI using
     DASH 6th-edition *Alternative-MPD Replace* events.
-- **Tooling.** A companion `dashfetcher` tool downloads DASH VoD assets (MPD and
+- <b>Tooling.</b> A companion `dashfetcher` tool downloads DASH VoD assets (MPD and
     segments) for use as simulator input.
 
 Note: Input VoD assets must be in the `isoff-live` profile (individual segment
@@ -346,9 +346,9 @@ define new Part 2 requirements.
       <td>The validator checks that `@timescale` is present, that all Representations in an Adaptation Set use the same addressing mode, and that SegmentTimeline `S` elements are consistent with `@t`, `@d`, and `@r`.
       <td>Test assets should cover all three addressing modes (indexed, explicit, simple) with correct and incorrect `@timescale` values, mixed-mode Adaptation Sets (negative), and SegmentTimeline gaps.
     <tr>
-      <td>Clock synchronization (**UTCTiming**)
-      <td>The validator checks that dynamic presentations include at least one **UTCTiming** element using a permitted scheme (`http-xsdate`, `http-iso`, `http-head`, `direct`).
-      <td>Test assets should include dynamic presentations with each permitted **UTCTiming** scheme and a negative case with no **UTCTiming** element.
+      <td>Clock synchronization (<b>UTCTiming</b>)
+      <td>The validator checks that dynamic presentations include at least one <b>UTCTiming</b> element using a permitted scheme (`http-xsdate`, `http-iso`, `http-head`, `direct`).
+      <td>Test assets should include dynamic presentations with each permitted <b>UTCTiming</b> scheme and a negative case with no <b>UTCTiming</b> element.
     <tr>
       <td>Availability window and time shift buffer
       <td>The validator checks <code><b>MPD</b>@timeShiftBufferDepth</code> presence and consistency with `@availabilityTimeOffset` values; checks that <code><b>MPD</b>@suggestedPresentationDelay</code> does not result in a zero or negative effective time shift buffer.
@@ -449,12 +449,12 @@ starting point for issue creation and test-asset planning.
       <td>The validator checks that `minimumUpdatePeriod` is consistent with the segment timeline, that segment references are not added to non-last Periods, and that expired segment references are removed per the `EarliestRemovalPoint` algorithm.
       <td>[=livesim2=] test streams should exercise MPD update cycles including content addition, expiry removal, and end-of-live signalling.
     <tr>
-      <td>Segment-based MPD update signalling (**InbandEventStream**)
-      <td>The validator checks that **InbandEventStream** is signalled for Adaptation Sets carrying MPD validity expiry events.
-      <td>Test assets should include segment-based MPD update streams with `urn:mpeg:dash:event:2012` events and corresponding **InbandEventStream** signalling.
+      <td>Segment-based MPD update signalling (<b>InbandEventStream</b>)
+      <td>The validator checks that <b>InbandEventStream</b> is signalled for Adaptation Sets carrying MPD validity expiry events.
+      <td>Test assets should include segment-based MPD update streams with `urn:mpeg:dash:event:2012` events and corresponding <b>InbandEventStream</b> signalling.
     <tr>
-      <td>Clock synchronization (**UTCTiming** scheme restriction)
-      <td>The validator checks that only permitted **UTCTiming** schemes are used (`http-xsdate`, `http-iso`, `http-head`, `direct`) and that at least one is present in dynamic presentations.
+      <td>Clock synchronization (<b>UTCTiming</b> scheme restriction)
+      <td>The validator checks that only permitted <b>UTCTiming</b> schemes are used (`http-xsdate`, `http-iso`, `http-head`, `direct`) and that at least one is present in dynamic presentations.
       <td>Test assets should cover each permitted scheme and a negative case with a non-permitted scheme.
     <tr>
       <td>Live client joining and presentation delay
@@ -524,17 +524,17 @@ requirements.
     <tr><th>Part 8 feature<th>Primary validation target<th>Reference/test asset expectation
   <tbody>
     <tr>
-      <td>Audio adaptation set signalling (`@lang`, `@audioSamplingRate`, **AudioChannelConfiguration**)
-      <td>The [=DASH-IF Conformance Validator=] checks that <code><b>AdaptationSet</b>@lang</code> is present on every audio adaptation set, that `@audioSamplingRate` is present at adaptation set or Representation level (but not both), and that **AudioChannelConfiguration** is present with a valid `@schemeIdUri`.
+      <td>Audio adaptation set signalling (`@lang`, `@audioSamplingRate`, <b>AudioChannelConfiguration</b>)
+      <td>The [=DASH-IF Conformance Validator=] checks that <code><b>AdaptationSet</b>@lang</code> is present on every audio adaptation set, that `@audioSamplingRate` is present at adaptation set or Representation level (but not both), and that <b>AudioChannelConfiguration</b> is present with a valid `@schemeIdUri`.
       <td>Test assets should include audio adaptation sets with correct and incorrect signalling of `@lang`, `@audioSamplingRate`, and `AudioChannelConfiguration`.
     <tr>
       <td>HE-AACv2 codec signalling (`mp4a.40.2`, `mp4a.40.5`, `mp4a.40.29`)
       <td>The validator checks that HE-AACv2 Representations use permitted `@codecs` strings and SAP type 1.
       <td>Test assets should include HE-AACv2 stereo and multichannel Representations with correct `@codecs` strings.
     <tr>
-      <td>Enhanced AC-3 / AC-4 **AudioChannelConfiguration** scheme
+      <td>Enhanced AC-3 / AC-4 <b>AudioChannelConfiguration</b> scheme
       <td>The validator checks that E-AC-3 and AC-4 Representations use `@schemeIdUri="tag:dolby.com,2014:dash:audio_channel_configuration:2011"` for `AudioChannelConfiguration`.
-      <td>Test assets should include E-AC-3 and AC-4 Representations with correct and incorrect **AudioChannelConfiguration** signalling.
+      <td>Test assets should include E-AC-3 and AC-4 Representations with correct and incorrect <b>AudioChannelConfiguration</b> signalling.
     <tr>
       <td>MPEG-H 3D Audio constraints (`mhm1.*`, `MHADecoderConfigurationRecord`)
       <td>The validator checks that MPEG-H Representations use permitted `@codecs` strings and that each Media Segment starts with a SAP of type 1.
@@ -568,11 +568,11 @@ define new Part 9 requirements.
       <td>Test assets should include IMSC1 Text (`im1t` / `stpp.ttml.im1t`), IMSC1 Image (`im1i` / `stpp.ttml.im1i`), WebVTT (`cwvt` / `wvtt`), and CTA 608/708 carried in video.
     <tr>
       <td>Text-track Adaptation Set signalling
-      <td>The validator checks `@mimeType`, `@codecs`, `@lang`, **Accessibility**, and **Role** usage for text Adaptation Sets.
+      <td>The validator checks `@mimeType`, `@codecs`, `@lang`, <b>Accessibility</b>, and <b>Role</b> usage for text Adaptation Sets.
       <td>Test assets should cover subtitle, caption, and easy-reader signalling, including multiple alternative text Adaptation Sets that differ by language, role, accessibility, or codec.
     <tr>
       <td>CTA 608/708 in video tracks
-      <td>The validator checks the presence and syntax of the video Adaptation Set **Accessibility** descriptor used for CTA 608/708 closed-caption signalling.
+      <td>The validator checks the presence and syntax of the video Adaptation Set <b>Accessibility</b> descriptor used for CTA 608/708 closed-caption signalling.
       <td>Test assets should include CEA-608 channel/language signalling such as `CC1=eng;CC3=spa`, single-language shorthand, and multi-channel cases where the language-only shorthand is not used.
     <tr>
       <td>IMSC1 storage and signalling
@@ -584,7 +584,7 @@ define new Part 9 requirements.
       <td>Test assets should include empty-document gaps and short-duration text segments that still conform to the IMSC1 Hypothetical Render Model.
     <tr>
       <td>Client text-track selection
-      <td>[=dash.js=] and other reference clients exercise language, codec, **EssentialProperty**, **Role**, **Accessibility**, and `@selectionPriority` based text-track selection.
+      <td>[=dash.js=] and other reference clients exercise language, codec, <b>EssentialProperty</b>, <b>Role</b>, <b>Accessibility</b>, and `@selectionPriority` based text-track selection.
       <td>Test assets should include multiple selectable text tracks and negative-selection cases for unsupported descriptors, codecs, or languages.
 </table>
 

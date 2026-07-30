@@ -21,19 +21,19 @@ based on ISO BMFF (ISO/IEC 14496-12 [[!ISOBMFF]]) and CMAF (ISO/IEC 23000-19
 
 <figure class="diagram" style="max-width:100%;overflow-x:auto;">
 <pre class=mermaid>
-%%{init: {'theme':'neutral','themeVariables':{'fontSize':'15px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':60,'rankSpacing':90,'padding':18,'htmlLabels':true,'useMaxWidth':true,'wrappingWidth':220}}}%%
-flowchart LR
-    CP[Contribution Link] -->|Contribution| ENC[ABR Encoder]
-    ENC -->|ISO BMFF / CMAF| PKG["ISO BMFF / CMAF Packager (Encryption)"]
-    PKG -->|Ingest 1-IF| MPG["MPD Generator and DASH Packager (Encryption)"]
-    MPG -->|Ingest 2-IF| CDN[("CDN: Segment + MPD Server")]
-    CDN -->|"DASH-IOP-IF (MPD + Segments)"| AC[DASH Access Client]
-    AC -->|Playback-API| RPP["Reference Playback Platform: Media Playback + Content Decryption"]
-    APP[Application] -->|Application-IF| AC
-    APP -->|Client-API| AC
-    SC[Service Configuration] -->|Service-Config-API| MPG
-    DRM[DRM System] -->|CPIX-IF| PKG
-    DRM -->|CPIX| MPG
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'16px','fontFamily':'system-ui, Segoe UI, Arial, sans-serif','lineColor':'#333'},'flowchart':{'curve':'linear','nodeSpacing':40,'rankSpacing':70,'padding':20,'htmlLabels':true,'useMaxWidth':true,'wrappingWidth':180}}}%%
+flowchart TB
+    CP[Contribution Link] --> ENC[ABR Encoder]
+    ENC --> PKG["CMAF Packager<br/>(Encryption)"]
+    PKG -- Ingest 1-IF --> MPG["MPD Generator /<br/>DASH Packager"]
+    MPG -- Ingest 2-IF --> CDN[("CDN:<br/>Segment + MPD Server")]
+    CDN -- DASH-IOP-IF --> AC["DASH Access<br/>Client"]
+    AC -- Playback-API --> RPP["Reference Playback<br/>Platform"]
+    APP[Application] -- Application-IF --> AC
+    APP -- Client-API --> AC
+    SC["Service<br/>Configuration"] -- Service-Config-API --> MPG
+    DRM["DRM<br/>System"] -- CPIX-IF --> PKG
+    DRM -- CPIX --> MPG
     classDef box fill:#eef3f8,stroke:#33475b,stroke-width:1.4px,color:#1a2733;
     class CP,ENC,PKG,MPG,CDN,AC,RPP,APP,SC,DRM box;
 </pre>

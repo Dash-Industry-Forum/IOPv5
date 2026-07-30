@@ -6,7 +6,7 @@
 
 # Introduction # {#part9-introduction}
 
-This document specifies DASH-IF IOP v5 Part 9: **Text**.
+This document specifies DASH-IF IOP v5 Part 9: <b>Text</b>.
 
 The present document defines the CMAF Media Profiles and DASH signalling for
 text tracks, including subtitles and captions, as well as open captions and
@@ -127,8 +127,8 @@ and can be found in [[DASHIF-IOP43]].
 # Adaptation Set requirements and recommendations # {#adaptation-set-requirements}
 
 Text adaptation sets <span class=modal-keyword>should</span> be annotated using
-descriptors defined by DASH, specifically **Role**, **Accessibility**,
-**EssentialProperty**, and **SupplementalProperty** descriptors.
+descriptors defined by DASH, specifically <b>Role</b>, <b>Accessibility</b>,
+<b>EssentialProperty</b>, and <b>SupplementalProperty</b> descriptors.
 
 # Content requirements # {#content-requirements}
 
@@ -145,8 +145,8 @@ following table.
     <tr><td>`@mimeType`<td>M<td>This <span class=modal-keyword>shall</span> be set to one of the `@mimeType` values defined in the CMAF Media Profile table.
     <tr><td>`@codecs`<td>M<td>If `@mimeType` is set to `application/mp4`, this attribute <span class=modal-keyword>shall</span> be present and set to one of the `@codecs` values defined in the CMAF Media Profile table.
     <tr><td>`@lang`<td>M<td>The `@lang` attribute <span class=modal-keyword>shall</span> be present and set according to DASH language rules. Language is used as the primary selection mechanism based on user preference.
-    <tr><td>**Accessibility**<td>0 … N<td>If the text track is closed captions, an **Accessibility** descriptor <span class=modal-keyword>shall</span> be present with `@schemeIdUri="urn:mpeg:dash:role:2011"` and `@value="caption"`.
-    <tr><td>**Role**<td>0 … N<td>**Role** descriptors <span class=modal-keyword>may</span> be present depending on the nature of the text. Subtitle tracks <span class=modal-keyword>should</span> use `@value="subtitle"`. Closed-caption tracks <span class=modal-keyword>shall</span> use `@value="caption"`. Text tailored to beginning readers <span class=modal-keyword>shall</span> use `@value="easyreader"` when signalled.
+    <tr><td><b>Accessibility</b><td>0 … N<td>If the text track is closed captions, an <b>Accessibility</b> descriptor <span class=modal-keyword>shall</span> be present with `@schemeIdUri="urn:mpeg:dash:role:2011"` and `@value="caption"`.
+    <tr><td><b>Role</b><td>0 … N<td><b>Role</b> descriptors <span class=modal-keyword>may</span> be present depending on the nature of the text. Subtitle tracks <span class=modal-keyword>should</span> use `@value="subtitle"`. Closed-caption tracks <span class=modal-keyword>shall</span> use `@value="caption"`. Text tailored to beginning readers <span class=modal-keyword>shall</span> use `@value="easyreader"` when signalled.
 </table>
 
 Text Adaptation Sets containing alternative content <span class=modal-keyword>shall</span>
@@ -154,8 +154,8 @@ differ by at least one of the following annotation labels:
 
 - `@codecs`, specifying the codec present within the Representation.
 - `@lang`, specifying the language of the subtitle with a non-null language code.
-- An **Accessibility** descriptor with DASH role scheme `urn:mpeg:dash:role:2011` and value `caption`.
-- One or more **Role** descriptors with DASH role scheme `urn:mpeg:dash:role:2011`.
+- An <b>Accessibility</b> descriptor with DASH role scheme `urn:mpeg:dash:role:2011` and value `caption`.
+- One or more <b>Role</b> descriptors with DASH role scheme `urn:mpeg:dash:role:2011`.
 
 ## Video tracks ## {#video-tracks}
 
@@ -168,7 +168,7 @@ This section addresses closed captions in video SEI messages.
   <caption>Video track Adaptation Set attributes and elements for text-related signaling.</caption>
   <thead><tr><th>DASH attribute or element<th>Use for media type<th>Detailed usage in DASH-IF IOPs
   <tbody>
-    <tr><td>**Accessibility**<td>0 … N<td>If the video Adaptation Set contains CTA 608/708 closed captions, this element <span class=modal-keyword>shall</span> be present and used as defined by DASH and [[!SCTE214-1]] caption-service signalling. For other uses of **Accessibility** with a video track, including open captions and open subtitles, see DASH-IF IOP v5 Part 7 [[DASHIF-IOP5-PART7]].
+    <tr><td><b>Accessibility</b><td>0 … N<td>If the video Adaptation Set contains CTA 608/708 closed captions, this element <span class=modal-keyword>shall</span> be present and used as defined by DASH and [[!SCTE214-1]] caption-service signalling. For other uses of <b>Accessibility</b> with a video track, including open captions and open subtitles, see DASH-IF IOP v5 Part 7 [[DASHIF-IOP5-PART7]].
 </table>
 
 Since this is a video Adaptation Set, `@mimeType` and `@codecs` are set according
@@ -192,7 +192,7 @@ have identical CEA-608/708 captions. Both CEA-608 and CEA-708
 Adaptation Set.
 
 The presence of CEA-608/708 captions <span class=modal-keyword>shall</span> be
-signaled by an **Accessibility** descriptor on the Adaptation Set level, with
+signaled by an <b>Accessibility</b> descriptor on the Adaptation Set level, with
 `@schemeIdUri="urn:scte:dash:cc:cea-608:2015"` or
 `@schemeIdUri="urn:scte:dash:cc:cea-708:2015"`, with an optional `@value`.
 
@@ -288,10 +288,10 @@ video-track Adaptation Set tables.
 If caption or subtitle text rendering is enabled, the client selects text
 Adaptation Sets as follows:
 
-1. Any text Adaptation Set for which an **EssentialProperty** descriptor is present and for which the scheme or value is not understood by the DASH client is excluded from the selection.
+1. Any text Adaptation Set for which an <b>EssentialProperty</b> descriptor is present and for which the scheme or value is not understood by the DASH client is excluded from the selection.
 2. Any text Adaptation Set for which the client does not have a decoder, such as CTA 608/708, IMSC1, or WebVTT, is excluded from the selection.
 3. If text language preference settings are provided to the client by the system, any Adaptation Set for which `@lang` is absent, null, or set to `und` is excluded from the selection, and any Adaptation Set that is not in the preferred text language is excluded from the selection.
-4. Any text Adaptation Set with one or more **Role** descriptors using `@schemeIdUri="urn:mpeg:dash:role:2011"` where none of the `@value` values is described in this part is excluded from the selection.
+4. Any text Adaptation Set with one or more <b>Role</b> descriptors using `@schemeIdUri="urn:mpeg:dash:role:2011"` where none of the `@value` values is described in this part is excluded from the selection.
 5. If multiple text Adaptation Sets remain, the one with the highest `@selectionPriority` value is chosen.
 6. If multiple text Adaptation Sets remain after the above steps, the DASH client makes a choice for itself.
 

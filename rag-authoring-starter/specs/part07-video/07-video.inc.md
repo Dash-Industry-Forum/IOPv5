@@ -14,13 +14,13 @@
 
 # Scope # {#scope}
 
-This document specifies DASH-IF IOP v5 Part 7: **Video**. It defines video
+This document specifies DASH-IF IOP v5 Part 7: <b>Video</b>. It defines video
 interoperability points, CMAF media profiles, codec signalling, DASH MPD
 parameters, and video-specific constraints for DASH-IF compliant services and
 clients.
 
 The primary normative reference for supported video codecs is the
-**DASH-IF Codec Registry** at [https://dashif.org/codecs/](https://dashif.org/codecs/).
+<b>DASH-IF Codec Registry</b> at [https://dashif.org/codecs/](https://dashif.org/codecs/).
 This part defines the general requirements for video adaptation sets and provides
 normative baseline requirements for the most widely deployed codecs (H.264/AVC
 and H.265/HEVC). For the complete and up-to-date list of registered codecs,
@@ -63,12 +63,12 @@ Part 2 unless defined in this part.
 
 ## Overview ## {#codec-registry-overview}
 
-DASH-IF maintains a **Codec Registry** that serves as the authoritative and
+DASH-IF maintains a <b>Codec Registry</b> that serves as the authoritative and
 continuously updated reference for codecs supported in DASH-IF compliant
 services. The registry is available at:
 
-- **Web interface:** [https://dashif.org/codecs/introduction/](https://dashif.org/codecs/introduction/)
-- **Source data:** [https://github.com/Dash-Industry-Forum/Codecs](https://github.com/Dash-Industry-Forum/Codecs)
+- <b>Web interface:</b> [https://dashif.org/codecs/introduction/](https://dashif.org/codecs/introduction/)
+- <b>Source data:</b> [https://github.com/Dash-Industry-Forum/Codecs](https://github.com/Dash-Industry-Forum/Codecs)
 
 The registry provides:
 

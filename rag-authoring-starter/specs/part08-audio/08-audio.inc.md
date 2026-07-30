@@ -14,12 +14,12 @@
 
 # Scope # {#scope}
 
-This document specifies DASH-IF IOP v5 Part 8: **Audio**. It defines audio
+This document specifies DASH-IF IOP v5 Part 8: <b>Audio</b>. It defines audio
 interoperability points, coding profiles, ISO BMFF packaging, MPD parameters,
 and audio-specific constraints for DASH-IF compliant services and clients.
 
 The primary normative reference for supported audio codecs is the
-**DASH-IF Codec Registry** at [https://dashif.org/codecs/](https://dashif.org/codecs/).
+<b>DASH-IF Codec Registry</b> at [https://dashif.org/codecs/](https://dashif.org/codecs/).
 This part defines the general requirements for audio adaptation sets and provides
 normative baseline requirements for the most widely deployed audio codecs. For
 the complete and up-to-date list of registered codecs, services and clients
@@ -63,18 +63,18 @@ Part 2 unless defined in this part.
 
 ## Overview ## {#codec-registry-overview}
 
-DASH-IF maintains a **Codec Registry** that serves as the authoritative and
+DASH-IF maintains a <b>Codec Registry</b> that serves as the authoritative and
 continuously updated reference for codecs supported in DASH-IF compliant
 services. The registry is available at:
 
-- **Web interface:** [https://dashif.org/codecs/introduction/](https://dashif.org/codecs/introduction/)
-- **Source data:** [https://github.com/Dash-Industry-Forum/Codecs](https://github.com/Dash-Industry-Forum/Codecs)
+- <b>Web interface:</b> [https://dashif.org/codecs/introduction/](https://dashif.org/codecs/introduction/)
+- <b>Source data:</b> [https://github.com/Dash-Industry-Forum/Codecs](https://github.com/Dash-Industry-Forum/Codecs)
 
 For audio codecs, the registry provides:
 
 - A structured list of supported audio codecs with their DASH MPD `@codecs`
     strings, CMAF profiles, and interoperability notes.
-- Codec-specific requirements for `@mimeType`, `@codecs`, **AudioChannelConfiguration**,
+- Codec-specific requirements for `@mimeType`, `@codecs`, <b>AudioChannelConfiguration</b>,
     and SAP type.
 - Guidance on codec selection for different service scenarios (stereo, multichannel,
     immersive audio, speech, etc.).
@@ -83,7 +83,7 @@ For audio codecs, the registry provides:
 
 Note: The DASH-IF Identifier Registry at
 [https://dashif.org/identifiers/audio_source_metadata/](https://dashif.org/identifiers/audio_source_metadata/)
-provides the `@schemeIdUri` values for **AudioChannelConfiguration** elements.
+provides the `@schemeIdUri` values for <b>AudioChannelConfiguration</b> elements.
 This is a separate registry from the Codec Registry.
 
 ## Using the Codec Registry ## {#codec-registry-usage}
@@ -109,7 +109,7 @@ solely on the static codec tables in this part.
 `@audioSamplingRate` <span class=modal-keyword>shall</span> be present either on the adaptation set or
 Representation level (but not both).
 
-The **AudioChannelConfiguration** element <span class=modal-keyword>shall</span> be present either on the
+The <b>AudioChannelConfiguration</b> element <span class=modal-keyword>shall</span> be present either on the
 adaptation set or Representation level (but not both). The scheme and value
 <span class=modal-keyword>shall</span> conform to `ChannelConfiguration` as defined in ISO/IEC 23001-8.
 
@@ -137,7 +137,7 @@ For content with SBR, i.e. `@codecs=mp4a.40.5` or `@codecs=mp4a.40.29`,
 `@audioSamplingRate` signals the resulting sampling rate after SBR is applied,
 e.g. 48 kHz even if the AAC-LC core operates at 24 kHz.
 
-For content with PS, i.e. `@codecs=mp4a.40.29`, the **AudioChannelConfiguration**
+For content with PS, i.e. `@codecs=mp4a.40.29`, the <b>AudioChannelConfiguration</b>
 element signals the resulting channel configuration after PS is applied, e.g.
 stereo even if the AAC-LC core operates at mono.
 
@@ -171,7 +171,7 @@ bitstream.
 
 The `@codecs` parameter <span class=modal-keyword>shall</span> be `ec-3`. SAP type <span class=modal-keyword>shall</span> be `1`.
 
-The **AudioChannelConfiguration** element <span class=modal-keyword>shall</span> use
+The <b>AudioChannelConfiguration</b> element <span class=modal-keyword>shall</span> use
 `@schemeIdUri="tag:dolby.com,2014:dash:audio_channel_configuration:2011"` with
 `@value` as defined in the [[DASHIF-IDENTIFIERS|DASH-IF Identifier Registry]].
 
@@ -183,7 +183,7 @@ The `@codecs` parameter <span class=modal-keyword>shall</span> be `mlpa`. SAP ty
 
 The `@codecs` parameter <span class=modal-keyword>shall</span> be `ac-4`. SAP type <span class=modal-keyword>shall</span> be `1`.
 
-The **AudioChannelConfiguration** element <span class=modal-keyword>shall</span> use
+The <b>AudioChannelConfiguration</b> element <span class=modal-keyword>shall</span> use
 `@schemeIdUri="tag:dolby.com,2014:dash:audio_channel_configuration:2011"` with
 `@value` as defined in the [[DASHIF-IDENTIFIERS|DASH-IF Identifier Registry]].
 

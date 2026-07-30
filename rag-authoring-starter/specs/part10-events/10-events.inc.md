@@ -13,7 +13,7 @@
 
 # Scope # {#scope}
 
-This document specifies DASH-IF IOP v5 Part 10: **Events**. Event signalling
+This document specifies DASH-IF IOP v5 Part 10: <b>Events</b>. Event signalling
 and processing, including MPD events, inband events, timed metadata tracks, and
 DASH Callback events.
 
@@ -21,9 +21,9 @@ This part defines the general event model and the requirements for event
 signalling that are common across service types. Service-type-specific event
 requirements are defined in:
 
-- **Part 4** (Live and Low-Latency Services) — MPD validity expiry events and
+- <b>Part 4</b> (Live and Low-Latency Services) — MPD validity expiry events and
     inband MPD update signalling for live services.
-- **Part 5** (Ad Insertion and Content Replacement) — SCTE-35 cue message
+- <b>Part 5</b> (Ad Insertion and Content Replacement) — SCTE-35 cue message
     events, DASH Callback events for ad tracking, and ad-insertion event
     stream constraints.
 
@@ -45,7 +45,7 @@ Terms and definitions are inherited from ISO/IEC 23009-1, ISO/IEC 23000-19, and
 Part 2 unless defined in this part.
 
 : <dfn export>MPD event</dfn>
-:: An event carried in the MPD as an **Event** element within an **EventStream**
+:: An event carried in the MPD as an <b>Event</b> element within an <b>EventStream</b>
     element at Period level.
 
 : <dfn export>inband event</dfn>
@@ -58,26 +58,26 @@ Part 2 unless defined in this part.
 # DASH Events Overview # {#events-overview}
 
 DASH events are messages having type, timing and optional payload. They can
-appear either in the MPD (as a Period-level **EventStream** element) or inband,
+appear either in the MPD (as a Period-level <b>EventStream</b> element) or inband,
 as ISO BMFF boxes of type `emsg`. The `emsg` boxes <span class=modal-keyword>shall</span> be placed at the very
 beginning of the Segment, i.e. prior to any media data, so that a DASH client
 needs a minimal amount of parsing to detect them.
 
 DASH defines events that are processed directly by a DASH client:
 
-- **MPD Validity Expiration** — signals that the current MPD snapshot is no
+- <b>MPD Validity Expiration</b> — signals that the current MPD snapshot is no
     longer valid and a new MPD must be fetched. See [[#inband]] and Part 4
     (Section "MPD- and Segment-based Live Service Offering").
-- **MPD Patch** — provides an XML patch that can be applied to the client's
+- <b>MPD Patch</b> — provides an XML patch that can be applied to the client's
     in-memory representation of the MPD.
-- **MPD Update** — provides a complete new MPD snapshot.
+- <b>MPD Update</b> — provides a complete new MPD snapshot.
 
 User-defined events are also possible. The DASH client does not process these
 directly — they are passed to an application, or discarded if there is no
 application willing or registered to process these events. A possible client API
 would allow an application to register callbacks for specific event types,
 triggered when the DASH client parses the `emsg` box in a Segment or the
-**Event** element in the MPD. User-defined events can, for example, be used to
+<b>Event</b> element in the MPD. User-defined events can, for example, be used to
 signal cue messages such as SCTE-35 in an ad-insertion context (see Part 5,
 Section "IF-3 Opportunity Metadata and SCTE-35 MPD Events").
 
@@ -102,7 +102,7 @@ added to other Representations. The in-band event stream <span class=modal-keywo
 every Representation where it is present.
 
 The in-band event stream <span class=modal-keyword>shall</span> be signaled on the adaptation set level by an
-**InbandEventStream** element with `@schemeIdUri="urn:mpeg:dash:event:2012"` and
+<b>InbandEventStream</b> element with `@schemeIdUri="urn:mpeg:dash:event:2012"` and
 a `@value` of 1 or 3, where:
 
 * A value of `1` indicates that in-band events only extend the MPD validity
@@ -134,10 +134,10 @@ duration using the following logic:
     field remains valid up to the event start time.
 
 The in-band events used for signaling MPD validity duration <span class=modal-keyword>shall</span> have
-`schemeIdUri` and `value` matching the **InbandEventStream** element. Clients
+`schemeIdUri` and `value` matching the <b>InbandEventStream</b> element. Clients
 <span class=modal-keyword>shall not</span> use in-band events for MPD validity update signaling if these fields
-on the events do not match the **InbandEventStream** element or if the
-**InbandEventStream** element is not present in the MPD.
+on the events do not match the <b>InbandEventStream</b> element or if the
+<b>InbandEventStream</b> element is not present in the MPD.
 
 In-band events with `value=3` <span class=modal-keyword>shall</span> provide an updated MPD in the event's `mpd`
 field as UTF-8 encoded text without a byte order mark.
@@ -167,8 +167,8 @@ to provide opaque information that the client passes to an external module. The
 <code><b>Event</b>@schemeIdUri</code> provides the addressing mechanism, while MPD events allow
 opaque payloads to be embedded in the MPD.
 
-MPD events <span class=modal-keyword>shall</span> be carried in **EventStream** elements at Period level. Each
-**EventStream** element <span class=modal-keyword>shall</span> carry a `@schemeIdUri` that identifies the event
+MPD events <span class=modal-keyword>shall</span> be carried in <b>EventStream</b> elements at Period level. Each
+<b>EventStream</b> element <span class=modal-keyword>shall</span> carry a `@schemeIdUri` that identifies the event
 type. The `@timescale` attribute <span class=modal-keyword>shall</span> be present if <code><b>Event</b>@presentationTime</code> or
 <code><b>Event</b>@duration</code> are used.
 
@@ -205,8 +205,8 @@ precisely synchronized with media playback, such as:
 A timed metadata Representation <span class=modal-keyword>shall</span> use `@mimeType="application/mp4"` and
 <span class=modal-keyword>shall</span> carry a `@codecs` string identifying the metadata format.
 
-The **AdaptationSet** containing timed metadata Representations <span class=modal-keyword>shall</span> carry a
-`@mimeType="application/mp4"` and <span class=modal-keyword>should</span> carry a **Role** descriptor indicating
+The <b>AdaptationSet</b> containing timed metadata Representations <span class=modal-keyword>shall</span> carry a
+`@mimeType="application/mp4"` and <span class=modal-keyword>should</span> carry a <b>Role</b> descriptor indicating
 the purpose of the metadata (e.g. `urn:mpeg:dash:role:2011` with value
 `supplementary`, `caption`, `subtitle`, or `description`).
 

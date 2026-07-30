@@ -6,19 +6,19 @@
 
 # Scope # {#scope}
 
-This document specifies DASH-IF IOP v5 Part 11: **Additional Functionalities**.
+This document specifies DASH-IF IOP v5 Part 11: <b>Additional Functionalities</b>.
 The part collects DASH-IF interoperability features that are not primarily core
 DASH/CMAF mapping, service-type, media-profile, content-protection, ad-insertion,
 or event-processing topics.
 
 Part 11 has not yet been substantively drafted. The initial work items are:
 
-- migrate **trick mode** material, including v4.3 clause 3.2.9 and live trick-mode
+- migrate <b>trick mode</b> material, including v4.3 clause 3.2.9 and live trick-mode
     material, into this part where it is not specific to Part 4;
-- migrate **thumbnail tracks** from v4.3;
-- define treatment of **specific metadata tracks**, in coordination with Part 10
+- migrate <b>thumbnail tracks</b> from v4.3;
+- define treatment of <b>specific metadata tracks</b>, in coordination with Part 10
     because timed metadata <span class=modal-keyword>may</span> also be event-related;
-- define a **registration and documentation process** for additional DASH-IF
+- define a <b>registration and documentation process</b> for additional DASH-IF
     technologies and extension points; and
 - identify examples and conformance/test-asset expectations for each technology.
 

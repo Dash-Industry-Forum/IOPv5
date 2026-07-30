@@ -98,10 +98,10 @@ for detailed discussion of the DASH timing model.
 Based on the MPD, a DASH client derives the list of Segments for each
 Representation in each Period. For each Period, the Period start and Period end
 are computed using the rules of ISO/IEC 23009-1 and Part 2. For each
-Representation, the Segment list is computed from **SegmentTemplate**,
-**SegmentTimeline**, **SegmentBase**, or the selected on-demand profile structure.
+Representation, the Segment list is computed from <b>SegmentTemplate</b>,
+<b>SegmentTimeline</b>, <b>SegmentBase</b>, or the selected on-demand profile structure.
 
-For **SegmentTimeline**-based Representations, the `S` elements and their `@t`,
+For <b>SegmentTimeline</b>-based Representations, the `S` elements and their `@t`,
 `@d`, and `@r` values define the media timeline, including any gaps. Each Media
 Segment has an earliest presentation time and an accurate Segment duration,
 which <span class=modal-keyword>may</span> be estimated from the MPD or determined from the Segment itself.
@@ -114,7 +114,7 @@ Adaptation Sets and within switchable Representations.
 ## On-Demand Services Using Live-Profile Segment Structures ## {#ondemand-live-profile-structures}
 
 On-demand content <span class=modal-keyword>may</span> use Segment structures also used by live services, for
-example **SegmentTemplate** with `$Number$` or `$Time$`. This can simplify reuse of
+example <b>SegmentTemplate</b> with `$Number$` or `$Time$`. This can simplify reuse of
 live packagers and client logic. When such structures are used for an on-demand
 service, the MPD remains static and the dynamic-service attributes listed in
 [[#common-mpd-requirements]] <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> be used.

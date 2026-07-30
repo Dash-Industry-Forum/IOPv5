@@ -2,12 +2,12 @@
 
 In a live DASH presentation the rights of the user can be different for different programs included in the presentation. This chapter describes recommended mechanisms for forcing rights to be re-evaluated at program boundaries.
 
-The user's level of access to content is governed by the issuance (or not) of [=licenses=] with [=content keys=] and the policy configuration carried by the [=licenses=]. The authorization server is the authority on what rights are assigned to the user and this is enforced by the license server. To force re-evaluation of rights, a service **_must_** force a new license request to be made. This can be accomplished by:
+The user's level of access to content is governed by the issuance (or not) of [=licenses=] with [=content keys=] and the policy configuration carried by the [=licenses=]. The authorization server is the authority on what rights are assigned to the user and this is enforced by the license server. To force re-evaluation of rights, a service <b>_must_</b> force a new license request to be made. This can be accomplished by:
 
 1. Defining an expiration time on the license.
 1. Changing the [=content key=] to one that is not yet available to DASH clients, thereby triggering [[#CPS-activation-workflow|DRM system activation]] for the new [=content key=].
 
-Not every [=DRM system=] supports real-time license expiration - some widely used implementations only check license validity at activation time. Therefore the latter option is a more universally applicable method to force re-evaluation of access rights. As changing the [=content key=] is only possible on DASH period boundaries as the initialisation segment is updated, live DASH presentations **_should_** create a new period in which content is encrypted with new [=content keys=] to force re-evaluation of user's access rights.
+Not every [=DRM system=] supports real-time license expiration - some widely used implementations only check license validity at activation time. Therefore the latter option is a more universally applicable method to force re-evaluation of access rights. As changing the [=content key=] is only possible on DASH period boundaries as the initialisation segment is updated, live DASH presentations <b>_should_</b> create a new period in which content is encrypted with new [=content keys=] to force re-evaluation of user's access rights.
 
 Note: Changing the [=content keys=] does not increase the cryptographic security of content protection. The term *periodic re-authorization* is therefore used here instead of *key rotation*, to maintain focus on the goal and not the mechanism.
 
@@ -27,18 +27,18 @@ A key hierarchy defines a multi-level structure of cryptographic keys, instead o
 
 A [=root key=] might not be an actual cryptographic key. Rather, it acts as a reference to identify the set of [=leaf keys=] that protect content. A DASH client requesting a [=license=] for a specific [=root key=] will be interpreted as requesting a [=license=] that makes available all the [=leaf keys=] associated with that [=root key=].
 
-Note: Intermediate layers of cryptographic keys **_may_** also exist between [=root keys=] and [=leaf keys=] but such layers are [=DRM system=] specific and only processed by the [=DRM system=], being transparent to the DASH client and the [=media platform=]. To a DASH client, only the [=root keys=] have meaning. To the [=media platform=], only the [=leaf keys=] have meaning.
+Note: Intermediate layers of cryptographic keys <b>_may_</b> also exist between [=root keys=] and [=leaf keys=] but such layers are [=DRM system=] specific and only processed by the [=DRM system=], being transparent to the DASH client and the [=media platform=]. To a DASH client, only the [=root keys=] have meaning. To the [=media platform=], only the [=leaf keys=] have meaning.
 
 This layering enables the user's rights to content to be evaluated in two ways:
 
-1. Changing the [=root key=] invokes the full re-evaluation workflow as a new license request **_must_** be made by the DASH client.
+1. Changing the [=root key=] invokes the full re-evaluation workflow as a new license request <b>_must_</b> be made by the DASH client.
 1. Changing the [=leaf key=] invokes an evaluation of the rights granted by the [=license=] for the [=root key=] and processing of any additional policy attached to the [=leaf key=]. If result of this evaluation indicates the [=leaf key=] cannot be used, the [=DRM system=] will signal playback failure to the DASH client.
 
-Changing the [=root key=] is equivalent to changing the [=content key=] in terms of content and MPD signaling, requiring a new period to be started. The [=leaf key=] can be changed in any media segment and does not require modification of the MPD. [=Leaf keys=] **_should not_** be changed within the same program. Changing [=leaf keys=] on a regular basis does not increase cryptographic security.
+Changing the [=root key=] is equivalent to changing the [=content key=] in terms of content and MPD signaling, requiring a new period to be started. The [=leaf key=] can be changed in any media segment and does not require modification of the MPD. [=Leaf keys=] <b>_should not_</b> be changed within the same program. Changing [=leaf keys=] on a regular basis does not increase cryptographic security.
 
 Note: A DASH service with a key hierarchy is sometimes referred to as using "internal key rotation".
 
-The mechanism by which a set of [=leaf keys=] is made available based on a request for a [=root key=] is [=DRM system=] specific. Nevertheless, different [=DRM systems=] **_may_** be interoperable as long as they can each make available the required set of [=leaf keys=] using their system-specific mechanisms, using the same [=root key=] as the identifier for the same set of [=leaf keys=].
+The mechanism by which a set of [=leaf keys=] is made available based on a request for a [=root key=] is [=DRM system=] specific. Nevertheless, different [=DRM systems=] <b>_may_</b> be interoperable as long as they can each make available the required set of [=leaf keys=] using their system-specific mechanisms, using the same [=root key=] as the identifier for the same set of [=leaf keys=].
 
 When using a key hierarchy, the [=leaf keys=] are typically delivered in-band in the media segments, using `moof/pssh` boxes, together with additional/updated license policy constraints. The exact implementation is [=DRM system=] specific and transparent to a DASH client.
 
@@ -58,17 +58,17 @@ Similar functionality could be implemented without a key hierarchy by using a se
 
 Clear Key is a [=DRM system=] defined by W3C in [[!encrypted-media]]. It is intended primarily for client and [=media platform=] development/test purposes and does not perform the content protection and [=content key=] protection duties ordinarily expected from a [=DRM system=]. Nevertheless, in DASH client DRM workflows, it is equivalent to a real [=DRM system=].
 
-A DRM system specific **ContentProtection** descriptor for Clear Key **_shall_** use the system ID `e2719d58-a985-b3c9-781a-b030af78d30e` and `value="ClearKey1.0"`.
+A DRM system specific <b>ContentProtection</b> descriptor for Clear Key <b>_shall_</b> use the system ID `e2719d58-a985-b3c9-781a-b030af78d30e` and `value="ClearKey1.0"`.
 
-The `dashif:laurl` element **_should_** be used to indicate the license server URL. Legacy content **_may_** also use an equivalent `Laurl` element from the `http://dashif.org/guidelines/clearKey` namespace, as this was defined in previous versions of this document (the definition is now expanded to also cover non-clearkey scenarios). Clients **_should_** process the legacy element if it exists and `dashif:laurl` does not.
+The `dashif:laurl` element <b>_should_</b> be used to indicate the license server URL. Legacy content <b>_may_</b> also use an equivalent `Laurl` element from the `http://dashif.org/guidelines/clearKey` namespace, as this was defined in previous versions of this document (the definition is now expanded to also cover non-clearkey scenarios). Clients <b>_should_</b> process the legacy element if it exists and `dashif:laurl` does not.
 
 The license request and response format is defined in [[!encrypted-media]].
 
-W3C describes the use of the system ID `1077efec-c0b2-4d02-ace3-3c1e52e2fb4b` in [[!eme-initdata-cenc]] section 4 to indicate that tracks are encrypted with [[!CENC|Common Encryption]]. However, the presence of this "common" `pssh` box does not imply that Clear Key is to be used for decryption. DASH clients **_shall not_** interpret a `pssh` box with the system ID `1077efec-c0b2-4d02-ace3-3c1e52e2fb4b` as an indication that the Clear Key mechanism is to be used (nor as an indication of anything else beyond the use of Common Encryption).
+W3C describes the use of the system ID `1077efec-c0b2-4d02-ace3-3c1e52e2fb4b` in [[!eme-initdata-cenc]] section 4 to indicate that tracks are encrypted with [[!CENC|Common Encryption]]. However, the presence of this "common" `pssh` box does not imply that Clear Key is to be used for decryption. DASH clients <b>_shall not_</b> interpret a `pssh` box with the system ID `1077efec-c0b2-4d02-ace3-3c1e52e2fb4b` as an indication that the Clear Key mechanism is to be used (nor as an indication of anything else beyond the use of Common Encryption).
 
 <div class="example">
 
-An example of a Clear Key **ContentProtection** descriptor using `laurl` is as follows.
+An example of a Clear Key <b>ContentProtection</b> descriptor using `laurl` is as follows.
 
 ```xml
 <MPD xmlns="urn:mpeg:dash:schema:mpd:2011" xmlns:dashif="https://dashif.org/">
@@ -90,7 +90,7 @@ Parts of the MPD structure that are not relevant for this chapter have been omit
 
 Issue: This section is under reconciliation against published IOP v5.1.0 Part 6
 clause 5, "DASH-IF XML schema". The published clause defines the `Laurl`,
-`Authzurl`, and `Certurl` elements under the **ContentProtection** descriptor for
+`Authzurl`, and `Certurl` elements under the <b>ContentProtection</b> descriptor for
 license acquisition, authorization-server discovery, and certificate acquisition.
 The current source preserved `laurl` and `authzurl` schema elements but did not
 explicitly preserve the published certificate-acquisition element or the
@@ -130,19 +130,19 @@ element names are case-sensitive; confirm the intended canonical casing before
 marking this section as fully reconciled.
 
 The `dashif:laurl` element identifies a license acquisition URL associated with
-the containing **ContentProtection** descriptor. The optional `@licenseType`
+the containing <b>ContentProtection</b> descriptor. The optional `@licenseType`
 attribute describes the license type served by this license server; its meaning
 is DRM-specific.
 
 The `dashif:authzurl` element identifies an authorization service URL associated
-with the containing **ContentProtection** descriptor. The optional `@authzType`
+with the containing <b>ContentProtection</b> descriptor. The optional `@authzType`
 attribute describes the authorization-token type served by this authorization
 server; its meaning is specific to the server serving the token.
 
 The `dashif:certurl` element identifies a certificate acquisition URL associated
-with the containing **ContentProtection** descriptor. It contains a URL for a
+with the containing <b>ContentProtection</b> descriptor. It contains a URL for a
 server that allows retrieval of a certificate in the format specific to the
-[=DRM system=] described by the containing **ContentProtection** descriptor. The
+[=DRM system=] described by the containing <b>ContentProtection</b> descriptor. The
 optional `@certType` attribute describes the certificate type served by this
 server; its meaning is DRM-specific.
 
@@ -172,21 +172,21 @@ published IOP v5.1.0 Part 6 clause 5.
 
 # HTTPS and DASH # {#CPS-HTTPS}
 
-Transport security in HTTP-based delivery **_may_** be achieved by using HTTP over TLS (HTTPS) as specified in [[!RFC8446]]. HTTPS is a protocol for secure communication which is widely used on the Internet and also increasingly used for content streaming, mainly for protecting:
+Transport security in HTTP-based delivery <b>_may_</b> be achieved by using HTTP over TLS (HTTPS) as specified in [[!RFC8446]]. HTTPS is a protocol for secure communication which is widely used on the Internet and also increasingly used for content streaming, mainly for protecting:
 
 * The privacy of the exchanged data from eavesdropping by providing encryption of bidirectional communications between a client and a server, and
 * The integrity of the exchanged data against forgery and tampering.
 
 As an MPD carries links to media resources, web browsers follow the W3C recommendation [[!mixed-content]]. To ensure that HTTPS benefits are maintained once the MPD is delivered, it is recommended that if the MPD is delivered with HTTPS, then the media also be delivered with HTTPS.
 
-DASH also explicitly permits the use of HTTPS as a URI scheme and hence, HTTP over TLS as a transport protocol. When using HTTPS in an MPD, one can for instance specify that all media segments are delivered over HTTPS, by declaring that all the **BaseURL**'s are HTTPS based, as follow:
+DASH also explicitly permits the use of HTTPS as a URI scheme and hence, HTTP over TLS as a transport protocol. When using HTTPS in an MPD, one can for instance specify that all media segments are delivered over HTTPS, by declaring that all the <b>BaseURL</b>'s are HTTPS based, as follow:
 
 ```xml
 <BaseURL>https://cdn1.example.com/</BaseURL>
 <BaseURL>https://cdn2.example.com/</BaseURL>
 ```
 
-One can also use HTTPS for retrieving other types of data carried with a MPD that are HTTP-URL based, such as, for example, DRM [=licenses=] specified within the **ContentProtection** descriptor:
+One can also use HTTPS for retrieving other types of data carried with a MPD that are HTTP-URL based, such as, for example, DRM [=licenses=] specified within the <b>ContentProtection</b> descriptor:
 
 ```xml
 <ContentProtection
@@ -196,6 +196,6 @@ One can also use HTTPS for retrieving other types of data carried with a MPD tha
 </ContentProtection>
 ```
 
-It is recommended that HTTPS be adopted for delivering DASH content. It **_should_** be noted nevertheless, that HTTPS does interfere with proxies that attempt to intercept, cache and/or modify content between the client and the TLS termination point within the CDN. Since the HTTPS traffic is opaque to these intermediate nodes, they can lose much of their intended functionality when faced with HTTPS traffic.
+It is recommended that HTTPS be adopted for delivering DASH content. It <b>_should_</b> be noted nevertheless, that HTTPS does interfere with proxies that attempt to intercept, cache and/or modify content between the client and the TLS termination point within the CDN. Since the HTTPS traffic is opaque to these intermediate nodes, they can lose much of their intended functionality when faced with HTTPS traffic.
 
 While using HTTPS in DASH provides good protection for data exchanged between DASH servers and clients, HTTPS only protects the transport link, but does not by itself provide an enforcement mechanism for access control and usage policies on the streamed content. HTTPS itself does not imply user authentication and content authorization (or access control). This is especially the case that HTTPS provides no protection to any streamed content cached in a local buffer at a client for playback. HTTPS does not replace a DRM.
