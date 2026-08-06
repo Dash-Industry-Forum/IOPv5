@@ -33,18 +33,20 @@ jobs:
         run: python tools/publication/build_all.py --out ../dist
 
       - name: Render PDFs from built HTML
+        shell: bash
         run: |
-          New-Item -ItemType Directory -Force dist-pdf | Out-Null
-          Get-ChildItem dist -Filter *.html | ForEach-Object {
-            $pdf = Join-Path dist-pdf ($_.BaseName + '.pdf')
-            python -m weasyprint $_.FullName $pdf
-          }
+          mkdir -p dist-pdf
+          for html in dist/*.html; do
+            base=$(basename "$html" .html)
+            python -m weasyprint "$html" "dist-pdf/${base}.pdf"
+          done
 
       - name: Collect Part 6 output
+        shell: bash
         run: |
-          New-Item -ItemType Directory -Force dist-part6 | Out-Null
-          Copy-Item dist/part06-content-protection.html dist-part6/ -Force
-          Copy-Item dist-pdf/part06-content-protection.pdf dist-part6/ -Force
+          mkdir -p dist-part6
+          cp dist/part06-content-protection.html dist-part6/
+          cp dist-pdf/part06-content-protection.pdf dist-part6/
 
       - name: Upload Part 6 artifact
         uses: actions/upload-artifact@v4
