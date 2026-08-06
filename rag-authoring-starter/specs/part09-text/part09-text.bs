@@ -76,6 +76,12 @@ Abstract: Subtitle and caption interoperability points, coding profiles, packagi
   "SMPTE2052-11": {
     "title": "Conversion from CEA-708 Caption Data to SMPTE-TT",
     "publisher": "SMPTE"
+  },
+  "DVBDASH": {
+    "href": "https://www.etsi.org/standards-search",
+    "title": "ETSI TS 103 285: MPEG-DASH Profile for Transport of ISO BMFF Based DVB Services over IP Based Networks",
+    "publisher": "ETSI/DVB",
+    "date": "2024"
   }
 }
 </pre>

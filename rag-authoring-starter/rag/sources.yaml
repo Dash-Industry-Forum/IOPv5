@@ -158,3 +158,21 @@ sources:
     corpus_path: rag/corpus/drafts/DASH-IF-IOPv5.0-Part12-DRAFT.docx
     canonical_url: ""
     tags: [dash-if, iop, v5, part12, conformance, reference-tools, dashjs, livesim2, draft]
+
+  - id: dashif-tutorial-mhv-2022
+    title: "Emmy Tutorial: Introduction to MPEG DASH (MHV 2022)"
+    type: tutorial
+    status: published
+    target_part: multiple
+    corpus_path: rag/corpus/tutorials/DASH-Tutorial-MHV-2022.pdf
+    canonical_url: ""
+    tags: [dash-if, tutorial, mpeg-dash, cmaf, low-latency, iop-v5, history, 2022, mhv, stockhammer]
+
+  - id: dvb-dash-a168r9a
+    title: "ETSI TS 103 285 V1.5.0: DVB MPEG-DASH Profile for Transport of ISO BMFF Based DVB Services over IP Based Networks"
+    type: external-standard
+    status: published
+    target_part: multiple
+    corpus_path: rag/corpus/external/DVB-DASH-A168r9a-ETSI-TS-103-285.docx
+    canonical_url: "https://www.etsi.org/standards-search"
+    tags: [dvb, dash, etsi, external, profile, live, on-demand, low-latency, content-protection, audio, video, subtitles, nga, hdr, hfr, 2024]

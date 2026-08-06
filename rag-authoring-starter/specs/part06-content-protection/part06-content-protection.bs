@@ -18,20 +18,81 @@ Abstract: Content protection and security guidelines for encrypted CMAF/DASH con
 
 <pre class=biblio>
 {
-  "DASH": { "aliasOf": "MPEGDASH" },
-  "CMAF": { "aliasOf": "MPEGCMAF" },
-  "CENC": { "aliasOf": "MPEGCENC" },
-  "jws": { "aliasOf": "rfc7515" },
-  "jwe": { "aliasOf": "rfc7516" },
-  "MSPR-EncryptionModes": {
+	"MPEGCENC": {
+		"href": "https://www.iso.org/standard/68042.html",
+		"title": "Information technology - MPEG systems technologies - Part 7: Common encryption in ISO base media file format files",
+		"publisher": "ISO/IEC",
+    "date": "2016"
+	},
+  "MPEGDASH": {
+    "href": "https://www.iso.org/standard/83314.html",
+    "title": "Information technology - Dynamic adaptive streaming over HTTP (DASH) - Part 1: Media presentation description and segment formats",
+    "publisher": "ISO/IEC",
+    "date": "2022"
+  },
+  "ISOBMFF": {
+    "href": "https://www.iso.org/standard/83102.html",
+    "title": "Information technology - Coding of audio-visual objects - Part 12: ISO base media file format",
+    "publisher": "ISO/IEC",
+    "date": "2024"
+  },
+  "DASHIF-IOPv5p1": {
+    "href": "https://www",
+    "title": "DASH-IF Interoperability Points; Part 1: Overview, Architecture and Interfaces",
+    "publisher": "SVTA/DASH-IF",
+    "date": "2026"
+  },
+  "DASHIF-IOPv5p2": {
+    "href": "https://www",
+    "title": "DASH-IF Interoperability Points; Part 2: Core principles and CMAF mapping",
+    "publisher": "SVTA/DASH-IF",
+    "date": "2026"
+  },
+  "CENCInit": {
+    "href": "https://www.w3.org/TR/eme-initdata-cenc",
+    "title": "'cenc' Initialization Data Format",
+    "publisher": "W3C",
+    "date": "2026"
+  },
+  "EME": {
+    "href": "https://www.w3.org/TR/encrypted-media",
+    "title": "Encrypted Media Extensions",
+    "publisher": "W3C",
+    "date": "2026"
+  },
+  "Mixed": {
+    "href": "https://www.w3.org/TR/mixed-content/",
+    "title": "Mixed Content",
+    "publisher": "W3C",
+    "date": "2023"
+  },
+	"TLS": {
+		"href": "https://datatracker.ietf.org/doc/html/rfc8446",
+		"title": "The Transport Layer Security (TLS) Protocol Version 1.3",
+		"publisher": "IETF",
+	  "date": "2018"
+  },
+	"HLS": {
+		"href": "https://datatracker.ietf.org/doc/draft-pantos-hls-rfc8216bis/",
+		"title": "HTTP Live Streaming 2nd Edition. Internet Draft",
+		"publisher": "IETF"
+	},
+  "EncryptionModes": {
     "title": "PlayReady Content Encryption Modes",
     "publisher": "Microsoft",
     "href": "https://docs.microsoft.com/en-us/playready/packaging/content-encryption-modes"
   },
-  "HLS-LowLatency": {
-    "title": "Protocol Extension for Low-Latency HLS (Preliminary Specification)",
-    "publisher": "Apple",
-    "href": "https://developer.apple.com/documentation/http_live_streaming/protocol_extension_for_low-latency_hls_preliminary_specification"
+  "CAT": {
+    "href": "https://www.cta.tech/standards/cta-5007-b/",
+    "title": "Common Access Token (CTA-5007-B)",
+    "publisher": "CTA",
+	  "date": "2018"
+  },
+  "DVBDASH": {
+    "href": "https://www.etsi.org/standards-search",
+    "title": "ETSI TS 103 285: MPEG-DASH Profile for Transport of ISO BMFF Based DVB Services over IP Based Networks",
+    "publisher": "ETSI/DVB",
+    "date": "2024"
   }
 }
 </pre>
@@ -45,30 +106,9 @@ path: _shared-diagram-style.inc.md
 </pre>
 
 <pre class=include>
-path: 01-intro.inc.md
-</pre>
-
-<pre class=include>
-path: 10-general.inc.md
-</pre>
-
-<pre class=include>
-path: 40-license-request-model.inc.md
-</pre>
-
-<pre class=include>
-path: 60-client-workflows.inc.md
-</pre>
-
-<pre class=include>
-path: 80-misc.inc.md
-</pre>
-
-<pre class=include>
-path: 90-enhanced-clear-key.inc.md
+path: 01-spec-text.inc.md
 </pre>
 
 <pre class=include>
 path: 06-content-protection.inc.md
 </pre>
-

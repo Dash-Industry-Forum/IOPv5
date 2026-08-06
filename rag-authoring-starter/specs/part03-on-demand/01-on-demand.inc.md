@@ -25,6 +25,10 @@ part:
 - ISO/IEC 23000-19 [[!MPEGCMAF]].
 - DASH-IF IOP v5 Part 2, *Core Principles and CMAF Mapping*.
 
+Note: ETSI TS 103 285 [[DVBDASH]] (the "DVB-DASH" profile) defines an On-Demand
+profile that constrains a subset of the on-demand mechanisms described in this
+part. Alignment notes are provided in the relevant clauses below.
+
 # Terms and Definitions # {#terms}
 
 : <dfn export>On-Demand Service</dfn>
@@ -144,6 +148,15 @@ Note: v4.3 emphasized operational advantages of the on-demand profile: fewer
 files, easier content management, improved cache behaviour, and lower
 packager/origin/CDN complexity.
 
+Note: The DVB-DASH [[DVBDASH]] On-Demand profile is aligned with this structure:
+it requires exactly one Segment per Representation using Indexed addressing
+(SegmentBase with `@indexRange`), a single `sidx` box describing all subsegments,
+and disallows `Period.SegmentList`. DVB-DASH additionally requires
+`Representation@mimeType`, codec parameters conformant to the applicable
+DVB-DASH media clause, and a single BaseURL per Representation pointing to the
+indexed media file. Content authored per this section's On-Demand profile
+requirements is expected to remain compatible with DVB-DASH On-Demand players.
+
 Issue: Confirm whether `http://dashif.org/guidelines/dash-if-ondemand` remains
 the IOP v5 profile identifier, is deprecated, or is replaced by a new v5 URI.
 [GROUNDED_BY=dashif-iop-v4-3#82..#84]
@@ -187,6 +200,13 @@ content does not imply support for dynamic services.
 Issue: Confirm the status of the DASH-IF Mixed On-Demand profile URI in IOP v5
 and define the relationship to Part 2 Good Multi-Period CMAF Content.
 [GROUNDED_BY=dashif-iop-v4-3#90]
+
+Note: DVB-DASH [[DVBDASH]] does not define a mixed on-demand profile; a DVB-DASH
+On-Demand player is only required to support single-profile, single-Period (or
+uniformly-structured multi-Period) on-demand content as specified by the
+DVB-DASH On-Demand profile. Services relying on Mixed On-Demand Content should
+not assume DVB-DASH player compatibility unless every Period independently
+conforms to the DVB-DASH On-Demand profile.
 
 # Open Issues and Work Items # {#open-issues}
 

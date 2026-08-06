@@ -26,6 +26,11 @@ video tracks.
 
 The use of sidecar text files is not covered in this part.
 
+Note: ETSI TS 103 285 [[DVBDASH]] (the "DVB-DASH" profile) defines its own
+subtitle constraints based on EBU-TT-D, a profile of TTML distinct from the
+IMSC1 profile used in this part. Alignment notes with DVB-DASH are provided in
+the relevant clauses below.
+
 # References # {#doc-references}
 
 The following referenced documents are necessary for the application of this
@@ -124,6 +129,14 @@ Open captions and open subtitles are addressed in DASH-IF IOP v5 Part 7,
 Additional non-CMAF text/subtitle profiles are outside the scope of this part
 and can be found in [[DASHIF-IOP43]].
 
+Note: DVB-DASH [[DVBDASH]] mandates EBU-TT-D (a constrained TTML profile
+defined in ETSI TS 103 285 clause 7, related to EBU Tech 3380) rather than
+IMSC1 for closed subtitles, and requires the `@mimeType="application/ttml+xml"`
+signalling without segmentation into CMAF media segments in some deployment
+modes. Services that need to serve both DVB-DASH and IMSC1-only players should
+provide separate Adaptation Sets using each profile, since a DVB-DASH client is
+not guaranteed to support the IMSC1 profiles defined in this clause.
+
 # Adaptation Set requirements and recommendations # {#adaptation-set-requirements}
 
 Text adaptation sets <span class=modal-keyword>should</span> be annotated using
@@ -148,6 +161,14 @@ following table.
     <tr><td><b>Accessibility</b><td>0 … N<td>If the text track is closed captions, an <b>Accessibility</b> descriptor <span class=modal-keyword>shall</span> be present with `@schemeIdUri="urn:mpeg:dash:role:2011"` and `@value="caption"`.
     <tr><td><b>Role</b><td>0 … N<td><b>Role</b> descriptors <span class=modal-keyword>may</span> be present depending on the nature of the text. Subtitle tracks <span class=modal-keyword>should</span> use `@value="subtitle"`. Closed-caption tracks <span class=modal-keyword>shall</span> use `@value="caption"`. Text tailored to beginning readers <span class=modal-keyword>shall</span> use `@value="easyreader"` when signalled.
 </table>
+
+Note: DVB-DASH [[DVBDASH]] additionally requires downloadable-font signalling
+for EBU-TT-D subtitle tracks using the DVB-DASH-specific
+`urn:dvb:dash:fontdownload:2014` Supplemental/Essential Property descriptor,
+which has no direct equivalent in the IMSC1/WebVTT-based signalling defined in
+this part. Services offering EBU-TT-D subtitles with embedded fonts for
+DVB-DASH compatibility should consult ETSI TS 103 285 clause 7 for the
+complete font-download signalling requirements.
 
 Text Adaptation Sets containing alternative content <span class=modal-keyword>shall</span>
 differ by at least one of the following annotation labels:

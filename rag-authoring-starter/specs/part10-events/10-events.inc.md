@@ -27,6 +27,13 @@ requirements are defined in:
     events, DASH Callback events for ad tracking, and ad-insertion event
     stream constraints.
 
+Note: ETSI TS 103 285 [[DVBDASH]] (the "DVB-DASH" profile) defines its own
+constraints on event signalling, including mandatory support for the
+`urn:mpeg:dash:event:2012` MPD validity expiry event and DVB-specific
+application-signalling event streams (e.g. programme metadata and SCTE-35 cue
+messages carried per DVB conventions). Alignment notes with DVB-DASH are
+provided in the relevant clauses below.
+
 # References # {#doc-references}
 
 The following referenced documents are necessary for the application of this
@@ -158,6 +165,13 @@ present in the Media Segments referenced by a static MPD, in which case they
 Note: The above may happen when a live service is converted to an on-demand
 service for catchup/recording purposes.
 
+Note: DVB-DASH [[DVBDASH]] mandates support for the
+`urn:mpeg:dash:event:2012` in-band MPD validity expiry event, consistent with
+the signalling defined in this clause, and requires DVB-DASH Live players to
+react by fetching an updated MPD. Services should confirm they set
+`MPD@minimumUpdatePeriod=0` and populate the <b>InbandEventStream</b> element
+exactly as required by this clause to remain compatible with DVB-DASH players.
+
 # MPD Events # {#mpd-events}
 
 In addition to tracking events (e.g. ad starts, quartile tracking), a server
@@ -175,6 +189,14 @@ type. The `@timescale` attribute <span class=modal-keyword>shall</span> be prese
 For ad-insertion cue messages (e.g. SCTE-35), see Part 5 (Section "IF-3
 Opportunity Metadata and SCTE-35 MPD Events") for the specific requirements on
 MPD event stream signalling.
+
+Note: DVB-DASH [[DVBDASH]] defines its own application-signalling and
+programme-metadata event streams (using DVB-specific `@schemeIdUri` values
+distinct from the SCTE-35 signalling referenced above) for carrying DVB SI-like
+metadata within the MPD. Services offering DVB-DASH-compatible programme
+metadata or ad-cue signalling should consult ETSI TS 103 285 clause 9 for the
+complete set of required event stream descriptors, in addition to the SCTE-35
+requirements in Part 5.
 
 # DASH Callback Events # {#callback-events}
 

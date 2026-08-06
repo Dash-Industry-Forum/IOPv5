@@ -35,6 +35,12 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
     "title": "DASH-IF Codec Registry",
     "publisher": "DASH Industry Forum",
     "date": "2024"
+  },
+  "DVBDASH": {
+    "href": "https://www.etsi.org/standards-search",
+    "title": "ETSI TS 103 285: MPEG-DASH Profile for Transport of ISO BMFF Based DVB Services over IP Based Networks",
+    "publisher": "ETSI/DVB",
+    "date": "2024"
   }
 }
 </pre>

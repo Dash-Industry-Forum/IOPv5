@@ -30,6 +30,12 @@ Registry or explicitly defined in this part. Clients <span class=modal-keyword>m
 codecs registered in the DASH-IF Codec Registry and <span class=modal-keyword>shall not</span> attempt to play
 back Representations for which they do not have codec support.
 
+Note: ETSI TS 103 285 [[DVBDASH]] (the "DVB-DASH" profile) defines its own
+mandatory and optional audio codec set (HE-AACv2, AC-4, MPEG-H 3D Audio,
+DTS-UHD, and AVS3-P3) and NGA preselection signalling requirements that are
+narrower than the DASH-IF Codec Registry. Alignment notes with DVB-DASH are
+provided in the relevant clauses below.
+
 # References # {#doc-references}
 
 The following referenced documents are necessary for the application of this
@@ -153,6 +159,12 @@ table.
     <tr><td>MPEG-4 HE-AAC v2 Profile<td>`mp4a.40.29`
 </table>
 
+Note: DVB-DASH [[DVBDASH]] mandates HE-AACv2 support as a baseline audio codec,
+consistent with the requirements in this clause. DVB-DASH additionally
+constrains permitted sampling rates and channel configurations for its base
+audio profile; services should consult ETSI TS 103 285 clause 6 for the
+complete set of DVB-DASH audio constraints.
+
 ## HE-AACv2 audio (multichannel) ## {#codecs-heaacv2-multichannel}
 
 This clause extends HE-AACv2 requirements with multichannel scenarios. All
@@ -229,6 +241,13 @@ of raw MPEG-H audio frames in DASH containers:
     `ChannelConfiguration` according to ISO/IEC 23001-8.
 * Each Media Segment <span class=modal-keyword>shall</span> start with a SAP of type 1 (e.g. a sync sample).
 
+Note: DVB-DASH [[DVBDASH]] specifies MPEG-H 3D Audio and NGA (Next Generation
+Audio) support using <b>Preselection</b> elements and DASH-IF-aligned
+`@schemeIdUri` values for describing audio presets, consistent with the
+`mhm1` codec strings in this clause. Services offering MPEG-H content for
+DVB-DASH compatibility should verify Preselection signalling against ETSI TS
+103 285 clause 6.
+
 <table class="data">
   <caption>Permitted MPEG-H 3D Audio `@codecs` values.</caption>
   <thead><tr><th>Codec<th>`@codecs`
@@ -249,6 +268,10 @@ Usage of USAC in DASH presentations <span class=modal-keyword>shall</span> confo
 profile, providing support up to 5.1 multichannel coding.
 
 SAP type <span class=modal-keyword>shall</span> be `1`. `@codecs` <span class=modal-keyword>shall</span> be `mp4a.40.42`.
+
+Note: DVB-DASH [[DVBDASH]] does not currently mandate USAC/xHE-AAC support;
+services relying on this codec for DVB-DASH compatibility should provide an
+alternative codec (e.g. HE-AACv2 or AC-4) as a fallback Adaptation Set.
 
 # Open Issues and Work Items # {#open-issues}
 

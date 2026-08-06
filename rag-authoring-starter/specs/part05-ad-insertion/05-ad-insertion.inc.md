@@ -347,9 +347,48 @@ The common functional entities are:
 - DASH access client and reference playback platform,
 - ad reporting server and measurement components.
 
-Issue: Architecture figures from the published Part 5 document still need to be
-extracted or redrawn. This prose provides a source-level architecture baseline
-until the figures are available.
+<figure class="diagram" style="max-width:100%;overflow-x:auto;">
+<pre class=mermaid>
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'14px','fontFamily':'system-ui, Arial, sans-serif'}}}%%
+flowchart LR
+    subgraph Source["Source (IF-0)"]
+        ABR["ABR Encoder\n+ CMAF Packager"]
+    end
+    subgraph Packaging["Packaging (IF-1/IF-2/IF-3)"]
+        PKG["DASH Packager\n/ MPD Generator"]
+    end
+    subgraph AdSystem["Ad System (IF-4)"]
+        ADS["Ad Decision\nService"]
+        ACS["Ad Content\nServer"]
+    end
+    subgraph Manipulation["Manipulation (IF-5)"]
+        MPX["Ad Insertion\nMPD Manipulator"]
+    end
+    subgraph Client["Client (IF-6/IF-7/IF-8/IF-9)"]
+        CDN["CDN / Origin"]
+        DASH["DASH Access\nClient"]
+        ARP["Ad Reporting\nServer"]
+    end
+
+    ABR -->|IF-1 CMAF ingest| PKG
+    PKG -->|IF-2 DASH content| MPX
+    PKG -->|IF-3 opportunity metadata| MPX
+    MPX -->|IF-4a decision request| ADS
+    ADS -->|IF-4e ad selection result| MPX
+    MPX -->|IF-4b conditioning| ACS
+    ACS -->|IF-4c/4d ad content| MPX
+    MPX -->|IF-5 MPD + segments| CDN
+    CDN -->|DASH stream| DASH
+    DASH -->|IF-7 decisioning params| MPX
+    DASH -->|IF-8 tracking| ARP
+</pre>
+<figcaption>Figure 1: DASH-IF Ad Insertion Architecture (redrawn from published Part 5 Figure 1).</figcaption>
+</figure>
+
+Note: This diagram is a Mermaid redraw of the published Part 5 Figure 1. The
+original figure is a richer block diagram; this version captures the interface
+flow between functional entities. A visual check against the published DOCX/PDF
+is recommended.
 
 # Overview on Interfaces and Functions # {#ad-interfaces-overview}
 
@@ -466,9 +505,39 @@ because the DASH packager can generate Period boundaries without media segment
 splitting. Options 2 and 3 require more downstream processing and may require
 the MPD manipulator or packaging function to access media segment details.
 
-Issue: Figures 3 and 4 from the published Part 5 document describe the
-abstracted media model and CMAF encoder/packager options. They still need to be
-extracted or redrawn and visually checked against this prose.
+<figure class="diagram" style="max-width:100%;overflow-x:auto;">
+<pre class=mermaid>
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'14px','fontFamily':'system-ui, Arial, sans-serif'}}}%%
+timeline
+    title Abstracted Media Model with Splice Points
+    section Main Content
+        t0 : Media start
+        tsplice,1 : Splice point 1 (ad opportunity start)
+        tsplice,2 : Splice point 2 (ad opportunity end / return to main)
+        tsplice,3 : Splice point 3 (next ad opportunity)
+    section Ad Opportunity
+        tsplice,1 : Ad avail begins
+        tsplice,2 : Ad avail ends
+</pre>
+<figcaption>Figure 3: Abstracted Media Model with Splice Points (redrawn from published Part 5 Figure 3). The continuous media timeline carries splice-point metadata at each `tsplice` position. Splice points identify where the main content may transition to ad content and back.</figcaption>
+</figure>
+
+<figure class="diagram" style="max-width:100%;overflow-x:auto;">
+<pre class=mermaid>
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'14px','fontFamily':'system-ui, Arial, sans-serif'}}}%%
+flowchart TD
+    subgraph Option1["Option 1: Splice-Conditioned Packaging"]
+        E1["ABR Encoder\n(continuous output)"] --> P1["CMAF Packager\n(fragment boundaries at tsplice)"] --> D1["DASH Packager\n(Period boundaries at tsplice)"]
+    end
+    subgraph Option2["Option 2: Splice-Conditioned Encoding"]
+        E2["ABR Encoder\n(SAP at tsplice)"] --> P2["CMAF Packager\n(standard fragmentation)"] --> D2["DASH Packager\n(Period boundaries at tsplice)"]
+    end
+    subgraph Option3["Option 3: Splice Point Signalling"]
+        E3["ABR Encoder\n(continuous output)"] --> P3["CMAF Packager\n(standard fragmentation)"] --> D3["DASH Packager\n(MPD Event at tsplice)"]
+    end
+</pre>
+<figcaption>Figure 4: CMAF Encoder and Packager Options (redrawn from published Part 5 Figure 4). Option 1 is preferred for MPD-level manipulation. Options 2 and 3 require more downstream processing.</figcaption>
+</figure>
 
 ## IF-1: Packager Ingest ## {#ad-if1-packager-ingest}
 
@@ -509,6 +578,32 @@ or infer enough information to:
 - generate MPD Event signalling when Period boundaries are not already created;
   and
 - generate the IF-2 MPD and IF-3 opportunity metadata consistently.
+
+<figure class="diagram" style="max-width:100%;overflow-x:auto;">
+<pre class=mermaid>
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'14px','fontFamily':'system-ui, Arial, sans-serif'}}}%%
+flowchart LR
+    subgraph Broadcast["Live Broadcast"]
+        BC["Broadcast\nEncoder"]
+        SCTE["SCTE-35\nCue Messages"]
+    end
+    subgraph Segmentation["Segmentation"]
+        SEG["Segmenter\n(SCTE-35 aware)"]
+    end
+    subgraph Output["Output"]
+        SEG1["Segment 1\n(pre-break)"]
+        SEG2["Segment 2\n(break start)"]
+        SEG3["Segment 3\n(ad avail)"]
+        SEG4["Segment 4\n(break end)"]
+        SEG5["Segment 5\n(post-break)"]
+    end
+    BC --> SEG
+    SCTE -->|splice_insert out| SEG
+    SCTE -->|splice_insert in| SEG
+    SEG --> SEG1 --> SEG2 --> SEG3 --> SEG4 --> SEG5
+</pre>
+<figcaption>Figure 2: Segmented Live Broadcast with Broadcast Events from SCTE-35 (redrawn from published Part 5 Figure 2). Broadcast events from SCTE-35 are used to segment the live stream and signal ad opportunities. The segmenter creates segment boundaries aligned with splice points.</figcaption>
+</figure>
 
 Issue: IF-1 has been hardened from the extracted Figure 1 / Figure 4 context,
 but the actual published figures still need extraction or redrawing before the
@@ -644,10 +739,69 @@ IF-2 content is used together with IF-3 opportunity metadata and IF-4 ad
 decision/content responses to produce the IF-5 MPD and segments with ad
 placements.
 
-Issue: This IF-2 hardening pass incorporates published extracted lines 360–408.
-Published Table 2, "DASH-IF Main live content MPD", still requires visual
-DOCX/PDF reconstruction because the text extraction preserves the caption and
-surrounding prose but not the complete table row layout.
+<figure class="diagram" style="max-width:100%;overflow-x:auto;">
+<pre class=mermaid>
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'14px','fontFamily':'system-ui, Arial, sans-serif'}}}%%
+flowchart LR
+    subgraph CMAF["CMAF Fragment (Option 1 / Option 3)"]
+        direction TB
+        F1["CMAF Fragment 1\n(pre-splice)"]
+        F2["CMAF Fragment 2\n(at tsplice — SAP)"]
+        F3["CMAF Fragment 3\n(post-splice)"]
+        F1 --> F2 --> F3
+    end
+    subgraph DASH["DASH Mapping"]
+        direction TB
+        P1["Period 1\n(main content)"]
+        P2["Period 2\n(ad opportunity)"]
+        P3["Period 3\n(main content)"]
+        P1 --> P2 --> P3
+    end
+    F1 -->|maps to| P1
+    F2 -->|Period boundary at tsplice| P2
+    F3 -->|maps to| P3
+</pre>
+<figcaption>Figure 5: CMAF Fragment to DASH Mapping for Option 1 and 3 (redrawn from published Part 5 Figure 5). CMAF Fragment boundaries at splice points map directly to DASH Period boundaries, enabling MPD-level ad insertion without segment splitting.</figcaption>
+</figure>
+
+<table class="data">
+  <caption>DASH-IF Main live content MPD.</caption>
+  <thead><tr><th>Context<th>Element or attribute<th>Use<th>Requirement / description
+  <tbody>
+    <tr><td>—<td><b>MPD</b><td>—<td>Provides the requirements for DASH-IF main content. Any value not specified here is identical to ISO/IEC 23009-1 [[!MPEGDASH]] clause 5.3.1.
+    <tr><td><b>MPD</b><td><b>ServiceDescription</b><td>0 … N<td>—
+    <tr><td><b>ServiceDescription</b><td><code><b>Latency</b>@target</code><td>O<td>A target latency may be provided.
+    <tr><td><b>MPD</b><td>`@profiles`<td>M<td>Should include a profile indicator for the DASH CMAF profile `urn:mpeg:dash:profile:cmaf:2019`.
+    <tr><td><b>MPD</b><td><b>InitializationSet</b><td>0 … N<td>May be present; `@inAllPeriods` may be set to `true` to express continuity of content across Period boundaries.
+    <tr><td><b>MPD</b><td><b>ProgramInformation</b><td>0 … N<td>Should be used to describe information about the main content.
+    <tr><td><b>MPD</b><td><b>Period</b><td>1 … N<td>One or more Periods <span class=modal-keyword>shall</span> be present. Any value not specified here is identical to ISO/IEC 23009-1 clause 5.3.2.
+    <tr><td><b>Period</b><td>`@xlink:href`<td>R<td><span class=modal-keyword>Shall</span> be absent.
+    <tr><td><b>Period</b><td>`@xlink:actuate`<td>R<td><span class=modal-keyword>Shall</span> be absent.
+    <tr><td><b>Period</b><td>`@start`<td>M<td><span class=modal-keyword>Shall</span> be present.
+    <tr><td><b>Period</b><td><b>AssetIdentifier</b><td>0 … 1<td>Should be used to provide an explicit main content identifier.
+    <tr><td><b>Period</b><td><b>EventStream</b><td>0 … N<td>Specifies an event stream. There are two types of Events: Event Streams terminating in the MPD proxy / ad processor, and Event Streams continuing even if an ad is inserted. The handling of these Events is decided by the proxy.
+    <tr><td><b>EventStream</b><td>`@presentationTimeOffset`<td>OD<td>Needed for multi-period split Events across Period boundaries. For details, see ISO/IEC 23009-1.
+    <tr><td><b>Period</b><td><b>AdaptationSet</b><td>1 … N<td>At least one Adaptation Set <span class=modal-keyword>shall</span> be present.
+    <tr><td><b>AdaptationSet</b><td>`@xlink:href`<td>R<td><span class=modal-keyword>Shall</span> be absent.
+    <tr><td><b>AdaptationSet</b><td>`@xlink:actuate`<td>R<td><span class=modal-keyword>Shall</span> be absent.
+    <tr><td><b>AdaptationSet</b><td><code><b>SegmentBase</b>@presentationTimeOffset</code><td>OD (default `0`)<td><span class=modal-keyword>Shall</span> be set to the correct value of the presentation time of the Adaptation Set at the start of the Period, if the presentation time is not equal to `0`.
+    <tr><td><b>AdaptationSet</b><td>`@contentType`<td>M<td><span class=modal-keyword>Shall</span> be present.
+    <tr><td><b>AdaptationSet</b><td><b>SegmentList</b><td>0<td><span class=modal-keyword>Shall</span> be absent.
+    <tr><td><b>AdaptationSet</b><td><b>Representation</b><td>1 … N<td>At least one Representation <span class=modal-keyword>shall</span> be present in each Adaptation Set. Any value not specified here is identical to ISO/IEC 23009-1 clause 5.3.3.
+    <tr><td><b>Period</b><td><b>EmptyAdaptationSet</b><td>0<td><span class=modal-keyword>Shall</span> be absent.
+    <tr><td><b>MPD</b><td><b>UTCTiming</b><td>1 … N<td>At least one <span class=modal-keyword>shall</span> be present.
+</table>
+
+Note: In the table above, M=mandatory, O=optional, R=removed for attributes;
+element occurrence is given as minOccurs…maxOccurs (N=unbounded). Elements are
+shown in bold; attributes are non-bold and preceded by `@`.
+
+Issue: This Table 2 reconstruction was rebuilt from the published DOCX table
+structure (extracted via python-docx table parsing rather than plain-text
+extraction, which had lost the row layout). The row content and hierarchy have
+been verified against the DOCX table cells; a final visual check against the
+rendered PDF is still recommended before this table is treated as fully
+reconciled.
 
 ## IF-3: Ad Avail Signalling ## {#ad-if3-ad-avail-signalling}
 
@@ -948,6 +1102,32 @@ The following recommendations apply to DASH-IF ad content:
 - The content may, and typically should, include multiple variants for the same ad, such as different codecs, formats, and resolutions, so that dynamic conditioning, the MPD proxy, or a DASH client can adjust the ad to current playback conditions.
 - An <b>AssetIdentifier</b> descriptor should be present to carry a globally unique content identifier for the ad content.
 
+<figure class="diagram" style="max-width:100%;overflow-x:auto;">
+<pre class=mermaid>
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'14px','fontFamily':'system-ui, Arial, sans-serif'}}}%%
+flowchart TB
+    subgraph AdMPD["DASH-IF Ad Content MPD (IF-4d)"]
+        direction TB
+        MPD["MPD\n(type=static, 1 Period)"]
+        Period["Period\n(@duration = ad duration)"]
+        BaseURL["BaseURL\n(ad content origin)"]
+        AS1["AdaptationSet\n(video)"]
+        AS2["AdaptationSet\n(audio)"]
+        R1a["Representation\n(codec A, 1080p)"]
+        R1b["Representation\n(codec A, 720p)"]
+        R2["Representation\n(audio)"]
+        MPD --> Period
+        Period --> BaseURL
+        Period --> AS1
+        Period --> AS2
+        AS1 --> R1a
+        AS1 --> R1b
+        AS2 --> R2
+    end
+</pre>
+<figcaption>Figure 6: Recommended Ad Content Format (redrawn from published Part 5 Figure 6). DASH-IF ad content is a static single-Period MPD with multiple Representations for different codecs and resolutions, enabling dynamic conditioning by the MPD proxy.</figcaption>
+</figure>
+
 Examples of asset identifier schemes include:
 
 - An Ad-ID identification scheme, defined by SMPTE RP 2092-1 [[SMPTE-RP2092-1]], signalled with:
@@ -1198,6 +1378,37 @@ Issue: Published Part 5 states that DASH mechanisms for SGAI signalling were
 under active study. Keep this section aligned with current Part 10/Part 11 event
 and remote-resolution work before turning it into final normative text.
 
+<figure class="diagram" style="max-width:100%;overflow-x:auto;">
+<pre class=mermaid>
+%%{init: {'theme':'neutral','themeVariables':{'fontSize':'14px','fontFamily':'system-ui, Arial, sans-serif'}}}%%
+flowchart LR
+    subgraph Input["Input"]
+        MC["Main Content MPD\n(IF-2)"]
+        OM["Opportunity Metadata\n(IF-3)"]
+        AC["Ad Content MPDs\n(IF-4)"]
+    end
+    subgraph Proxy["Ad Insertion MPD Manipulator"]
+        direction TB
+        P1["Identify splice points\nfrom IF-3"]
+        P2["Request ad content\nvia IF-4"]
+        P3["Insert ad Periods\nat tsplice-out"]
+        P4["Remove main-content\nPeriods in opportunity"]
+        P5["Copy EventStreams\nand continuity signals"]
+        P1 --> P2 --> P3 --> P4 --> P5
+    end
+    subgraph Output["IF-5 Output MPD"]
+        direction TB
+        O1["Period: Main content\n(before tsplice-out)"]
+        O2["Period: Ad content 1"]
+        O3["Period: Ad content 2 / Slate"]
+        O4["Period: Main content\n(after tsplice-in)"]
+        O1 --> O2 --> O3 --> O4
+    end
+    Input --> Proxy --> Output
+</pre>
+<figcaption>Figure 7: MPD Manipulator Operation — Conforming IF-5 output (redrawn from published Part 5 Figure 7). The ad insertion MPD manipulator takes main content (IF-2), opportunity metadata (IF-3), and ad content (IF-4) as inputs and produces a multi-Period MPD (IF-5) with ad Periods inserted at splice points.</figcaption>
+</figure>
+
 ### DASH Client Operation Requirements and Guidelines for Playback ### {#ad-if5-client-playback-guidelines}
 
 A DASH client is expected to consume content offered with the DASH Extended
@@ -1243,24 +1454,63 @@ mechanism to migrate for this interface.
 
 ### DASH Callback Event ### {#ad-if6-dash-callback-event}
 
-A DASH Callback Event enables event-based signalling associated with an inserted
-advertisement. It is carried as DASH event metadata and can be used to trigger
-application-level callbacks, for example for ad tracking or measurement.
+A DASH Callback Event is a DASH event mechanism defined in ISO/IEC 23009-1
+[[!MPEGDASH]] that instructs a DASH client to issue an HTTP GET request to a
+given URL and ignore the HTTP response. It is used in ad-insertion contexts to
+trigger impression reporting, quartile tracking, and other measurement callbacks
+at defined media timeline positions.
+
+DASH Callback Events are identified by the scheme URI
+`urn:mpeg:dash:event:callback:2015`. The event `@value` attribute carries the
+callback URL. The DASH client <span class=modal-keyword>shall</span> issue an HTTP GET request to the URL
+specified in `@value` when the event presentation time is reached, and
+<span class=modal-keyword>shall</span> ignore the HTTP response body.
+
+DASH Callback Events <span class=modal-keyword>may</span> be carried as MPD events (in an <b>EventStream</b>
+element at Period level) or as inband events (in `emsg` boxes in Media
+Segments). For ad-insertion tracking, MPD events are preferred because they
+allow the ad insertion MPD manipulator to embed tracking callbacks directly in
+the IF-5 MPD without requiring access to media segments.
 
 When DASH Callback Events are used with inserted ad content:
 
-- the event should be associated with the Period or media timeline region to
+- the event <span class=modal-keyword>should</span> be associated with the Period or media timeline region to
   which the callback applies;
-- the event payload should contain sufficient information for the application to
-  identify the callback action, the ad, and the triggering condition;
-- event timing should be aligned with the ad media timeline after any Period
-  insertion, splitting, or truncation performed by the MPD proxy; and
-- callback metadata should remain consistent with ad decisioning and tracking
-  metadata carried through IF-4 and IF-8.
+- the event `@presentationTime` <span class=modal-keyword>shall</span> be set to the media timeline position
+  at which the callback should be triggered, relative to the Period start;
+- event timing <span class=modal-keyword>shall</span> be aligned with the ad media timeline after any Period
+  insertion, splitting, or truncation performed by the MPD proxy;
+- callback metadata <span class=modal-keyword>should</span> remain consistent with ad decisioning and tracking
+  metadata carried through IF-4 and IF-8; and
+- the ad insertion MPD manipulator <span class=modal-keyword>should</span> copy or adapt callback events from
+  the ad content MPD (IF-4d) into the IF-5 output MPD, adjusting
+  `@presentationTime` values to account for the Period start offset.
 
-Issue: This IF-6 migration is a source-level baseline. The exact DASH Callback
-Event scheme, payload structure, and examples still need to be checked against
-the published DOCX/PDF and aligned with current Part 10 event guidance.
+<div class="example">
+
+An example DASH Callback Event in an MPD EventStream for ad impression tracking:
+
+```xml
+<EventStream schemeIdUri="urn:mpeg:dash:event:callback:2015" timescale="1">
+  <Event presentationTime="0" duration="0" id="1">
+    https://tracking.example.com/impression?adId=ad123
+  </Event>
+  <Event presentationTime="15" duration="0" id="2">
+    https://tracking.example.com/firstquartile?adId=ad123
+  </Event>
+  <Event presentationTime="30" duration="0" id="3">
+    https://tracking.example.com/midpoint?adId=ad123
+  </Event>
+</EventStream>
+```
+
+</div>
+
+Note: The general DASH event model, including MPD events, inband events, and
+the `urn:mpeg:dash:event:callback:2015` scheme, is specified in Part 10 (Events)
+of this document set. Part 5 uses DASH Callback Events specifically for ad
+tracking and measurement in the context of IF-6. For the general event
+processing requirements applicable to all DASH clients, see Part 10.
 
 ## IF-7: Ad Decisioning Parameters and Remote Resolution ## {#ad-if7-remote-resolution}
 
@@ -1323,31 +1573,61 @@ context.
 
 ### IF-7c: Late Binding via Remote Periods ### {#ad-if7c-remote-periods}
 
-Late binding enables ad opportunity resolution to be deferred until the DASH
-client reaches the relevant location in the MPD. A common mechanism is to use a
-remote Period or remote entity that the DASH client resolves when needed.
+ISO/IEC 23009-1 [[!MPEGDASH]] defines the XLink mechanism for enabling remote
+elements within an MPD. The Remote Period variant of remote elements can be used
+in an SGAI architecture to defer ad opportunity resolution until the DASH client
+reaches the relevant location in the MPD.
 
-In this model:
+In this model, the [=ad insertion MPD manipulator=] creates an IF-5 MPD in which
+ad opportunity locations are represented by <b>Period</b> elements with
+`@xlink:href` set to a URL that the DASH client resolves when needed. The
+`@xlink:actuate` attribute controls when resolution occurs:
+
+- `@xlink:actuate="onLoad"` — the DASH client resolves the remote Period when
+  the MPD is loaded. This is suitable for pre-roll or early-binding scenarios.
+- `@xlink:actuate="onRequest"` — the DASH client resolves the remote Period
+  when it is about to present the Period. This is the primary mechanism for
+  SGAI late binding.
+
+The late-binding SGAI workflow using Remote Periods is:
 
 1. The ad insertion MPD manipulator receives opportunity metadata through IF-3.
-2. The manipulator creates an IF-5 MPD containing a remote reference at the
-   opportunity location instead of immediately inserting concrete ad Periods.
-3. When playback approaches or reaches the opportunity, the DASH client resolves
-   the remote reference.
-4. The resolution request carries decisioning and/or conditioning parameters
-   through IF-7a and IF-7b.
-5. The ad insertion MPD manipulator uses IF-4 to retrieve or condition the
-   selected ad content and returns an MPD fragment or Period structure suitable
-   for insertion.
+2. The manipulator creates an IF-5 MPD containing a <b>Period</b> element with
+   `@xlink:href` pointing to the ad resolver URL and `@xlink:actuate="onRequest"`
+   at the opportunity location.
+3. Decisioning and/or conditioning parameters from IF-7a and IF-7b are embedded
+   in the URL as query parameters.
+4. When playback approaches the opportunity, the DASH client issues an HTTP GET
+   request to the URL in `@xlink:href`.
+5. The [=DASH ad resolver=] uses IF-4 to retrieve or condition the selected ad
+   content and returns an MPD fragment containing one or more concrete <b>Period</b>
+   elements suitable for insertion.
+6. The DASH client replaces the remote <b>Period</b> element with the resolved
+   <b>Period</b> elements and continues playback.
+
+The URL in `@xlink:href` <span class=modal-keyword>should</span> include sufficient context for the ad resolver
+to perform decisioning and conditioning, including the parameters described by
+IF-7a and IF-7b. The URL <span class=modal-keyword>shall</span> be HTTPS when the content is served over HTTPS.
+
+The resolved MPD fragment <span class=modal-keyword>shall</span> conform to the DASH-IF ad content format
+described by IF-4d, with the following additional constraints for Remote Period
+resolution:
+
+- The resolved fragment <span class=modal-keyword>shall</span> contain one or more complete <b>Period</b> elements.
+- Each resolved <b>Period</b> <span class=modal-keyword>shall</span> have `@start` set to the appropriate
+  position on the MPD timeline.
+- The resolved <b>Period</b> elements <span class=modal-keyword>shall not</span> themselves contain `@xlink:href`
+  attributes (no chained remote resolution).
 
 Late binding is especially useful when ad decisions depend on the playback
 context at the time the opportunity is reached, such as current device
 capabilities, client state, or session attributes.
 
-Issue: Published Part 5 describes IF-7c in terms of Remote Periods and late
-binding. This migration should be aligned with the current DASH remote entity
-model and with Part 10/Part 11 event and remote-resolution work before final
-normative stabilization.
+Note: The XLink remote entity mechanism is defined in ISO/IEC 23009-1
+[[!MPEGDASH]] clause 5.6. The DASH client processing model for remote elements,
+including the `onRequest` resolution trigger and the HTTP GET request behaviour,
+is specified there. Part 5 uses this mechanism specifically for SGAI ad
+opportunity resolution; the general remote entity model applies.
 
 ## IF-8: Ad Tracking and Measurement ## {#ad-if8-tracking-measurement}
 
@@ -1398,10 +1678,26 @@ DOCX/PDF and aligned with current DASH-IF tracking/test-asset plans.
 
 # Requirements and Recommendations # {#requirements}
 
-Issue: This section is retained as an editorial collection point while the
-published Part 5 clauses are migrated into their structural locations above.
-After migration, this section should either be removed or replaced by a concise
-summary of testable requirements with links to Part 12 conformance mapping.
+The following is a summary of the key normative requirements in this part,
+organized by interface. For the complete requirements, see the interface clauses
+above. For conformance mapping to validators and test assets, see Part 12.
+
+**IF-2 (Content Preparation):**
+- Opportunity metadata <span class=modal-keyword>shall</span> be carried through DASH MPD Events (see [[#ad-if3-ad-avail-signalling-general]]).
+- DASH-IF ad content <span class=modal-keyword>shall</span> conform to the DASH Core Profile for CMAF content (see [[#ad-if4d-ad-content-storage]]).
+- DASH-IF ad content <span class=modal-keyword>shall</span> contain exactly one Period with `MPD@type="static"` (see [[#ad-if4d-ad-content-storage]]).
+
+**IF-5 (MPD and Segments with Ad Placements):**
+- IF-5 content <span class=modal-keyword>shall</span> conform to the DASH Extended Profile for CMAF content (see [[#ad-if5-media-presentation-requirements]]).
+- DASH clients <span class=modal-keyword>shall</span> support playback of a single Period of content according to the DASH profile for CMAF content (see [[#ad-if5-client-playback-guidelines]]).
+
+**IF-6 (DASH Callback Event):**
+- DASH clients <span class=modal-keyword>shall</span> issue an HTTP GET request to the URL in `@value` when the event presentation time is reached (see [[#ad-if6-dash-callback-event]]).
+- DASH clients <span class=modal-keyword>shall</span> ignore the HTTP response body (see [[#ad-if6-dash-callback-event]]).
+
+**IF-7c (Remote Period late binding):**
+- The URL in `@xlink:href` <span class=modal-keyword>shall</span> be HTTPS when the content is served over HTTPS (see [[#ad-if7c-remote-periods]]).
+- Resolved <b>Period</b> elements <span class=modal-keyword>shall not</span> themselves contain `@xlink:href` attributes (see [[#ad-if7c-remote-periods]]).
 
 [GROUNDED_BY=rag/corpus/published/DASH-IF-IOP-Part5-v5.0.0.docx.extracted.txt]
 
@@ -1415,8 +1711,8 @@ summary of testable requirements with links to Part 12 conformance mapping.
     <tr><td>References and bibliography<td>Open<td>Add/normalize published Part 5 references in `part05-ad-insertion.bs`.
     <tr><td>Terms and abbreviations<td>Terms migrated; abbreviations identified<td>Published term definitions migrated; review exact wording and shared terminology, then normalize abbreviations against shared glossary policy.
     <tr><td>Use cases and architecture<td>Initial migration<td>Use cases and architecture prose migrated; extract/redraw published figures and verify wording against DOCX/PDF.
-    <tr><td>Architecture figures and tables<td>Table 1 reconstructed<td>Review reconstructed interface overview table against published DOCX/PDF; extract or redraw figures and reconstruct Tables 2–5.
-    <tr><td>IF-0/IF-1/IF-9/IF-2 early interfaces<td>IF-0/IF-1/IF-2 hardened<td>IF-0/IF-1 source hardened with splice-point media time, CMAF preparation options, SAP assumptions, timed metadata, and IF-1 sub-interface tracking; IF-2 source hardened with Period-boundary, EventStream, InitializationSet, AssetIdentifier, Period start, continuity, presentationTimeOffset, and eptDelta rules; reconstruct Table 2 and extract/redraw Figures 1, 3, 4, and 5 next.
+    <tr><td>Architecture figures and tables<td>Tables 1, 2, 4, 5 reconstructed<td>Review reconstructed tables against published DOCX/PDF layout; extract or redraw Figures 1–7.
+    <tr><td>IF-0/IF-1/IF-9/IF-2 early interfaces<td>IF-0/IF-1/IF-2 hardened; Table 2 reconstructed<td>IF-0/IF-1 source hardened with splice-point media time, CMAF preparation options, SAP assumptions, timed metadata, and IF-1 sub-interface tracking; IF-2 source hardened with Period-boundary, EventStream, InitializationSet, AssetIdentifier, Period start, continuity, presentationTimeOffset, and eptDelta rules; Table 2 (DASH-IF Main live content MPD) reconstructed directly from the DOCX table structure via python-docx; extract/redraw Figures 1, 3, 4, and 5 next.
     <tr><td>IF-3 Ad Avail Signalling<td>Initial migration<td>Published clause 5.5 opportunity metadata carriage, SCTE-35 MPD Event signalling, and example migrated; review Table 3 formatting against DOCX/PDF.
     <tr><td>IF-4 Ad Decisioning and Exchange<td>Initial migration complete<td>Published clause 5.6 initial migration now covers IF-4 introduction, IF-4a, IF-4b, IF-4e, IF-4d, Table 4, IF-4f, and IF-4c; review exact table layout and modal wording against DOCX/PDF.
     <tr><td>IF-5 MPD and segment requirements<td>Table 5 reconstructed<td>Initial published clause 5.7 overview, MPD proxy operation, playback guidance, and Table 5 MPD element/attribute requirements migrated; visually review against published DOCX/PDF.
@@ -1445,5 +1741,6 @@ summary of testable requirements with links to Part 12 conformance mapping.
     <tr><td>0.10<td>Reconciliation<td>Migrated initial use cases, architecture overview, and IF-0/IF-1/IF-9/IF-2 baseline sections.
     <tr><td>0.11<td>Reconciliation<td>Hardened IF-2 content preparation using published Period-boundary, EventStream, InitializationSet, AssetIdentifier, Period start, continuity, presentationTimeOffset, and eptDelta rules.
     <tr><td>0.12<td>Reconciliation<td>Hardened IF-0 and IF-1 with splice-point media time, CMAF preparation options, SAP assumptions, timed metadata, and IF-1 sub-interface figure tracking.
+    <tr><td>0.13<td>Reconciliation<td>Normalized bibliography (added missing href fields to 9 entries); aligned IF-6 DASH Callback Event with ISO/IEC 23009-1 scheme URI and Part 10 event guidance; aligned IF-7c Remote Period late binding with ISO/IEC 23009-1 XLink mechanism; replaced #requirements placeholder with normative summary; added Mermaid diagrams for Figures 1, 3, 4, 7.
     <tr><td>5.0.0<td>2021-11<td>Version published as Part 5 v5.0.0.
 </table>

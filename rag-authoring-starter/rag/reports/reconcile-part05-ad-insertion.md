@@ -137,6 +137,34 @@ Current Part 5 source headings are only:
 | 5.10 IF-8 Ad Tracking and Measurement | New `#ad-if8-tracking-measurement` | Missing | Migrate VAST view tracking, Open Measurement SDK, and alternative tracking methods. |
 | Annex A Change History | `#change-history` | Partial | Add published v5.0.0 row and migration-history row. |
 
+## Table 2 reconstruction status
+
+Completed: Published Part 5 Table 2, "DASH-IF Main live content MPD", has been
+reconstructed in `specs/part05-ad-insertion/05-ad-insertion.inc.md` under
+`#ad-if2-content-preparation`.
+
+The reconstruction was performed by extracting the DOCX table structure directly
+using `python-docx` (6 tables found in the DOCX, Table 2 = docx table index 1,
+24 rows × 8 columns). The row content and hierarchy were verified against the
+DOCX table cells. The reconstructed table uses the same 4-column format
+(Context, Element or attribute, Use, Requirement / description) as Table 4 and
+Table 5 already in the source.
+
+Reconstructed rows cover:
+- MPD root element description
+- ServiceDescription / Latency@target
+- @profiles
+- InitializationSet
+- ProgramInformation
+- Period (1…N) with @xlink:href, @xlink:actuate, @start, AssetIdentifier,
+  EventStream (with @presentationTimeOffset), AdaptationSet (with @xlink:href,
+  @xlink:actuate, SegmentBase@presentationTimeOffset, @contentType, SegmentList,
+  Representation), EmptyAdaptationSet
+- UTCTiming
+
+A final visual check against the rendered PDF is still recommended before this
+table is treated as fully reconciled.
+
 ## Recommended migration order
 
 Use small, auditable increments:

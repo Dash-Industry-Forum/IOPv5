@@ -31,6 +31,12 @@ Registry or explicitly defined in this part. Clients <span class=modal-keyword>m
 codecs registered in the DASH-IF Codec Registry and <span class=modal-keyword>shall not</span> attempt to play
 back Representations for which they do not have codec support.
 
+Note: ETSI TS 103 285 [[DVBDASH]] (the "DVB-DASH" profile) defines its own
+mandatory and optional video codec set (H.264/AVC, HEVC, VVC, and AVS3),
+profile/level constraints, and HDR/HFR signalling that is narrower than the
+DASH-IF Codec Registry. Alignment notes with DVB-DASH are provided in the
+relevant clauses below.
+
 # References # {#doc-references}
 
 The following referenced documents are necessary for the application of this
@@ -151,6 +157,13 @@ can typically decode content intended for a lower level decoder). See the
 [[DASHIF-CODECS|DASH-IF Codec Registry]] for the complete list of registered
 H.264 `@codecs` strings.
 
+Note: DVB-DASH [[DVBDASH]] mandates support for H.264/AVC High Profile up to
+Level 4.0 (1920x1080p) for its base video profile, consistent with the H.264
+Level 4.0 requirement in this clause. Services relying only on Level 3.1 for
+DVB-DASH compatibility should verify against the current DVB-DASH Content
+Provider Guidelines, as DVB-DASH devices are not required to support
+resolutions or levels beyond those mandated there.
+
 ## H.265 (HEVC) ## {#codecs-h265}
 
 The H.265 (HEVC) codec <span class=modal-keyword>may</span> be used by services for video adaptation sets.
@@ -185,6 +198,13 @@ Note: Use of `hev1` is one of the factors that enables
 
 Note: See the [[DASHIF-CODECS|DASH-IF Codec Registry]] for HEVC HDR, UHD, and
 additional profile `@codecs` strings.
+
+Note: DVB-DASH [[DVBDASH]] mandates support for HEVC Main and Main 10 Profile,
+Main Tier, up to Level 5.1, with additional constraints for UHD and HDR (HLG10
+and PQ10) services, in some cases exceeding the baseline Level 4.1 requirement
+in this clause. Services targeting DVB-DASH UHD/HDR compatibility should
+consult ETSI TS 103 285 clause 5 directly rather than relying solely on this
+part's baseline HEVC requirements.
 
 ## Decoder configuration with H.264 and H.265 ## {#codecs-decoder-setup-h264-h265}
 
@@ -289,6 +309,15 @@ runtime:
 
 `@scanType` <span class=modal-keyword>should not</span> be present and if present <span class=modal-keyword>shall</span> have the value
 `progressive`. Non-progressive video is not interoperable.
+
+Note: DVB-DASH [[DVBDASH]] additionally requires HDR-capable Adaptation Sets to
+signal the applicable transfer characteristics (HLG or PQ) using the
+`urn:mpeg:mpegB:cicp:TransferCharacteristics` Supplemental/Essential Property
+descriptor referenced above, and imposes its own constraints on High Frame Rate
+(HFR) signalling via `@maximumSAPPeriod` and frame-rate-dependent profile/level
+selection. Services offering combined HDR/HFR content intended for DVB-DASH
+players should consult ETSI TS 103 285 clause 5 for the complete set of
+required descriptors.
 
 # Open Issues and Work Items # {#open-issues}
 

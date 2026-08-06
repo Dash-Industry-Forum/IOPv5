@@ -32,6 +32,14 @@ ISO/IEC 23009-1 provides a unified set of live tools, and this clause is written
 against that baseline. Low-latency operation is specified separately in
 [[#low-latency]].
 
+Note: DVB-DASH [[DVBDASH]] defines a Live profile that constrains a subset of
+the live mechanisms described in this clause: it requires explicit or simple
+SegmentTemplate addressing (excluding Period.SegmentList and multiplexed
+Representations), a minimum Segment duration of 960 ms (except the final
+Segment of a Period), and a bounded MPD size and structure (see Part 2, "MPD
+Size and Structural Limits"). Alignment notes relevant to specific live
+mechanisms are provided in the clauses below.
+
 ## Overview: Dynamic and Live Media Presentations ## {#live-overview}
 
 A DASH Media Presentation with <code><b>MPD</b>@type</code> set to `dynamic` allows media to be
@@ -266,6 +274,13 @@ point of the time shift buffer, except when reaching the end of live content.
 Clients <span class=modal-keyword><span class=modal-keyword>shall</span> not</span> allow seeking into regions of the time shift buffer that are not
 covered by Periods.
 
+Note: DVB-DASH [[DVBDASH]] requires DVB-DASH Live players to support a minimum
+time shift buffer depth of 4 hours where offered by the service, and defines
+its own recommended default `@timeShiftBufferDepth` values per service type.
+Services intending to remain usable by DVB-DASH Live players should confirm
+that `@timeShiftBufferDepth` is set consistently with the DVB-DASH Content
+Provider Guidelines rather than relying on IOP v5 defaults alone.
+
 ### Presentation Delay ### {#presentation-delay}
 
 There is a natural conflict between the availability window and the time shift
@@ -475,6 +490,13 @@ For a service offering that relies on segment-based MPD update signalling:
 - When segment-based updates are used, the client <span class=modal-keyword>may</span> extend the timeline based
     on Segment information without reloading the MPD until an MPD validity expiry
     event indicates that a new MPD is required.
+
+Note: DVB-DASH [[DVBDASH]] mandates support for the `urn:mpeg:dash:event:2012`
+MPD validity expiry event and requires that DVB-DASH Live players react to it
+by fetching an updated MPD. DVB-DASH also restricts the set of changes a
+segment-based or MPD-based update may make (see Part 2, "MPD Updates" for the
+enumerated list); services should confirm their update pattern falls within
+that list when DVB-DASH compatibility is required.
 
 ## Availability Time Synchronization between Client and Server ## {#live-time-sync}
 

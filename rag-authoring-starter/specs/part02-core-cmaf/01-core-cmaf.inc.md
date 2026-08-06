@@ -43,6 +43,12 @@ part:
 - DASH-IF IOP v5 Part 1, *Overview, Architecture and Interfaces*.
 - DASH-IF IOP v5 Part 12, *Conformance and Reference Tools*.
 
+Note: ETSI TS 103 285 [[DVBDASH]] (the "DVB-DASH" profile) constrains a subset of
+ISO/IEC 23009-1 [[!MPEGDASH]] for DVB IP-based services. Where this part and
+DVB-DASH overlap on MPD structure, segment addressing, and CMAF conformance,
+alignment notes are provided in the relevant clauses below so that content
+authored to this part remains compatible with DVB-DASH-conformant players.
+
 # Terms, Definitions, Symbols and Abbreviations # {#terms}
 
 ## Terms and Definitions ## {#terms-definitions}
@@ -499,6 +505,15 @@ Addressing mode selection <span class=modal-keyword>should</span> be based on th
 A SegmentTemplate-based Representation <span class=modal-keyword>shall</span> include all attributes and elements
 required by ISO/IEC 23009-1 for the selected mode. Attributes and elements not
 specified by this part are governed by ISO/IEC 23009-1.
+
+Note: DVB-DASH [[DVBDASH]] restricts the addressing modes permitted for its Live
+and On-Demand profiles: DVB-DASH Live-profile presentations use explicit or
+simple SegmentTemplate addressing (Period.SegmentList and multiplexed
+Representations are excluded), while DVB-DASH On-Demand-profile presentations use
+Indexed addressing (SegmentBase) exclusively, with a single Segment per
+Representation. Content intended to remain compatible with DVB-DASH players
+should avoid mixing addressing modes within a Period in ways that are
+incompatible with these constraints.
 
 #### Indexed Addressing (SegmentBase) #### {#indexed-addressing}
 
@@ -1120,6 +1135,17 @@ updated MPD <span class=modal-keyword>shall</span> maintain a consistent MPD tim
 mechanisms of ISO/IEC 23009-1, including <code><b>MPD</b>@minimumUpdatePeriod</code>, MPD validity
 expiry events, and <code><b>MPD</b>.<b>Location</b></code> where applicable.
 
+Note: DVB-DASH [[DVBDASH]] enumerates a fixed set of MPD update changes that
+DVB-DASH players are required to support (adding Representations/Adaptation
+Sets, updating <b>SegmentTimeline</b> `S` elements, switching `MPD@type` from
+dynamic to static, adding/removing/updating BaseURL and Event/InbandEventStream
+elements, and adding/removing Periods without invalidating already-available
+Segment references) and a set of attributes that <span class=modal-keyword>shall not</span> change between
+updates (`@timeShiftBufferDepth`, `@availabilityStartTime`,
+`Period@AssetIdentifier`, `Period@id`/`@start` for a given dynamic Period, and
+several per-Representation identifiers). Services targeting DVB-DASH
+compatibility should restrict MPD updates to this enumerated set.
+
 Issue: Complete the Part 2 draft MPD update rules and reconcile with Part 4 live
 service text to avoid duplication. [GROUNDED_BY=dashif-iop-v5-part2-draft#105..#108]
 
@@ -1146,6 +1172,17 @@ Issue: The Part 2 draft has a placeholder for gap handling. Complete normative
 service-offering and client-processing rules, including alignment with
 SegmentTimeline gaps, Period boundaries, and low-latency resynchronization.
 [GROUNDED_BY=dashif-iop-v5-part2-draft#111..#115]
+
+## MPD Size and Structural Limits ## {#mpd-size-limits}
+
+Note: DVB-DASH [[DVBDASH]] imposes hard structural limits on the MPD that are not
+mandated by ISO/IEC 23009-1 itself: a maximum MPD size of 256 KB before and after
+xlink resolution, a maximum of 64 Periods, a maximum of 16 Adaptation Sets per
+Period, and a maximum of 16 Representations per Adaptation Set. DVB-DASH also
+requires a minimum Segment duration of 960 ms (except for the final Segment of a
+Period) and caps subtitle Segment size at 512 KB. Services that need to remain
+usable by DVB-DASH players should keep MPD structure within these limits even
+where this part and ISO/IEC 23009-1 do not themselves impose such a limit.
 
 # Content Annotation and Media Mapping # {#content-annotation}
 

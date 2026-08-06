@@ -38,12 +38,14 @@ Abstract: Ad insertion and content replacement guidelines, including SSAI and SG
   "SCTE35": {
     "title": "Digital Program Insertion Cueing Message for Cable",
     "publisher": "ANSI/SCTE",
-    "date": "2015"
+    "date": "2015",
+    "href": "https://www.scte.org/standards/library/catalog/scte-35-digital-program-insertion-cueing-message/"
   },
   "SCTE104": {
     "title": "Automation System to Compression System Communications Applications Programming Interface",
     "publisher": "ANSI/SCTE",
-    "date": "2019A"
+    "date": "2019A",
+    "href": "https://www.scte.org/standards/library/catalog/scte-104-automation-system-to-compression-system-communications-applications-programming-interface/"
   },
   "DASHIF-INGEST": {
     "title": "DASH-IF Live Media Ingest Protocol",
@@ -52,7 +54,8 @@ Abstract: Ad insertion and content replacement guidelines, including SSAI and SG
   },
   "CTA5003": {
     "title": "Web Application Video Ecosystem - Device Playback Capabilities",
-    "publisher": "CTA"
+    "publisher": "CTA",
+    "href": "https://cdn.cta.tech/cta/media/media/resources/standards/pdfs/cta-5003-c-final.pdf"
   },
   "SMPTE-RP2079": {
     "title": "Digital Object Identifier (DOI) Name and Entertainment ID Registry (EIDR) Identifier Representations",
@@ -67,21 +70,25 @@ Abstract: Ad insertion and content replacement guidelines, including SSAI and SG
   },
   "SCTE214-1": {
     "title": "MPEG DASH for IP-Based Cable Services, Part 1: MPD Constraints and Extensions",
-    "publisher": "ANSI/SCTE"
+    "publisher": "ANSI/SCTE",
+    "href": "https://www.scte.org/standards/library/catalog/scte-214-1-mpeg-dash-for-ip-based-cable-services-part-1-mpd-constraints-and-extensions/"
   },
   "SCTE214-3": {
     "title": "MPEG DASH for IP-Based Cable Services, Part 3: DASH/FF Profile",
-    "publisher": "ANSI/SCTE"
+    "publisher": "ANSI/SCTE",
+    "href": "https://www.scte.org/standards/library/catalog/scte-214-3-mpeg-dash-for-ip-based-cable-services-part-3-dash-ff-profile/"
   },
   "SCTE130-3": {
     "title": "Digital Program Insertion - Advertising Systems Interface Part 3",
     "publisher": "ANSI/SCTE",
-    "date": "2013"
+    "date": "2013",
+    "href": "https://www.scte.org/standards/library/catalog/scte-130-3-digital-program-insertion-advertising-systems-interfaces-part-3/"
   },
   "SMPTE-RP2092-1": {
     "title": "Advertising Digital Identifier (Ad-ID) Representations",
     "publisher": "SMPTE",
-    "date": "2015"
+    "date": "2015",
+    "href": "https://ieeexplore.ieee.org/document/7291893"
   },
   "CABLELABS-VOD": {
     "title": "CableLabs Video-On-Demand Content Specification",
@@ -90,7 +97,8 @@ Abstract: Ad insertion and content replacement guidelines, including SSAI and SG
   },
   "MPEG2-SYSTEMS": {
     "title": "MPEG-2 Part 1: Systems",
-    "publisher": "ISO/IEC"
+    "publisher": "ISO/IEC",
+    "href": "https://www.iso.org/standard/74427.html"
   },
   "RIST": {
     "title": "Reliable Internet Stream Transport (RIST), TR-06-1",
@@ -120,7 +128,8 @@ Abstract: Ad insertion and content replacement guidelines, including SSAI and SG
   },
   "ITU-R-BS1770-4": {
     "title": "Algorithms to measure audio programme loudness and true-peak audio level",
-    "publisher": "ITU-R"
+    "publisher": "ITU-R",
+    "href": "https://www.itu.int/rec/R-REC-BS.1770/en"
   }
 }
 </pre>
