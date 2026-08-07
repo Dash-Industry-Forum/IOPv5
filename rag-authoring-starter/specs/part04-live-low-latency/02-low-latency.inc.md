@@ -413,21 +413,40 @@ ffmpeg \
 The source draft also mapped the main low-latency service parameters to FFmpeg
 settings as follows:
 
-- Low-latency presentation: `-ldash` together with `-streaming 1` for chunked
+- Low-latency presentation: `-ldash 1` together with `-streaming 1` for chunked
   operation.
 - Target latency: `-target_latency &lt;TargetLatency&gt;` (in seconds).
 - UTC timing source: `-utc_timing_url &lt;UTCTime&gt;`.
-- Addressing scheme: `use_template 1`, with `use_timeline 0` for `@duration`
-  based addressing or `use_timeline 1` for `SegmentTimeline`, and media segment
+- Addressing scheme: `-use_template 1`, with `-use_timeline 0` for `@duration`
+  based addressing or `-use_timeline 1` for `SegmentTimeline`, and media segment
   names based on `$RepresentationID$-$Number$.m4s` or
   `$RepresentationID$-$Time$.m4s`.
 - Producer reference time: `-write_prft 1`.
-- Nominal segment duration: `seg_duration &lt;SD[i]&gt;` (noting in the draft that
+- Nominal segment duration: `-seg_duration &lt;SD[i]&gt;` (noting in the draft that
   this could only be set globally).
-- Nominal chunk duration: `frag_duration &lt;CD[i]&gt;` (also noted in the draft as
+- Nominal chunk duration: `-frag_duration &lt;CD[i]&gt;` (also noted in the draft as
   globally scoped).
+- Fragment type: `-frag_type duration` for time-based chunking (other values:
+  `none`, `every_frame`, `pframes`).
 - Video representation bitrate ladder: `-c:v ${VCODEC} -b:v:0 ... -b:v:1 ...`.
 - Audio representation settings: `-c:a ${ACODEC} -b:a RBW[a,1] -ac 2`.
+- Adaptation sets: `-adaptation_sets "id=0,streams=v id=1,streams=a"` to group
+  streams into separate adaptation sets.
+- Format options for CMAF: `-format_options "movflags=cmaf"`.
+
+Note: The above guidance reflects FFmpeg 9.0 syntax validated against the DASH
+muxer. The historical command-line example in lines 388–411 uses shell variable
+expansion and may require adjustment for the installed FFmpeg version. Key
+differences from earlier FFmpeg releases:
+
+- `-ldash`, `-streaming`, `-target_latency`, `-utc_timing_url`, `-write_prft`,
+  `-use_template`, `-use_timeline`, `-seg_duration`, `-frag_duration`,
+  `-frag_type`, and `-adaptation_sets` are all confirmed present in FFmpeg 9.0.
+- `-export_side_data` (line 403) is a global codec option, not a DASH muxer
+  option, and may not be required for producer reference time signalling when
+  `-write_prft` is used.
+- The `-frag_type` parameter accepts enumerated values (`none`, `every_frame`,
+  `duration`, `pframes`), not arbitrary strings.
 
 The draft also recorded limitations of the then-current FFmpeg support. In that
 source snapshot, maximum latency, minimum latency, change lead time, reference
@@ -436,6 +455,327 @@ not supported directly by FFmpeg. Implementers should therefore treat FFmpeg as
 one possible encoder/packager realization and verify which parts of the complete
 [=Low-Latency Service Offering=] are realized in FFmpeg itself versus in
 surrounding workflow components.
+
+For a minimal validated low-latency DASH encoding example using FFmpeg 9.0 with
+synthetic test sources, see the smoke-test script in the IOPv5 repository at
+`rag-authoring-starter/tools/ll_dash_smoketest.bat` (or equivalent shell script
+for non-Windows platforms).
+
+#### FFmpeg Command-Line Examples #### {#ll-ffmpeg-examples}
+
+The following examples demonstrate different FFmpeg configurations for low-latency
+DASH, validated against FFmpeg 9.0. All examples use synthetic test sources for
+reproducibility.
+
+**Example 1: Basic Low-Latency Chunked DASH with $Number$ addressing**
+
+This example creates a low-latency DASH stream with 1.5-second segments, 0.5-second
+chunks, and simple `$Number$` addressing:
+
+<pre>
+ffmpeg -hide_banner -y \
+  -f lavfi -i "testsrc2=size=1280x720:rate=25" \
+  -f lavfi -i "sine=frequency=1000:sample_rate=48000" \
+  -t 10 \
+  -c:v libx264 -tune zerolatency -g 25 -keyint_min 25 -sc_threshold 0 \
+  -b:v 2000k -maxrate 2200k -bufsize 4000k -pix_fmt yuv420p \
+  -c:a aac -b:a 128k -ac 2 \
+  -use_template 1 -use_timeline 0 \
+  -utc_timing_url "https://time.akamai.com/?iso" \
+  -format_options "movflags=cmaf" \
+  -adaptation_sets "id=0,streams=v id=1,streams=a" \
+  -seg_duration 1.5 \
+  -frag_duration 0.5 \
+  -frag_type duration \
+  -streaming 1 \
+  -ldash 1 \
+  -write_prft 1 \
+  -target_latency 3.5 \
+  -f dash output.mpd
+</pre>
+
+**Example 2: Low-Latency DASH with SegmentTimeline ($Time$ addressing)**
+
+This example uses `SegmentTimeline` for more precise timing control:
+
+<pre>
+ffmpeg -hide_banner -y \
+  -f lavfi -i "testsrc2=size=1280x720:rate=30" \
+  -f lavfi -i "sine=frequency=440:sample_rate=48000" \
+  -t 10 \
+  -c:v libx264 -tune zerolatency -g 30 -keyint_min 30 -sc_threshold 0 \
+  -b:v 1500k -pix_fmt yuv420p \
+  -c:a aac -b:a 96k -ac 2 \
+  -use_template 1 -use_timeline 1 \
+  -utc_timing_url "https://time.akamai.com/?iso" \
+  -format_options "movflags=cmaf" \
+  -adaptation_sets "id=0,streams=v id=1,streams=a" \
+  -seg_duration 2.0 \
+  -frag_duration 0.5 \
+  -frag_type duration \
+  -streaming 1 \
+  -ldash 1 \
+  -write_prft 1 \
+  -target_latency 4.0 \
+  -f dash output_timeline.mpd
+</pre>
+
+**Example 3: Multi-Bitrate ABR Ladder with Low-Latency**
+
+This example creates multiple video representations for adaptive bitrate streaming:
+
+<pre>
+ffmpeg -hide_banner -y \
+  -f lavfi -i "testsrc2=size=1920x1080:rate=25" \
+  -f lavfi -i "sine=frequency=1000:sample_rate=48000" \
+  -t 10 \
+  -map 0:v -map 0:v -map 0:v -map 1:a \
+  -c:v:0 libx264 -b:v:0 3000k -s:v:0 1920x1080 \
+  -c:v:1 libx264 -b:v:1 1500k -s:v:1 1280x720 \
+  -c:v:2 libx264 -b:v:2 800k -s:v:2 854x480 \
+  -tune:v zerolatency -g:v 25 -keyint_min:v 25 -sc_threshold:v 0 -pix_fmt yuv420p \
+  -c:a aac -b:a 128k -ac 2 \
+  -use_template 1 -use_timeline 1 \
+  -utc_timing_url "https://time.akamai.com/?iso" \
+  -format_options "movflags=cmaf" \
+  -adaptation_sets "id=0,streams=0,1,2 id=1,streams=3" \
+  -seg_duration 2.0 \
+  -frag_duration 0.5 \
+  -frag_type duration \
+  -streaming 1 \
+  -ldash 1 \
+  -write_prft 1 \
+  -target_latency 4.0 \
+  -f dash output_abr.mpd
+</pre>
+
+**Example 4: Low-Latency Segment Adaptation Set (no chunking)**
+
+This example creates short segments without CMAF chunking, suitable for simpler
+client implementations:
+
+<pre>
+ffmpeg -hide_banner -y \
+  -f lavfi -i "testsrc2=size=1280x720:rate=25" \
+  -f lavfi -i "sine=frequency=1000:sample_rate=48000" \
+  -t 10 \
+  -c:v libx264 -tune zerolatency -g 25 -keyint_min 25 -sc_threshold 0 \
+  -b:v 2000k -pix_fmt yuv420p \
+  -c:a aac -b:a 128k -ac 2 \
+  -use_template 1 -use_timeline 1 \
+  -utc_timing_url "https://time.akamai.com/?iso" \
+  -format_options "movflags=cmaf" \
+  -adaptation_sets "id=0,streams=v id=1,streams=a" \
+  -seg_duration 1.0 \
+  -frag_type none \
+  -streaming 0 \
+  -ldash 1 \
+  -write_prft 1 \
+  -target_latency 3.0 \
+  -f dash output_segments.mpd
+</pre>
+
+**Example 5: Ultra-Low-Latency with Per-Frame Chunking**
+
+This example demonstrates the most aggressive chunking strategy (experimental):
+
+<pre>
+ffmpeg -hide_banner -y \
+  -f lavfi -i "testsrc2=size=640x360:rate=25" \
+  -f lavfi -i "sine=frequency=1000:sample_rate=48000" \
+  -t 5 \
+  -c:v libx264 -tune zerolatency -g 25 -keyint_min 25 -sc_threshold 0 \
+  -b:v 800k -pix_fmt yuv420p \
+  -c:a aac -b:a 64k -ac 2 \
+  -use_template 1 -use_timeline 1 \
+  -utc_timing_url "https://time.akamai.com/?iso" \
+  -format_options "movflags=cmaf" \
+  -adaptation_sets "id=0,streams=v id=1,streams=a" \
+  -seg_duration 1.0 \
+  -frag_type every_frame \
+  -streaming 1 \
+  -ldash 1 \
+  -write_prft 1 \
+  -target_latency 1.5 \
+  -f dash output_ultra_low.mpd
+</pre>
+
+Note: Per-frame chunking (`-frag_type every_frame`) creates very small chunks and
+significantly increases HTTP overhead. It should only be used for ultra-low-latency
+scenarios (< 2 seconds target latency) where the trade-off is acceptable.
+
+**Example 6: Custom Segment and Chunk Durations per Adaptation Set**
+
+This example shows different timing configurations for video and audio:
+
+<pre>
+ffmpeg -hide_banner -y \
+  -f lavfi -i "testsrc2=size=1280x720:rate=25" \
+  -f lavfi -i "sine=frequency=1000:sample_rate=48000" \
+  -t 10 \
+  -c:v libx264 -tune zerolatency -g 25 -keyint_min 25 -sc_threshold 0 \
+  -b:v 2000k -pix_fmt yuv420p \
+  -c:a aac -b:a 128k -ac 2 \
+  -use_template 1 -use_timeline 1 \
+  -utc_timing_url "https://time.akamai.com/?iso" \
+  -format_options "movflags=cmaf" \
+  -adaptation_sets "id=0,seg_duration=1.5,frag_duration=0.5,streams=v id=1,seg_duration=2.0,frag_type=none,streams=a" \
+  -streaming 1 \
+  -ldash 1 \
+  -write_prft 1 \
+  -target_latency 3.5 \
+  -f dash output_custom.mpd
+</pre>
+
+Note: In FFmpeg 9.0, per-adaptation-set `seg_duration` and `frag_duration` can be
+specified within the `-adaptation_sets` parameter, overriding the global values.
+
+**Key Parameter Trade-offs:**
+
+- **Segment Duration (`-seg_duration`)**: Shorter segments reduce latency but
+  increase manifest size and HTTP request overhead. Recommended: 1–2 seconds for
+  low-latency, 0.5–1 second for ultra-low-latency.
+- **Chunk Duration (`-frag_duration`)**: Smaller chunks enable earlier playback
+  start but increase overhead. Recommended: 0.5–1.0 seconds for video, 0.5–2.0
+  seconds for audio.
+- **Fragment Type (`-frag_type`)**: `duration` provides predictable timing,
+  `every_frame` minimizes latency but maximizes overhead, `none` disables chunking.
+- **Target Latency (`-target_latency`)**: Should be 2–3× the segment duration to
+  allow for network jitter and buffering.
+- **Streaming Mode (`-streaming`)**: Set to `1` for chunked transfer encoding
+  (required for [=Low-Latency Chunked Adaptation Set=]s), `0` for complete segments.
+
+#### livesim2 Low-Latency Configuration #### {#ll-livesim2-config}
+
+The DASH-IF livesim2 tool provides a live DASH simulator that can be configured
+for low-latency operation. livesim2 is available at
+<a href="https://github.com/Dash-Industry-Forum/livesim2">github.com/Dash-Industry-Forum/livesim2</a>
+and is deployed at <a href="https://livesim2.dashif.org">livesim2.dashif.org</a>.
+
+**Basic Low-Latency Configuration**
+
+livesim2 supports low-latency DASH through URL parameters. The general URL pattern
+for low-latency streams is:
+
+<pre>
+https://livesim2.dashif.org/livesim2/chunkdur_&lt;CD&gt;/ato_&lt;ATO&gt;/ltgt_&lt;TL&gt;/&lt;content&gt;/Manifest.mpd
+</pre>
+
+Where:
+- `chunkdur_<CD>`: CMAF chunk duration in seconds (e.g., `chunkdur_0.5` for 500ms chunks)
+- `ato_<ATO>`: Availability Time Offset in seconds (e.g., `ato_7` for 7 seconds)
+- `ltgt_<TL>`: Low-latency target latency in seconds (e.g., `ltgt_3.5` for 3.5s target)
+- `<content>`: The base content path (e.g., `testpic_2s` for 2-second segments)
+
+**Example 1: Basic Low-Latency Stream (3.5s target latency)**
+
+<pre>
+https://livesim2.dashif.org/livesim2/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd
+</pre>
+
+This configuration provides:
+- 2-second segments (`testpic_2s`)
+- 0.5-second CMAF chunks (`chunkdur_0.5`)
+- 7-second availability time offset (`ato_7`)
+- 3.5-second target latency signalled in ServiceDescription (`ltgt_3.5`)
+
+**Example 2: Ultra-Low-Latency Stream (2s target latency)**
+
+<pre>
+https://livesim2.dashif.org/livesim2/chunkdur_0.2/ato_4/ltgt_2.0/testpic_2s/Manifest.mpd
+</pre>
+
+This configuration provides:
+- 2-second segments
+- 0.2-second (200ms) CMAF chunks for ultra-low latency
+- 4-second availability time offset
+- 2.0-second target latency
+
+**Example 3: Low-Latency with SegmentTimeline**
+
+<pre>
+https://livesim2.dashif.org/livesim2/segtimeline_1/chunkdur_0.5/ato_7/ltgt_4.0/testpic_2s/Manifest.mpd
+</pre>
+
+This configuration adds:
+- `segtimeline_1`: Enables SegmentTimeline instead of `@duration`
+- Provides more precise timing information
+
+**Example 4: Low-Latency with Multiple Periods**
+
+<pre>
+https://livesim2.dashif.org/livesim2/periods_60/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd
+</pre>
+
+This configuration adds:
+- `periods_60`: Creates a new Period every 60 seconds
+- Useful for testing Period transitions in low-latency scenarios
+
+**Example 5: Low-Latency with UTC Timing**
+
+<pre>
+https://livesim2.dashif.org/livesim2/utc_direct/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd
+</pre>
+
+This configuration adds:
+- `utc_direct`: Includes UTCTiming element with direct time server
+- Required for proper low-latency synchronization
+
+**Example 6: Low-Latency Multi-Period with Continuous Timeline**
+
+<pre>
+https://livesim2.dashif.org/livesim2/continuous_1/periods_60/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd
+</pre>
+
+This configuration adds:
+- `continuous_1`: Maintains continuous timeline across Period boundaries
+- Useful for testing seamless Period transitions
+
+**Testing with dash.js Reference Player**
+
+All livesim2 URLs can be tested directly in the dash.js reference player:
+
+<pre>
+https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html
+</pre>
+
+To test a low-latency stream:
+1. Open the dash.js reference player URL above
+2. Paste any of the livesim2 MPD URLs into the "Custom DASH URL" field
+3. Click "Load"
+4. Enable "Low Latency Mode" in the player settings
+5. Monitor the latency metrics in the player's debug panel
+
+**Direct dash.js Links for Testing**
+
+The following links open the dash.js reference player with pre-configured low-latency
+streams:
+
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https://livesim2.dashif.org/livesim2/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd&lowLatencyMode=true">Basic Low-Latency (3.5s target)</a>
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https://livesim2.dashif.org/livesim2/chunkdur_0.2/ato_4/ltgt_2.0/testpic_2s/Manifest.mpd&lowLatencyMode=true">Ultra-Low-Latency (2s target)</a>
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https://livesim2.dashif.org/livesim2/segtimeline_1/chunkdur_0.5/ato_7/ltgt_4.0/testpic_2s/Manifest.mpd&lowLatencyMode=true">Low-Latency with SegmentTimeline</a>
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https://livesim2.dashif.org/livesim2/utc_direct/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd&lowLatencyMode=true">Low-Latency with UTC Timing</a>
+
+**Key livesim2 Parameters for Low-Latency**
+
+- `chunkdur_<dur>`: CMAF chunk duration (0.2–1.0 seconds typical)
+- `ato_<offset>`: Availability Time Offset in seconds
+- `ltgt_<latency>`: Target latency signalled in ServiceDescription
+- `segtimeline_1`: Enable SegmentTimeline
+- `utc_direct`: Add UTCTiming element
+- `continuous_1`: Continuous timeline across Periods
+- `periods_<dur>`: Period duration in seconds
+- `timeoffset_<offset>`: Start time offset for testing catch-up
+
+**Recommended Configurations by Use Case**
+
+- **Standard Low-Latency (3–5s)**: `chunkdur_0.5/ato_7/ltgt_3.5`
+- **Ultra-Low-Latency (1–2s)**: `chunkdur_0.2/ato_4/ltgt_2.0`
+- **Broadcast-Style (5–10s)**: `chunkdur_1.0/ato_10/ltgt_7.0`
+
+Note: The availability time offset (`ato`) should be set to approximately 2× the
+target latency to provide sufficient buffer for network jitter and client-side
+buffering.
 
 ### MPD Generator and Packager Operation ### {#ll-packager}
 
