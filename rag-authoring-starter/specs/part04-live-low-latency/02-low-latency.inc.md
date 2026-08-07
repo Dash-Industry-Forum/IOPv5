@@ -662,27 +662,31 @@ https://livesim2.dashif.org/livesim2/chunkdur_&lt;CD&gt;/ato_&lt;ATO&gt;/ltgt_&l
 </pre>
 
 Where:
-- `chunkdur_<CD>`: CMAF chunk duration in seconds (e.g., `chunkdur_0.5` for 500ms chunks)
-- `ato_<ATO>`: Availability Time Offset in seconds (e.g., `ato_7` for 7 seconds)
-- `ltgt_<TL>`: Low-latency target latency in seconds (e.g., `ltgt_3.5` for 3.5s target)
-- `<content>`: The base content path (e.g., `testpic_2s` for 2-second segments)
+- `chunkdur_<CD>`: CMAF chunk duration in seconds (e.g., `chunkdur_0.5` for 500ms chunks).
+- `ato_<ATO>`: Availability Time Offset in seconds (e.g., `ato_7` for 7 seconds).
+- `ltgt_<TL>`: Low-latency target latency in milliseconds as an integer (e.g.,
+  `ltgt_3500` for a 3.5s target). Decimal values such as `ltgt_3.5` are invalid.
+- `<content>`: The base content path (e.g., `testpic_2s` for 2-second segments).
+
+Note: The example MPD URLs below were checked against the public livesim2
+deployment and returned `HTTP 200 OK` with `Content-Type: application/dash+xml`.
 
 **Example 1: Basic Low-Latency Stream (3.5s target latency)**
 
 <pre>
-https://livesim2.dashif.org/livesim2/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd
+<a href="https://livesim2.dashif.org/livesim2/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd">https://livesim2.dashif.org/livesim2/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd</a>
 </pre>
 
 This configuration provides:
 - 2-second segments (`testpic_2s`)
 - 0.5-second CMAF chunks (`chunkdur_0.5`)
 - 7-second availability time offset (`ato_7`)
-- 3.5-second target latency signalled in ServiceDescription (`ltgt_3.5`)
+- 3.5-second target latency signalled in ServiceDescription (`ltgt_3500`)
 
 **Example 2: Ultra-Low-Latency Stream (2s target latency)**
 
 <pre>
-https://livesim2.dashif.org/livesim2/chunkdur_0.2/ato_4/ltgt_2.0/testpic_2s/Manifest.mpd
+<a href="https://livesim2.dashif.org/livesim2/chunkdur_0.2/ato_4/ltgt_2000/testpic_2s/Manifest.mpd">https://livesim2.dashif.org/livesim2/chunkdur_0.2/ato_4/ltgt_2000/testpic_2s/Manifest.mpd</a>
 </pre>
 
 This configuration provides:
@@ -694,7 +698,7 @@ This configuration provides:
 **Example 3: Low-Latency with SegmentTimeline**
 
 <pre>
-https://livesim2.dashif.org/livesim2/segtimeline_1/chunkdur_0.5/ato_7/ltgt_4.0/testpic_2s/Manifest.mpd
+<a href="https://livesim2.dashif.org/livesim2/segtimeline_1/chunkdur_0.5/ato_7/ltgt_4000/testpic_2s/Manifest.mpd">https://livesim2.dashif.org/livesim2/segtimeline_1/chunkdur_0.5/ato_7/ltgt_4000/testpic_2s/Manifest.mpd</a>
 </pre>
 
 This configuration adds:
@@ -704,7 +708,7 @@ This configuration adds:
 **Example 4: Low-Latency with Multiple Periods**
 
 <pre>
-https://livesim2.dashif.org/livesim2/periods_60/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd
+<a href="https://livesim2.dashif.org/livesim2/periods_60/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd">https://livesim2.dashif.org/livesim2/periods_60/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd</a>
 </pre>
 
 This configuration adds:
@@ -714,7 +718,7 @@ This configuration adds:
 **Example 5: Low-Latency with UTC Timing**
 
 <pre>
-https://livesim2.dashif.org/livesim2/utc_direct/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd
+<a href="https://livesim2.dashif.org/livesim2/utc_direct/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd">https://livesim2.dashif.org/livesim2/utc_direct/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd</a>
 </pre>
 
 This configuration adds:
@@ -724,7 +728,7 @@ This configuration adds:
 **Example 6: Low-Latency Multi-Period with Continuous Timeline**
 
 <pre>
-https://livesim2.dashif.org/livesim2/continuous_1/periods_60/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd
+<a href="https://livesim2.dashif.org/livesim2/continuous_1/periods_60/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd">https://livesim2.dashif.org/livesim2/continuous_1/periods_60/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd</a>
 </pre>
 
 This configuration adds:
@@ -751,16 +755,17 @@ To test a low-latency stream:
 The following links open the dash.js reference player with pre-configured low-latency
 streams:
 
-- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https://livesim2.dashif.org/livesim2/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd&lowLatencyMode=true">Basic Low-Latency (3.5s target)</a>
-- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https://livesim2.dashif.org/livesim2/chunkdur_0.2/ato_4/ltgt_2.0/testpic_2s/Manifest.mpd&lowLatencyMode=true">Ultra-Low-Latency (2s target)</a>
-- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https://livesim2.dashif.org/livesim2/segtimeline_1/chunkdur_0.5/ato_7/ltgt_4.0/testpic_2s/Manifest.mpd&lowLatencyMode=true">Low-Latency with SegmentTimeline</a>
-- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https://livesim2.dashif.org/livesim2/utc_direct/chunkdur_0.5/ato_7/ltgt_3.5/testpic_2s/Manifest.mpd&lowLatencyMode=true">Low-Latency with UTC Timing</a>
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fchunkdur_0.5%2Fato_7%2Fltgt_3500%2Ftestpic_2s%2FManifest.mpd&lowLatencyMode=true">Basic Low-Latency (3.5s target)</a>
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fchunkdur_0.2%2Fato_4%2Fltgt_2000%2Ftestpic_2s%2FManifest.mpd&lowLatencyMode=true">Ultra-Low-Latency (2s target)</a>
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fsegtimeline_1%2Fchunkdur_0.5%2Fato_7%2Fltgt_4000%2Ftestpic_2s%2FManifest.mpd&lowLatencyMode=true">Low-Latency with SegmentTimeline</a>
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Futc_direct%2Fchunkdur_0.5%2Fato_7%2Fltgt_3500%2Ftestpic_2s%2FManifest.mpd&lowLatencyMode=true">Low-Latency with UTC Timing</a>
 
 **Key livesim2 Parameters for Low-Latency**
 
 - `chunkdur_<dur>`: CMAF chunk duration (0.2–1.0 seconds typical)
 - `ato_<offset>`: Availability Time Offset in seconds
-- `ltgt_<latency>`: Target latency signalled in ServiceDescription
+- `ltgt_<latency>`: Target latency signalled in ServiceDescription, in milliseconds
+  as an integer (for example `ltgt_3500` for 3.5 seconds)
 - `segtimeline_1`: Enable SegmentTimeline
 - `utc_direct`: Add UTCTiming element
 - `continuous_1`: Continuous timeline across Periods
@@ -769,9 +774,9 @@ streams:
 
 **Recommended Configurations by Use Case**
 
-- **Standard Low-Latency (3–5s)**: `chunkdur_0.5/ato_7/ltgt_3.5`
-- **Ultra-Low-Latency (1–2s)**: `chunkdur_0.2/ato_4/ltgt_2.0`
-- **Broadcast-Style (5–10s)**: `chunkdur_1.0/ato_10/ltgt_7.0`
+- **Standard Low-Latency (3–5s)**: `chunkdur_0.5/ato_7/ltgt_3500`
+- **Ultra-Low-Latency (1–2s)**: `chunkdur_0.2/ato_4/ltgt_2000`
+- **Broadcast-Style (5–10s)**: `chunkdur_1.0/ato_10/ltgt_7000`
 
 Note: The availability time offset (`ato`) should be set to approximately 2× the
 target latency to provide sufficient buffer for network jitter and client-side
