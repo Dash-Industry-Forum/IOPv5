@@ -744,21 +744,25 @@ https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/ind
 </pre>
 
 To test a low-latency stream:
-1. Open the dash.js reference player URL above
-2. Paste any of the livesim2 MPD URLs into the "Custom DASH URL" field
-3. Click "Load"
-4. Enable "Low Latency Mode" in the player settings
-5. Monitor the latency metrics in the player's debug panel
+1. Open the dash.js reference player URL above.
+2. Paste any of the livesim2 MPD URLs into the "Custom DASH URL" field, or use
+   one of the direct launch links below.
+3. Click "Load" if the stream is not loaded automatically.
+4. Enable or tune low-latency settings in the player settings if needed.
+5. Monitor the latency metrics in the player's debug panel.
 
-**Direct dash.js Links for Testing**
+**Direct dash.js Launch Links for Testing**
 
-The following links open the dash.js reference player with pre-configured low-latency
-streams:
+The following links open the dash.js reference player with a pre-configured
+livesim2 MPD URL and `autoLoad=true`, so playback is started directly by the
+reference player. The dash.js reference player expects the MPD URL in the `stream`
+query parameter. The `autoplay=true` and `muted=true` parameters are included to
+permit browser autoplay policies to start playback without user interaction.
 
-- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fchunkdur_0.5%2Fato_7%2Fltgt_3500%2Ftestpic_2s%2FManifest.mpd&lowLatencyMode=true">Basic Low-Latency (3.5s target)</a>
-- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fchunkdur_0.2%2Fato_4%2Fltgt_2000%2Ftestpic_2s%2FManifest.mpd&lowLatencyMode=true">Ultra-Low-Latency (2s target)</a>
-- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fsegtimeline_1%2Fchunkdur_0.5%2Fato_7%2Fltgt_4000%2Ftestpic_2s%2FManifest.mpd&lowLatencyMode=true">Low-Latency with SegmentTimeline</a>
-- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?url=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Futc_direct%2Fchunkdur_0.5%2Fato_7%2Fltgt_3500%2Ftestpic_2s%2FManifest.mpd&lowLatencyMode=true">Low-Latency with UTC Timing</a>
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fchunkdur_0.5%2Fato_7%2Fltgt_3500%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true">Launch Basic Low-Latency (3.5s target) in dash.js</a>
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fchunkdur_0.2%2Fato_4%2Fltgt_2000%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true">Launch Ultra-Low-Latency (2s target) in dash.js</a>
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fsegtimeline_1%2Fchunkdur_0.5%2Fato_7%2Fltgt_4000%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true">Launch Low-Latency with SegmentTimeline in dash.js</a>
+- <a href="https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Futc_direct%2Fchunkdur_0.5%2Fato_7%2Fltgt_3500%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true">Launch Low-Latency with UTC Timing in dash.js</a>
 
 **Key livesim2 Parameters for Low-Latency**
 
