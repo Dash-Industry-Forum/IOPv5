@@ -369,9 +369,73 @@ Representations, if the Segment Duration is larger than 50% of the target
 latency, a Representation is added whose bitrate is identical to the lowest
 bitrate Representation and whose chunks create Resync Marker Points.
 
-Note: A reference FFmpeg configuration is provided in the source draft; in the
-final version this is expected to be replaced by a reference rather than inline
-command lines.
+#### Example: FFmpeg Configuration #### {#ll-ffmpeg-config}
+
+The agreed Part 4 draft included an informative FFmpeg example for generating a
+Low-Latency DASH representation. That text is restored here as historical
+implementation guidance. FFmpeg option names and behavior evolve over time, so
+implementers should verify the exact syntax against the current FFmpeg
+documentation for the DASH muxer:
+<a href="https://ffmpeg.org/ffmpeg-formats.html#dash-2">FFmpeg Formats Documentation — dash</a>.
+
+FFmpeg provides settings that can be used to generate a low-latency DASH
+representation, including DASH output, CMAF-oriented fragment formatting,
+timeline/addressing control, producer reference time export, and a target
+latency. A representative command-line skeleton derived from the source draft is
+shown below:
+
+<pre>
+ffmpeg \
+  -framerate ${INPUT_FPS} \
+  -i ${INPUT} \
+  -f lavfi -i sine \
+  -pix_fmt yuv420p \
+  -c:v ${VCODEC} -b:v:0 RBW[v,1] -b:v:1 RBW[v,2] ... \
+  -map 0:v:0 -map 0:v:0 \
+  -c:a ${ACODEC} -b:a RBW[a,1] -ac 2 \
+  -map 1:a:0 \
+  -use_timeline $TIMELINE \
+  -utc_timing_url "UTCTime" \
+  -format_options "movflags=cmaf" \
+  -frag_type $DURATION \
+  -adaptation_sets "id=0,seg_duration=SD[v],frag_duration=CD[v],streams=0,1 id=1,seg_duration=SD[a],frag_type=none,streams=NoSS" \
+  -g:v 20 -keyint_min:v 20 -sc_threshold:v 0 -streaming $ASType -ldash $LLDASH -tune zerolatency \
+  -export_side_data $PRFT \
+  -write_prft $PRFT \
+  -target_latency ${TargetLatency} \
+  -color_primaries ${COLOR} -color_trc ${COLOR} -colorspace ${COLOR} \
+  -f dash \
+  ${HTTP_OPTS} \
+  ${PROTO}://${SERVER}:${PORT}/${ID}/${ID}.mpd \
+  ${TS_OUT_CMD}
+</pre>
+
+The source draft also mapped the main low-latency service parameters to FFmpeg
+settings as follows:
+
+- Low-latency presentation: `-ldash` together with `-streaming 1` for chunked
+  operation.
+- Target latency: `-target_latency &lt;TargetLatency&gt;` (in seconds).
+- UTC timing source: `-utc_timing_url &lt;UTCTime&gt;`.
+- Addressing scheme: `use_template 1`, with `use_timeline 0` for `@duration`
+  based addressing or `use_timeline 1` for `SegmentTimeline`, and media segment
+  names based on `$RepresentationID$-$Number$.m4s` or
+  `$RepresentationID$-$Time$.m4s`.
+- Producer reference time: `-write_prft 1`.
+- Nominal segment duration: `seg_duration &lt;SD[i]&gt;` (noting in the draft that
+  this could only be set globally).
+- Nominal chunk duration: `frag_duration &lt;CD[i]&gt;` (also noted in the draft as
+  globally scoped).
+- Video representation bitrate ladder: `-c:v ${VCODEC} -b:v:0 ... -b:v:1 ...`.
+- Audio representation settings: `-c:a ${ACODEC} -b:a RBW[a,1] -ac 2`.
+
+The draft also recorded limitations of the then-current FFmpeg support. In that
+source snapshot, maximum latency, minimum latency, change lead time, reference
+buffer duration, leap-second signalling, and MPD validity expiration events were
+not supported directly by FFmpeg. Implementers should therefore treat FFmpeg as
+one possible encoder/packager realization and verify which parts of the complete
+[=Low-Latency Service Offering=] are realized in FFmpeg itself versus in
+surrounding workflow components.
 
 ### MPD Generator and Packager Operation ### {#ll-packager}
 
