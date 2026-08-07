@@ -2,10 +2,7 @@
 This document is an update to the "Content Protection and Security" section of the DASH-IF IOP Guidelines version 4.3. The scope remains the same, giving guidelines for interoperable behaviors of clients in front of well formed encrypted content. Some updates have been made. This means:
 * Updated encrypted content constraints for supporting CMAF. This includes the addition of the cbcs scheme support and recommendation for encrypting content when available using both cbcs and cenc protection schemes.
 
-Note: ETSI TS 103 285 [[DVBDASH]] (the "DVB-DASH" profile) defines its own
-content protection constraints for `cenc`-protected content, including CENC
-signalling, key rotation, and HDCP output control. Alignment notes with
-DVB-DASH are provided in the relevant clauses below.
+Note: ETSI TS 103 285 [[DVBDASH]] (the "DVB-DASH" profile) defines its own content protection constraints for `cenc` protected content, including CENC signalling, key rotation, and HDCP output control. Alignment notes with DVB-DASH are provided in the relevant clauses below.
 
 In addition, this document introduces:
 * The DASH-IF XML schema where three elements are defined. These elements are namely the <b>`Laurl`</b> (License acquisition server URL), the <b>`Certurl`</b> (Certificate acquisition server URL), and the <b>`Authzurl`</b> (Authorization server URL).
@@ -76,7 +73,7 @@ Different software architectural components are involved in playback of encrypte
 
 The media platform provides one or more APIs that allow the device's media playback and DRM capabilities to be used by a DASH client. The DASH client is typically a library included in an app. On some device types, the DASH client may be a part of the media platform.
 
-This document assumes that the media platform exposes its encrypted content playback features via an API similar to W3C EME [[!EME]]. The technical nature of the API may be different but EME-equivalent functionality is expected.
+This document assumes that the media platform exposes its encrypted content playback features via an API similar to [[!W3CEME]]. The technical nature of the API may be different but EME-equivalent functionality is expected.
 
 The media platform often implements at least one DRM system. Additional DRM system implementations can be included as libraries in the app.
 
@@ -133,7 +130,7 @@ One or more <b>`Certurl`</b> elements may be added under the <b>`ContentProtecti
 When present, it is expected that the device first use the URL under this element for retrieving the certificate. This certificate can then be used in a DRM specific manner for requesting a license using the URL provided under one <b>`Laurl`</b> element.
 
 ## XML schema ## {#XMLSchema}
-The namespace for the DASH-IF <b>`MPD`</b> extensions defined in this document is https://dashif.org/CPS. This document refers to this namespace using the dashif prefix. The schema of the DASH-IF <b>`MPD`</b> extensions is provided on the dashif.org site. It is reproduced below for convenience, the electronic file is the authoritative source.
+The namespace for the DASH-IF <b>`MPD`</b> extensions defined in this document is `https://dashif.org/CPS`. This document refers to this namespace using the dashif prefix. The schema of the DASH-IF <b>`MPD`</b> extensions is provided on the dashif.org site. It is reproduced below for convenience, the electronic file is the authoritative source.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -172,12 +169,12 @@ The namespace for the DASH-IF <b>`MPD`</b> extensions defined in this document i
 
 # Content protection constraints for CMAF # {#CMAFConstraints}
 ## Introduction ## {#Constraints-Introduction}
-The structure of content protection related information in the CMAF containers used by DASH is largely specified by [[!MPEGCENC]] and [[!CMAF]] clause 8. This clause outlines some additional requirements to ensure interoperable behavior of DASH clients and services.
+The structure of content protection related information in the CMAF containers used by DASH is largely specified by [[!MPEGCENC]] and [[!MPEGCMAF]] clause 8. This clause outlines some additional requirements to ensure interoperable behavior of DASH clients and services.
 
 NOTE: This document uses the `cenc:` prefix to reference the XML namespace `urn:mpeg:cenc:2013` [[!MPEGCENC]].
 
 ## Content protection data ## {#Data}
-This clause describes the structure of content protection data in CMAF containers used to provide encrypted content in a DASH presentation, summarizing the requirements defined by [[!MPEGCENC]], [[!CMAF]] and [[!ISOBMFF]].
+This clause describes the structure of content protection data in CMAF containers used to provide encrypted content in a DASH presentation, summarizing the requirements defined by [[!MPEGCENC]], [[!MPEGCMAF]] and [[!ISOBMFF]].
 
 DASH initialization segments contain:
 * Zero or more `moov/pssh` "Protection System Specific Header" boxes ([[!MPEGCENC]] clause 8.1) which provide DRM system initialization data in DRM system specific format.
@@ -186,20 +183,20 @@ DASH initialization segments contain:
 
 DASH media segments are composed of a single CMAF fragment that contains:
 * Exactly one `moof/traf/senc` "Sample Encryption" box ([[!MPEGCENC]] clause 7.2) which stores initialization vectors (IVs) and, optionally, subsample encryption ranges for samples in the same CMAF fragment.
-* Zero or one `moof/traf/saiz` "Sample Auxiliary Information Size" boxes ([[!ISOBMFF]] clause 8.7.8) which references the sizes of the per-sample data stored in the `moof/traf/senc` box ([[!MPEGCENC]] clause 7 and [[!CMAF]] clause 8.2.2). It is omitted if the parameters provided by the senc box are identical for all samples in the CMAF fragment.
-* Zero or one `moof/traf/saio` "Sample Auxiliary Information Offset" boxes ([[!ISOBMFF]] clause 8.7.9) which references the sizes of the per-sample data stored in the `moof/traf/senc` box ([[!MPEGCENC]] clause 7 and [[!CMAF]] clause 8.2.2). It is omitted if the parameters provided by the senc box are identical for all samples in the CMAF fragment.
+* Zero or one `moof/traf/saiz` "Sample Auxiliary Information Size" boxes ([[!ISOBMFF]] clause 8.7.8) which references the sizes of the per-sample data stored in the `moof/traf/senc` box ([[!MPEGCENC]] clause 7 and [[!MPEGCMAF]] clause 8.2.2). It is omitted if the parameters provided by the senc box are identical for all samples in the CMAF fragment.
+* Zero or one `moof/traf/saio` "Sample Auxiliary Information Offset" boxes ([[!ISOBMFF]] clause 8.7.9) which references the sizes of the per-sample data stored in the `moof/traf/senc` box ([[!MPEGCENC]] clause 7 and [[!MPEGCMAF]] clause 8.2.2). It is omitted if the parameters provided by the senc box are identical for all samples in the CMAF fragment.
 * Zero or more `moof/pssh` "Protection System Specific Header" boxes ([[!MPEGCENC]] clause 8.1) which provide transparent updates to DRM system internal state.
 * For each sample group, exactly one `moof/traf/sgpd` "Sample Group Description" box ([[!MPEGCENC]] clause 6 and [[!ISOBMFF]] clause 8.9.3) which contains overrides for encryption parameters defined in the `tenc` box. It is omitted if no parameters are overridden.
 * For each sample grouping type (see [[!ISOBMFF]], typically one), exactly one `moof/traf/sbgp` "Sample to Group" box ([[!MPEGCENC]] clause 6 and [[!ISOBMFF]] clause 8.9.2) which associates samples with sample groups. It is omitted if no parameters are overridden.
 
 ## Content protection data constraints ## {#DataConstraints}
-Initialization segments should not contain any `pssh` box as specified in [[!CMAF]], clause 7.4.3 and clause 8.2.2.3, and DASH clients may ignore such boxes when encountered. Instead, pssh boxes should be placed in the <b>`MPD`</b> as <b>`cenc:pssh`</b> elements in DRM system specific <b>`ContentProtection`</b> descriptors.
+Initialization segments should not contain any `pssh` box as specified in [[!MPEGCMAF]], clause 7.4.3 and clause 8.2.2.3, and DASH clients may ignore such boxes when encountered. Instead, pssh boxes should be placed in the <b>`MPD`</b> as <b>`cenc:pssh`</b> elements in DRM system specific <b>`ContentProtection`</b> descriptors.
 
 NOTE: Placing the `pssh` boxes in the <b>`MPD`</b> has become common for purposes of operational agility, it is often easier to update <b>`MPD`</b> files than rewrite initialization segments when, for example, a new DRM system needs to be supported. Furthermore, in some scenarios the appropriate set of `pssh` boxes is not known when the initialization segment is created.
 
 Protected content may be published without any `pssh` boxes in both the <b>`MPD`</b> and media segments. All DRM system configuration may be provided at runtime, including the `pssh` box data.
 
-Media segments may contain `moof/pssh` boxes ([[!CMAF]] clause 7.4.3) to provide updates to the DRM system internal state (e.g. to supply new leaf keys in a key hierarchy). These state updates may be transparent to a DASH client on some media platforms that intercept the `moof/pssh` boxes and supply them directly to the active DRM system; on other media platforms, the DASH client may need to extract and forward the `moof/pssh` boxes to the DRM system. When using CMAF chunks for delivery, each CMAF fragment may be split into multiple CMAF chunks. If the CMAF fragment contained any `moof/pssh` boxes, copies of these boxes shall be present in each CMAF chunk that starts with an independent media sample.
+Media segments may contain `moof/pssh` boxes ([[!MPEGCMAF]] clause 7.4.3) to provide updates to the DRM system internal state (e.g. to supply new leaf keys in a key hierarchy). These state updates may be transparent to a DASH client on some media platforms that intercept the `moof/pssh` boxes and supply them directly to the active DRM system; on other media platforms, the DASH client may need to extract and forward the `moof/pssh` boxes to the DRM system. When using CMAF chunks for delivery, each CMAF fragment may be split into multiple CMAF chunks. If the CMAF fragment contained any `moof/pssh` boxes, copies of these boxes shall be present in each CMAF chunk that starts with an independent media sample.
 
 NOTE: While DASH only requires the presence of `moof/pssh` in the first CMAF chunk, the requirement is more extensive in the interest of HLS interoperability [[HLS]].
 
@@ -208,7 +205,7 @@ A DASH presentation may provide some or all adaptation sets in encrypted form, r
 
 In a DASH presentation, every representation in an adaptation set shall be protected using the same content key (identified by the same `default_KID` or `KID)`. This means that if representations use different content keys, they shall be in different adaptation sets, even if they would otherwise (were they not encrypted) belong to the same adaptation set. A `urn:mpeg:dash:adaptation-set-switching:2016` supplemental property descriptor ([[!MPEGDASH]] clause 5.3.3.5) shall be used to signal that such adaptation sets are suitable for switching.
 
-Encrypted DASH content shall use either the `cenc` or the `cbcs` protection scheme defined in [[!MPEGCENC]] and as constrained in [[!CMAF]] clause 8.2.3.
+Encrypted DASH content shall use either the `cenc` or the `cbcs` protection scheme defined in [[!MPEGCENC]] and as constrained in [[!MPEGCMAF]] clause 8.2.3.
 
 NOTE: `cenc` and `cbcs` are two mutually exclusive protection schemes. DASH content encrypted according to the `cenc` protection scheme cannot be decrypted by a DRM system supporting only the `cbcs` protection scheme and vice versa.
 
@@ -216,14 +213,9 @@ Some DRM system implementations support both protection schemes. Even when this 
 
 Representations in the same adaptation set shall use the same protection scheme. Representations in different adaptation sets may use different protection schemes. If both protection schemes are used in the same period, all encrypted representations in that period shall be provided using both protection schemes.
 
-Representations that contain the same media content using different protection schemes should use different content keys. This protects against some cryptographic attacks [[!EncryptionModes]].
+Representations that contain the same media content using different protection schemes should use different content keys. This protects against some cryptographic attacks [[EncryptionModes]].
 
-Note: DVB-DASH [[DVBDASH]] requires protected content to use the `cenc`
-protection scheme exclusively; `cbcs`-only content is not guaranteed to be
-supported by a DVB-DASH client. Services that need to serve both DVB-DASH and
-non-DVB-DASH players should provide `cenc`-protected representations for
-DVB-DASH compatibility, using `cbcs` only as an additional, non-exclusive
-protection scheme per [[#Encryption]].
+Note: ETSI TS 103 285 [[DVBDASH]] requires protected content to use the `cenc` protection scheme exclusively; `cbcs`-only content is not guaranteed to be supported by a DVB-DASH client. Services that need to serve both DVB-DASH and non-DVB-DASH players should provide `cenc`-protected representations for DVB-DASH compatibility, using `cbcs` only as an additional, non-exclusive protection scheme per [[#Encryption]].
 
 # Content protection constraints for the MPD # {#MPDConstraints}
 ## Introduction ## {#MPDConstraints-Introduction}
@@ -245,7 +237,8 @@ This descriptor is present for all encrypted content ([[!MPEGDASH]] clause 5.8.4
 As an example, the following snippet of an <b>`MPD`</b> signals an adaptation set encrypted using the `cbcs` scheme and with a content key identified by `34e5db32-8625-47cd-ba06-68fca0655a72`.
 
 ```xml
-<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cbcs" cenc:default_KID="34e5db32-8625-47cd-ba06-68fca0655a72" /\>
+<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cbcs"
+	cenc:default_KID="34e5db32-8625-47cd-ba06-68fca0655a72"/>
 ```
 The `tenc` box stores `default_KID` as a 16-byte array. The byte order shall be identical in the binary structure and the string-form `@cenc:default_KID`.
 
@@ -271,7 +264,7 @@ Multiple <b>`Laurl`</b> or <b>`Authzurl`</b> elements under the same <b>`Content
 The following is an example of a <b>`ContentProtection`</b> descriptor that provides default DRM system configuration for a fictional DRM system.
 
 ```xml
-<ContentProtection schemeIdUri="urn:uuid:d0ee2730-09b5-459f-8452-200e52b37567" value="FirstDRM2.0">
+<ContentProtection schemeIdUri="urn:uuid:d0ee2730-09b5-459f-8452-200e52b37567" value="FirstDRM2">
 	<cenc:pssh>
 		YmFzZTY0IGVuY29kZWQgY29udGVudHMgb2YgkXBzc2iSIGJveCB3aXRoIHRoaXMgU3lzdGVtSUQ=
 	</cenc:pssh>
@@ -289,7 +282,7 @@ The <b>`ContentProtection`</b> descriptor may include a `@robustness` attribute.
 
 In order to leverage this value, the DASH client needs to know the robustness level of the different DRM systems supported by the platform. There is no recommended API for getting this information.
 
-NOTE: If using W3C EME [[!EME]], the `@robustness` value can be compared to the value of the robustness member of MediaKeySystemMediaCapability for selecting a key system to activate. The DASH client selects then a key system with the requested robustness level.
+NOTE: If using [[!W3CEME]], the `@robustness` value can be compared to the value of the robustness member of MediaKeySystemMediaCapability for selecting a key system to activate. The DASH client selects then a key system with the requested robustness level.
 
 It may happen that even if the DASH client selected a DRM system that should allow playling the representations of the adaptation set, playback fails, it is most likely due to a key failure because the DRM system did not release the content key based on its own evaluation of the requested robustness level compared to that of the platform. In this case, the DASH client shall try playing back representations from another adaptation set with lower resolution (with less restrictive robustness requirements).
 
@@ -301,46 +294,103 @@ The following is an example of a <b>`MPD`</b> that includes two representations 
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" minBufferTime="PT1.500S" type="static" mediaPresentationDuration="PT0H24M28.000S" maxSegmentDuration="PT0H0M4.000S" profiles="urn:mpeg:dash:profile:isoff-live:2011,https://dashif.org/guidelines/dash264" xmlns:cenc="urn:mpeg:cenc:2013">
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" minBufferTime="PT1.500S" type="static"
+	mediaPresentationDuration="PT0H24M28.000S" maxSegmentDuration="PT0H0M4.000S"
+	profiles="urn:mpeg:dash:profile:isoff-live:2011,https://dashif.org/guidelines/dash264"
+	xmlns:cenc="urn:mpeg:cenc:2013">
 	<Period duration="PT0H12M14.000S">
-		<AdaptationSet segmentAlignment="true" id="1" group="1" maxWidth="1920" maxHeight="1080" maxFrameRate="24" par="16:9" lang="und">
-			<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="2"/>
-			<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc" cenc:default_KID="c14f0709-f2b9-4427-916b-61b52586506a"/>
-			<ContentProtection value="MSPR 2.0" schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" robustness="SL2000">
+		<AdaptationSet segmentAlignment="true" id="1" group="1" maxWidth="1920"
+			maxHeight="1080" maxFrameRate="24" par="16:9" lang="und">
+			<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016"
+				value="2"/>
+			<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc" 
+				cenc:default_KID="c14f0709-f2b9-4427-916b-61b52586506a"/>
+			<ContentProtection value="MSPR 2.0"
+				schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" robustness="SL2000">
 				<cenc:pssh>
-					AAAB5HBzc2gAAAAAmgTweZhAQoarkuZb4IhflQAAAcTEAQAAAQABALoBPABXAFIATQBIAEUAQQBEAEUAUgAgAHgAbQBsAG4AcwA9ACIAaAB0AHQAcAA6AC8ALwBzAGMAaABlAG0AYQBzAC4AbQBpAGMAcgBvAHMAbwBmAHQALgBjAG8AbQAvAEQAUgBNAC8AMgAwADAANwAvADAAMwAvAFAAbABhAHkAUgBlAGEAZAB5AEgAZQBhAGQAZQByACIAIAB2AGUAcgBzAGkAbwBuAD0AIgA0AC4AMAAuADAALgAwACIAPgA8AEQAQQBUAEEAPgA8AFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBFAFkATABFAE4APgAxADYAPAAvAEsARQBZAEwARQBOAD4APABBAEwARwBJAEQAPgBBAEUAUwBDAFQAUgA8AC8AQQBMAEcASQBEAD4APAAvAFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBJAEQAPgBDAFEAZABQAHcAYgBuAHkASgAwAFMAUgBhADIARwAxAEoAWQBaAFEAYQBnAD0APQA8AC8ASwBJAEQAPgA8AC8ARABBAFQAQQA+ADwALwBXAFIATQBIAEUAQQBEAEUAUgA+AA==
+					AAAB5HBzc2gAAAAAmgTweZhAQoarkuZb4IhflQAAAcTEAQAAAQABALoBPABXAFIATQBIAEUAQ
+					QBEAEUAUgAgAHgAbQBsAG4AcwA9ACIAaAB0AHQAcAA6AC8ALwBzAGMAaABlAG0AYQBzAC4AbQB
+					pAGMAcgBvAHMAbwBmAHQALgBjAG8AbQAvAEQAUgBNAC8AMgAwADAANwAvADAAMwAvAFAAbABhA
+					HkAUgBlAGEAZAB5AEgAZQBhAGQAZQByACIAIAB2AGUAcgBzAGkAbwBuAD0AIgA0AC4AMAAuADA
+					ALgAwACIAPgA8AEQAQQBUAEEAPgA8AFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBFAFkAT
+					ABFAE4APgAxADYAPAAvAEsARQBZAEwARQBOAD4APABBAEwARwBJAEQAPgBBAEUAUwBDAFQAUgA
+					8AC8AQQBMAEcASQBEAD4APAAvAFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBJAEQAPgBDA
+					FEAZABQAHcAYgBuAHkASgAwAFMAUgBhADIARwAxAEoAWQBaAFEAYQBnAD0APQA8AC8ASwBJAEQ
+					APgA8AC8ARABBAFQAQQA+ADwALwBXAFIATQBIAEUAQQBEAEUAUgA+AA==
 				</cenc:pssh>
 				<pro xmlns="urn:microsoft:playready">
-					xAEAAAEAAQC6ATwAVwBSAE0ASABFAEEARABFAFIAIAB4AG0AbABuAHMAPQAiAGgAdAB0AHAAOgAvAC8AcwBjAGgAZQBtAGEAcwAuAG0AaQBjAHIAbwBzAG8AZgB0AC4AYwBvAG0ALwBEAFIATQAvADIAMAAwADcALwAwADMALwBQAGwAYQB5AFIAZQBhAGQAeQBIAGUAYQBkAGUAcgAiACAAdgBlAHIAcwBpAG8AbgA9ACIANAAuADAALgAwAC4AMAAiAD4APABEAEEAVABBAD4APABQAFIATwBUAEUAQwBUAEkATgBGAE8APgA8AEsARQBZAEwARQBOAD4AMQA2ADwALwBLAEUAWQBMAEUATgA+ADwAQQBMAEcASQBEAD4AQQBFAFMAQwBUAFIAPAAvAEEATABHAEkARAA+ADwALwBQAFIATwBUAEUAQwBUAEkATgBGAE8APgA8AEsASQBEAD4AQwBRAGQAUAB3AGIAbgB5AEoAMABTAFIAYQAyAEcAMQBKAFkAWgBRAGEAZwA9AD0APAAvAEsASQBEAD4APAAvAEQAQQBUAEEAPgA8AC8AVwBSAE0ASABFAEEARABFAFIAPgA=
+					xAEAAAEAAQC6ATwAVwBSAE0ASABFAEEARABFAFIAIAB4AG0AbABuAHMAPQAiAGgAdAB0AHAAOg
+					AvAC8AcwBjAGgAZQBtAGEAcwAuAG0AaQBjAHIAbwBzAG8AZgB0AC4AYwBvAG0ALwBEAFIATQAv
+					ADIAMAAwADcALwAwADMALwBQAGwAYQB5AFIAZQBhAGQAeQBIAGUAYQBkAGUAcgAiACAAdgBlAH
+					IAcwBpAG8AbgA9ACIANAAuADAALgAwAC4AMAAiAD4APABEAEEAVABBAD4APABQAFIATwBUAEUA
+					QwBUAEkATgBGAE8APgA8AEsARQBZAEwARQBOAD4AMQA2ADwALwBLAEUAWQBMAEUATgA+ADwAQQ
+					BMAEcASQBEAD4AQQBFAFMAQwBUAFIAPAAvAEEATABHAEkARAA+ADwALwBQAFIATwBUAEUAQwBU
+					AEkATgBGAE8APgA8AEsASQBEAD4AQwBRAGQAUAB3AGIAbgB5AEoAMABTAFIAYQAyAEcAMQBKAF
+					kAWgBRAGEAZwA9AD0APAAvAEsASQBEAD4APAAvAEQAQQBUAEEAPgA8AC8AVwBSAE0ASABFAEEA
+					RABFAFIAPgA=
 				</pro>
 			</ContentProtection>
-			<ContentProtection value="Widevine" schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed" robustness="L3">
-				<cenc:pssh>AAAANHBzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAABQIARIQwU8HCfK5RCeRa2G1JYZQag==</cenc:pssh>
+			<ContentProtection value="Widevine"
+				schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed" robustness="L3">
+				<cenc:pssh>
+					AAAANHBzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAABQIARIQwU8HCfK5RCeRa2G1JYZQag==
+				</cenc:pssh>
 			</ContentProtection>
-			<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s" startNumber="1" duration="4799983" initialization="$RepresentationID$/init.mp4"/>
-			<Representation id="1" mimeType="video/mp4" codecs="avc1.64001f" width="512" height="288" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="389802"></Representation>
-			<Representation id="2" mimeType="video/mp4" codecs="avc1.64001f" width="640" height="360" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="764935"></Representation>
-			<Representation id="3" mimeType="video/mp4" codecs="avc1.640028" width="852" height="480" frameRate="24" sar="640:639" startWithSAP="1" bandwidth="1120439"></Representation>
+			<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s"
+				startNumber="1" duration="4799983" initialization="$RepresentationID$/init.mp4"/>
+			<Representation id="1" mimeType="video/mp4" codecs="avc1.64001f" width="512"
+				height="288" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="389802"/>
+			<Representation id="2" mimeType="video/mp4" codecs="avc1.64001f" width="640"
+				height="360" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="764935"/>
+			<Representation id="3" mimeType="video/mp4" codecs="avc1.640028" width="852"
+				height="480" frameRate="24" sar="640:639" startWithSAP="1" bandwidth="1120439"/>
 		</AdaptationSet>
-		<AdaptationSet segmentAlignment="true" id="2" group="1" maxWidth="3840" maxHeight="2160" maxFrameRate="24" par="16:9" lang="und">
-			<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="1" />
-			<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc" cenc:default_KID="8b029e51-d56a-44bd-910f-d4b5fd90fba2"/>
-			<ContentProtection value="MSPR 2.0" schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" robustness="SL3000">
+		<AdaptationSet segmentAlignment="true" id="2" group="1" maxWidth="3840" maxHeight="2160"
+			maxFrameRate="24" par="16:9" lang="und">
+			<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="1"/>
+			<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc"
+				cenc:default_KID="8b029e51-d56a-44bd-910f-d4b5fd90fba2"/>
+			<ContentProtection value="MSPR 2.0"
+				schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" robustness="SL3000">
 				<cenc:pssh>
-					AAAB5HBzc2gAAAAAmgTweZhAQoarkuZb4IhflQAAAcTEAQAAAQABALoBPABXAFIATQBIAEUAQQBEAEUAUgAgAHgAbQBsAG4AcwA9ACIAaAB0AHQAcAA6AC8ALwBzAGMAaABlAG0AYQBzAC4AbQBpAGMAcgBvAHMAbwBmAHQALgBjAG8AbQAvAEQAUgBNAC8AMgAwADAANwAvADAAMwAvAFAAbABhAHkAUgBlAGEAZAB5AEgAZQBhAGQAZQByACIAIAB2AGUAcgBzAGkAbwBuAD0AIgA0AC4AMAAuADAALgAwACIAPgA8AEQAQQBUAEEAPgA8AFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBFAFkATABFAE4APgAxADYAPAAvAEsARQBZAEwARQBOAD4APABBAEwARwBJAEQAPgBBAEUAUwBDAFQAUgA8AC8AQQBMAEcASQBEAD4APAAvAFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBJAEQAPgBVAFoANABDAGkAMgByAFYAdgBVAFMAUgBEADkAUwAxAC8AWgBEADcAbwBnAD0APQA8AC8ASwBJAEQAPgA8AC8ARABBAFQAQQA+ADwALwBXAFIATQBIAEUAQQBEAEUAUgA+AA==
+					AAAB5HBzc2gAAAAAmgTweZhAQoarkuZb4IhflQAAAcTEAQAAAQABALoBPABXAFIATQBIAEUAQ
+					QBEAEUAUgAgAHgAbQBsAG4AcwA9ACIAaAB0AHQAcAA6AC8ALwBzAGMAaABlAG0AYQBzAC4AbQ
+					BpAGMAcgBvAHMAbwBmAHQALgBjAG8AbQAvAEQAUgBNAC8AMgAwADAANwAvADAAMwAvAFAAbAB
+					hAHkAUgBlAGEAZAB5AEgAZQBhAGQAZQByACIAIAB2AGUAcgBzAGkAbwBuAD0AIgA0AC4AMAAu
+					ADAALgAwACIAPgA8AEQAQQBUAEEAPgA8AFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBFA
+					FkATABFAE4APgAxADYAPAAvAEsARQBZAEwARQBOAD4APABBAEwARwBJAEQAPgBBAEUAUwBDAF
+					QAUgA8AC8AQQBMAEcASQBEAD4APAAvAFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBJAEQ
+					PgBVAFoANABDAGkAMgByAFYAdgBVAFMAUgBEADkAUwAxAC8AWgBEADcAbwBnAD0APQA8AC8AS
+					wBJAEQAPgA8AC8ARABBAFQAQQA+ADwALwBXAFIATQBIAEUAQQBEAEUAUgA+AA==
 				</cenc:pssh>
 				<pro xmlns="urn:microsoft:playready">
-					xAEAAAEAAQC6ATwAVwBSAE0ASABFAEEARABFAFIAIAB4AG0AbABuAHMAPQAiAGgAdAB0AHAAOgAvAC8AcwBjAGgAZQBtAGEAcwAuAG0AaQBjAHIAbwBzAG8AZgB0AC4AYwBvAG0ALwBEAFIATQAvADIAMAAwADcALwAwADMALwBQAGwAYQB5AFIAZQBhAGQAeQBIAGUAYQBkAGUAcgAiACAAdgBlAHIAcwBpAG8AbgA9ACIANAAuADAALgAwAC4AMAAiAD4APABEAEEAVABBAD4APABQAFIATwBUAEUAQwBUAEkATgBGAE8APgA8AEsARQBZAEwARQBOAD4AMQA2ADwALwBLAEUAWQBMAEUATgA+ADwAQQBMAEcASQBEAD4AQQBFAFMAQwBUAFIAPAAvAEEATABHAEkARAA+ADwALwBQAFIATwBUAEUAQwBUAEkATgBGAE8APgA8AEsASQBEAD4AVQBaADQAQwBpADIAcgBWAHYAVQBTAFIARAA5AFMAMQAvAFoARAA3AG8AZwA9AD0APAAvAEsASQBEAD4APAAvAEQAQQBUAEEAPgA8AC8AVwBSAE0ASABFAEEARABFAFIAPgA=
+					xAEAAAEAAQC6ATwAVwBSAE0ASABFAEEARABFAFIAIAB4AG0AbABuAHMAPQAiAGgAdAB0AHAAO
+					gAvAC8AcwBjAGgAZQBtAGEAcwAuAG0AaQBjAHIAbwBzAG8AZgB0AC4AYwBvAG0ALwBEAFIATQ
+					AvADIAMAAwADcALwAwADMALwBQAGwAYQB5AFIAZQBhAGQAeQBIAGUAYQBkAGUAcgAiACAAdgB
+					lAHIAcwBpAG8AbgA9ACIANAAuADAALgAwAC4AMAAiAD4APABEAEEAVABBAD4APABQAFIATwBU
+					AEUAQwBUAEkATgBGAE8APgA8AEsARQBZAEwARQBOAD4AMQA2ADwALwBLAEUAWQBMAEUATgA+A
+					DwAQQBMAEcASQBEAD4AQQBFAFMAQwBUAFIAPAAvAEEATABHAEkARAA+ADwALwBQAFIATwBUAE
+					UAQwBUAEkATgBGAE8APgA8AEsASQBEAD4AVQBaADQAQwBpADIAcgBWAHYAVQBTAFIARAA5AFM
+					AMQAvAFoARAA3AG8AZwA9AD0APAAvAEsASQBEAD4APAAvAEQAQQBUAEEAPgA8AC8AVwBSAE0A
+					SABFAEEARABFAFIAPgA=
 				</pro>
 			</ContentProtection>
-			<ContentProtection value="Widevine" schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed" robustness="L1">
-				<cenc:pssh>AAAANHBzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAABQIARIQiwKeUdVqRL2RD9S1/ZD7og==</cenc:pssh>
+			<ContentProtection value="Widevine"
+				schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed" robustness="L1">
+				<cenc:pssh>
+					AAAANHBzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAABQIARIQiwKeUdVqRL2RD9S1/ZD7og==
+				</cenc:pssh>
 			</ContentProtection>
-			<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s" startNumber="1" duration="4799983" initialization="$RepresentationID$/init.mp4"/>
-			<Representation id="4" mimeType="video/mp4" codecs="hev1.2.4.L93.90" width="1280" height="720" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1474186"></Representation>
-			<Representation id="5" mimeType="video/mp4" codecs="hev1.2.4.L120.90" width="1920" height="1080" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1967542"></Representation>
-			<Representation id="6" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="2560" height="1440" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="2954309"></Representation>
-			<Representation id="7" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="3840" height="2160" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="4424584"></Representation>
+			<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s"
+				startNumber="1" duration="4799983" initialization="$RepresentationID$/init.mp4"/>
+			<Representation id="4" mimeType="video/mp4" codecs="hev1.2.4.L93.90" width="1280"
+				height="720" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1474186"/>
+			<Representation id="5" mimeType="video/mp4" codecs="hev1.2.4.L120.90" width="1920"
+				height="1080" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1967542"/>
+			<Representation id="6" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="2560"
+				height="1440" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="2954309"/>
+			<Representation id="7" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="3840"
+				height="2160" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="4424584"/>
 		</AdaptationSet>
 	</Period>
 </MPD>
@@ -352,55 +402,119 @@ The following is an example of a <b>`MPD`</b>, that extends the one shown above,
 
 ```xml
 <?xml version="1.0" encoding="utf-8"?>
-<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" minBufferTime="PT1.500S" type="static" mediaPresentationDuration="PT0H24M28.000S" maxSegmentDuration="PT0H0M4.000S" profiles="urn:mpeg:dash:profile:isoff-live:2011,https://dashif.org/guidelines/dash264" xmlns:cenc="urn:mpeg:cenc:2013">
+<MPD xmlns="urn:mpeg:dash:schema:mpd:2011" minBufferTime="PT1.500S" type="static"
+	mediaPresentationDuration="PT0H24M28.000S" maxSegmentDuration="PT0H0M4.000S"
+	profiles="urn:mpeg:dash:profile:isoff-live:2011,https://dashif.org/guidelines/dash264"
+	xmlns:cenc="urn:mpeg:cenc:2013">
 	<Period duration="PT0H12M14.000S">
-		<AdaptationSet segmentAlignment="true" id="1" group="1" maxWidth="1920" maxHeight="1080" maxFrameRate="24" par="16:9" lang="und">
-			<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="2" />
-			<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc" cenc:default_KID="c14f0709-f2b9-4427-916b-61b52586506a"/>
-			<ContentProtection value="MSPR 2.0" schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" robustness="SL2000" refID="PR_SL2000">
+		<AdaptationSet segmentAlignment="true" id="1" group="1" maxWidth="1920" maxHeight="1080"
+			maxFrameRate="24" par="16:9" lang="und">
+			<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="2"/>
+			<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc"
+				cenc:default_KID="c14f0709-f2b9-4427-916b-61b52586506a"/>
+			<ContentProtection value="MSPR 2.0"
+				schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95"
+				robustness="SL2000" refID="PR_SL2000">
 				<cenc:pssh>
-					AAAB5HBzc2gAAAAAmgTweZhAQoarkuZb4IhflQAAAcTEAQAAAQABALoBPABXAFIATQBIAEUAQQBEAEUAUgAgAHgAbQBsAG4AcwA9ACIAaAB0AHQAcAA6AC8ALwBzAGMAaABlAG0AYQBzAC4AbQBpAGMAcgBvAHMAbwBmAHQALgBjAG8AbQAvAEQAUgBNAC8AMgAwADAANwAvADAAMwAvAFAAbABhAHkAUgBlAGEAZAB5AEgAZQBhAGQAZQByACIAIAB2AGUAcgBzAGkAbwBuAD0AIgA0AC4AMAAuADAALgAwACIAPgA8AEQAQQBUAEEAPgA8AFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBFAFkATABFAE4APgAxADYAPAAvAEsARQBZAEwARQBOAD4APABBAEwARwBJAEQAPgBBAEUAUwBDAFQAUgA8AC8AQQBMAEcASQBEAD4APAAvAFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBJAEQAPgBDAFEAZABQAHcAYgBuAHkASgAwAFMAUgBhADIARwAxAEoAWQBaAFEAYQBnAD0APQA8AC8ASwBJAEQAPgA8AC8ARABBAFQAQQA+ADwALwBXAFIATQBIAEUAQQBEAEUAUgA+AA==
+					AAAB5HBzc2gAAAAAmgTweZhAQoarkuZb4IhflQAAAcTEAQAAAQABALoBPABXAFIATQBIAEUAQ
+					QBEAEUAUgAgAHgAbQBsAG4AcwA9ACIAaAB0AHQAcAA6AC8ALwBzAGMAaABlAG0AYQBzAC4AbQB
+					pAGMAcgBvAHMAbwBmAHQALgBjAG8AbQAvAEQAUgBNAC8AMgAwADAANwAvADAAMwAvAFAAbABhA
+					HkAUgBlAGEAZAB5AEgAZQBhAGQAZQByACIAIAB2AGUAcgBzAGkAbwBuAD0AIgA0AC4AMAAuADA
+					ALgAwACIAPgA8AEQAQQBUAEEAPgA8AFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBFAFkAT
+					ABFAE4APgAxADYAPAAvAEsARQBZAEwARQBOAD4APABBAEwARwBJAEQAPgBBAEUAUwBDAFQAUgA
+					8AC8AQQBMAEcASQBEAD4APAAvAFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBJAEQAPgBDA
+					FEAZABQAHcAYgBuAHkASgAwAFMAUgBhADIARwAxAEoAWQBaAFEAYQBnAD0APQA8AC8ASwBJAEQ
+					APgA8AC8ARABBAFQAQQA+ADwALwBXAFIATQBIAEUAQQBEAEUAUgA+AA==
 				</cenc:pssh>
 				<pro xmlns="urn:microsoft:playready">
-					xAEAAAEAAQC6ATwAVwBSAE0ASABFAEEARABFAFIAIAB4AG0AbABuAHMAPQAiAGgAdAB0AHAAOgAvAC8AcwBjAGgAZQBtAGEAcwAuAG0AaQBjAHIAbwBzAG8AZgB0AC4AYwBvAG0ALwBEAFIATQAvADIAMAAwADcALwAwADMALwBQAGwAYQB5AFIAZQBhAGQAeQBIAGUAYQBkAGUAcgAiACAAdgBlAHIAcwBpAG8AbgA9ACIANAAuADAALgAwAC4AMAAiAD4APABEAEEAVABBAD4APABQAFIATwBUAEUAQwBUAEkATgBGAE8APgA8AEsARQBZAEwARQBOAD4AMQA2ADwALwBLAEUAWQBMAEUATgA+ADwAQQBMAEcASQBEAD4AQQBFAFMAQwBUAFIAPAAvAEEATABHAEkARAA+ADwALwBQAFIATwBUAEUAQwBUAEkATgBGAE8APgA8AEsASQBEAD4AQwBRAGQAUAB3AGIAbgB5AEoAMABTAFIAYQAyAEcAMQBKAFkAWgBRAGEAZwA9AD0APAAvAEsASQBEAD4APAAvAEQAQQBUAEEAPgA8AC8AVwBSAE0ASABFAEEARABFAFIAPgA=
+					xAEAAAEAAQC6ATwAVwBSAE0ASABFAEEARABFAFIAIAB4AG0AbABuAHMAPQAiAGgAdAB0AHAAOg
+					AvAC8AcwBjAGgAZQBtAGEAcwAuAG0AaQBjAHIAbwBzAG8AZgB0AC4AYwBvAG0ALwBEAFIATQAv
+					ADIAMAAwADcALwAwADMALwBQAGwAYQB5AFIAZQBhAGQAeQBIAGUAYQBkAGUAcgAiACAAdgBlAH
+					IAcwBpAG8AbgA9ACIANAAuADAALgAwAC4AMAAiAD4APABEAEEAVABBAD4APABQAFIATwBUAEUA
+					QwBUAEkATgBGAE8APgA8AEsARQBZAEwARQBOAD4AMQA2ADwALwBLAEUAWQBMAEUATgA+ADwAQQ
+					BMAEcASQBEAD4AQQBFAFMAQwBUAFIAPAAvAEEATABHAEkARAA+ADwALwBQAFIATwBUAEUAQwBU
+					AEkATgBGAE8APgA8AEsASQBEAD4AQwBRAGQAUAB3AGIAbgB5AEoAMABTAFIAYQAyAEcAMQBKAF
+					kAWgBRAGEAZwA9AD0APAAvAEsASQBEAD4APAAvAEQAQQBUAEEAPgA8AC8AVwBSAE0ASABFAEEA
+					RABFAFIAPgA=
 				</pro>
 			</ContentProtection>
-			<ContentProtection value="Widevine" schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed" robustness="L3" refID="WV_L3">
-				<cenc:pssh>AAAANHBzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAABQIARIQwU8HCfK5RCeRa2G1JYZQag==</cenc:pssh>
+			<ContentProtection value="Widevine"
+				schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed"
+				robustness="L3" refID="WV_L3">
+				<cenc:pssh>
+					AAAANHBzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAABQIARIQwU8HCfK5RCeRa2G1JYZQag==
+				</cenc:pssh>
 			</ContentProtection>
-			<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s" startNumber="1" duration="4799983" initialization="$RepresentationID$/init.mp4"/>
-			<Representation id="1" mimeType="video/mp4" codecs="avc1.64001f" width="512" height="288" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="389802"></Representation>
-			<Representation id="2" mimeType="video/mp4" codecs="avc1.64001f" width="640" height="360" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="764935"></Representation>
-			<Representation id="3" mimeType="video/mp4" codecs="avc1.640028" width="852" height="480" frameRate="24" sar="640:639" startWithSAP="1" bandwidth="1120439"></Representation>
+			<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s"
+				startNumber="1" duration="4799983" initialization="$RepresentationID$/init.mp4"/>
+			<Representation id="1" mimeType="video/mp4" codecs="avc1.64001f" width="512" height="288"
+				frameRate="24" sar="1:1" startWithSAP="1" bandwidth="389802"/>
+			<Representation id="2" mimeType="video/mp4" codecs="avc1.64001f" width="640" height="360"
+				frameRate="24" sar="1:1" startWithSAP="1" bandwidth="764935"/>
+			<Representation id="3" mimeType="video/mp4" codecs="avc1.640028" width="852" height="480"
+				frameRate="24" sar="640:639" startWithSAP="1" bandwidth="1120439"/>
 		</AdaptationSet>
-		<AdaptationSet segmentAlignment="true" id="2" group="1" maxWidth="3840" maxHeight="2160" maxFrameRate="24" par="16:9" lang="und">
-			<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="1" />
-			<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc" cenc:default_KID="8b029e51-d56a-44bd-910f-d4b5fd90fba2"/>
-			<ContentProtection value="MSPR 2.0" schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" robustness="SL3000">
+		<AdaptationSet segmentAlignment="true" id="2" group="1" maxWidth="3840" maxHeight="2160"
+			maxFrameRate="24" par="16:9" lang="und">
+			<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="1"/>
+			<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc"
+				cenc:default_KID="8b029e51-d56a-44bd-910f-d4b5fd90fba2"/>
+			<ContentProtection value="MSPR 2.0"
+				schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95"
+				robustness="SL3000">
 				<cenc:pssh>
-					AAAB5HBzc2gAAAAAmgTweZhAQoarkuZb4IhflQAAAcTEAQAAAQABALoBPABXAFIATQBIAEUAQQBEAEUAUgAgAHgAbQBsAG4AcwA9ACIAaAB0AHQAcAA6AC8ALwBzAGMAaABlAG0AYQBzAC4AbQBpAGMAcgBvAHMAbwBmAHQALgBjAG8AbQAvAEQAUgBNAC8AMgAwADAANwAvADAAMwAvAFAAbABhAHkAUgBlAGEAZAB5AEgAZQBhAGQAZQByACIAIAB2AGUAcgBzAGkAbwBuAD0AIgA0AC4AMAAuADAALgAwACIAPgA8AEQAQQBUAEEAPgA8AFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBFAFkATABFAE4APgAxADYAPAAvAEsARQBZAEwARQBOAD4APABBAEwARwBJAEQAPgBBAEUAUwBDAFQAUgA8AC8AQQBMAEcASQBEAD4APAAvAFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBJAEQAPgBVAFoANABDAGkAMgByAFYAdgBVAFMAUgBEADkAUwAxAC8AWgBEADcAbwBnAD0APQA8AC8ASwBJAEQAPgA8AC8ARABBAFQAQQA+ADwALwBXAFIATQBIAEUAQQBEAEUAUgA+AA==
+					AAAB5HBzc2gAAAAAmgTweZhAQoarkuZb4IhflQAAAcTEAQAAAQABALoBPABXAFIATQBIAEUAQ
+					QBEAEUAUgAgAHgAbQBsAG4AcwA9ACIAaAB0AHQAcAA6AC8ALwBzAGMAaABlAG0AYQBzAC4AbQ
+					BpAGMAcgBvAHMAbwBmAHQALgBjAG8AbQAvAEQAUgBNAC8AMgAwADAANwAvADAAMwAvAFAAbAB
+					hAHkAUgBlAGEAZAB5AEgAZQBhAGQAZQByACIAIAB2AGUAcgBzAGkAbwBuAD0AIgA0AC4AMAAu
+					ADAALgAwACIAPgA8AEQAQQBUAEEAPgA8AFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBFA
+					FkATABFAE4APgAxADYAPAAvAEsARQBZAEwARQBOAD4APABBAEwARwBJAEQAPgBBAEUAUwBDAF
+					QAUgA8AC8AQQBMAEcASQBEAD4APAAvAFAAUgBPAFQARQBDAFQASQBOAEYATwA+ADwASwBJAEQ
+					PgBVAFoANABDAGkAMgByAFYAdgBVAFMAUgBEADkAUwAxAC8AWgBEADcAbwBnAD0APQA8AC8AS
+					wBJAEQAPgA8AC8ARABBAFQAQQA+ADwALwBXAFIATQBIAEUAQQBEAEUAUgA+AA==
 				</cenc:pssh>
 				<pro xmlns="urn:microsoft:playready">
-					xAEAAAEAAQC6ATwAVwBSAE0ASABFAEEARABFAFIAIAB4AG0AbABuAHMAPQAiAGgAdAB0AHAAOgAvAC8AcwBjAGgAZQBtAGEAcwAuAG0AaQBjAHIAbwBzAG8AZgB0AC4AYwBvAG0ALwBEAFIATQAvADIAMAAwADcALwAwADMALwBQAGwAYQB5AFIAZQBhAGQAeQBIAGUAYQBkAGUAcgAiACAAdgBlAHIAcwBpAG8AbgA9ACIANAAuADAALgAwAC4AMAAiAD4APABEAEEAVABBAD4APABQAFIATwBUAEUAQwBUAEkATgBGAE8APgA8AEsARQBZAEwARQBOAD4AMQA2ADwALwBLAEUAWQBMAEUATgA+ADwAQQBMAEcASQBEAD4AQQBFAFMAQwBUAFIAPAAvAEEATABHAEkARAA+ADwALwBQAFIATwBUAEUAQwBUAEkATgBGAE8APgA8AEsASQBEAD4AVQBaADQAQwBpADIAcgBWAHYAVQBTAFIARAA5AFMAMQAvAFoARAA3AG8AZwA9AD0APAAvAEsASQBEAD4APAAvAEQAQQBUAEEAPgA8AC8AVwBSAE0ASABFAEEARABFAFIAPgA=
+					xAEAAAEAAQC6ATwAVwBSAE0ASABFAEEARABFAFIAIAB4AG0AbABuAHMAPQAiAGgAdAB0AHAAO
+					gAvAC8AcwBjAGgAZQBtAGEAcwAuAG0AaQBjAHIAbwBzAG8AZgB0AC4AYwBvAG0ALwBEAFIATQ
+					AvADIAMAAwADcALwAwADMALwBQAGwAYQB5AFIAZQBhAGQAeQBIAGUAYQBkAGUAcgAiACAAdgB
+					lAHIAcwBpAG8AbgA9ACIANAAuADAALgAwAC4AMAAiAD4APABEAEEAVABBAD4APABQAFIATwBU
+					AEUAQwBUAEkATgBGAE8APgA8AEsARQBZAEwARQBOAD4AMQA2ADwALwBLAEUAWQBMAEUATgA+A
+					DwAQQBMAEcASQBEAD4AQQBFAFMAQwBUAFIAPAAvAEEATABHAEkARAA+ADwALwBQAFIATwBUAE
+					UAQwBUAEkATgBGAE8APgA8AEsASQBEAD4AVQBaADQAQwBpADIAcgBWAHYAVQBTAFIARAA5AFM
+					AMQAvAFoARAA3AG8AZwA9AD0APAAvAEsASQBEAD4APAAvAEQAQQBUAEEAPgA8AC8AVwBSAE0A
+					SABFAEEARABFAFIAPgA=
 				</pro>
 			</ContentProtection>
-			<ContentProtection value="Widevine" schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed" robustness="L1">
-				<cenc:pssh>AAAANHBzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAABQIARIQiwKeUdVqRL2RD9S1/ZD7og==</cenc:pssh>
+			<ContentProtection value="Widevine"
+				schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed"
+				robustness="L1">
+				<cenc:pssh>
+					AAAANHBzc2gAAAAA7e+LqXnWSs6jyCfc1R0h7QAAABQIARIQiwKeUdVqRL2RD9S1/ZD7og==
+				</cenc:pssh>
 			</ContentProtection>
-			<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s" startNumber="1" duration="4799983" initialization="$RepresentationID$/init.mp4" />
-			<Representation id="4" mimeType="video/mp4" codecs="hev1.2.4.L93.90" width="1280" height="720" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1474186"></Representation>
-			<Representation id="5" mimeType="video/mp4" codecs="hev1.2.4.L120.90" width="1920" height="1080" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1967542"></Representation>
-			<Representation id="6" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="2560" height="1440" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="2954309"></Representation>
-			<Representation id="7" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="3840" height="2160" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="4424584"></Representation>
+			<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s"
+				startNumber="1" duration="4799983" initialization="$RepresentationID$/init.mp4"/>
+			<Representation id="4" mimeType="video/mp4" codecs="hev1.2.4.L93.90" width="1280"
+				height="720" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1474186"/>
+			<Representation id="5" mimeType="video/mp4" codecs="hev1.2.4.L120.90" width="1920"
+				height="1080" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1967542">
+			<Representation id="6" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="2560"
+				height="1440" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="2954309"/>
+			<Representation id="7" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="3840"
+				height="2160" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="4424584"/>
 		</AdaptationSet>
 
 		<AdaptationSet segmentAlignment="true" group="2" lang="en">
-			<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc" cenc:default_KID="c14f0709-f2b9-4427-916b-61b52586506a"/>
+			<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc"
+				cenc:default_KID="c14f0709-f2b9-4427-916b-61b52586506a"/>
 			<ContentProtection ref="PR_SL2000"/>
 			<ContentProtection ref="WV_L3"/>
-			<SegmentTemplate timescale="24000" media="$RepresentationID$/$Number%04d$.m4s" startNumber="1" duration="95232" initialization="$RepresentationID$/init.mp4"/>
-			<Representation id="17" mimeType="audio/mp4" codecs="mp4a.40.29" audioSamplingRate="48000" startWithSAP="1" bandwidth="134040">
-				<AudioChannelConfiguration schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/>
+			<SegmentTemplate timescale="24000" media="$RepresentationID$/$Number%04d$.m4s"
+				startNumber="1" duration="95232" initialization="$RepresentationID$/init.mp4"/>
+			<Representation id="17" mimeType="audio/mp4" codecs="mp4a.40.29" audioSamplingRate="48000"
+				startWithSAP="1" bandwidth="134040">
+				<AudioChannelConfiguration
+					schemeIdUri="urn:mpeg:dash:23003:3:audio_channel_configuration:2011" value="2"/>
 			</Representation>
 		</AdaptationSet>
 	</Period>
@@ -414,44 +528,52 @@ The <b>`ContentProtection`</b> descriptor provides the description of the DRM sy
 
 NOTE: It is very likely that the highest HDCP version is requested for the adaptation set containing the representations with the highest resolution.
 
-Note: DVB-DASH [[DVBDASH]] defines its own HDCP output-control signalling using
-an <b>`EssentialProperty`</b> or <b>`SupplementalProperty`</b> descriptor with
-`@schemeIdUri="urn:dvb:dash:hdcp:2017"` and `@value` equal to the minimum
-required HDCP version, predating the [[!MPEGDASH]] `OutputProtection` descriptor
-used in this clause. Services that need to remain compatible with DVB-DASH
-players should signal both the DVB-DASH-specific descriptor and the
-[[!MPEGDASH]] `OutputProtection` descriptor with equivalent values.
+Note: ETSI TS 103 285 [[DVBDASH]] defines its own HDCP output-control signalling using an <b>`EssentialProperty`</b> or <b>`SupplementalProperty`</b> descriptor with `@schemeIdUri="urn:dvb:dash:hdcp:2017"` and `@value` equal to the minimum required HDCP version, predating the [[!MPEGDASH]] `OutputProtection` descriptor used in this clause. Services that need to remain compatible with DVB-DASH players should signal both the DVB-DASH-specific descriptor and the [[!MPEGDASH]] `OutputProtection` descriptor with equivalent values.
 
 Below is a snippet of an <b>`MPD`</b> showing two adaptation sets with different required required HDCP version. A device consuming only the adaptation set with `@id="1"` shall enfoce HDCP 1.4 at minimum while a device consuming both adaptation sets shall enforce HDCP 2.3 at minimum.
 
 ```xml
-<AdaptationSet segmentAlignment="true" id="1" group="1" maxWidth="1920" maxHeight="1080" maxFrameRate="24" par="16:9" lang="und">
-	<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="2" />
-	<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc" cenc:default_KID="c14f0709-f2b9-4427-916b-61b52586506a" />
-	<OutputProtection value="1.4" schemeIdUri="urn:mpeg:dash:output-protection:hdcp:2020" />
-	<ContentProtection value="MSPR 2.0" schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" robustness="SL2000">
+<AdaptationSet segmentAlignment="true" id="1" group="1" maxWidth="1920" maxHeight="1080"
+	maxFrameRate="24" par="16:9" lang="und">
+	<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="2"/>
+	<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc"
+		cenc:default_KID="c14f0709-f2b9-4427-916b-61b52586506a"/>
+	<OutputProtection value="1.4" schemeIdUri="urn:mpeg:dash:output-protection:hdcp:2020"/>
+	<ContentProtection value="MSPR 2.0" schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95"
+		robustness="SL2000">
 …
 	</ContentProtection>
-	<ContentProtection value="Widevine" schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed" robustness="L3">
+	<ContentProtection value="Widevine" schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed"
+		robustness="L3">
 …
 	</ContentProtection>
-	<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s" startNumber="1" duration="4799983" initialization="$RepresentationID$/init.mp4" />
-	<Representation id="11-c14f0709" mimeType="video/mp4" codecs="hev1.2.4.L93.90" width="1280" height="720" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1474186"></Representation>
-	<Representation id="12-c14f0709" mimeType="video/mp4" codecs="hev1.2.4.L120.90" width="1920" height="1080" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1967542"></Representation>
+	<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s" startNumber="1"
+		duration="4799983" initialization="$RepresentationID$/init.mp4"/>
+	<Representation id="11-c14f0709" mimeType="video/mp4" codecs="hev1.2.4.L93.90" width="1280"
+		height="720" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1474186"/>
+	<Representation id="12-c14f0709" mimeType="video/mp4" codecs="hev1.2.4.L120.90" width="1920"
+		height="1080" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="1967542"/>
 </AdaptationSet>
-<AdaptationSet segmentAlignment="true" id="2" group="1" maxWidth="3840" maxHeight="2160" maxFrameRate="24" par="16:9" lang="und">
-	<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="1" />
-	<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc" cenc:default_KID="8b029e51-d56a-44bd-910f-d4b5fd90fba2" />
-	<OutputProtection value="2.3" schemeIdUri=" urn:mpeg:dash:output-protection:hdcp:2020" />
-	<ContentProtection value="MSPR 2.0" schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" robustness="SL3000">
+<AdaptationSet segmentAlignment="true" id="2" group="1" maxWidth="3840" maxHeight="2160"
+	maxFrameRate="24" par="16:9" lang="und">
+	<SupplementalProperty schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016" value="1"/>
+	<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc"
+		cenc:default_KID="8b029e51-d56a-44bd-910f-d4b5fd90fba2"/>
+	<OutputProtection value="2.3" schemeIdUri=" urn:mpeg:dash:output-protection:hdcp:2020"/>
+	<ContentProtection value="MSPR 2.0" schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95"
+		robustness="SL3000">
 …
 	</ContentProtection>
-	<ContentProtection value="Widevine" schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed" robustness="L1">
+	<ContentProtection value="Widevine" schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed"
+		robustness="L1">
 …
 	</ContentProtection>
-	<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s" startNumber="1" duration="4799983" initialization="$RepresentationID$/init.mp4" />
-	<Representation id="13-8b029e51" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="2560" height="1440" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="2954309"></Representation>
-	<Representation id="14-8b029e51" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="3840" height="2160" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="4424584"></Representation>
+	<SegmentTemplate timescale="1200000" media="$RepresentationID$/$Number%04d$.m4s"
+		startNumber="1" duration="4799983" initialization="$RepresentationID$/init.mp4"/>
+	<Representation id="13-8b029e51" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="2560"
+		height="1440" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="2954309"/>
+	<Representation id="14-8b029e51" mimeType="video/mp4" codecs="hev1.2.4.L150.90" width="3840"
+		height="2160" frameRate="24" sar="1:1" startWithSAP="1" bandwidth="4424584"/>
 </AdaptationSet>
 ```
 
@@ -475,10 +597,10 @@ The following is an example of a DRM system configuration with the content ID em
 	<cenc:pssh>
 		YmFzZTY0IGVuY29kZWQgY29udGVudHMgb2YgkXBzc2iSIGJveCB3aXRoIHRoaXMgU3lzdGVtSUQ=
 	</cenc:pssh>
-	<dashif:Authzurl authzType=”acquire-license-1.0”>
+	<dashif:Authzurl authzType="acquire-license-1.0">
 		https://example.com/tenants/5341/authorize?contentId=movie865343651
 	</dashif:Authzurl>
-	<dashif:Laurl licenseType=”license-1.0”>
+	<dashif:Laurl licenseType="license-1.0">
 		https://example.com/moviecatalog-license-api/movie865343651/AcquireLicense
 	</dashif:Laurl>
 </ContentProtection>
@@ -487,11 +609,11 @@ The following is an example of a DRM system configuration with the content ID em
 The content ID shall not be embedded in DRM system specific data structures such as `pssh` boxes, as logic that depends on DRM system specific data structures is not interoperable and often leads to increased development and maintenance costs.
 
 # Use of W3C Clear Key with DASH # {#ClearKey}
-Clear Key is a DRM system defined by W3C in [[!EME]]. It is intended primarily for client and media platform development/test purposes and does not perform the content protection and content key protection duties ordinarily expected from a DRM system.
+Clear Key is a DRM system defined in [[!W3CEME]]. It is intended primarily for client and media platform development/test purposes and does not perform the content protection and content key protection duties ordinarily expected from a DRM system.
 
 A DRM system specific <b>`ContentProtection`</b> descriptor for Clear Key shall use the `systemID=e2719d58-a985-b3c9-781a-b030af78d30e` and the attribute `@value` shall be equal to `"ClearKey1.0"`.
 
-The <b>`Laurl`</b> element shall be used to indicate the license server URL. The attribute `@licenseType` describes the type of the license served by this license server. The value is `"EME-1.0"` when the license is in the format defined in [[!EME]] clause 9.1.4.
+The <b>`Laurl`</b> element shall be used to indicate the license server URL. The attribute `@licenseType` describes the type of the license served by this license server. The value is `"EME-1.0"` when the license is in the format defined in [[!W3CEME]] clause 9.1.4.
 
 W3C describes the optional use of `systemID=1077efec-c0b2-4d02-ace3-3c1e52e2fb4b` in [[!CENCInit]] clause 4 to indicate that tracks are encrypted with Common Encryption. DASH clients shall not interpret a `pssh` box with `systemID=1077efec-c0b2-4d02-ace3-3c1e52e2fb4b` as an indication that Clear Key is supported on this content.
 
@@ -524,8 +646,8 @@ NOTE: W3C specifies in [[!CENCInit]] clause 3 that the source for the `KIDs` sha
 When requesting a Clear Key license to the license server, it is recommended to use a secure connection as described in [[#HTTPS]].
 
 When used with a license type equal to `"EME-1.0"`:
-* The GET request for the license includes in the body the JSON license request format defined in [[!EME]] clause 9.1.3. The license request may also include additional authentication elements such as token.
-* The response from the license server includes in the body the Clear Key license in the format defined in [[!EME]] clause 9.1.4 if the device is entitled to receive the content keys.
+* The GET request for the license includes in the body the JSON license request format defined in [[!W3CEME]] clause 9.1.3. The license request may also include additional authentication elements such as token.
+* The response from the license server includes in the body the Clear Key license in the format defined in [[!W3CEME]] clause 9.1.4 if the device is entitled to receive the content keys.
 
 Clear Key licenses shall not be used to manage a key and `KID` that is also used by a DRM system. The use of an unprotected key risks the security of DRM systems using that key, and violates the terms of use of most DRM systems.
 
@@ -556,7 +678,8 @@ Doing so, when the player parses the <b>`MPD`</b>, it cannot make a license requ
 The following is an example of a snippet of a <b>`MPD`</b>.
 
 ```xml
-<AdaptationSet mimeType="video/mp4" segmentAlignment="true" startWithSAP="1" subsegmentAlignment="true" subsegmentStartsWithSAP="1" bitstreamSwitching="true">
+<AdaptationSet mimeType="video/mp4" segmentAlignment="true" startWithSAP="1"
+	subsegmentAlignment="true" subsegmentStartsWithSAP="1" bitstreamSwitching="true">
 	<ContentProtection schemeIdUri="urn:mpeg:dash:mp4protection:2011" value="cenc"/>
 	<ContentProtection schemeIdUri="urn:uuid:edef8ba9-79d6-4ace-a3c8-27dcd51d21ed"/>
 	<ContentProtection schemeIdUri="urn:uuid:9a04f079-9840-4286-ab92-e65be0885f95" value="MSPR 2.0"/>
@@ -633,14 +756,14 @@ DASH also explicitly permits the use of HTTPS as a URI scheme and hence, HTTP ov
 One can also use HTTPS for retrieving other types of data carried with a <b>`MPD`</b> that are HTTP-URL based, such as, for example, DRM licenses specified within the <b>`ContentProtection`</b> descriptor:
 
 ```xml
-<ContentProtection schemeIdUri="urn:uuid:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" value="DRMNAME version"
+<ContentProtection schemeIdUri="urn:uuid:xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" value="DRMNAME"
 	<dashif:Laurl>https://MoviesSP.example.com/protect?license=kljklsdfiowek</dashif:Laurl>
 </ContentProtection>
 ```
 
 It is recommended that HTTPS be adopted for delivering DASH content.
 
-NOTE: Some browsers require the usage of HTTPS for W3C EME [[!EME]] support. Applications delivered via HTTP will not be able to use this API.
+NOTE: Some browsers require the usage of HTTPS for [[!W3CEME]] support. Applications delivered via HTTP will not be able to use this API.
 
 While using HTTPS in DASH provides good protection for data exchanged between DASH servers and clients, HTTPS only protects the transport link, but does not by itself provide an enforcement mechanism for access control and usage policies on the streamed content. HTTPS itself does not imply user authentication and content authorization (or access control). This is especially the case that HTTPS provides no protection to any streamed content cached in a local buffer at a client for playback. HTTPS does not replace a DRM.
 
@@ -651,7 +774,7 @@ The purpose of Enhanced Clear Key Content Protection (ECCP) is to define a conte
 ECCP is therefore a collective set of restrictions placed on content preparation, manifest preparation, license server behavior and segment authentication. These restrictions are defined below.
 
 ## Constraints on DASH content generation ## {#ECCPConstraintsDASH}
-Media segments shall be packaged in CMAF containers per DASH-IF IOP part 1 [[!DASHIF-IOPv5p1]] and part 2 [[!DASHIF-IOPv5p2]]. Additional contraints for encryption are defined in [[#CMAFConstraints]]. Content protection constraints for the <b>`MPD`</b> are defined in [[#MPDConstraints]].
+Media segments shall be packaged in CMAF containers per [[!DASHIF-IOPv5p1]] and [[!DASHIF-IOPv5p2]]. Additional contraints for encryption are defined in [[#CMAFConstraints]]. Content protection constraints for the <b>`MPD`</b> are defined in [[#MPDConstraints]].
 
 ## Constraints on content protection ## {#ECCPConstraintsProtection}
 Implementation of W3C Clear Key content protection shall follow the requirements defined in [[#ClearKey]].
@@ -663,7 +786,7 @@ All URLs referencing manifests, media objects and license servers shall use the 
 
 ## Constraints on access control ## {#ECCPConstraintsAccess}
 Access control to the manifest, the license key URL and all media segments containing encrypted content shall be present. No object described in the manifest, including the manifest itself, shall be openly available to an unauthenticated and/or unauthorized client. This access control may invoke both authorization and/or authentication processes and may be implemented through an enforcement scheme such as:
-* Tokens. CTA WAVE has defined the Common Access Token (CAT) [[!CAT]]. It is recommended to use this token format.
+* Tokens. CTA WAVE has defined the Common Access Token (CAT) [[CAT]]. It is recommended to use this token format.
 * Client certificates
 * Proxy solutions. A common implementation for transparent authorization is to use a "license proxy" that sits between the client and the real license server. It acts as a license server but instead forwards the license request after authorization checks have passed.
 
@@ -681,7 +804,8 @@ An example of a compliant manifest for content protected by ECCP is shown below:
 <?xml version="1.0" encoding="UTF-8"?>
 <MPD xmlns:dashif="https://dashif.org/CPS" xmlns="urn:mpeg:dash:schema:mpd:2011"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:cenc="urn:mpeg:cenc:2013"
-	xsi:schemaLocation="urn:mpeg:dash:schema:mpd:2011 DASH-MPD.xsd urn:mpeg:cenc:2013 CENC.xsd https://dashif.org/CPS DASH-IF-CPS.xsd"
+	xsi:schemaLocation="urn:mpeg:dash:schema:mpd:2011 DASH-MPD.xsd urn:mpeg:cenc:2013
+	CENC.xsd https://dashif.org/CPS DASH-IF-CPS.xsd"
 	profiles="urn:mpeg:dash:profile:isoff-live:2011" minBufferTime="PT2S" type="static"
 	mediaPresentationDuration="PT32.08333206176758S">
 	<Period id="0">
@@ -735,7 +859,7 @@ An example of a compliant manifest for content protected by ECCP is shown below:
 </MPD>
 ```
 
-As defined in [[!EME]] clause 9.1.3 and clause 9.1.4, upon receiving this manifest, the DASH client would remove the "-" from the the `KID`, convert the Hex to base64, strip out any "==" padding and then call the license server specified in the <b>`Laurl`</b> with a HTTPS POST-based JSON request which would look like:
+As defined in [[!W3CEME]] clause 9.1.3 and clause 9.1.4, upon receiving this manifest, the DASH client would remove the "-" from the the `KID`, convert the Hex to base64, strip out any "==" padding and then call the license server specified in the <b>`Laurl`</b> with a HTTPS POST-based JSON request which would look like:
 ```json
 {
 	"kids":["nrQFDeRLSAKTLifXUIPiZg"],
