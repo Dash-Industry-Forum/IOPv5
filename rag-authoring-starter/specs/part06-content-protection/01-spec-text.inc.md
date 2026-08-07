@@ -493,7 +493,7 @@ A DRM system specific <b>`ContentProtection`</b> descriptor for Clear Key shall 
 
 The <b>`Laurl`</b> element shall be used to indicate the license server URL. The attribute `@licenseType` describes the type of the license served by this license server. The value is `"EME-1.0"` when the license is in the format defined in [[!EME]] clause 9.1.4.
 
-W3C describes the optional use of `systemID=1077efec-c0b2-4d02-ace3-3c1e52e2fb4b` in [[!MPEGCENCInit]] clause 4 to indicate that tracks are encrypted with Common Encryption. DASH clients shall not interpret a `pssh` box with `systemID=1077efec-c0b2-4d02-ace3-3c1e52e2fb4b` as an indication that Clear Key is supported on this content.
+W3C describes the optional use of `systemID=1077efec-c0b2-4d02-ace3-3c1e52e2fb4b` in [[!CENCInit]] clause 4 to indicate that tracks are encrypted with Common Encryption. DASH clients shall not interpret a `pssh` box with `systemID=1077efec-c0b2-4d02-ace3-3c1e52e2fb4b` as an indication that Clear Key is supported on this content.
 
 NOTE: This common `pssh` box is used in some deployments as a source for creating, on the fly, in the DASH client, `pssh` boxes for other DRM systems. In a lot of cases the `KIDs` are already enough information for creating init data. Even if there is some additional information required, i.e. a content ID or something similar, this is side-loaded. This means that the common `pssh` box is enough to successfully request a DRM license. That, in turn, means that the <b>`MPD`</b> can be kept a little bit smaller and potentially permits the application to add new DRMs without repackaging and without reaching out to some additional service.
 
@@ -519,7 +519,7 @@ An example of a snippet with Clear Key <b>`ContentProtection`</b> descriptor usi
 
 W3C specifies that in order to activate Clear Key, the client shall provide Clear Key initialization data to the browser. The Clear Key initialization data consists of a listing of the `KIDs` required to decrypt the content. The <b>`ContentProtection`</b> descriptor for Clear Key shall not contain Clear Key initialization data. Instead, clients shall construct Clear Key initialization data at runtime, based on the `default_KID` signaled in the <b>`MPD`</b> using <b>`ContentProtection`</b> descriptors with the `urn:mpeg:dash:mp4protection:2011` scheme.
 
-NOTE: W3C specifies in [[!W3CCENCINIT]] clause 3 that the source for the `KIDs` shall be the optional Common PSSH box, but because it is optional and not in the <b>`MPD`</b>, this document prefers using the <b>`ContentProtection`</b> descriptors with the `urn:mpeg:dash:mp4protection:2011 scheme`.
+NOTE: W3C specifies in [[!CENCInit]] clause 3 that the source for the `KIDs` shall be the optional Common PSSH box, but because it is optional and not in the <b>`MPD`</b>, this document prefers using the <b>`ContentProtection`</b> descriptors with the `urn:mpeg:dash:mp4protection:2011 scheme`.
 
 When requesting a Clear Key license to the license server, it is recommended to use a secure connection as described in [[#HTTPS]].
 
