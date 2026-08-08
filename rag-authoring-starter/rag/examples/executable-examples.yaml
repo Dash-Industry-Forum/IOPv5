@@ -1,0 +1,79 @@
+# Executable DASH example registry for IOP v5.
+#
+# The registry is intentionally curated. Add only examples whose MPD URL has
+# been checked and whose observable behavior is useful for implementers.
+#
+# dash.js launch links use:
+#   ?stream=<URL-encoded-MPD>&autoLoad=true&autoplay=true&muted=true
+
+version: 1
+dashjs_reference_player: https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html
+
+examples:
+  - id: part04-ll-basic
+    part: part04-live-low-latency
+    title: Basic low-latency live, 3.5 s target
+    feature: Low-latency live playback with CMAF chunks and ServiceDescription target latency
+    source: livesim2
+    mpd: https://livesim2.dashif.org/livesim2/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd
+    dashjs: https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fchunkdur_0.5%2Fato_7%2Fltgt_3500%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true
+    expected: Dynamic MPD loads in dash.js and plays close to the live edge with a 3.5 s target latency.
+    caveats: Browser autoplay may still require user interaction depending on policy.
+
+  - id: part04-ll-ultra
+    part: part04-live-low-latency
+    title: Ultra-low-latency live, 2 s target
+    feature: More aggressive low-latency live playback with 200 ms CMAF chunks
+    source: livesim2
+    mpd: https://livesim2.dashif.org/livesim2/chunkdur_0.2/ato_4/ltgt_2000/testpic_2s/Manifest.mpd
+    dashjs: https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fchunkdur_0.2%2Fato_4%2Fltgt_2000%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true
+    expected: Dynamic MPD loads in dash.js with a 2 s target latency and shorter CMAF chunks.
+    caveats: More sensitive to network jitter and player catch-up behavior.
+
+  - id: part04-ll-segtimeline
+    part: part04-live-low-latency
+    title: SegmentTimeline low-latency live
+    feature: Low-latency live playback using SegmentTimeline addressing
+    source: livesim2
+    mpd: https://livesim2.dashif.org/livesim2/segtimeline_1/chunkdur_0.5/ato_7/ltgt_4000/testpic_2s/Manifest.mpd
+    dashjs: https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fsegtimeline_1%2Fchunkdur_0.5%2Fato_7%2Fltgt_4000%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true
+    expected: Dynamic MPD uses SegmentTimeline and loads in dash.js.
+    caveats: Inspect the MPD to observe SegmentTimeline details.
+
+  - id: part04-ll-utc
+    part: part04-live-low-latency
+    title: Low-latency live with UTC timing
+    feature: Low-latency live playback with UTCTiming
+    source: livesim2
+    mpd: https://livesim2.dashif.org/livesim2/utc_direct/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd
+    dashjs: https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Futc_direct%2Fchunkdur_0.5%2Fato_7%2Fltgt_3500%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true
+    expected: MPD includes UTCTiming and loads in dash.js for live-edge synchronization.
+    caveats: Timing behavior depends on client clock and network conditions.
+
+candidate_backlog:
+  part02-core-cmaf:
+    - SegmentTemplate with $Number$
+    - SegmentTimeline with $Time$
+    - Multi-Period live presentation
+    - UTCTiming and availability-window examples
+  part03-on-demand:
+    - Static on-demand multi-bitrate playback
+    - Static SegmentTemplate examples
+  part05-ad-insertion:
+    - Period-based ad insertion
+    - SCTE-35 or emsg ad signalling, after livesim2 syntax confirmation
+  part06-content-protection:
+    - ClearKey playback
+    - Widevine/PlayReady with environment caveats
+  part07-video:
+    - Codec and representation ladder examples
+    - HDR/SDR examples if suitable hosted assets are available
+  part08-audio:
+    - Alternate audio and language-role examples
+    - Channel configuration examples
+  part09-text:
+    - WebVTT text track playback
+    - IMSC subtitle/caption playback
+  part10-events:
+    - MPD event examples
+    - Inband emsg examples with event-observation instructions
