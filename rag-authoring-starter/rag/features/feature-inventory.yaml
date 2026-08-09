@@ -1,0 +1,830 @@
+# DASH feature inventory seed for IOP v5.
+#
+# This registry is editorial and intentionally incomplete. It is used to align
+# IOPv5 parts, DASH-IF-IOP extensions, dash.js client support, livesim2 content
+# generation support, and executable examples.
+
+version: 1
+status: seed
+sources:
+  dashjs_samples: https://reference.dashif.org/dash.js/latest/samples/samples.json
+  livesim2_readme: https://github.com/Dash-Industry-Forum/livesim2
+  dash_if_iop: https://github.com/Dash-Industry-Forum/DASH-IF-IOP
+
+features:
+  - id: dynamic-mpd-live
+    title: Dynamic MPD / Live DASH
+    status: draft
+    category: live
+    granularity: feature
+    defined_by:
+      iopv5_parts: [part04-live-low-latency]
+      dash_if_iop: []
+      external_specs: [ISO/IEC 23009-1]
+    signalling:
+      mpd:
+        elements: [MPD, UTCTiming, SegmentTemplate]
+        attributes: [MPD@type, MPD@availabilityStartTime, MPD@minimumUpdatePeriod, MPD@timeShiftBufferDepth]
+        descriptors: []
+      inband:
+        boxes: []
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples:
+        - section: Live
+          title: Live delay comparison custom manifest
+        - section: Live
+          title: Synchronized live playback with the catchup mode
+      settings:
+        - streaming.delay.liveDelay
+        - streaming.liveCatchup.enabled
+      apis:
+        - setLiveDelay
+      caveats: []
+    livesim2:
+      support_status: supported
+      url_parameters: []
+      examples: [part04-ll-basic]
+      caveats: [Generated from looped VoD assets as wall-clock synchronized live streams.]
+    examples:
+      executable: [part04-ll-basic, part04-ll-ultra, part04-ll-segtimeline, part04-ll-utc]
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: false
+    notes: []
+
+  - id: segmenttemplate-number
+    title: SegmentTemplate Number Addressing
+    status: draft
+    category: core
+    granularity: sub-feature
+    defined_by:
+      iopv5_parts: [part02-core-cmaf]
+      dash_if_iop: []
+      external_specs: [ISO/IEC 23009-1]
+    signalling:
+      mpd:
+        elements: [SegmentTemplate]
+        attributes: [SegmentTemplate@media, SegmentTemplate@initialization, SegmentTemplate@duration, SegmentTemplate@startNumber]
+        descriptors: []
+      inband:
+        boxes: []
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples: []
+      settings: []
+      apis: []
+      caveats: []
+    livesim2:
+      support_status: supported
+      url_parameters: []
+      examples: []
+      caveats: [Default livesim2 output pattern uses SegmentTemplate with $Number$.]
+    examples:
+      executable: []
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: false
+      requires_drm: false
+      requires_custom_app: false
+    notes: []
+
+  - id: segmenttimeline-time
+    title: SegmentTimeline Time Addressing
+    status: draft
+    category: core
+    granularity: sub-feature
+    defined_by:
+      iopv5_parts: [part02-core-cmaf]
+      dash_if_iop: []
+      external_specs: [ISO/IEC 23009-1]
+    signalling:
+      mpd:
+        elements: [SegmentTemplate, SegmentTimeline, S]
+        attributes: [SegmentTemplate@media, SegmentTemplate@timescale, S@t, S@d, S@r]
+        descriptors: []
+      inband:
+        boxes: []
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples: []
+      settings: []
+      apis: []
+      caveats: []
+    livesim2:
+      support_status: supported
+      url_parameters: [segtimeline_1]
+      examples: [part04-ll-segtimeline]
+      caveats: []
+    examples:
+      executable: [part04-ll-segtimeline]
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: false
+      requires_drm: false
+      requires_custom_app: false
+    notes: []
+
+  - id: utc-timing
+    title: UTCTiming
+    status: draft
+    category: core
+    granularity: sub-feature
+    defined_by:
+      iopv5_parts: [part02-core-cmaf, part04-live-low-latency]
+      dash_if_iop: []
+      external_specs: [ISO/IEC 23009-1]
+    signalling:
+      mpd:
+        elements: [UTCTiming]
+        attributes: [UTCTiming@schemeIdUri, UTCTiming@value]
+        descriptors: []
+      inband:
+        boxes: []
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples: []
+      settings:
+        - streaming.utcSynchronization.defaultTimingSource
+      apis: []
+      caveats: []
+    livesim2:
+      support_status: supported
+      url_parameters: [utc_direct]
+      examples: [part04-ll-utc]
+      caveats: []
+    examples:
+      executable: [part04-ll-utc]
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: false
+      requires_drm: false
+      requires_custom_app: false
+    notes: []
+
+  - id: availability-time-offset
+    title: Availability Time Offset
+    status: draft
+    category: live
+    granularity: sub-feature
+    defined_by:
+      iopv5_parts: [part04-live-low-latency]
+      dash_if_iop: []
+      external_specs: [ISO/IEC 23009-1]
+    signalling:
+      mpd:
+        elements: [SegmentTemplate]
+        attributes: [SegmentTemplate@availabilityTimeOffset, SegmentTemplate@availabilityTimeComplete]
+        descriptors: []
+      inband:
+        boxes: []
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples:
+        - section: Live
+          title: Live stream with availabilityTimeOffset
+      settings: []
+      apis: []
+      caveats: []
+    livesim2:
+      support_status: supported
+      url_parameters: [ato]
+      examples: [part04-ll-basic, part04-ll-ultra]
+      caveats: []
+    examples:
+      executable: [part04-ll-basic, part04-ll-ultra]
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: false
+    notes: []
+
+  - id: low-latency-live
+    title: Low-Latency Live DASH
+    status: draft
+    category: low-latency
+    granularity: feature
+    defined_by:
+      iopv5_parts: [part04-live-low-latency]
+      dash_if_iop: []
+      external_specs: [ISO/IEC 23009-1, CMAF]
+    signalling:
+      mpd:
+        elements: [ServiceDescription, Latency, ProducerReferenceTime, UTCTiming, SegmentTemplate, Resync]
+        attributes: [Latency@target, SegmentTemplate@availabilityTimeOffset, SegmentTemplate@availabilityTimeComplete]
+        descriptors: []
+      inband:
+        boxes: [prft]
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements:
+        - ServiceDescription present for DASH-IF Low-Latency Service Offering.
+        - Latency@target present in milliseconds.
+      recommendations: []
+    client:
+      requirements:
+        - Consume low-latency content with multiple moof/mdat pairs per Segment.
+      recommendations:
+        - Use service latency information to control live-edge playback.
+    dashjs:
+      support_status: supported
+      samples:
+        - section: Live Low Latency
+          title: Low latency testplayer
+        - section: Live
+          title: Synchronized live playback with the catchup mode
+      settings:
+        - streaming.liveCatchup.enabled
+        - streaming.delay.liveDelay
+      apis: []
+      caveats: []
+    livesim2:
+      support_status: supported
+      url_parameters: [chunkdur, ato, ltgt, utc_direct, segtimeline_1]
+      examples: [part04-ll-basic, part04-ll-ultra, part04-ll-segtimeline, part04-ll-utc]
+      caveats: [ltgt values are integer milliseconds.]
+    examples:
+      executable: [part04-ll-basic, part04-ll-ultra, part04-ll-segtimeline, part04-ll-utc]
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: false
+    notes: []
+
+  - id: service-description-latency
+    title: ServiceDescription Latency Signalling
+    status: draft
+    category: low-latency
+    granularity: sub-feature
+    parent: low-latency-live
+    defined_by:
+      iopv5_parts: [part04-live-low-latency]
+      dash_if_iop: []
+      external_specs: [ISO/IEC 23009-1]
+    signalling:
+      mpd:
+        elements: [ServiceDescription, Latency]
+        attributes: [Latency@target, Latency@min, Latency@max]
+        descriptors: []
+      inband:
+        boxes: []
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements:
+        - Latency@target present in milliseconds for the low-latency offering.
+      recommendations: []
+    client:
+      requirements: []
+      recommendations:
+        - Use ServiceDescription when selecting playback latency.
+    dashjs:
+      support_status: supported
+      samples:
+        - section: Live Low Latency
+          title: Low latency testplayer
+      settings:
+        - streaming.applyServiceDescription
+        - streaming.delay.useSuggestedPresentationDelay
+      apis: []
+      caveats: []
+    livesim2:
+      support_status: supported
+      url_parameters: [ltgt]
+      examples: [part04-ll-basic, part04-ll-ultra]
+      caveats: [ltgt values are integer milliseconds.]
+    examples:
+      executable: [part04-ll-basic, part04-ll-ultra]
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: false
+    notes: []
+
+  - id: cmaf-chunked-delivery
+    title: CMAF Chunked Delivery
+    status: draft
+    category: low-latency
+    granularity: sub-feature
+    parent: low-latency-live
+    defined_by:
+      iopv5_parts: [part04-live-low-latency]
+      dash_if_iop: []
+      external_specs: [CMAF, ISO/IEC 23009-1]
+    signalling:
+      mpd:
+        elements: [SegmentTemplate, Resync]
+        attributes: [SegmentTemplate@availabilityTimeOffset, Resync@dT]
+        descriptors: []
+      inband:
+        boxes: [moof, mdat]
+        events: []
+      http:
+        headers: [Transfer-Encoding]
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations:
+        - CMAF chunks should be generated so adjacent chunks do not overlap in presentation time.
+    client:
+      requirements:
+        - Support media segments that contain more than one moof/mdat pair.
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples:
+        - section: Live Low Latency
+          title: Low latency testplayer
+      settings: []
+      apis: []
+      caveats: []
+    livesim2:
+      support_status: supported
+      url_parameters: [chunkdur]
+      examples: [part04-ll-basic, part04-ll-ultra]
+      caveats: []
+    examples:
+      executable: [part04-ll-basic, part04-ll-ultra]
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: false
+    notes: []
+
+  - id: mpd-patching
+    title: MPD Patching
+    status: external
+    category: live
+    granularity: feature
+    defined_by:
+      iopv5_parts: [part04-live-low-latency]
+      dash_if_iop: [mpd-patch]
+      external_specs: [ISO/IEC 23009-1]
+    signalling:
+      mpd:
+        elements: [PatchLocation]
+        attributes: []
+        descriptors: []
+      inband:
+        boxes: []
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples:
+        - section: Live
+          title: Live stream with MPD Patching
+      settings: []
+      apis: []
+      caveats: []
+    livesim2:
+      support_status: unknown
+      url_parameters: []
+      examples: []
+      caveats: []
+    examples:
+      executable: []
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: false
+    notes: [Map DASH-IF-IOP MPD Patch extension details in a later pass.]
+
+  - id: cmcd
+    title: Common Media Client Data
+    status: external
+    category: reporting
+    granularity: feature
+    defined_by:
+      iopv5_parts: [part12-conformance-reference-tools]
+      dash_if_iop: [cmcd]
+      external_specs: [CTA-5004]
+    signalling:
+      mpd:
+        elements: []
+        attributes: []
+        descriptors: []
+      inband:
+        boxes: []
+        events: []
+      http:
+        headers: [CMCD-Object, CMCD-Request, CMCD-Session, CMCD-Status]
+        query_parameters: [CMCD]
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples:
+        - section: CMCD
+          title: CMCD v1 Reporting
+        - section: CMCD
+          title: CMCD v1 Reporting from manifest
+        - section: CMCD
+          title: CMCD v2 Reporting
+      settings:
+        - streaming.cmcd.enabled
+        - streaming.cmcd.mode
+      apis: []
+      caveats: []
+    livesim2:
+      support_status: unknown
+      url_parameters: []
+      examples: []
+      caveats: []
+    examples:
+      executable: []
+      snippets: []
+    validation:
+      mpd_observable: false
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: true
+    notes: [CMCD is primarily observable in HTTP requests.]
+
+  - id: content-steering
+    title: Content Steering
+    status: external
+    category: delivery
+    granularity: feature
+    defined_by:
+      iopv5_parts: [part12-conformance-reference-tools]
+      dash_if_iop: [content-steering]
+      external_specs: [DASH-IF Content Steering]
+    signalling:
+      mpd:
+        elements: []
+        attributes: []
+        descriptors: [ContentSteering]
+      inband:
+        boxes: []
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples: []
+      settings:
+        - streaming.applyContentSteering
+      apis: []
+      caveats: []
+    livesim2:
+      support_status: unknown
+      url_parameters: []
+      examples: []
+      caveats: []
+    examples:
+      executable: []
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: false
+    notes: [Needs closer mapping to DASH-IF-IOP content-steering spec.]
+
+  - id: content-protection
+    title: Content Protection
+    status: draft
+    category: protection
+    granularity: feature
+    defined_by:
+      iopv5_parts: [part06-content-protection]
+      dash_if_iop: []
+      external_specs: [ISO/IEC 23001-7, EME]
+    signalling:
+      mpd:
+        elements: [ContentProtection]
+        attributes: [ContentProtection@schemeIdUri, ContentProtection@value]
+        descriptors: []
+      inband:
+        boxes: [pssh]
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples:
+        - section: DRM
+          title: Widevine
+        - section: DRM
+          title: PlayReady
+        - section: DRM
+          title: ClearKey
+      settings: []
+      apis: []
+      caveats: [Browser, OS, CDM, and license server availability affect playback.]
+    livesim2:
+      support_status: unknown
+      url_parameters: []
+      examples: []
+      caveats: []
+    examples:
+      executable: []
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: true
+      requires_custom_app: false
+    notes: []
+
+  - id: text-tracks
+    title: Text Tracks
+    status: draft
+    category: media
+    granularity: feature
+    defined_by:
+      iopv5_parts: [part09-text]
+      dash_if_iop: []
+      external_specs: [WebVTT, IMSC]
+    signalling:
+      mpd:
+        elements: [AdaptationSet, Role, Accessibility]
+        attributes: [AdaptationSet@mimeType, AdaptationSet@lang]
+        descriptors: []
+      inband:
+        boxes: []
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples:
+        - section: Subtitles and Captions
+          title: Caption VTT
+        - section: Subtitles and Captions
+          title: TTML EBU timed text tracks
+        - section: Subtitles and Captions
+          title: Multi Track Captions
+      settings: []
+      apis: []
+      caveats: []
+    livesim2:
+      support_status: supported
+      url_parameters: [timesubsstpp, timesubswvtt]
+      examples: []
+      caveats: [Generated time subtitles can create STPP or WebVTT tracks by language.]
+    examples:
+      executable: []
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: false
+    notes: []
+
+  - id: multi-audio
+    title: Multi-Audio
+    status: draft
+    category: media
+    granularity: feature
+    defined_by:
+      iopv5_parts: [part08-audio]
+      dash_if_iop: []
+      external_specs: [ISO/IEC 23009-1]
+    signalling:
+      mpd:
+        elements: [AdaptationSet, Role, Accessibility]
+        attributes: [AdaptationSet@mimeType, AdaptationSet@lang, AudioChannelConfiguration@value]
+        descriptors: []
+      inband:
+        boxes: []
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples:
+        - section: Multi-Audio
+          title: Multiple audio tracks
+        - section: Multi-Audio
+          title: Multi Audio - Initial Track with language and accessibility
+      settings: []
+      apis: []
+      caveats: [Codec support depends on browser and platform.]
+    livesim2:
+      support_status: supported_with_asset
+      url_parameters: []
+      examples: []
+      caveats: [Depends on source asset audio tracks.]
+    examples:
+      executable: []
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: false
+    notes: []
+
+  - id: inband-emsg-events
+    title: Inband emsg Events
+    status: draft
+    category: events
+    granularity: sub-feature
+    defined_by:
+      iopv5_parts: [part10-events, part05-ad-insertion]
+      dash_if_iop: []
+      external_specs: [ISO/IEC 23009-1, ISO/IEC 14496-12]
+    signalling:
+      mpd:
+        elements: [EventStream]
+        attributes: [EventStream@schemeIdUri]
+        descriptors: []
+      inband:
+        boxes: [emsg]
+        events: []
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples:
+        - section: Advanced
+          title: Listening to SCTE-EMSG Events
+        - section: Getting Started
+          title: Listening to events
+      settings: []
+      apis: []
+      caveats: [Often requires application event handling to observe payloads.]
+    livesim2:
+      support_status: unknown
+      url_parameters: []
+      examples: []
+      caveats: []
+    examples:
+      executable: []
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: true
+    notes: []
+
+  - id: lcevc
+    title: MPEG-5 Part 2 LCEVC Carriage
+    status: external
+    category: video
+    granularity: feature
+    defined_by:
+      iopv5_parts: [part07-video]
+      dash_if_iop: [lc-evc]
+      external_specs: [MPEG-5 Part 2]
+    signalling:
+      mpd:
+        elements: [AdaptationSet, Representation, EssentialProperty, SupplementalProperty]
+        attributes: []
+        descriptors: []
+      inband:
+        boxes: []
+        events: [SEI]
+      http:
+        headers: []
+        query_parameters: []
+    content_offering:
+      requirements: []
+      recommendations: []
+    client:
+      requirements: []
+      recommendations: []
+    dashjs:
+      support_status: supported
+      samples:
+        - section: MPEG-5 Part 2 - LCEVC
+          title: Scalable LCEVC carriage
+      settings: []
+      apis: []
+      caveats: [Requires LCEVC-capable playback pipeline.]
+    livesim2:
+      support_status: supported_with_asset
+      url_parameters: []
+      examples: []
+      caveats: [Depends on suitable source asset.]
+    examples:
+      executable: []
+      snippets: []
+    validation:
+      mpd_observable: true
+      player_observable: true
+      requires_drm: false
+      requires_custom_app: true
+    notes: []

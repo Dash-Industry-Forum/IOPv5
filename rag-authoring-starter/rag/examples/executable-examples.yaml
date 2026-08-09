@@ -15,6 +15,12 @@ examples:
     title: Basic low-latency live, 3.5 s target
     feature: Low-latency live playback with CMAF chunks and ServiceDescription target latency
     source: livesim2
+    covers_features:
+      - dynamic-mpd-live
+      - low-latency-live
+      - service-description-latency
+      - cmaf-chunked-delivery
+      - availability-time-offset
     mpd: https://livesim2.dashif.org/livesim2/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd
     dashjs: https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fchunkdur_0.5%2Fato_7%2Fltgt_3500%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true
     expected: Dynamic MPD loads in dash.js and plays close to the live edge with a 3.5 s target latency.
@@ -25,6 +31,12 @@ examples:
     title: Ultra-low-latency live, 2 s target
     feature: More aggressive low-latency live playback with 200 ms CMAF chunks
     source: livesim2
+    covers_features:
+      - dynamic-mpd-live
+      - low-latency-live
+      - service-description-latency
+      - cmaf-chunked-delivery
+      - availability-time-offset
     mpd: https://livesim2.dashif.org/livesim2/chunkdur_0.2/ato_4/ltgt_2000/testpic_2s/Manifest.mpd
     dashjs: https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fchunkdur_0.2%2Fato_4%2Fltgt_2000%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true
     expected: Dynamic MPD loads in dash.js with a 2 s target latency and shorter CMAF chunks.
@@ -35,6 +47,13 @@ examples:
     title: SegmentTimeline low-latency live
     feature: Low-latency live playback using SegmentTimeline addressing
     source: livesim2
+    covers_features:
+      - dynamic-mpd-live
+      - low-latency-live
+      - service-description-latency
+      - cmaf-chunked-delivery
+      - availability-time-offset
+      - segmenttimeline-time
     mpd: https://livesim2.dashif.org/livesim2/segtimeline_1/chunkdur_0.5/ato_7/ltgt_4000/testpic_2s/Manifest.mpd
     dashjs: https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Fsegtimeline_1%2Fchunkdur_0.5%2Fato_7%2Fltgt_4000%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true
     expected: Dynamic MPD uses SegmentTimeline and loads in dash.js.
@@ -45,6 +64,13 @@ examples:
     title: Low-latency live with UTC timing
     feature: Low-latency live playback with UTCTiming
     source: livesim2
+    covers_features:
+      - dynamic-mpd-live
+      - low-latency-live
+      - service-description-latency
+      - cmaf-chunked-delivery
+      - availability-time-offset
+      - utc-timing
     mpd: https://livesim2.dashif.org/livesim2/utc_direct/chunkdur_0.5/ato_7/ltgt_3500/testpic_2s/Manifest.mpd
     dashjs: https://reference.dashif.org/dash.js/latest/samples/dash-if-reference-player/index.html?stream=https%3A%2F%2Flivesim2.dashif.org%2Flivesim2%2Futc_direct%2Fchunkdur_0.5%2Fato_7%2Fltgt_3500%2Ftestpic_2s%2FManifest.mpd&autoLoad=true&autoplay=true&muted=true
     expected: MPD includes UTCTiming and loads in dash.js for live-edge synchronization.
