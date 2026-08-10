@@ -1,5 +1,5 @@
 <pre class=metadata>
-Revision: 0.3
+Revision: 5.0.4
 Title: DASH-IF IOP v5 Part 7: Video
 Status: LD
 Repository: Dash-Industry-Forum/IOPv5
@@ -18,11 +18,53 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
 
 <pre class=biblio>
 {
+  "AVC": {
+    "href": "https://www.iso.org/standard/87574.html",
+    "title": "Information technology — Coding of audio-visual objects - Part 10: Advanced video coding",
+    "publisher": "ISO/IEC",
+    "date": "2025"
+  },
+  "HEVC": {
+    "href": "https://www.iso.org/standard/90502.html",
+    "title": "Information technology — High efficiency coding and media delivery in heterogeneous environments - Part 2: High efficiency video coding",
+    "publisher": "ISO/IEC",
+    "date": "2025"
+  },
+  "VVC": {
+    "href": "https://www.iso.org/standard/86516.html",
+    "title": "Information technology — Coded representation of immersive media - Part 3: Versantile video coding",
+    "publisher": "ISO/IEC",
+    "date": "2024"
+  },
+  "MPEG5EVC": {
+    "href": "https://www.iso.org/standard/57797.html",
+    "title": "Information technology — General video coding - Part 1: Essential video coding",
+    "publisher": "ISO/IEC",
+    "date": "2020"
+  },
+  "MPEG5LCEVC": {
+    "href": "https://www.iso.org/standard/79143.html",
+    "title": "Information technology — General video coding - Part 2: Low complexity enhancement video coding",
+    "publisher": "ISO/IEC",
+    "date": "2021"
+  },
+  "ISOBMFF": {
+    "href": "https://www.iso.org/standard/85596.html",
+    "title": "Information technology — Coding of audio-visual objects - Part 12: ISO base media file format",
+    "publisher": "ISO/IEC",
+    "date": "2026"
+  },
+  "NALUFF": {
+    "href": "https://www.iso.org/standard/89118.html",
+    "title": "Information technology — Coding of audio-visual objects - Part 15: Carriage of network abstraction layer (NAL) unit structured video in the ISO base media file format",
+    "publisher": "ISO/IEC",
+    "date": "2024"
+  },
   "MPEGDASH": {
-    "href": "https://www.iso.org/standard/83314.html",
+    "href": "https://www.iso.org/standard/23009-1",
     "title": "Information technology - Dynamic adaptive streaming over HTTP (DASH) - Part 1: Media presentation description and segment formats",
     "publisher": "ISO/IEC",
-    "date": "2022"
+    "date": "2026"
   },
   "MPEGCMAF": {
     "href": "https://www.iso.org/standard/85623.html",
@@ -41,6 +83,12 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
     "title": "ETSI TS 103 285: MPEG-DASH Profile for Transport of ISO BMFF Based DVB Services over IP Based Networks",
     "publisher": "ETSI/DVB",
     "date": "2024"
+  },
+  "ITU_H274": {
+    "href": "https://www.itu.int/rec/T-REC-H.274",
+    "title": "H.274: Versatile supplemental enhancement information messages for coded video bitstreams",
+    "publisher": "ITU-T",
+    "date": "01/26"
   }
 }
 </pre>
