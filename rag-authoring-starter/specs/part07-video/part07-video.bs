@@ -79,16 +79,16 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
     "date": "2024"
   },
   "MPEGCICP_1": {
-    "href": "xxx",
+    "href": "https://www.iso.org/standard/57794.html",
     "title": "Information technology - Coding-independent code points - Part 1: Systems",
     "publisher": "ISO/IEC",
-    "date": "xxx"
+    "date": "2018"
   },
   "MPEGCICP_2": {
-    "href": "xxx",
+    "href": "https://www.iso.org/standard/85291.html",
     "title": "Information technology - Coding-independent code points - Part 2: Video",
     "publisher": "ISO/IEC",
-    "date": "xxx"
+    "date": "2025"
   },
   "DASHIF-CODECS": {
     "href": "https://dashif.org/codecs/introduction/",
@@ -97,22 +97,22 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
     "date": "2024"
   },
   "DASHIF-IOP5_2": {
-    "href": "xxx",
+    "href": "https://dashif.org/guidelines/iop-v5#part-2-core-principles-and-cmaf-mapping",
     "title": "Core principles and CMAF mapping",
     "publisher": "SVTA",
-    "date": "xxx"
+    "date": "to be puvlished"
   },
   "DASHIF-IOP4_3": {
-    "href": "xxx",
+    "href": "https://dash-industry-forum.github.io/docs/DASH-IF-IOP-v4.3.pdf",
     "title": "DASH-IF IOP v4.3: Guidelines for Implementation: DASH-IF Interoperability Points",
     "publisher": "SVTA",
-    "date": "xxx"
+    "date": "2018"
   },
   "ETSI_101_154": {
-    "href": "xxx",
+    "href": "https://www.etsi.org/deliver/etsi_ts/101100_101199/101154/02.10.01_60/ts_101154v021001p.pdf",
     "title": "ETSI TS 101 154",
     "publisher": "ETSI/DVB",
-    "date": "xxx"
+    "date": "2026"
   },
   "DVBDASH": {
     "href": "https://www.etsi.org/standards-search",
@@ -121,10 +121,10 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
     "date": "2024"
   },
   "ITU_BT709": {
-    "href": "xxx",
-    "title": "ITU-R BT.709: XXX",
+    "href": "https://www.itu.int/rec/r-rec-bt.709",
+    "title": "ITU-R BT.709: Parameter values for the HDTV standards for production and international programme exchange",
     "publisher": "ITU-R",
-    "date": "xxx"
+    "date": "06/2015"
   },
   "ITU_H274": {
     "href": "https://www.itu.int/rec/T-REC-H.274",
@@ -133,16 +133,16 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
     "date": "01/26"
   },
   "SCTE_214-1": {
-    "href": "xxxx",
+    "href": "https://account.scte.org/standards/library/catalog/scte-214-1-mpeg-dash-for-ip-based-cable-services-part1-mpd-constraints-and-extensions/",
     "title": "SCTE 214-1: MPEG DASH for IP-Based Cable Services, Part 1: MPD Constraints and Extensions",
     "publisher": "SCTE",
     "date": "2024"
   },
   "SCTE_215-1-1": {
-    "href": "xxxx",
+    "href": "https://webstore.ansi.org/standards/scte/ANSISCTE2152020-2409666",
     "title": "HEVC Video Constraints for Cable Television Part 1-1 HDR",
     "publisher": "SCTE",
-    "date": "xxxx"
+    "date": "2020"
   },
   "CTA_WAVE": {
     "href": "https://shop.cta.tech/products/cta-5003 https://cdn.cta.tech/cta/media/media/resources/standards/pdfs/cta-5003-final.pdf",
@@ -151,22 +151,20 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
     "date": "2024"
   },
   "SMPTE_2094_10": {
-    "href": "xxx",
     "title": "SMPTE ST 2094-10:2021: Dynamic Metadata for Color Volume Transform - Application #1",
     "publisher": "SMPTE",
     "date": "2021"
   },
   "SMPTE_2094_40": {
-    "href": "xxx",
     "title": "SMPTE ST 2094-10:2021: Dynamic Metadata for Color Volume Transform - Application #4",
     "publisher": "SMPTE",
     "date": "2020"
   },
   "ETSI_103_433-2": {
-    "href": "xxx",
+    "href": "https://www.etsi.org/deliver/etsi_ts/103400_103499/10343302/01.03.01_60/ts_10343302v010301p.pdf",
     "title": "High-Performance Single Layer High Dynamic Range (HDR) System for use in Consumer Electronics devices; Part 2: Enhancements for Perceptual Quantization (PQ) transfer function based High Dynamic Range (HDR) Systems (SL-HDR2)",
     "publisher": "ETSI",
-    "date": "xxx"
+    "date": "2021-08"
   }
 }
 </pre>
