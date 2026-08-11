@@ -48,17 +48,23 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
     "publisher": "ISO/IEC",
     "date": "2021"
   },
-  "ISOBMFF": {
+  "MPEGISOBMFF": {
     "href": "https://www.iso.org/standard/85596.html",
     "title": "Information technology — Coding of audio-visual objects - Part 12: ISO base media file format",
     "publisher": "ISO/IEC",
     "date": "2026"
   },
-  "NALUFF": {
+  "MPEGNALUFF": {
     "href": "https://www.iso.org/standard/89118.html",
     "title": "Information technology — Coding of audio-visual objects - Part 15: Carriage of network abstraction layer (NAL) unit structured video in the ISO base media file format",
     "publisher": "ISO/IEC",
     "date": "2024"
+  },
+  "MPEG_TS": {
+    "href": "",
+    "title": "Information technology - Generic coding of moving pictures and associated audio information - Part 1: Systems",
+    "publisher": "ISO/IEC",
+    "date": ""
   },
   "MPEGDASH": {
     "href": "https://www.iso.org/standard/23009-1",
@@ -72,11 +78,41 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
     "publisher": "ISO/IEC",
     "date": "2024"
   },
+  "MPEGCICP_1": {
+    "href": "xxx",
+    "title": "Information technology - Coding-independent code points - Part 1: Systems",
+    "publisher": "ISO/IEC",
+    "date": "xxx"
+  },
+  "MPEGCICP_2": {
+    "href": "xxx",
+    "title": "Information technology - Coding-independent code points - Part 2: Video",
+    "publisher": "ISO/IEC",
+    "date": "xxx"
+  },
   "DASHIF-CODECS": {
     "href": "https://dashif.org/codecs/introduction/",
     "title": "DASH-IF Codec Registry",
-    "publisher": "DASH Industry Forum",
+    "publisher": "SVTA",
     "date": "2024"
+  },
+  "DASHIF-IOP5_2": {
+    "href": "xxx",
+    "title": "Core principles and CMAF mapping",
+    "publisher": "SVTA",
+    "date": "xxx"
+  },
+  "DASHIF-IOP4_3": {
+    "href": "xxx",
+    "title": "DASH-IF IOP v4.3: Guidelines for Implementation: DASH-IF Interoperability Points",
+    "publisher": "SVTA",
+    "date": "xxx"
+  },
+  "ETSI_101_154": {
+    "href": "xxx",
+    "title": "ETSI TS 101 154",
+    "publisher": "ETSI/DVB",
+    "date": "xxx"
   },
   "DVBDASH": {
     "href": "https://www.etsi.org/standards-search",
@@ -84,11 +120,53 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
     "publisher": "ETSI/DVB",
     "date": "2024"
   },
+  "ITU_BT709": {
+    "href": "xxx",
+    "title": "ITU-R BT.709: XXX",
+    "publisher": "ITU-R",
+    "date": "xxx"
+  },
   "ITU_H274": {
     "href": "https://www.itu.int/rec/T-REC-H.274",
     "title": "H.274: Versatile supplemental enhancement information messages for coded video bitstreams",
     "publisher": "ITU-T",
     "date": "01/26"
+  },
+  "SCTE_214-1": {
+    "href": "xxxx",
+    "title": "SCTE 214-1: MPEG DASH for IP-Based Cable Services, Part 1: MPD Constraints and Extensions",
+    "publisher": "SCTE",
+    "date": "2024"
+  },
+  "SCTE_215-1-1": {
+    "href": "xxxx",
+    "title": "HEVC Video Constraints for Cable Television Part 1-1 HDR",
+    "publisher": "SCTE",
+    "date": "xxxx"
+  },
+  "CTA_WAVE": {
+    "href": "https://shop.cta.tech/products/cta-5003 https://cdn.cta.tech/cta/media/media/resources/standards/pdfs/cta-5003-final.pdf",
+    "title": "CTA-5003-B: Web Application Video Ecosystem (WAVE): Device Playback Capabilities Specification",
+    "publisher": "CTA",
+    "date": "2024"
+  },
+  "SMPTE_2094_10": {
+    "href": "xxx",
+    "title": "SMPTE ST 2094-10:2021: Dynamic Metadata for Color Volume Transform - Application #1",
+    "publisher": "SMPTE",
+    "date": "2021"
+  },
+  "SMPTE_2094_40": {
+    "href": "xxx",
+    "title": "SMPTE ST 2094-10:2021: Dynamic Metadata for Color Volume Transform - Application #4",
+    "publisher": "SMPTE",
+    "date": "2020"
+  },
+  "ETSI_103_433-2": {
+    "href": "xxx",
+    "title": "High-Performance Single Layer High Dynamic Range (HDR) System for use in Consumer Electronics devices; Part 2: Enhancements for Perceptual Quantization (PQ) transfer function based High Dynamic Range (HDR) Systems (SL-HDR2)",
+    "publisher": "ETSI",
+    "date": "xxx"
   }
 }
 </pre>

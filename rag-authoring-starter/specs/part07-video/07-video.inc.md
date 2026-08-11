@@ -11,7 +11,7 @@
 
 # Executive summary # {#exec_summary}
 
-The present document defines the CMAF Media Profiles and the DASH signalling for video tracks. This work was derived from IOP v4.3 \[i.1\], but does not contain non-CMAF profiles.
+The present document defines the CMAF Media Profiles and the DASH signalling for video tracks. This work was derived from IOP v4.3 [[DASHIF-IOP4_3]], but does not contain non-CMAF profiles.
 
 # Introduction # {#intro}
 
@@ -32,8 +32,8 @@ The present document is Part 7 of a multipart set of documents, collectively cal
 
 # Scope # {#scope}
 
-The present document defines the CMAF Media Profiles and the DASH signalling for video tracks. This work was derived from IOP v4.3 \[i.1\], but does not contain non-CMAF profiles.
-
+The present document defines the CMAF Media Profiles and the DASH signalling for video tracks. This work was derived from IOP v4.3 [[DASHIF-IOP4_3]], but does not contain non-CMAF profiles.
+<!--
 # References # {#references_local}
 
 ## Normative references ## {#normative-references}
@@ -50,7 +50,7 @@ The following referenced documents are necessary for the application of the pres
 
 3. ISO/IEC 23000-19 “Information technology — Multimedia application format (MPEG-A) — Part 19: Common media application format (CMAF) for segmented media” [[!MPEGCMAF]].
 
-4. ISO/IEC 14496-12: Information technology — Coding of audio-visual objects \-Part 12: ISO base media file format [[!ISOBMFF]].
+4. ISO/IEC 14496-12: Information technology — Coding of audio-visual objects -Part 12: ISO base media file format [[!ISOBMFF]].
 
 5. ISO/IEC 14496-15: Information technology — Coding of audio-visual objects — Part 15: Carriage of network abstraction layer (NAL) unit structured video in ISO base media file format [[!NALUFF]].
 
@@ -88,10 +88,10 @@ The following referenced documents are not necessary for the application of the 
 
 1. DASH-IF IOP v4.3, “Guidelines for Implementation: DASH-IF Interoperability Points”  
 2. SCTE 214-1: 2024: “MPEG DASH for IP-Based Cable Services, Part 1: MPD Constraints and Extensions”  
-3. SMPTE ST 2094-10:2021: "Dynamic Metadata for Color Volume Transform \- Application \#1".  
-4. SMPTE ST 2094-40:2020: "Dynamic Metadata for Color Volume Transform \- Application \#4".  
+3. SMPTE ST 2094-10:2021: "Dynamic Metadata for Color Volume Transform - Application #1".  
+4. SMPTE ST 2094-40:2020: "Dynamic Metadata for Color Volume Transform - Application #4".  
 5. ETSI TS 103 433-2: "High-Performance Single Layer High Dynamic Range (HDR) System for use in Consumer Electronics devices; Part 2: Enhancements for Perceptual Quantization (PQ) transfer function based High Dynamic Range (HDR) Systems (SL-HDR2)".
-
+-->
 # Definition of terms, symbols and abbreviations # {#definition-of-terms,-symbols-and-abbreviations}
 
 ## Terms ## {#terms}
@@ -127,9 +127,9 @@ For the purposes of the present document, the following abbreviations apply:
 
 # CMAF Media Profiles # {#cmaf-media-profiles}
 
-All video tracks <span class=modal-keyword>should</span> conform to CMAF Media Profiles, as outlined in draft DASH-IF v5.0.0, Part 2 \[1\]. DASH-IF IOPs do not require support for any specific codecs, but rather permits to add different codecs as long as they are addressing basic CMAF media profile related requirements. Codecs validated to fulfill these requirements are documented in the online DASH-IF specification repository found here: [https://dashif.org/codecs/video/](https://dashif.org/codecs/text) including the Media profile name, the CMAF brand, a reference to the relevant specifications, a recommended <code>`@codecs`</code> parameter and any additional information.
+All video tracks <span class=modal-keyword>should</span> conform to CMAF Media Profiles, as outlined in draft DASH-IF v5.0.0, Part 2 [[!DASHIF-IOP5_2]]. DASH-IF IOPs do not require support for any specific codecs, but rather permits to add different codecs as long as they are addressing basic CMAF media profile related requirements. Codecs validated to fulfill these requirements are documented in the online DASH-IF specification repository found here: [https://dashif.org/codecs/video/](https://dashif.org/codecs/text) including the Media profile name, the CMAF brand, a reference to the relevant specifications, a recommended <code>`@codecs`</code> parameter and any additional information.
 
-Additional non-CMAF video profiles can be found in DASH-IF IOP v4.3 \[i.1\].
+Additional non-CMAF video profiles can be found in DASH-IF IOP v4.3 [[DASHIF-IOP4_3]].
 
 # Mapping to delivery # {#mapping-to-delivery}
 
@@ -139,9 +139,9 @@ If video media conforming to a particular media profile is provided in an CMAF t
 
 * The requirements of the ISO BMFF track defined in subclause 5.1 for the particular media profile,
 
-* The general CMAF track constraints in ISO/IEC 23000-19 [[MPEGCMAF]] clause 7, and
+* The general CMAF track constraints in ISO/IEC 23000-19 [[!MPEGCMAF]] clause 7, and
 
-* The general video track constraints defined in ISO/IEC 23000-19 [[MPEGCMAF]] clause 9.
+* The general video track constraints defined in ISO/IEC 23000-19 [[!MPEGCMAF]] clause 9.
 
 ## CMAF switching set definition ## {#cmaf-switching-set-definition}
 
@@ -149,13 +149,13 @@ If video media conforming to a particular media profile is provided in an CMAF s
 
 * The requirements of CMAF track in specified in subclause 5.2,
 
-* The general CMAF switching set constraints in ISO/IEC 23000-19 [[MPEGCMAF]] clause 7, and
+* The general CMAF switching set constraints in ISO/IEC 23000-19 [[!MPEGCMAF]] clause 7, and
 
-* The general CMAF switching set constraints defined in ISO/IEC 23000-19 [[MPEGCMAF]] clause 9.
+* The general CMAF switching set constraints defined in ISO/IEC 23000-19 [[!MPEGCMAF]] clause 9.
 
 ## Content requirements ## {#content-requirements}
 
-In addition to the general provisions defined in draft IOP V5 part 2 \[1\] additionally Adaptation Sets <span class=modal-keyword>shall</span> comply with the provisions of the [table below](#t_video_adaptationset_attr_elem).
+In addition to the general provisions defined in draft IOP V5 part 2 [[DASHIF-IOP5_2]] additionally Adaptation Sets <span class=modal-keyword>shall</span> comply with the provisions of the [table below](#t_video_adaptationset_attr_elem).
 
 <table id="t_video_adaptationset_attr_elem" class="data">
   <caption>Video track Adaptation Set attributes and elements</caption>
@@ -164,28 +164,28 @@ In addition to the general provisions defined in draft IOP V5 part 2 \[1\] addit
     <tr>
       <td><code>@mimeType</code></td>
       <td>M</td>
-      <td>See ISO/IEC 23009-1 \[2\], clause 5.3.7.2, Table 14.<br>
+      <td>See ISO/IEC 23009-1 [[!MPEGDASH]], clause 5.3.7.2, Table 14.<br>
         This <span class=modal-keyword>shall</span> be set to <code>“video/mp4”</code>.</td>
     </tr>
     <tr>
       <td><code>`@codecs`</code></td>
       <td>M</td>
-      <td>See ISO/IEC 23009-1 \[2\], clause 5.3.7.2, Table 14.<br>
+      <td>See ISO/IEC 23009-1 [[!MPEGDASH]], clause 5.3.7.2, Table 14.<br>
         This element <span class=modal-keyword>shall</span> be present and set to a valid value, including the codec, profile and level. See [https://dashif.org/codecs/video/](https://dashif.org/codecs/text) for example values for this attribute.</td>
     </tr>
     <tr>
       <td><code>@lang</code></td>
       <td>O</td>
-      <td>See ISO/IEC 23009-1 \[2\], clause 5.3.3.2, Table 5.<br>
+      <td>See ISO/IEC 23009-1 [[!MPEGDASH]], clause 5.3.3.2, Table 5.<br>
         If present with <code><b>Accessibility</b></code>**, the <code>@lang</code> attribute signals the language of closed signing present in the video.</td>
     </tr>
     <tr>
       <td><code><b>Accessibility</b></code></td>
       <td>0 … N</td>
-      <td>See ISO/IEC 23009-1 \[2\], clause 5.3.4.2, Table 8.<br>
+      <td>See ISO/IEC 23009-1 [[!MPEGDASH]], clause 5.3.4.2, Table 8.<br>
       In DASH-IF IOPs the following two schemes for accessibility are defined:
       <ul>
-        <li>the Role scheme as defined by MPEG-DASH (ISO/IEC 23009-1 \[2\]), clause 5.8.5.5, i.e., <code>“urn:mpeg:dash:role:2011”</code>, <span class=modal-keyword>should</span> be used</li>
+        <li>the Role scheme as defined by MPEG-DASH (ISO/IEC 23009-1 [[!MPEGDASH]]), clause 5.8.5.5, i.e., <code>“urn:mpeg:dash:role:2011”</code>, <span class=modal-keyword>should</span> be used</li>
       </ul>
       The DASH role scheme with the following values is expected to be recognized by a DASH-IF client for media type <code>“video”</code> together with the <code><b>Accessibility</b></code> descriptor:
       <ul>
@@ -193,13 +193,13 @@ In addition to the general provisions defined in draft IOP V5 part 2 \[1\] addit
         <li><code>captions</code></li>
         <li>the scheme when CEA-608 is used as defined in clause 6.4.3.3, with <code>@schemeIdUri</code> set to <code>"urn:scte:dash:cc:cea-608:2015"</code>
       </ul>
-      If the video contains open or closed signing, the <code><b>Accessibility</b></code> element <span class=modal-keyword>shall</span> be present. In DASH IOPs only the Role scheme as defined in ISO/IEC 23009-1 \[2\], clause 5.8.5.5, <span class=modal-keyword>should</span> be used, with `@schemIdUri` set to <code>urn:mpeg:dash:role:2011</code>; and the <code>@value</code> <span class=modal-keyword>shall</span> be set to "caption"</td>
+      If the video contains open or closed signing, the <code><b>Accessibility</b></code> element <span class=modal-keyword>shall</span> be present. In DASH IOPs only the Role scheme as defined in ISO/IEC 23009-1 [[!MPEGDASH]], clause 5.8.5.5, <span class=modal-keyword>should</span> be used, with `@schemIdUri` set to <code>urn:mpeg:dash:role:2011</code>; and the <code>@value</code> <span class=modal-keyword>shall</span> be set to "caption"</td>
     </tr>
     <tr>
       <td><code><b>Role</b></code></td>
       <td>0 … N</td>
-      <td>See ISO/IEC 23009-1 \[2\], clause 5.3.3.2, Table 5.<br>
-      In DASH-IF IOPs only the Role scheme as defined by MPEG-DASH  (ISO/IEC 23009-1 \[2\]), clause 5.8.5.5, <span class=modal-keyword>should</span> be used, with <code>@schemIdUri</code> set to <code>urn:mpeg:dash:role:2011</code>.<br>
+      <td>See ISO/IEC 23009-1 [[!MPEGDASH]], clause 5.3.3.2, Table 5.<br>
+      In DASH-IF IOPs only the Role scheme as defined by MPEG-DASH  (ISO/IEC 23009-1 [[!MPEGDASH]]), clause 5.8.5.5, <span class=modal-keyword>should</span> be used, with <code>@schemIdUri</code> set to <code>urn:mpeg:dash:role:2011</code>.<br>
       The DASH role scheme with the following values is expected to be recognized by a DASH-IF client for media type “video” together with the Role descriptor:
       <ul>
         <li><code>caption</code></li>
@@ -229,66 +229,66 @@ The [table below](#t_video_src_metadata) lists a set of `@schemeIdUri` values (d
   <tbody>
     <tr>
       <td>`urn:mpeg:mpegB:cicp:ColourPrimaries`
-      <td>ISO/IEC 23091-2 \[12\]
+      <td>ISO/IEC 23091-2 [[!MPEGCICP_2]]
       <td>8.1
-      <td>Indicating the chromaticity coordinates of the source colour primaries. The `@value` is the value as defined for <code><b>ColourPrimaries</b></code> in \[12\].
+      <td>Indicating the chromaticity coordinates of the source colour primaries. The `@value` is the value as defined for <code><b>ColourPrimaries</b></code> in [[!MPEGCICP_2]].
     <tr>
       <td>`urn:mpeg:mpegB:cicp:TransferCharacteristics`
-      <td>ISO/IEC 23091-2 \[12\]
+      <td>ISO/IEC 23091-2 [[!MPEGCICP_2]]
       <td>8.2
-      <td>Indicating the opto-electronic transfer characteristic of the source colour primaries. The `@value` is the value as defined for <code><b>TransferCharacteristics</b></code> in \[12\].
+      <td>Indicating the opto-electronic transfer characteristic of the source colour primaries. The `@value` is the value as defined for <code><b>TransferCharacteristics</b></code> in [[!MPEGCICP_2]].
     <tr>
       <td>`urn:mpeg:mpegB:cicp:MatrixCoefficients`
-      <td>ISO/IEC 23091-2 \[12\]
+      <td>ISO/IEC 23091-2 [[!MPEGCICP_2]]
       <td>8.3
-      <td>Indicating the matrix coefficients used in deriving luma and chroma signals from the green, blue, and red primaries. The `@value` is the value as defined for <code><b>MatrixCoefficients</b></code> in \[12\].
+      <td>Indicating the matrix coefficients used in deriving luma and chroma signals from the green, blue, and red primaries. The `@value` is the value as defined for <code><b>MatrixCoefficients</b></code> in [[!MPEGCICP_2]].
     <tr>
       <td>`urn:mpeg:mpegB:cicp:VideoFullRangeFlag`
-      <td>ISO/IEC 23091-2 \[12\]
+      <td>ISO/IEC 23091-2 [[!MPEGCICP_2]]
       <td>8.3
-      <td>Indicating the scaling and offset values applied in association with the matrix colour coefficients. The`@value`is the value as defined for <code><b>VideoFullRangeFlag</b></code> in \[12\].
+      <td>Indicating the scaling and offset values applied in association with the matrix colour coefficients. The`@value`is the value as defined for <code><b>VideoFullRangeFlag</b></code> in [[!MPEGCICP_2]].
     <tr>
       <td>`urn:dvb:dash:hdr-dmi`
-      <td>ETSI TS 103 285 \[17\]
+      <td>ETSI TS 103 285 [[!DVBDASH]]
       <td>5.2.6<br>5.4.8
       <td>Indicating the presence of HDR dynamic metadata information. See clause 5.5.2 for a list of defined values.
     <tr>
       <td>`urn:mpeg:mpegB:cicp:VideoFramePackingType`
-      <td>ISO/IEC 23091-2 \[12\]
+      <td>ISO/IEC 23091-2 [[!MPEGCICP_2]]
       <td>8.4
-      <td>Indicating the type of packing arrangement used in video frames. The`@value`is the value as defined for <code><b>VideoFramePackingType</b></code> in \[12\].
+      <td>Indicating the type of packing arrangement used in video frames. The`@value`is the value as defined for <code><b>VideoFramePackingType</b></code> in [[!MPEGCICP_2]].
     <tr>
       <td>`urn:mpeg:mpegB:cicp:QuincunxSamplingFlag`
-      <td>ISO/IEC 23091-2 \[12\]
+      <td>ISO/IEC 23091-2 [[!MPEGCICP_2]]
       <td>8.4
-      <td>Indicating whether a quincunx sampling structure is used in the frame packed video representation. The`@value`is the value as defined for <code><b>QuincunxSamplingFlag</b></code> in \[12\].
+      <td>Indicating whether a quincunx sampling structure is used in the frame packed video representation. The`@value`is the value as defined for <code><b>QuincunxSamplingFlag</b></code> in [[!MPEGCICP_2]].
     <tr>
       <td>`urn:mpeg:mpegB:cicp:PackedContentInterpretationType`
-      <td>ISO/IEC 23091-2 \[12\]
+      <td>ISO/IEC 23091-2 [[!MPEGCICP_2]]
       <td>8.5
-      <td>Indicating the intended interpretation of the constituent frames. The`@value`is the value as defined for <code><b>PackedContentInterpretationType</b></code> in \[12\].
+      <td>Indicating the intended interpretation of the constituent frames. The`@value`is the value as defined for <code><b>PackedContentInterpretationType</b></code> in [[!MPEGCICP_2]].
     <tr>
       <td>`urn:mpeg:dash:14496:10:frame_packing_arrangement_type:2011`
-      <td>[[MPEGDASH]] ISO/IEC 23009-1 \[2\]
+      <td>[[MPEGDASH]] ISO/IEC 23009-1 [[!MPEGDASH]]
       <td>5.8.5.3
-      <td>For Adaptation Sets or Representations that contain a video component that conforms to ISO/IEC 14496-10 \[6\], this value of `@schemeIdUri` (in this case the descriptor becomes the <code><b>FramePacking</b></code> element as defined in \[2\]) <span class=modal-keyword>may</span> also be used for backward-compatibility. In this case the `@value` is the value as defined for <code><b>VideoFramePackingType</b></code> in \[12\]. However, it is recommended to use the value `urn:mpeg:mpegB:cicp:VideoFramePackingType` instead.
+      <td>For Adaptation Sets or Representations that contain a video component that conforms to ISO/IEC 14496-10 [[!AVC]], this value of `@schemeIdUri` (in this case the descriptor becomes the <code><b>FramePacking</b></code> element as defined in [[!MPEGDASH]]) <span class=modal-keyword>may</span> also be used for backward-compatibility. In this case the `@value` is the value as defined for <code><b>VideoFramePackingType</b></code> in [[!MPEGCICP_2]]. However, it is recommended to use the value `urn:mpeg:mpegB:cicp:VideoFramePackingType` instead.
     <tr>
       <td>`urn:mpeg:dash:13818:1:stereo_video_format_type:2011`
-      <td>ISO/IEC 23009-1 \[2\]
+      <td>ISO/IEC 23009-1 [[!MPEGDASH]]
       <td>5.8.5.3
-      <td>For Adaptation Sets or Representations that contain a video component that conforms to ISO/IEC 13818-1 \[154\], this value of `@schemeIdUri` (in this case the descriptor becomes the <code><b>FramePacking</b></code> element as defined in \[2\]) <span class=modal-keyword>may</span> also be used for backward-compatibility. In this case the `@value` is the value as defined for <code><b>VideoFramePackingType</b></code> in \[12\]. However, it is recommended to use the value `urn:mpeg:mpegB:cicp:VideoFramePackingType` instead.
+      <td>For Adaptation Sets or Representations that contain a video component that conforms to ISO/IEC 13818-1 [[!MPEG_TS]], this value of `@schemeIdUri` (in this case the descriptor becomes the <code><b>FramePacking</b></code> element as defined in [[!MPEGDASH]]) <span class=modal-keyword>may</span> also be used for backward-compatibility. In this case the `@value` is the value as defined for <code><b>VideoFramePackingType</b></code> in [[!MPEGCICP_2]]. However, it is recommended to use the value `urn:mpeg:mpegB:cicp:VideoFramePackingType` instead.
     <tr>
       <td>`urn:mpeg:dash:stereoid:2011`
-      <td>ISO/IEC 23009-1 \[2\]
+      <td>ISO/IEC 23009-1 [[!MPEGDASH]]
       <td>5.8.5.6
-      <td>When this value of `@schemeIdUri` is in use, the descriptor is also referred to as a <code><b>Role</b></code> element as specified in \[2\], clause 5.8.5.6. If N views are available that can be combined into M valid stereo pairs, the <code><b>Role</b>@schemeIdURI</code> equal to this identifier signals which views form a stereo pair and which one is the left view and which one is the right view of each stereo pair. The `@value` of the <code><b>Role</b></code> element contains a space-delimited list of view indicators ‘li‘ or ‘rj’ where i, j are non-negative decimal integers.
+      <td>When this value of `@schemeIdUri` is in use, the descriptor is also referred to as a <code><b>Role</b></code> element as specified in [[!MPEGDASH]], clause 5.8.5.6. If N views are available that can be combined into M valid stereo pairs, the <code><b>Role</b>@schemeIdURI</code> equal to this identifier signals which views form a stereo pair and which one is the left view and which one is the right view of each stereo pair. The `@value` of the <code><b>Role</b></code> element contains a space-delimited list of view indicators ‘li‘ or ‘rj’ where i, j are non-negative decimal integers.
 </table>
 
-NOTE:	The composition of the overall `@schemeIdUri` string for all codepoints defined in ISO/IEC 23091-2 \[12\] is specified in ISO/IEC 23091-1 \[13\].
+NOTE:	The composition of the overall `@schemeIdUri` string for all codepoints defined in ISO/IEC 23091-2 [[!MPEGCICP_2]] is specified in ISO/IEC 23091-1 [[!MPEGCICP_1]].
 
 ### Source metadata signalling for HDR video ### {#5.45.2-source-metadata-signalling-for-hdr-video}
 
-Information on colour primaries, matrix coefficients and transfer characteristics <span class=modal-keyword>may</span> be signalled using <code><b>EssentialProperty</b></code> or <code><b>SupplementalProperty</b></code> descriptors. This signalling <span class=modal-keyword>shall</span> only be applied at the <code><b>AdaptationSet</b></code> level, i.e. all Representations in one <code><b>AdaptationSet</b></code> are required to have the same colour primaries, matrix coefficients and transfer characteristics. In each case, where no descriptor is present, it <span class=modal-keyword>may</span> be assumed that the Recommendation Recommendation ITU-R BT.709 \[21\] value applies.
+Information on colour primaries, matrix coefficients and transfer characteristics <span class=modal-keyword>may</span> be signalled using <code><b>EssentialProperty</b></code> or <code><b>SupplementalProperty</b></code> descriptors. This signalling <span class=modal-keyword>shall</span> only be applied at the <code><b>AdaptationSet</b></code> level, i.e. all Representations in one <code><b>AdaptationSet</b></code> are required to have the same colour primaries, matrix coefficients and transfer characteristics. In each case, where no descriptor is present, it <span class=modal-keyword>may</span> be assumed that the Recommendation Recommendation ITU-R BT.709 [[ITU_BT709]] value applies.
 
 In general, <code><b>EssentialProperty</b></code> descriptors <span class=modal-keyword>shall</span> be used to indicate that the player has to support the specified colour primaries, matrix coefficients and transfer characteristics in order to correctly present any <code><b>Representation</b></code> within the <code><b>AdaptationSet</b></code>. A <code><b>SupplementalProperty</b></code> descriptor <span class=modal-keyword>may</span> be used to indicate that the <code><b>Representation</b></code>s of this <code><b>AdaptationSet</b></code> have transfer characteristics that are better described by this descriptor than any <code><b>EssentialProperty</b></code> descriptor with the same `@schemeIdUri`. This value <span class=modal-keyword>should</span> be used in preference by players that support it.
 
@@ -299,7 +299,7 @@ The [table below](#t_hdr_config) lists parameter sets for typical Wide Color Gam
 <table  id="t_hdr_config" class="data">
   <caption>Values for typical HDR configurations</caption>
   <thead>
-    <tr><th><th>SDR with BT.2020<th>HLG10 \+ BT.2100<th>PQ10 + BT.2100
+    <tr><th><th>SDR with BT.2020<th>HLG10 + BT.2100<th>PQ10 + BT.2100
     <tr><th>`@schemeIdUri`<th colspan=3>@value
   <tbody>
     <tr><td>`"urn:mpeg:mpegB:cicp:ColourPrimaries"`<td>9<td>9<td>9
@@ -309,19 +309,19 @@ The [table below](#t_hdr_config) lists parameter sets for typical Wide Color Gam
 
 ### Signalling for presence of HDR dynamic mapping information ### {#5.45.3-signalling-for-presence-of-hdr-dynamic-mapping-information}
 
-In addition to parameters in clause 5.5.1, if a bitstream using PQ10 contains SEI messages carrying HDR dynamic mapping information, the presence of HDR dynamic mapping information <span class=modal-keyword>should</span> be signalled using a <code><b>SupplementalProperty</b></code> with `@schemeIdUri="urn:dvb:dash:hdr-dmi"` as defined in ETSI TS 103 285 \[17\], with the`@value`set to one of the following options: 
+In addition to parameters in clause 5.5.1, if a bitstream using PQ10 contains SEI messages carrying HDR dynamic mapping information, the presence of HDR dynamic mapping information <span class=modal-keyword>should</span> be signalled using a <code><b>SupplementalProperty</b></code> with `@schemeIdUri="urn:dvb:dash:hdr-dmi"` as defined in ETSI TS 103 285 [[!DVBDASH]], with the`@value`set to one of the following options: 
 
-* "ST2094-10": used for dynamic mapping information according to SMPTE ST 2094-10 \[i.2\]  
-* "ST2094-40": used for dynamic mapping information according to SMPTE ST 2094-40 \[i.3\]  
-* "SL-HDR2": used for dynamic mapping information according to ETSI 103 433-2 \[i.4\]
+* "ST2094-10": used for dynamic mapping information according to SMPTE ST 2094-10 [[SMPTE_2094_10]]  
+* "ST2094-40": used for dynamic mapping information according to SMPTE ST 2094-40 [[SMPTE_2094_40]]  
+* "SL-HDR2": used for dynamic mapping information according to ETSI 103 433-2 [[ETSI_103_433-2]]
 
-Additionally, for SCTE-214 \[i.2\] compliant systems, the presence of HDR dynamic mapping information <span class=modal-keyword>may</span> also be signalled using scte214:supplementalCodecs attribute with appropriate codec parameters that indicate the specific HDR dynamic metadata scheme being used.
+Additionally, for SCTE-214 [[SCTE_214-1]] compliant systems, the presence of HDR dynamic mapping information <span class=modal-keyword>may</span> also be signalled using `scte214:supplementalCodecs` attribute with appropriate codec parameters that indicate the specific HDR dynamic metadata scheme being used.
 
 For broader compatibility with targeted players, content providers might wish to provide the content with multiple different HDR dynamic mapping information schemes. Since the data overhead for each of these schemes is low, the provided HDR dynamic mapping information metadata tracks <span class=modal-keyword>should</span> be multiplexed into the same video base track.
 
 When multiple different schemes are included in a bitstream, multiple instances of this descriptor <span class=modal-keyword>shall</span> be used: For each HDR dynamic metadata scheme one descriptor with `@schemeIdUri="urn:dvb:dash:hdr-dmi"` and the respective `@value` <span class=modal-keyword>shall</span> be present. Similarly, when using SCTE-214 signalling, corresponding `scte214:supplementalCodecs` entries <span class=modal-keyword>should</span> be included for each HDR dynamic metadata scheme.
 
-It is important to note that HDR dynamic metadata can be carried in different types of SEI messages and other NAL units at the elementary stream (ES) level: These <span class=modal-keyword>may</span> include standard SEI messages defined in the video coding specifications as well as user data registered SEI messages (ITU T.35 SEI messages) that carry dynamic metadata according to SMPTE ST 2094-10, SMPTE ST 2094-40, or ETSI SL-HDR2. While the coding specification of each HDR dynamic metadata scheme defines the exact location and is constrained e.g. by ETSI TS 101 154, clause L.3.3.10.4 \[x\], the manifest-level signaling using a descriptor with  `@schemeIdUri="urn:dvb:dash:hdr-dmi"` or `scte214:supplementalCodecs` provides a high-level indication of the presence and type of dynamic metadata to help players determine compatibility before selecting the stream.
+It is important to note that HDR dynamic metadata can be carried in different types of SEI messages and other NAL units at the elementary stream (ES) level: These <span class=modal-keyword>may</span> include standard SEI messages defined in the video coding specifications as well as user data registered SEI messages (ITU T.35 SEI messages) that carry dynamic metadata according to SMPTE ST 2094-10 [[SMPTE_2094_10]], SMPTE ST 2094-40 [[SMPTE_2094_40]], or ETSI SL-HDR2 [[ETSI_103_433-2]]. While the coding specification of each HDR dynamic metadata scheme defines the exact location and is constrained e.g. by ETSI TS 101 154, clause L.3.3.10.4 [[ETSI_101_154]], the manifest-level signaling using a descriptor with  `@schemeIdUri="urn:dvb:dash:hdr-dmi"` or `scte214:supplementalCodecs` provides a high-level indication of the presence and type of dynamic metadata to help players determine compatibility before selecting the stream.
 
 ## Codec-specific signaling ## {#codec-specific}
 
@@ -368,9 +368,9 @@ General Requirements:
 
 ## General ## {#6.1-general}
 
-For a client supporting a media profile as outlined in clause 4listed in Table 1, the following applies:
+For a client supporting a media profile as outlined in clause 4, the following applies:
 
-* It <span class=modal-keyword>shall</span> support the following playback requirements as documented in clause 8 of CTA-WAVE 5003 \[16\] for any content conforming to a CMAF switching set as defined in subclause 5.3:
+* It <span class=modal-keyword>shall</span> support the following playback requirements as documented in clause 8 of CTA-WAVE 5003 [[!CTA_WAVE]] for any content conforming to a CMAF switching set as defined in subclause 5.3:
 
   * 8.2 Sequential Track Playback
 
@@ -384,7 +384,7 @@ For a client supporting a media profile as outlined in clause 4listed in Table 1
 
   * 8.7 Regular Playback of Chunked Content, non-aligned append
 
-* It <span class=modal-keyword>should</span> support the following playback requirements as documented in clause 8 of CTA-WAVE 5003 \[16\] for any content conforming to a CMAF switching set as defined in subclause 5.3:
+* It <span class=modal-keyword>should</span> support the following playback requirements as documented in clause 8 of CTA-WAVE 5003 [[!CTA_WAVE]] for any content conforming to a CMAF switching set as defined in subclause 5.3:
 
   * 8.9 Out-Of-Order Loading
 
@@ -429,7 +429,7 @@ This clause provides guidance on how HDR video source metadata parameters specif
 
 The video metadata parameters including SDR and HDR  signaled through <code><b>EssentialProperty</b></code> or <code><b>SupplementalProperty</b></code> descriptors as defined in clause 5.5.2 <span class=modal-keyword>may</span> be mapped to the corresponding media capabilities API fields as specified in the tables below. Note that tables document additional code points beyond those identified in clause 5.
 
-Also note that CTA-5003-B \[15\] provides detailed mapping recommendations for a selected list of video media profiles.
+Also note that CTA-5003-B [[!CTA_WAVE]] provides detailed mapping recommendations for a selected list of video media profiles.
 
 <table id="t_mca_colorPrim" class="data">
   <caption>Mapping of DASH descriptors with `@schemeIdUri="urn:mpeg:mpegB:cicp:ColourPrimaries"` to W3C MediaCapabilities-API `colorGamut`</caption>
@@ -453,7 +453,7 @@ Note: Media Capabilities API does not provide a direct mapping for DASH descript
 
 ### HDR dynamic metadata capability mapping ### {#6.3.3-hdr-dynamic-metadata-capability-mapping}
 
-When HDR dynamic metadata is present as signaled by a descriptor with `@schemeIdUri="urn:dvb:dash:hdr-dmi"`, it is recommended that the capability discovery includes dynamic metadata support assessment as specified in the [table below](#t_mca_hdr-dmi)\.
+When HDR dynamic metadata is present as signaled by a descriptor with `@schemeIdUri="urn:dvb:dash:hdr-dmi"`, it is recommended that the capability discovery includes dynamic metadata support assessment as specified in the [table below](#t_mca_hdr-dmi).
 
 
 <table id="t_mca_hdr-dmi" class="data">
@@ -503,7 +503,7 @@ Clients that do not support this feature <span class=modal-keyword>should</span>
           <li>Added a bunch of references, including for the codec specs, some additional file format specs, the latest CICP video and systems specs, and CTA-5003.
           <li>Split the VVC and EVC media profiles to a separate table, such that they are “CMAF Video Media Profiles provided for information”, while the AVC and HEVC media profiles are “Recommended CMAF Video Media Profiles”.
           <li>Added four columns to the tables, for video codec, profile, tier, and level, and added missing example `@codecs`values.
-          <li>Changed the title of Clause 5 from “Adaption Set requirements and recommendations” to “Mapping to delivery”, in a manner similar to what is in 3GPP TS 26.511, and then added the following subcluasessubclauses similarly as in 3GPP TS 26.511:
+          <li>Changed the title of Clause 5 from “Adaption Set requirements and recommendations” to “Mapping to delivery”, in a manner similar to what is in 3GPP TS 26.511, and then added the following subclauses similarly as in 3GPP TS 26.511:
             <ul>
               <li>5.1 File format track definition
               <li>5.2 CMAF track definition
