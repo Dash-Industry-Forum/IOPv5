@@ -1,5 +1,16 @@
 # Introduction # {#introduction}
 
+<div class="note" role="note">
+  <p><strong>Early draft — work in progress.</strong> This part is at a very early,
+  exploratory stage. The feature model, the taxonomy, the inventory tables, and the
+  tool/example lenses below are <em>preliminary placeholders</em> intended to
+  establish structure and to seed discussion. Nothing in this part is stable, complete,
+  or agreed. Feature names, groupings, granularity, references, and support claims are
+  expected to change substantially, and entries may be added, merged, split, or removed
+  without notice. Do not treat this part as an authoritative statement of DASH-IF
+  feature support or of IOPv5 scope.</p>
+</div>
+
 This part provides an editorial inventory of DASH interoperability features used across DASH-IF IOP v5.
 
 The inventory is intended to connect feature definitions to:
@@ -381,6 +392,225 @@ The executable example registry can be URL-validated using:
 ```bash
 python tools/validation/check_executable_examples.py rag/examples/executable-examples.yaml
 ```
+
+# Related feature-review activities # {#related-feature-reviews}
+
+Feature inventories and feature-selection reviews are being carried out in other
+organizations as well. These are valuable inputs for scoping Part 13 and for deciding
+which DASH features are relevant for interoperable deployment. They are summarized here
+as editorial context only; none of the assessments below are DASH-IF positions.
+
+## DVB feature review of MPEG DASH editions ## {#dvb-feature-review}
+
+DVB has begun a systematic review of what has been added to MPEG DASH (ISO/IEC 23009-1)
+from the 3rd edition onward, with the aim of deciding which additions are relevant for
+DVB-DASH. This is directly useful for Part 13 because it frames each DASH feature in
+terms of concrete use cases, HLS equivalence, reference-tool support, and deployment
+relevance.
+
+Key observations from the DVB review that are relevant to this inventory:
+
+- ISO withdraws older DASH editions when a new one is published (e.g. the 4th edition
+    was withdrawn when the 5th was published), which complicates stable referencing and
+    argues for a curated, editorially-maintained feature view such as Part 13.
+- Investment in reference tools and unit tests for additions after the 3rd edition is
+    still limited, so tool/example support is an important dimension when assessing a
+    feature's readiness.
+- Each added feature is best characterized by: a short summary, a use case or scenario,
+    an HLS equivalent (if any), the relevant DASH clause references, the closest existing
+    DVB-DASH functionality, and open-source support status (dash.js, livesim2, Shaka,
+    hls.js, and others).
+
+The following table summarizes DASH features highlighted by the DVB review, grouped by
+the edition in which they were introduced. The "DVB relevance" column reflects the DVB
+review's own preliminary assessment and is included here purely as external context.
+
+<table class="data">
+  <thead>
+    <tr>
+      <th>Feature / clause</th>
+      <th>Introduced</th>
+      <th>Summary</th>
+      <th>DVB relevance (per DVB review)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Producer Reference Time (5.12)</td>
+      <td>4th edition</td>
+      <td>Signalling and mapping of media time to wall-clock time, including capture/encoding context.</td>
+      <td>Relevant</td>
+    </tr>
+    <tr>
+      <td>Leap seconds (5.13)</td>
+      <td>4th edition</td>
+      <td>Support for client timing calculations when leap seconds occur.</td>
+      <td>Relevant</td>
+    </tr>
+    <tr>
+      <td>Service Description (Annex K)</td>
+      <td>4th edition</td>
+      <td>Provider signalling on how a service is expected to be consumed.</td>
+      <td>Relevant</td>
+    </tr>
+    <tr>
+      <td>Missing Content Segment (6.2.6)</td>
+      <td>4th edition</td>
+      <td>Signals that content is missing while conveying the media duration of the gap.</td>
+      <td>Probably (live)</td>
+    </tr>
+    <tr>
+      <td>Location and reference resolution (Annex A.11)</td>
+      <td>4th edition</td>
+      <td>Consistent URL/reference resolution for MPD updates, segments, and other MPD resources.</td>
+      <td>Probably</td>
+    </tr>
+    <tr>
+      <td>Failover Content Signalling (5.3.9.7/5.3.9.8)</td>
+      <td>4th edition</td>
+      <td>Offering failover content in place of properly-encoded main content on ingest/encoding errors.</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>Initialization Set / Group / Presentation (5.3.12)</td>
+      <td>4th edition</td>
+      <td>Simplifies playback across Period boundaries.</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>Resynchronization (5.3.13, 6.3.2.5, Annex A.12)</td>
+      <td>5th edition</td>
+      <td>In-segment resynchronization and early access; fast tune-in, loss recovery, seek accuracy.</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>MPD Patch framework (5.15)</td>
+      <td>5th edition</td>
+      <td>Transmit only changed parts of a dynamic MPD to reduce bandwidth/processing overhead.</td>
+      <td>Perhaps (currently recommended against in DVB)</td>
+    </tr>
+    <tr>
+      <td>DASH profile for CMAF content (8.12)</td>
+      <td>5th edition</td>
+      <td>Prescriptive mapping of CMAF structures/timelines to DASH.</td>
+      <td>Partial</td>
+    </tr>
+    <tr>
+      <td>Output protection / robustness signalling (5.8.4.12, 5.8.5.14)</td>
+      <td>5th edition</td>
+      <td>Efficient content-protection signalling, robustness levels, and HDCP output-protection descriptor.</td>
+      <td>Relevant</td>
+    </tr>
+    <tr>
+      <td>Event/timed-metadata client reference model (Annex A.13)</td>
+      <td>5th edition</td>
+      <td>Timing and processing model for MPD/inband event streams and timed metadata tracks.</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>Variable bitrate bandwidth signalling (5.3.5.6)</td>
+      <td>5th edition</td>
+      <td>More flexible bandwidth signalling for VBR encoding.</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>Alternative Media Presentation (5.16, 8.14, Annex A.14) and Media Presentation Insertion events</td>
+      <td>6th edition</td>
+      <td>Switching between main and alternative presentations (e.g. preroll/midroll ads, blackouts); enables SGAI.</td>
+      <td>Not yet; potential broadband ad-insertion alternative</td>
+    </tr>
+    <tr>
+      <td>Content Steering (K.3.6)</td>
+      <td>6th edition</td>
+      <td>Interoperable server-centric multi-CDN steering (HLS-equivalent exists).</td>
+      <td>Overlaps with DVB multiple BaseURLs (client-centric)</td>
+    </tr>
+    <tr>
+      <td>Enhanced segment sequences / fast tune-in (5.3.5.7, 5.3.9.7, "L3D")</td>
+      <td>6th edition</td>
+      <td>Faster time-to-first-video on join; relevant for ultra-low-latency services.</td>
+      <td>Relevant</td>
+    </tr>
+    <tr>
+      <td>Segment duration patterns (5.3.9.6.5)</td>
+      <td>6th edition</td>
+      <td>Compact MPDs for fractional frame rates and when audio/video durations differ.</td>
+      <td>Relevant outside 50 Hz markets</td>
+    </tr>
+    <tr>
+      <td>CMCD reporting via service description (K.3.7)</td>
+      <td>6th edition</td>
+      <td>In-manifest CMCD (v1) configuration without a bespoke application.</td>
+      <td>Relevant (relates to DVB metrics)</td>
+    </tr>
+    <tr>
+      <td>Event and playback restrictions via service description (K.3.8)</td>
+      <td>6th edition</td>
+      <td>Signals ff/seek restrictions (e.g. no skipping during ads).</td>
+      <td>Relevant for ad insertion</td>
+    </tr>
+    <tr>
+      <td>Improved query parameters and header extensions (Annex I.3.6, I.4)</td>
+      <td>6th edition</td>
+      <td>Token pass-through and richer URL parameterization; CDN authorization tokens.</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>Addressable Resource Index (ARI) Tracks (Annex M)</td>
+      <td>6th edition</td>
+      <td>Exact quality/bitrate and inband-message presence for segments/chunks.</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>Alternative codecs via preselection (G.30)</td>
+      <td>6th edition</td>
+      <td>A track decodable by more than one codec (e.g. HEVC / MV-HEVC / LCEVC).</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>Nonlinear playback / interactive storylines (Annex L)</td>
+      <td>6th edition</td>
+      <td>User-driven nonlinear Period selection (Bandersnatch-style experiences).</td>
+      <td>Not relevant to DVB (app-level)</td>
+    </tr>
+    <tr>
+      <td>Multi-key encryption (G.25)</td>
+      <td>6th edition</td>
+      <td>Different keys across CMAF-aligned switching sets (e.g. HD vs UHD).</td>
+      <td>Uncertain</td>
+    </tr>
+    <tr>
+      <td>ISO BMFF Advanced Linear / List / Single-Period Static profiles (8.13–8.15)</td>
+      <td>5th/6th edition</td>
+      <td>Profiles for long-running linear content and imported/list MPDs supporting SGAI and blackouts.</td>
+      <td>Potential input for feature selection</td>
+    </tr>
+  </tbody>
+</table>
+
+Additional editorial context from the DVB review:
+
+- <strong>MPD Chaining (5.11)</strong> and <strong>Flexible Insertion of URL Parameters
+    (Annex I)</strong> were noted as, respectively, largely unused and only beginning to
+    see adoption; Annex I is relevant for CDN authorization tokens (e.g. Common Access
+    Token) and has partial dash.js support.
+- The DVB review draws on the DASH-IF April 2024 special presentation on the 6th edition
+    ([SpecialPresentation-6thEdition.pdf](https://github.com/Dash-Industry-Forum/Dash-Industry-Forum.github.io/files/14887658/SpecialPresentation-6thEdition.pdf))
+    as background material.
+
+## Features beyond IOPv5 ## {#features-beyond-iopv5}
+
+A separate, longer-term "features beyond IOPv5" exploration collects candidate features
+and technologies that are not (yet) in scope for IOPv5 but may become relevant in future
+guidelines. It is maintained as a living document:
+
+- [Features beyond IOPv5 (Google Doc)](https://docs.google.com/document/d/1x5CPEG0KYp20U84PEvcnonkHbVr4OUMAhcBc9IOotkU/edit?usp=sharing)
+
+<div class="note" role="note">
+  <p>The "features beyond IOPv5" document has not been updated recently, so some entries
+  may be stale. It is nonetheless a useful source of candidate features and open
+  questions when extending this inventory.</p>
+</div>
 
 # Open editorial issues # {#open-editorial-issues}
 
