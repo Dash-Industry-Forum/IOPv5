@@ -165,7 +165,7 @@ In addition to the general provisions defined in draft IOP V5 part 2 [[DASHIF-IO
       <td><code>@mimeType</code></td>
       <td>M</td>
       <td>See ISO/IEC 23009-1 [[!MPEGDASH]], clause 5.3.7.2, Table 14.<br>
-        This <span class=modal-keyword>shall</span> be set to <code>“video/mp4”</code>.</td>
+        This <span class=modal-keyword>shall</span> be set to <code>"video/mp4"</code>.</td>
     </tr>
     <tr>
       <td><code>`@codecs`</code></td>
@@ -177,7 +177,7 @@ In addition to the general provisions defined in draft IOP V5 part 2 [[DASHIF-IO
       <td><code>@lang</code></td>
       <td>O</td>
       <td>See ISO/IEC 23009-1 [[!MPEGDASH]], clause 5.3.3.2, Table 5.<br>
-        If present with <code><b>Accessibility</b></code>**, the <code>@lang</code> attribute signals the language of closed signing present in the video.</td>
+        If present with <code><b>Accessibility</b></code>, the <code>@lang</code> attribute signals the language of closed signing present in the video.</td>
     </tr>
     <tr>
       <td><code><b>Accessibility</b></code></td>
@@ -185,15 +185,15 @@ In addition to the general provisions defined in draft IOP V5 part 2 [[DASHIF-IO
       <td>See ISO/IEC 23009-1 [[!MPEGDASH]], clause 5.3.4.2, Table 8.<br>
       In DASH-IF IOPs the following two schemes for accessibility are defined:
       <ul>
-        <li>the Role scheme as defined by MPEG-DASH (ISO/IEC 23009-1 [[!MPEGDASH]]), clause 5.8.5.5, i.e., <code>“urn:mpeg:dash:role:2011”</code>, <span class=modal-keyword>should</span> be used</li>
+        <li>the Role scheme as defined by MPEG-DASH (ISO/IEC 23009-1 [[!MPEGDASH]]), clause 5.8.5.5, i.e., <code>"urn:mpeg:dash:role:2011"</code>, <span class=modal-keyword>should</span> be used</li>
       </ul>
-      The DASH role scheme with the following values is expected to be recognized by a DASH-IF client for media type <code>“video”</code> together with the <code><b>Accessibility</b></code> descriptor:
+      The DASH role scheme with the following values is expected to be recognized by a DASH-IF client for media type <code>"video"</code> together with the <code><b>Accessibility</b></code> descriptor:
       <ul>
         <li><code>sign</code></li>
         <li><code>captions</code></li>
         <li>the scheme when CEA-608 is used as defined in clause 6.4.3.3, with <code>@schemeIdUri</code> set to <code>"urn:scte:dash:cc:cea-608:2015"</code>
       </ul>
-      If the video contains open or closed signing, the <code><b>Accessibility</b></code> element <span class=modal-keyword>shall</span> be present. In DASH IOPs only the Role scheme as defined in ISO/IEC 23009-1 [[!MPEGDASH]], clause 5.8.5.5, <span class=modal-keyword>should</span> be used, with `@schemIdUri` set to <code>urn:mpeg:dash:role:2011</code>; and the <code>@value</code> <span class=modal-keyword>shall</span> be set to "caption"</td>
+      If the video contains open or closed signing, the <code><b>Accessibility</b></code> element <span class=modal-keyword>shall</span> be present. In DASH IOPs only the Role scheme as defined in ISO/IEC 23009-1 [[!MPEGDASH]], clause 5.8.5.5, <span class=modal-keyword>should</span> be used, with `@schemIdUri` set to <code>urn:mpeg:dash:role:2011</code>; and the <code>@value</code> <span class=modal-keyword>shall</span> be set to `"caption"`</td>
     </tr>
     <tr>
       <td><code><b>Role</b></code></td>
@@ -471,7 +471,7 @@ When HDR dynamic metadata is present as signaled by a descriptor with `@schemeId
 
 In general terms, in addition to supporting LCEVC decoding:
 
-1. Client supports a Switching Set from two merged <code><b>AdaptationSet</b></code>s (BL + EL), see `schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016"`
+1. Client supports a Switching Set from two merged <code><b>AdaptationSet</b></code>s (BL + EL), see `@schemeIdUri="urn:mpeg:dash:adaptation-set-switching:2016"`
 2. Client supports “dependent representations” as defined in section 3.1.12, 5.3.5 of ISO/IEC 23009-1 and therefore supports two stream processing pipelines for both dependent (EL) and complementary representation (BL).   
 3. Client supports parsing of BL and EL encoded data from separate buffer input streams   
 4. Client supports the `@selectionPriority` attribute with the <code><b>AdaptationSet</b></code> element, in all use cases where the adaptation-set-switching property is not used, in order to prioritize the EL <code><b>AdaptationSet</b></code> over the BL one.
@@ -485,6 +485,35 @@ If a <code><b>SubRepresentation</b></code> element is present and signals an LCE
 Clients that do not support this feature <span class=modal-keyword>should</span> ignore the <code><b>SubRepresentation</b></code> element in accordance with existing DASH processing rules.
 
 # Annex A (informative) # {#annex}
+## Document Status ## {#document_status}
+This Bikeshed edition of Part 7 of version 5 of DASH-IF Interoperabiliuty Guidelines is a consolidated working draft based on the previously published documents authored in Word or Google Docs.
+
+The following work items remain before Part 2 can be considered complete:
+
+<table class="data">
+  <caption>Part 7 open issues and topics to progress</caption>
+  <thead><tr><th>Topic<th>Status<th>Next action
+  <tbody>
+    <tr>
+      <td>LCEVC
+      <td>Initial draft
+      <td>draft under community review (Google Docs version); any changes need to get migrated to this Biskeshed edition
+    <tr>
+      <td>Video base codec description (AVC, HEVC)
+      <td>Open
+      <td>Migrate from [[DASHIF-IOP4_3]]
+    <tr>
+      <td>New video codec description (VVC, AV1)
+      <td>Open
+      <td>
+    <tr>
+      <td>Dolby Vision
+      <td>Open
+      <td>
+</table>
+
+See [https://github.com/orgs/Dash-Industry-Forum/projects/33](https://github.com/orgs/Dash-Industry-Forum/projects/33) and [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aissue%20state%3Aopen%20%5BPart%207%5D) for a full list of open issues.
+
 ## Change History ## {#change_history}
 
 <table class="data">
