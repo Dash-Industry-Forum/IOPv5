@@ -226,6 +226,9 @@ as a separate document; links point to the current published version.
     the conformance validator, reference player ([dash.js](https://github.com/Dash-Industry-Forum/dash.js)),
     live source simulator ([livesim2](https://github.com/Dash-Industry-Forum/livesim2)),
     and test assets.
+- <b>[Part 13 — Feature inventory](https://dashif.org/Guidelines/iop-v5/part13-feature-inventory.html)</b>:
+    an editorial feature inventory linking DASH interoperability features to IOPv5 parts,
+    DASH-IF-IOP extension specifications, signalling, reference tools, and executable examples.
 
 Note: Issues for any part <span class=modal-keyword>should</span> be filed at the single IOPv5 issue tracker:
 [https://github.com/Dash-Industry-Forum/IOPv5/issues](https://github.com/Dash-Industry-Forum/IOPv5/issues).

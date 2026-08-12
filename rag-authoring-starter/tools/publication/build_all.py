@@ -36,6 +36,7 @@ PART_SUMMARY = {
     "part10-events": "Events: MPD and inband events and timed metadata tracks.",
     "part11-additional-technologies": "Additional functionalities: thumbnails, query/token mechanisms, metadata tracks.",
     "part12-conformance-reference-tools": "Conformance and reference tools: validator, dash.js, livesim2 and test assets.",
+    "part13-feature-inventory": "Feature inventory: DASH feature taxonomy and references to IOPv5 parts, DASH-IF-IOP extensions, tools and examples.",
 }
 
 
