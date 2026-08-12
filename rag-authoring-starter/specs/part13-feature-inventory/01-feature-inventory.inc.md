@@ -598,6 +598,67 @@ Additional editorial context from the DVB review:
     ([SpecialPresentation-6thEdition.pdf](https://github.com/Dash-Industry-Forum/Dash-Industry-Forum.github.io/files/14887658/SpecialPresentation-6thEdition.pdf))
     as background material.
 
+## DASH core feature timeline (ISO/IEC 23009-1 editions) ## {#dash-core-feature-timeline}
+
+This subsection collects the DASH features added in successive editions of
+ISO/IEC 23009-1, extracted from clause 4 (Overview) and clause 5 (Media Presentation
+Description) of the 6th edition, using the authoritative per-edition schema-addition
+list in subclause 5.2.3 ("Elements and Attributes added in revisions and amendments") as
+the backbone. Clause numbers use the 6th-edition numbering and should be re-verified
+against the final published text.
+
+The full extraction, including the per-edition element/attribute lists and the mapping
+from each feature to its defining clause, is maintained as a working report:
+`rag/reports/iso-23009-1-6th-edition-feature-extraction.md`.
+
+<table class="data">
+  <thead>
+    <tr>
+      <th>Feature ID</th>
+      <th>Feature</th>
+      <th>Edition introduced</th>
+      <th>Primary clause (6th ed.)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><code>utc-timing</code></td><td>UTCTiming</td><td>3rd</td><td>5.8.5</td></tr>
+    <tr><td><code>preselections</code></td><td>Preselections</td><td>3rd</td><td>5.3.11</td></tr>
+    <tr><td><code>random-access-signalling</code></td><td>RandomAccess signalling</td><td>3rd</td><td>5.3.5</td></tr>
+    <tr><td><code>switching-signalling</code></td><td>Switching signalling</td><td>3rd</td><td>5.3.5</td></tr>
+    <tr><td><code>labels-group-labels</code></td><td>Labels and Group Labels</td><td>3rd</td><td>5.3.10</td></tr>
+    <tr><td><code>service-description</code></td><td>Service Description</td><td>4th</td><td>Annex K</td></tr>
+    <tr><td><code>initialization-set-group-presentation</code></td><td>Initialization Set / Group / Presentation</td><td>4th</td><td>5.3.12</td></tr>
+    <tr><td><code>producer-reference-time</code></td><td>Producer Reference Time</td><td>4th</td><td>5.12</td></tr>
+    <tr><td><code>leap-seconds</code></td><td>Leap seconds</td><td>4th</td><td>5.13</td></tr>
+    <tr><td><code>content-popularity-rate</code></td><td>Content Popularity Rate</td><td>4th</td><td>5.14</td></tr>
+    <tr><td><code>failover-content</code></td><td>Failover Content Signalling</td><td>4th</td><td>5.3.9.7</td></tr>
+    <tr><td><code>availability-time-offset</code></td><td>Availability Time Offset</td><td>2nd/4th</td><td>5.3.9.5</td></tr>
+    <tr><td><code>mpd-content-protection</code></td><td>MPD/Period-level ContentProtection</td><td>5th</td><td>5.8.4</td></tr>
+    <tr><td><code>mpd-patching</code></td><td>MPD Patch Framework</td><td>5th</td><td>5.15</td></tr>
+    <tr><td><code>resync</code></td><td>Resynchronization</td><td>5th</td><td>5.3.13 / 6.3.2.5</td></tr>
+    <tr><td><code>extended-bandwidth</code></td><td>Extended / variable bitrate bandwidth signalling</td><td>5th</td><td>5.3.5</td></tr>
+    <tr><td><code>output-protection</code></td><td>Output protection + robustness</td><td>5th</td><td>5.8.4</td></tr>
+    <tr><td><code>container-profiles</code></td><td>Container profile signalling</td><td>5th</td><td>5.3.5</td></tr>
+    <tr><td><code>content-steering</code></td><td>Content Steering</td><td>6th</td><td>Annex K.3.6 (+ 5.6.5)</td></tr>
+    <tr><td><code>segment-sequences</code></td><td>Segment Sequences</td><td>6th</td><td>5.3.9.7</td></tr>
+    <tr><td><code>duration-patterns</code></td><td>Duration Patterns</td><td>6th</td><td>5.3.9.6.5</td></tr>
+    <tr><td><code>cmcd-reporting</code></td><td>CMCD reporting via Service Description</td><td>6th</td><td>Annex K.3.7</td></tr>
+    <tr><td><code>playback-restrictions</code></td><td>Event &amp; playback restrictions</td><td>6th</td><td>Annex K.3.8</td></tr>
+    <tr><td><code>request-params</code></td><td>Improved query parameters / header extensions</td><td>6th</td><td>Annex I</td></tr>
+    <tr><td><code>alternative-media-presentation</code></td><td>Alternative Media Presentations + insertion/replacement events</td><td>6th</td><td>5.16</td></tr>
+    <tr><td><code>supplementary-video</code></td><td>Supplementary video services + descriptor</td><td>5th/6th</td><td>5.8.5.16</td></tr>
+    <tr><td><code>edrap-esr</code></td><td>Main and External Stream Representations (EDRAP/ESR)</td><td>6th</td><td>5.8.x</td></tr>
+  </tbody>
+</table>
+
+<div class="note" role="note">
+  <p>This timeline is derived from a merged 6th-edition working draft and is itself an
+  early extraction. Segment-format and profile additions (clauses 6–8, e.g. ISO BMFF
+  Advanced Linear, List, and Single-Period Static profiles), Addressable Resource Index
+  (ARI) tracks (Annex M), nonlinear playback (Annex L), and multi-key encryption are
+  outside clause 4/5 and are tracked separately via the DVB feature review above.</p>
+</div>
+
 ## Features beyond IOPv5 ## {#features-beyond-iopv5}
 
 A separate, longer-term "features beyond IOPv5" exploration collects candidate features

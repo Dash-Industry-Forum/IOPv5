@@ -10,6 +10,202 @@ sources:
   dashjs_samples: https://reference.dashif.org/dash.js/latest/samples/samples.json
   livesim2_readme: https://github.com/Dash-Industry-Forum/livesim2
   dash_if_iop: https://github.com/Dash-Industry-Forum/DASH-IF-IOP
+  iso_23009_1_6th_edition: rag/corpus/mpeg/ISO_IEC_23009-1_2026_merged_r5.docx
+
+# DASH core feature timeline extracted from ISO/IEC 23009-1 clause 4 (Overview) and
+# clause 5 (Media Presentation Description). The backbone is subclause 5.2.3
+# ("Elements and Attributes added in revisions and amendments"). See
+# rag/reports/iso-23009-1-6th-edition-feature-extraction.md for the full extraction.
+# Clause numbers use 6th-edition numbering and are preliminary (re-verify against the
+# final published text). This section is editorial and early.
+dash_editions:
+  extraction_status: early-draft
+  source: iso_23009_1_6th_edition
+  backbone_clause: "5.2.3"
+  editions:
+    - edition: 2nd
+      iso: "ISO/IEC 23009-1:2014"
+      added_elements_attributes:
+        - MPD@publishTime
+        - MPD.EssentialProperty
+        - MPD.SupplementalProperty
+        - Period.AssetIdentifier
+        - Period.EventStream
+        - Period.SupplementalProperty
+        - RepresentationBase.InbandEventStream
+        - SegmentBase@availabilityTimeOffset
+        - SegmentBase@availabilityTimeComplete
+        - BaseURL@availabilityTimeOffset
+        - BaseURL@availabilityTimeComplete
+        - Subset@id
+        - SegmentTimeline.S@n
+    - edition: 3rd
+      iso: "ISO/IEC 23009-1:2019"
+      added_elements_attributes:
+        - MPD.UTCTiming
+        - Period.GroupLabel
+        - Period.Preselection
+        - Period.EmptyAdaptationSet
+        - RepresentationBase.Switching
+        - RepresentationBase.RandomAccess
+        - RepresentationBase.GroupLabel
+        - RepresentationBase.Label
+        - RepresentationBase@selectionPriority
+        - Representation@tag
+        - Representation@associationId
+        - Representation@associationType
+        - SegmentBase@presentationDuration
+        - SegmentBase@timeShiftBufferDepth
+        - SegmentTimeline.S@n
+        - SegmentTimeline.S@k
+    - edition: 4th
+      iso: "ISO/IEC 23009-1 (2020 revision)"
+      added_elements_attributes:
+        - MPD.ServiceDescription
+        - MPD.InitializationSet
+        - MPD.InitializationGroup
+        - MPD.InitializationPresentation
+        - MPD.LeapSecondInformation
+        - Period.ServiceDescription
+        - EventStream@presentationTimeOffset
+        - Event@contentEncoding
+        - AdaptationSet@initializationSetRef
+        - RepresentationBase.ProducerReferenceTime
+        - RepresentationBase.ContentPopularityRate
+        - Preselection@order
+        - SegmentBase.FailoverContent
+        - SegmentBase@eptDelta
+        - MultiSegmentBase@endNumber
+        - BaseURL@timeShiftBufferDepth
+    - edition: 5th
+      iso: "ISO/IEC 23009-1:2022"
+      added_elements_attributes:
+        - MPD.ContentProtection
+        - MPD.PatchLocation
+        - Period.ContentProtection
+        - AdaptationSet@initializationPrincipal
+        - RepresentationBase.Resync
+        - RepresentationBase@containerProfiles
+        - Representation.ExtendedBandwidth
+        - ContentProtection@ref
+        - ContentProtection@refId
+        - ContentProtection@robustness
+        - RepresentationBase.OutputProtection
+    - edition: 6th
+      iso: "ISO/IEC 23009-1:2025"
+      added_elements_attributes:
+        - MPD.ContentSteering
+        - RequestParam
+        - Location@serviceLocation
+        - PatchLocation@serviceLocation
+        - SegmentSequenceProperties
+        - SegmentTemplate@tolerance
+        - SegmentTemplate.Pattern
+        - SegmentTemplate.S@p
+        - SegmentTemplate.S@pE
+        - SegmentTemplate.S@ssp
+        - ServiceDescription.ContentSteering
+        - ServiceDescription.ClientDataReporting
+        - ServiceDescription.PlaybackRestrictions
+        - Event.InsertPresentation
+        - Event.ReplacePresentation
+        - Event.ServiceDescription
+        - Event.SelectionInfo
+        - Event.EssentialProperty
+        - Event.SupplementalProperty
+  candidate_features:
+    - id: preselections
+      title: Preselections
+      edition: 3rd
+      clause: "5.3.11"
+    - id: random-access-signalling
+      title: RandomAccess signalling
+      edition: 3rd
+      clause: "5.3.5"
+    - id: switching-signalling
+      title: Switching signalling
+      edition: 3rd
+      clause: "5.3.5"
+    - id: labels-group-labels
+      title: Labels and Group Labels
+      edition: 3rd
+      clause: "5.3.10"
+    - id: service-description
+      title: Service Description
+      edition: 4th
+      clause: "Annex K"
+    - id: initialization-set-group-presentation
+      title: Initialization Set / Group / Presentation
+      edition: 4th
+      clause: "5.3.12"
+    - id: producer-reference-time
+      title: Producer Reference Time
+      edition: 4th
+      clause: "5.12"
+    - id: leap-seconds
+      title: Leap seconds
+      edition: 4th
+      clause: "5.13"
+    - id: content-popularity-rate
+      title: Content Popularity Rate
+      edition: 4th
+      clause: "5.14"
+    - id: failover-content
+      title: Failover Content Signalling
+      edition: 4th
+      clause: "5.3.9.7"
+    - id: mpd-content-protection
+      title: MPD/Period-level ContentProtection
+      edition: 5th
+      clause: "5.8.4"
+    - id: resync
+      title: Resynchronization
+      edition: 5th
+      clause: "5.3.13 / 6.3.2.5"
+    - id: extended-bandwidth
+      title: Extended / variable bitrate bandwidth signalling
+      edition: 5th
+      clause: "5.3.5"
+    - id: output-protection
+      title: Output protection + robustness
+      edition: 5th
+      clause: "5.8.4"
+    - id: container-profiles
+      title: Container profile signalling
+      edition: 5th
+      clause: "5.3.5"
+    - id: segment-sequences
+      title: Segment Sequences
+      edition: 6th
+      clause: "5.3.9.7"
+    - id: duration-patterns
+      title: Duration Patterns
+      edition: 6th
+      clause: "5.3.9.6.5"
+    - id: cmcd-reporting
+      title: CMCD reporting via Service Description
+      edition: 6th
+      clause: "Annex K.3.7"
+    - id: playback-restrictions
+      title: Event & playback restrictions
+      edition: 6th
+      clause: "Annex K.3.8"
+    - id: request-params
+      title: Improved query parameters / header extensions
+      edition: 6th
+      clause: "Annex I"
+    - id: alternative-media-presentation
+      title: Alternative Media Presentations + insertion/replacement events
+      edition: 6th
+      clause: "5.16"
+    - id: supplementary-video
+      title: Supplementary video services + descriptor
+      edition: 5th/6th
+      clause: "5.8.5.16"
+    - id: edrap-esr
+      title: Main and External Stream Representations (EDRAP/ESR)
+      edition: 6th
+      clause: "5.8.x"
 
 features:
   - id: dynamic-mpd-live
