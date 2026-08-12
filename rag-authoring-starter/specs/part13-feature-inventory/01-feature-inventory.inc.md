@@ -50,33 +50,103 @@ The inventory distinguishes three levels.
 
 Features may be defined, constrained, or referenced by the following IOPv5 parts:
 
-| Part | Scope |
-|---|---|
-| [Part 2 — Core Principles and CMAF Mapping](https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html) | Core DASH timing, addressing, CMAF mapping, UTCTiming, and MPD structure. |
-| [Part 3 — On-demand Services](https://dashif.org/Guidelines/iop-v5/part03-on-demand.html) | On-demand service features and content offering constraints. |
-| [Part 4 — Live and Low-Latency Services](https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html) | Dynamic MPDs, live timing, low-latency live, availability timing, ServiceDescription, and related client behavior. |
-| [Part 5 — Ad Insertion and Content Replacement](https://dashif.org/Guidelines/iop-v5/part05-ad-insertion.html) | Period-based ad insertion, SGAI, SSAI, ad signalling, and content replacement. |
-| [Part 6 — Content Protection and Security](https://dashif.org/Guidelines/iop-v5/part06-content-protection.html) | ContentProtection signalling, CENC, key rotation, Enhanced Clear Key, and security guidance. |
-| [Part 7 — Video](https://dashif.org/Guidelines/iop-v5/part07-video.html) | Video profiles, codec signalling, representation constraints, and DASH/CMAF video interoperability. |
-| [Part 8 — Audio](https://dashif.org/Guidelines/iop-v5/part08-audio.html) | Audio profiles, multi-audio, language, role, accessibility, and channel signalling. |
-| [Part 9 — Text](https://dashif.org/Guidelines/iop-v5/part09-text.html) | Subtitles, captions, WebVTT, IMSC/TTML, and related text-track signalling. |
-| [Part 10 — Events](https://dashif.org/Guidelines/iop-v5/part10-events.html) | MPD events, inband events, timed metadata, and application event handling. |
-| [Part 11 — Additional Functionalities](https://dashif.org/Guidelines/iop-v5/part11-additional-technologies.html) | Thumbnails, query/token mechanisms, metadata tracks, and additional feature areas. |
-| [Part 12 — Conformance and Reference Tools](https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html) | Validator, dash.js, livesim2, reference assets, and conformance interpretation. |
+<table class="data">
+  <thead>
+    <tr>
+      <th>Part</th>
+      <th>Scope</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html">Part 2 — Core Principles and CMAF Mapping</a></td>
+      <td>Core DASH timing, addressing, CMAF mapping, UTCTiming, and MPD structure.</td>
+    </tr>
+    <tr>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part03-on-demand.html">Part 3 — On-demand Services</a></td>
+      <td>On-demand service features and content offering constraints.</td>
+    </tr>
+    <tr>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html">Part 4 — Live and Low-Latency Services</a></td>
+      <td>Dynamic MPDs, live timing, low-latency live, availability timing, ServiceDescription, and related client behavior.</td>
+    </tr>
+    <tr>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part05-ad-insertion.html">Part 5 — Ad Insertion and Content Replacement</a></td>
+      <td>Period-based ad insertion, SGAI, SSAI, ad signalling, and content replacement.</td>
+    </tr>
+    <tr>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part06-content-protection.html">Part 6 — Content Protection and Security</a></td>
+      <td>ContentProtection signalling, CENC, key rotation, Enhanced Clear Key, and security guidance.</td>
+    </tr>
+    <tr>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part07-video.html">Part 7 — Video</a></td>
+      <td>Video profiles, codec signalling, representation constraints, and DASH/CMAF video interoperability.</td>
+    </tr>
+    <tr>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part08-audio.html">Part 8 — Audio</a></td>
+      <td>Audio profiles, multi-audio, language, role, accessibility, and channel signalling.</td>
+    </tr>
+    <tr>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part09-text.html">Part 9 — Text</a></td>
+      <td>Subtitles, captions, WebVTT, IMSC/TTML, and related text-track signalling.</td>
+    </tr>
+    <tr>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part10-events.html">Part 10 — Events</a></td>
+      <td>MPD events, inband events, timed metadata, and application event handling.</td>
+    </tr>
+    <tr>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part11-additional-technologies.html">Part 11 — Additional Functionalities</a></td>
+      <td>Thumbnails, query/token mechanisms, metadata tracks, and additional feature areas.</td>
+    </tr>
+    <tr>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html">Part 12 — Conformance and Reference Tools</a></td>
+      <td>Validator, dash.js, livesim2, reference assets, and conformance interpretation.</td>
+    </tr>
+  </tbody>
+</table>
 
 ## DASH-IF-IOP extension specifications ## {#dash-if-iop-extensions}
 
 Some features are currently defined as standalone DASH-IF-IOP extension specifications. Until those features are incorporated or profiled directly in IOPv5, this inventory references the corresponding folders in [Dash-Industry-Forum/DASH-IF-IOP](https://github.com/Dash-Industry-Forum/DASH-IF-IOP).
 
-| DASH-IF-IOP folder | Feature inventory candidate |
-|---|---|
-| [`specs/cmcd`](https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/cmcd) | Common Media Client Data (CMCD). |
-| [`specs/content-steering`](https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/content-steering) | Content Steering. |
-| [`specs/l3d`](https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/l3d) | L3D-related distribution feature, pending closer mapping. |
-| [`specs/lc-evc`](https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/lc-evc) | MPEG-5 Part 2 LCEVC carriage. |
-| [`specs/live2vod`](https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/live2vod) | Live-to-VoD transition. |
-| [`specs/mpd-patch`](https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/mpd-patch) | MPD Patching. |
-| [`specs/varsub`](https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/varsub) | MPD Variable Substitution. |
+<table class="data">
+  <thead>
+    <tr>
+      <th>DASH-IF-IOP folder</th>
+      <th>Feature inventory candidate</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><a href="https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/cmcd"><code>specs/cmcd</code></a></td>
+      <td>Common Media Client Data (CMCD).</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/content-steering"><code>specs/content-steering</code></a></td>
+      <td>Content Steering.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/l3d"><code>specs/l3d</code></a></td>
+      <td>L3D-related distribution feature, pending closer mapping.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/lc-evc"><code>specs/lc-evc</code></a></td>
+      <td>MPEG-5 Part 2 LCEVC carriage.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/live2vod"><code>specs/live2vod</code></a></td>
+      <td>Live-to-VoD transition.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/mpd-patch"><code>specs/mpd-patch</code></a></td>
+      <td>MPD Patching.</td>
+    </tr>
+    <tr>
+      <td><a href="https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/varsub"><code>specs/varsub</code></a></td>
+      <td>MPD Variable Substitution.</td>
+    </tr>
+  </tbody>
+</table>
 
 ## dash.js perspective ## {#dashjs-perspective}
 
@@ -110,24 +180,148 @@ The machine-readable source for the seed inventory is maintained at:
 
 The current seed is intentionally incomplete. It is included here to establish the publication structure and to support review of feature granularity.
 
-| Feature ID | Feature | Category | IOPv5 reference | DASH-IF-IOP reference | Current tool/example lens |
-|---|---|---|---|---|---|
-| `dynamic-mpd-live` | Dynamic MPD / Live DASH | Live | [Part 4](https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html) | — | dash.js Live samples; livesim2 dynamic live streams. |
-| `segmenttemplate-number` | SegmentTemplate Number Addressing | Core | [Part 2](https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html) | — | livesim2 default addressing mode. |
-| `segmenttimeline-time` | SegmentTimeline Time Addressing | Core | [Part 2](https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html) | — | livesim2 `segtimeline_1`; executable Part 4 example. |
-| `utc-timing` | UTCTiming | Core | [Part 2](https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html), [Part 4](https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html) | — | livesim2 `utc_direct`; executable Part 4 example. |
-| `availability-time-offset` | Availability Time Offset | Live | [Part 4](https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html) | — | dash.js Live sample; livesim2 `ato`; executable Part 4 examples. |
-| `low-latency-live` | Low-Latency Live DASH | Low latency | [Part 4](https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html) | — | dash.js low-latency test player; livesim2 `chunkdur`, `ato`, `ltgt`. |
-| `service-description-latency` | ServiceDescription Latency Signalling | Low latency | [Part 4](https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html) | — | dash.js ServiceDescription settings; livesim2 `ltgt`. |
-| `cmaf-chunked-delivery` | CMAF Chunked Delivery | Low latency | [Part 4](https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html) | — | dash.js low-latency playback; livesim2 `chunkdur`. |
-| `mpd-patching` | MPD Patching | Live | [Part 4](https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html) | [`specs/mpd-patch`](https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/mpd-patch) | dash.js MPD patching sample. |
-| `cmcd` | Common Media Client Data | Reporting | [Part 12](https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html) | [`specs/cmcd`](https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/cmcd) | dash.js CMCD samples; HTTP request observability. |
-| `content-steering` | Content Steering | Delivery | [Part 12](https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html) | [`specs/content-steering`](https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/content-steering) | dash.js Content Steering support. |
-| `content-protection` | Content Protection | Protection | [Part 6](https://dashif.org/Guidelines/iop-v5/part06-content-protection.html) | — | dash.js DRM samples; browser/CDM dependent. |
-| `text-tracks` | Text Tracks | Media | [Part 9](https://dashif.org/Guidelines/iop-v5/part09-text.html) | — | dash.js subtitle/caption samples; livesim2 generated time subtitles. |
-| `multi-audio` | Multi-Audio | Media | [Part 8](https://dashif.org/Guidelines/iop-v5/part08-audio.html) | — | dash.js multi-audio samples; source asset dependent in livesim2. |
-| `inband-emsg-events` | Inband `emsg` Events | Events | [Part 10](https://dashif.org/Guidelines/iop-v5/part10-events.html), [Part 5](https://dashif.org/Guidelines/iop-v5/part05-ad-insertion.html) | — | dash.js SCTE/emsg sample; usually requires app event handling. |
-| `lcevc` | MPEG-5 Part 2 LCEVC Carriage | Video | [Part 7](https://dashif.org/Guidelines/iop-v5/part07-video.html) | [`specs/lc-evc`](https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/lc-evc) | dash.js LCEVC sample; requires LCEVC-capable pipeline. |
+<table class="data">
+  <thead>
+    <tr>
+      <th>Feature ID</th>
+      <th>Feature</th>
+      <th>Category</th>
+      <th>IOPv5 reference</th>
+      <th>DASH-IF-IOP reference</th>
+      <th>Current tool/example lens</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>dynamic-mpd-live</code></td>
+      <td>Dynamic MPD / Live DASH</td>
+      <td>Live</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html">Part 4</a></td>
+      <td>—</td>
+      <td>dash.js Live samples; livesim2 dynamic live streams.</td>
+    </tr>
+    <tr>
+      <td><code>segmenttemplate-number</code></td>
+      <td>SegmentTemplate Number Addressing</td>
+      <td>Core</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html">Part 2</a></td>
+      <td>—</td>
+      <td>livesim2 default addressing mode.</td>
+    </tr>
+    <tr>
+      <td><code>segmenttimeline-time</code></td>
+      <td>SegmentTimeline Time Addressing</td>
+      <td>Core</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html">Part 2</a></td>
+      <td>—</td>
+      <td>livesim2 <code>segtimeline_1</code>; executable Part 4 example.</td>
+    </tr>
+    <tr>
+      <td><code>utc-timing</code></td>
+      <td>UTCTiming</td>
+      <td>Core</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part02-core-cmaf.html">Part 2</a>, <a href="https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html">Part 4</a></td>
+      <td>—</td>
+      <td>livesim2 <code>utc_direct</code>; executable Part 4 example.</td>
+    </tr>
+    <tr>
+      <td><code>availability-time-offset</code></td>
+      <td>Availability Time Offset</td>
+      <td>Live</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html">Part 4</a></td>
+      <td>—</td>
+      <td>dash.js Live sample; livesim2 <code>ato</code>; executable Part 4 examples.</td>
+    </tr>
+    <tr>
+      <td><code>low-latency-live</code></td>
+      <td>Low-Latency Live DASH</td>
+      <td>Low latency</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html">Part 4</a></td>
+      <td>—</td>
+      <td>dash.js low-latency test player; livesim2 <code>chunkdur</code>, <code>ato</code>, <code>ltgt</code>.</td>
+    </tr>
+    <tr>
+      <td><code>service-description-latency</code></td>
+      <td>ServiceDescription Latency Signalling</td>
+      <td>Low latency</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html">Part 4</a></td>
+      <td>—</td>
+      <td>dash.js ServiceDescription settings; livesim2 <code>ltgt</code>.</td>
+    </tr>
+    <tr>
+      <td><code>cmaf-chunked-delivery</code></td>
+      <td>CMAF Chunked Delivery</td>
+      <td>Low latency</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html">Part 4</a></td>
+      <td>—</td>
+      <td>dash.js low-latency playback; livesim2 <code>chunkdur</code>.</td>
+    </tr>
+    <tr>
+      <td><code>mpd-patching</code></td>
+      <td>MPD Patching</td>
+      <td>Live</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part04-live-low-latency.html">Part 4</a></td>
+      <td><a href="https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/mpd-patch"><code>specs/mpd-patch</code></a></td>
+      <td>dash.js MPD patching sample.</td>
+    </tr>
+    <tr>
+      <td><code>cmcd</code></td>
+      <td>Common Media Client Data</td>
+      <td>Reporting</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html">Part 12</a></td>
+      <td><a href="https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/cmcd"><code>specs/cmcd</code></a></td>
+      <td>dash.js CMCD samples; HTTP request observability.</td>
+    </tr>
+    <tr>
+      <td><code>content-steering</code></td>
+      <td>Content Steering</td>
+      <td>Delivery</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part12-conformance-reference-tools.html">Part 12</a></td>
+      <td><a href="https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/content-steering"><code>specs/content-steering</code></a></td>
+      <td>dash.js Content Steering support.</td>
+    </tr>
+    <tr>
+      <td><code>content-protection</code></td>
+      <td>Content Protection</td>
+      <td>Protection</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part06-content-protection.html">Part 6</a></td>
+      <td>—</td>
+      <td>dash.js DRM samples; browser/CDM dependent.</td>
+    </tr>
+    <tr>
+      <td><code>text-tracks</code></td>
+      <td>Text Tracks</td>
+      <td>Media</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part09-text.html">Part 9</a></td>
+      <td>—</td>
+      <td>dash.js subtitle/caption samples; livesim2 generated time subtitles.</td>
+    </tr>
+    <tr>
+      <td><code>multi-audio</code></td>
+      <td>Multi-Audio</td>
+      <td>Media</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part08-audio.html">Part 8</a></td>
+      <td>—</td>
+      <td>dash.js multi-audio samples; source asset dependent in livesim2.</td>
+    </tr>
+    <tr>
+      <td><code>inband-emsg-events</code></td>
+      <td>Inband <code>emsg</code> Events</td>
+      <td>Events</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part10-events.html">Part 10</a>, <a href="https://dashif.org/Guidelines/iop-v5/part05-ad-insertion.html">Part 5</a></td>
+      <td>—</td>
+      <td>dash.js SCTE/emsg sample; usually requires app event handling.</td>
+    </tr>
+    <tr>
+      <td><code>lcevc</code></td>
+      <td>MPEG-5 Part 2 LCEVC Carriage</td>
+      <td>Video</td>
+      <td><a href="https://dashif.org/Guidelines/iop-v5/part07-video.html">Part 7</a></td>
+      <td><a href="https://github.com/Dash-Industry-Forum/DASH-IF-IOP/tree/master/specs/lc-evc"><code>specs/lc-evc</code></a></td>
+      <td>dash.js LCEVC sample; requires LCEVC-capable pipeline.</td>
+    </tr>
+  </tbody>
+</table>
 
 # Executable examples # {#executable-examples}
 
@@ -139,12 +333,32 @@ The current example registry is maintained at:
 
 The initial examples focus on Part 4 low-latency livesim2 streams.
 
-| Example ID | Covered feature IDs |
-|---|---|
-| `part04-ll-basic` | `dynamic-mpd-live`, `low-latency-live`, `service-description-latency`, `cmaf-chunked-delivery`, `availability-time-offset` |
-| `part04-ll-ultra` | `dynamic-mpd-live`, `low-latency-live`, `service-description-latency`, `cmaf-chunked-delivery`, `availability-time-offset` |
-| `part04-ll-segtimeline` | `dynamic-mpd-live`, `low-latency-live`, `service-description-latency`, `cmaf-chunked-delivery`, `availability-time-offset`, `segmenttimeline-time` |
-| `part04-ll-utc` | `dynamic-mpd-live`, `low-latency-live`, `service-description-latency`, `cmaf-chunked-delivery`, `availability-time-offset`, `utc-timing` |
+<table class="data">
+  <thead>
+    <tr>
+      <th>Example ID</th>
+      <th>Covered feature IDs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>part04-ll-basic</code></td>
+      <td><code>dynamic-mpd-live</code>, <code>low-latency-live</code>, <code>service-description-latency</code>, <code>cmaf-chunked-delivery</code>, <code>availability-time-offset</code></td>
+    </tr>
+    <tr>
+      <td><code>part04-ll-ultra</code></td>
+      <td><code>dynamic-mpd-live</code>, <code>low-latency-live</code>, <code>service-description-latency</code>, <code>cmaf-chunked-delivery</code>, <code>availability-time-offset</code></td>
+    </tr>
+    <tr>
+      <td><code>part04-ll-segtimeline</code></td>
+      <td><code>dynamic-mpd-live</code>, <code>low-latency-live</code>, <code>service-description-latency</code>, <code>cmaf-chunked-delivery</code>, <code>availability-time-offset</code>, <code>segmenttimeline-time</code></td>
+    </tr>
+    <tr>
+      <td><code>part04-ll-utc</code></td>
+      <td><code>dynamic-mpd-live</code>, <code>low-latency-live</code>, <code>service-description-latency</code>, <code>cmaf-chunked-delivery</code>, <code>availability-time-offset</code>, <code>utc-timing</code></td>
+    </tr>
+  </tbody>
+</table>
 
 # Maintenance workflow # {#maintenance-workflow}
 
