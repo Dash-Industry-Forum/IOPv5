@@ -1,5 +1,5 @@
 <pre class=metadata>
-Revision: 0.3
+Revision: 5.0.4
 Title: DASH-IF IOP v5 Part 7: Video
 Status: LD
 Repository: Dash-Industry-Forum/IOPv5
@@ -10,7 +10,7 @@ Editor: Stephan Schreiner, Dolby, https://www.linkedin.com/in/stephanschreiner/
 Abstract: Video interoperability points, CMAF media profiles, codec signalling, DASH MPD parameters, and video-specific constraints. Working draft authored in the IOPv5 workspace.
 
 !Issue Tracking: <a href="https://github.com/Dash-Industry-Forum/IOPv5/issues?q=is%3Aopen+project%3ADash-Industry-Forum%2F33" target="_blank">Currently open Part 7 issues</a><br><a href="https://github.com/Dash-Industry-Forum/IOPv5/issues/new?title=%5BPart+7%5D%3A+" target="_blank">File a new Part 7 issue</a> (then assign to <a href="https://github.com/orgs/Dash-Industry-Forum/projects/33" target="_blank">Part 7 project</a>)
-!Document Status: <strong>Working Draft 0.3</strong>.<br><small>See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#document-status">Annex A: Document Status</a> for versioning and workflow.</small>
+!Document Status: <strong>Working Draft 0.3</strong>.<br><small>See <a href="https://dashif.org/Guidelines/iop-v5/part07-video.html#document-status">Annex A: Document Status</a> for versioning and workflow.</small>
 !Contributors: Contributors are maintained via GitHub pull requests to the <a href="https://github.com/Dash-Industry-Forum/IOPv5">IOPv5 repository</a>.
 !Contributing: See <a href="https://dashif.org/Guidelines/iop-v5/part01-overview.html#contributing">Part 1 §1.4 Contributing and Reviewing</a>.
 !Key Words: Video, CMAF, Codecs, HDR, MPD Signalling
@@ -18,11 +18,59 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
 
 <pre class=biblio>
 {
+  "AVC": {
+    "href": "https://www.iso.org/standard/87574.html",
+    "title": "Information technology — Coding of audio-visual objects - Part 10: Advanced video coding",
+    "publisher": "ISO/IEC",
+    "date": "2025"
+  },
+  "HEVC": {
+    "href": "https://www.iso.org/standard/90502.html",
+    "title": "Information technology — High efficiency coding and media delivery in heterogeneous environments - Part 2: High efficiency video coding",
+    "publisher": "ISO/IEC",
+    "date": "2025"
+  },
+  "VVC": {
+    "href": "https://www.iso.org/standard/86516.html",
+    "title": "Information technology — Coded representation of immersive media - Part 3: Versantile video coding",
+    "publisher": "ISO/IEC",
+    "date": "2024"
+  },
+  "MPEG5EVC": {
+    "href": "https://www.iso.org/standard/57797.html",
+    "title": "Information technology — General video coding - Part 1: Essential video coding",
+    "publisher": "ISO/IEC",
+    "date": "2020"
+  },
+  "MPEG5LCEVC": {
+    "href": "https://www.iso.org/standard/79143.html",
+    "title": "Information technology — General video coding - Part 2: Low complexity enhancement video coding",
+    "publisher": "ISO/IEC",
+    "date": "2021"
+  },
+  "MPEGISOBMFF": {
+    "href": "https://www.iso.org/standard/85596.html",
+    "title": "Information technology — Coding of audio-visual objects - Part 12: ISO base media file format",
+    "publisher": "ISO/IEC",
+    "date": "2026"
+  },
+  "MPEGNALUFF": {
+    "href": "https://www.iso.org/standard/89118.html",
+    "title": "Information technology — Coding of audio-visual objects - Part 15: Carriage of network abstraction layer (NAL) unit structured video in the ISO base media file format",
+    "publisher": "ISO/IEC",
+    "date": "2024"
+  },
+  "MPEG_TS": {
+    "href": "",
+    "title": "Information technology - Generic coding of moving pictures and associated audio information - Part 1: Systems",
+    "publisher": "ISO/IEC",
+    "date": ""
+  },
   "MPEGDASH": {
-    "href": "https://www.iso.org/standard/83314.html",
+    "href": "https://www.iso.org/standard/23009-1",
     "title": "Information technology - Dynamic adaptive streaming over HTTP (DASH) - Part 1: Media presentation description and segment formats",
     "publisher": "ISO/IEC",
-    "date": "2022"
+    "date": "2026"
   },
   "MPEGCMAF": {
     "href": "https://www.iso.org/standard/85623.html",
@@ -30,17 +78,93 @@ Abstract: Video interoperability points, CMAF media profiles, codec signalling, 
     "publisher": "ISO/IEC",
     "date": "2024"
   },
+  "MPEGCICP_1": {
+    "href": "https://www.iso.org/standard/57794.html",
+    "title": "Information technology - Coding-independent code points - Part 1: Systems",
+    "publisher": "ISO/IEC",
+    "date": "2018"
+  },
+  "MPEGCICP_2": {
+    "href": "https://www.iso.org/standard/85291.html",
+    "title": "Information technology - Coding-independent code points - Part 2: Video",
+    "publisher": "ISO/IEC",
+    "date": "2025"
+  },
   "DASHIF-CODECS": {
     "href": "https://dashif.org/codecs/introduction/",
     "title": "DASH-IF Codec Registry",
-    "publisher": "DASH Industry Forum",
+    "publisher": "SVTA",
     "date": "2024"
+  },
+  "DASHIF-IOP5_2": {
+    "href": "https://dashif.org/guidelines/iop-v5#part-2-core-principles-and-cmaf-mapping",
+    "title": "Core principles and CMAF mapping",
+    "publisher": "SVTA",
+    "date": "to be puvlished"
+  },
+  "DASHIF-IOP4_3": {
+    "href": "https://dash-industry-forum.github.io/docs/DASH-IF-IOP-v4.3.pdf",
+    "title": "DASH-IF IOP v4.3: Guidelines for Implementation: DASH-IF Interoperability Points",
+    "publisher": "SVTA",
+    "date": "2018"
+  },
+  "ETSI_101_154": {
+    "href": "https://www.etsi.org/deliver/etsi_ts/101100_101199/101154/02.10.01_60/ts_101154v021001p.pdf",
+    "title": "ETSI TS 101 154",
+    "publisher": "ETSI/DVB",
+    "date": "2026"
   },
   "DVBDASH": {
     "href": "https://www.etsi.org/standards-search",
     "title": "ETSI TS 103 285: MPEG-DASH Profile for Transport of ISO BMFF Based DVB Services over IP Based Networks",
     "publisher": "ETSI/DVB",
     "date": "2024"
+  },
+  "ITU_BT709": {
+    "href": "https://www.itu.int/rec/r-rec-bt.709",
+    "title": "ITU-R BT.709: Parameter values for the HDTV standards for production and international programme exchange",
+    "publisher": "ITU-R",
+    "date": "06/2015"
+  },
+  "ITU_H274": {
+    "href": "https://www.itu.int/rec/T-REC-H.274",
+    "title": "H.274: Versatile supplemental enhancement information messages for coded video bitstreams",
+    "publisher": "ITU-T",
+    "date": "01/26"
+  },
+  "SCTE_214-1": {
+    "href": "https://account.scte.org/standards/library/catalog/scte-214-1-mpeg-dash-for-ip-based-cable-services-part1-mpd-constraints-and-extensions/",
+    "title": "SCTE 214-1: MPEG DASH for IP-Based Cable Services, Part 1: MPD Constraints and Extensions",
+    "publisher": "SCTE",
+    "date": "2024"
+  },
+  "SCTE_215-1-1": {
+    "href": "https://webstore.ansi.org/standards/scte/ANSISCTE2152020-2409666",
+    "title": "HEVC Video Constraints for Cable Television Part 1-1 HDR",
+    "publisher": "SCTE",
+    "date": "2020"
+  },
+  "CTA_WAVE": {
+    "href": "https://shop.cta.tech/products/cta-5003 https://cdn.cta.tech/cta/media/media/resources/standards/pdfs/cta-5003-final.pdf",
+    "title": "CTA-5003-B: Web Application Video Ecosystem (WAVE): Device Playback Capabilities Specification",
+    "publisher": "CTA",
+    "date": "2024"
+  },
+  "SMPTE_2094_10": {
+    "title": "SMPTE ST 2094-10:2021: Dynamic Metadata for Color Volume Transform - Application #1",
+    "publisher": "SMPTE",
+    "date": "2021"
+  },
+  "SMPTE_2094_40": {
+    "title": "SMPTE ST 2094-10:2021: Dynamic Metadata for Color Volume Transform - Application #4",
+    "publisher": "SMPTE",
+    "date": "2020"
+  },
+  "ETSI_103_433-2": {
+    "href": "https://www.etsi.org/deliver/etsi_ts/103400_103499/10343302/01.03.01_60/ts_10343302v010301p.pdf",
+    "title": "High-Performance Single Layer High Dynamic Range (HDR) System for use in Consumer Electronics devices; Part 2: Enhancements for Perceptual Quantization (PQ) transfer function based High Dynamic Range (HDR) Systems (SL-HDR2)",
+    "publisher": "ETSI",
+    "date": "2021-08"
   }
 }
 </pre>
